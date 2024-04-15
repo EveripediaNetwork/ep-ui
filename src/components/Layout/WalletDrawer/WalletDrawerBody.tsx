@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react'
 import WalletDetails from './WalletDetails'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
+import { RootState, store } from '@/store/store'
 import { useTranslation } from 'next-i18next'
 import {
   fetchRateAndCalculateTotalBalance,
@@ -31,10 +31,14 @@ import { LogOutBtn } from '../Navbar/Logout'
 import { useAddress } from '@/hooks/useAddress'
 import { ProfileLink } from '../Navbar/ProfileLink'
 import SettingsLink from '../Navbar/SettingsLink'
+import AdminLink from '../Navbar/AdminLink'
+import { adminApiClient, checkIsAdmin } from '@/services/admin'
 
 export const WalletDrawerBody = () => {
   const { t } = useTranslation('common')
   const { address } = useAddress()
+  const [isAdmin, setIsAdmin] = React.useState(false)
+  const token = useSelector((state: RootState) => state.user.token)
   const { userBalance } = useFetchWalletBalance(address)
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
@@ -63,6 +67,19 @@ export const WalletDrawerBody = () => {
       })
     }
   }, [walletDetails])
+
+  useEffect(() => {
+    async function fetchAuth() {
+      if (address && token) {
+        adminApiClient.setHeader('authorization', token)
+        const { data } = await store.dispatch(checkIsAdmin?.initiate(undefined))
+        if (data) {
+          setIsAdmin(true)
+        }
+      }
+    }
+    fetchAuth()
+  }, [address])
 
   return (
     <>
@@ -162,6 +179,7 @@ export const WalletDrawerBody = () => {
               alignItems="flex-start"
               display={{ base: 'none', md: 'block' }}
             >
+              {isAdmin && <AdminLink />}
               <ProfileLink />
               <SettingsLink />
               <ColorModeToggle isInMobileMenu={false} />
