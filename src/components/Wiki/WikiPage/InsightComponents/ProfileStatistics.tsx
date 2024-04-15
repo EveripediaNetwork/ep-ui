@@ -33,7 +33,7 @@ const ProfileStatistics = (props: ProfileStatisticsProps) => {
       title: t('Price'),
       content: {
         value: getFormattedAmount(tokenStats.token_price_in_usd, 'USD', 2, 7),
-        change: statChange(tokenStats.market_cap_percentage_change),
+        change: statChange(tokenStats.price_percentage_change),
         changeDirection: getStatDirection(
           tokenStats.market_cap_percentage_change,
         ),
