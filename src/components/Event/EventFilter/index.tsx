@@ -116,7 +116,10 @@ const EventFilter = ({
         setIsLoading(false)
       }
     } else {
-      setEventData(fetchedData)
+      const interestQuery = { ...router.query }
+      if (!interestQuery.tags) {
+        setEventData(fetchedData)
+      }
     }
   }
 
@@ -163,7 +166,7 @@ const EventFilter = ({
 
   useEffect(() => {
     aggregateResults(filters)
-  }, [filters, dateRange, fetchedData])
+  }, [filters, dateRange])
 
   useEffect(() => {
     const updatedFilters: Filters = { ...defaultFilters }

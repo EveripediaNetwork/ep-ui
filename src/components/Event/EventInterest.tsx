@@ -20,25 +20,25 @@ const EventInterest = ({
 
   const toggleTag = (tag: string) => {
     setSelectedTags((prevSelected) => {
-      let updatedTags: string[] = [...prevSelected]
       if (prevSelected.includes(tag)) {
-        updatedTags = prevSelected.filter((t) => t !== tag)
+        return prevSelected.filter((t) => t !== tag)
       } else {
-        updatedTags = [...prevSelected, tag].slice(0, 4)
+        return [...prevSelected, tag].slice(0, 4)
       }
+    })
+  }
 
-      const currentQueryParams = { ...query }
-      if (updatedTags.length > 0) {
-        currentQueryParams.tags = updatedTags
-        setIsLoading(true)
-        filterEventsByTags(updatedTags)
-          .then((res) => setEventData(res))
-          .catch((err) => console.log(err))
-          .finally(() => setIsLoading(false))
-      } else {
-        delete currentQueryParams.tags
-        setEventData(eventData)
-      }
+  useEffect(() => {
+    if (selectedTags.length > 0) {
+      setIsLoading(true)
+      filterEventsByTags(selectedTags)
+        .then((res) => {
+          setEventData(res)
+        })
+        .catch((err) => console.log(err))
+        .finally(() => setIsLoading(false))
+
+      const currentQueryParams = { ...query, tags: selectedTags }
       router.replace(
         {
           pathname: pathname,
@@ -47,10 +47,19 @@ const EventInterest = ({
         undefined,
         { shallow: true },
       )
-
-      return updatedTags
-    })
-  }
+    } else {
+      delete query.tags
+      setEventData(eventData)
+      router.replace(
+        {
+          pathname: pathname,
+          query: query,
+        },
+        undefined,
+        { shallow: true },
+      )
+    }
+  }, [selectedTags])
 
   async function filterEventsByTags(filterTags: string[]) {
     const { data } = await store.dispatch(

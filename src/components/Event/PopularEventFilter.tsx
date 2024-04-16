@@ -18,8 +18,6 @@ const PopularEventFilter = ({
 }) => {
   const router = useRouter()
 
-  console.log(popularEvents)
-
   return (
     <div className="">
       <div className="flex flex-col gap-1">
