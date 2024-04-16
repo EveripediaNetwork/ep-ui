@@ -35,7 +35,6 @@ const EventSearchBar = ({
       arg.endDate = searchDate?.to && dateFormater(searchDate.to)
     }
     setIsLoading(true)
-    console.log({ arg })
     store
       .dispatch(getEventByTitle.initiate(arg))
       .then((response) => {
