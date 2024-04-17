@@ -173,6 +173,8 @@ const CreateWikiContent = () => {
     }
   }, [dispatch, revision, setCommitMessage, toast, wikiData])
 
+  // console.log({ content: wiki.content })
+
   return (
     <>
       <CreateWikiPageHeader />
