@@ -2435,10 +2435,10 @@
     "@ethersproject/rlp" "^5.6.1"
     "@ethersproject/signing-key" "^5.6.2"
 
-"@everipedia/iq-utils@^0.2.4":
-  version "0.2.4"
-  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.2.4.tgz#0891b0b19a97c8271300a99489a3b0b9b361f52c"
-  integrity sha512-KXx395HK6FmvDMK70rgSVn2QOF4yNb4a0IBQ7H5xO4ENcHn8KEy0FvDIa3YNsW06So+kzrXk5Vp3FOBm1QSFGw==
+"@everipedia/iq-utils@^0.2.8":
+  version "0.2.8"
+  resolved "https://registry.yarnpkg.com/@everipedia/iq-utils/-/iq-utils-0.2.8.tgz#74f70f176c5b083c9457753311c67662aa8e0641"
+  integrity sha512-uhoyOS2i18/Dwpd8Z8cgc0E/Asb7jLVxLpBhACxe8VrhAcu/qfnoGWqjzr9scMkrBnBLsqNtm+jBqytpXv5H4A==
 
 "@everipedia/web3-signer@^0.0.11":
   version "0.0.11"

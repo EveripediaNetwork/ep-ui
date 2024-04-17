@@ -203,4 +203,32 @@ export const LINK_OPTIONS = [
     icon: FaFileContract,
     tests: [/https:\/\/(www.)?ftmscan.com\/\w+/],
   },
+  {
+    id: CommonMetaIds.SOLSCAN_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'Solscan',
+    icon: FaFileContract,
+    tests: [/https:\/\/(www.)?solscan.com\/\w+/],
+  },
+  {
+    id: CommonMetaIds.AVASCAN_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'AvaScan',
+    icon: FaFileContract,
+    tests: [/https:\/\/(www.)?avascan.com\/\w+/],
+  },
+  {
+    id: CommonMetaIds.NEARBLOCKS_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'NearBlocks',
+    icon: FaFileContract,
+    tests: [/https:\/\/(www.)?nearblocks.com\/\w+/],
+  },
+  {
+    id: CommonMetaIds.TROSCAN_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'Tronscan',
+    icon: FaFileContract,
+    tests: [/https:\/\/(www.)?tronscan.com\/\w+/],
+  },
 ]
