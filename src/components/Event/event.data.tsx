@@ -22,7 +22,7 @@ export const EventInterestData = [
   'Festival',
   'Forum',
   'Games',
-  'Hackaton',
+  'Hackathon',
   'Bitcoin',
   'AI',
   'DEXes',
