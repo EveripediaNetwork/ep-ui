@@ -80,7 +80,7 @@ const EventPage = ({
             <div className="hidden xl:block">
               <EventFilter
                 setIsLoading={setIsLoading}
-                fetchedData={eventData}
+                fetchedData={events}
                 setEventData={setEventData}
               />
             </div>
