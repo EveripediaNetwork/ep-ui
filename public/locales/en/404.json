@@ -1,5 +1,7 @@
 {
   "404Title": "OOPS! LOST IN SPACE?",
   "404Description": "Seems like you’ve landed in the wrong space. Don’t worry, We’ve got you. Let’s take you back to where it’s safe.",
-  "404CTA": "Take me back home"
+  "404CTA": "Take me back home",
+  "404SeoTitle": "404 - Page Not Found",
+  "404SeoDescription": "The page you are looking for might have been removed, had its name changed, or is temporarily unavailable."
 }
