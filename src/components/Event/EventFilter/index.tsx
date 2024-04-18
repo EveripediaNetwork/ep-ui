@@ -131,6 +131,8 @@ const EventFilter = ({
     setFilters((prevFilters) => {
       const updatedFilters = { ...prevFilters }
 
+      console.log({ filterCategory, value })
+
       if (filterCategory === 'eventType') {
         const isAlreadySelected = prevFilters.eventType.includes(value)
         updatedFilters.eventType = isAlreadySelected
@@ -164,6 +166,7 @@ const EventFilter = ({
         },
       )
 
+      console.log({ updatedFilters })
       return updatedFilters
     })
   }
@@ -183,7 +186,7 @@ const EventFilter = ({
           updatedFilters[key] =
             typeof queryParam === 'string' ? queryParam.split(',') : queryParam
         } else if (typeof queryParam === 'string') {
-          if (key === 'date' || key === 'blockchain') {
+          if (key === 'date' || key === 'blockchain' || key === 'location') {
             updatedFilters[key] = queryParam
           }
         }
