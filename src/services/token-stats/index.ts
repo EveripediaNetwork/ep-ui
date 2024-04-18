@@ -11,6 +11,7 @@ export type TokenStats = {
   token_image_url: string
   market_cap: number
   market_cap_percentage_change: number
+  price_percentage_change: number
   diluted_market_cap: number
   diluted_market_cap_percentage_change: number
   volume: number
