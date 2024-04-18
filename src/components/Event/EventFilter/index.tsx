@@ -84,7 +84,6 @@ const EventFilter = ({
     const activeFilters = filterKeys.filter((key) =>
       key === 'eventType' ? filters[key].length > 0 : filters[key],
     )
-    console.log({ activeFilters })
     if (activeFilters.length > 0) {
       setIsLoading(true)
       try {
@@ -118,7 +117,6 @@ const EventFilter = ({
     } else {
       const interestQuery = { ...router.query }
       if (!interestQuery.tags) {
-        console.log({ fetchedData })
         setEventData(fetchedData)
       }
     }

@@ -1,10 +1,11 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
 import { getEventByTitle } from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
 import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
+import { useRouter } from 'next/router'
 
 const EventSearchBar = ({
   setEventData,
@@ -23,27 +24,55 @@ const EventSearchBar = ({
   searchQuery: string
   setSearchQuery: Function
 }) => {
+  const router = useRouter()
+
+  // This effect will run when the component mounts and anytime router.query changes.
+  useEffect(() => {
+    // If query parameters exist, perform the search.
+    const query = router.query
+    if (query.title || query.startDate || query.endDate) {
+      const arg = {
+        title: (query.title as string) || '',
+        startDate: (query.startDate as string) || undefined,
+        endDate: (query.endDate as string) || undefined,
+      }
+
+      setIsLoading(true)
+      store
+        .dispatch(getEventByTitle.initiate(arg))
+        .then((response) => {
+          if (response.data) {
+            setEventData(response.data)
+          } else if (response.error) console.error(response.error)
+        })
+        .catch((err) => console.error(err))
+        .finally(() => setIsLoading(false))
+    }
+  }, [router.query])
+
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSearchActive(true)
 
-    const arg: { title: string; startDate?: string; endDate?: string } = {
-      title: searchQuery,
-    }
-    if (searchDate?.from || searchDate?.to) {
-      arg.startDate = searchDate?.from && dateFormater(searchDate.from)
-      arg.endDate = searchDate?.to && dateFormater(searchDate.to)
-    }
-    setIsLoading(true)
-    store
-      .dispatch(getEventByTitle.initiate(arg))
-      .then((response) => {
-        if (response.data) {
-          setEventData(response.data)
-        } else if (response.error) console.error(response.error)
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false))
+    const queryParams: {
+      title?: string
+      startDate?: string
+      endDate?: string
+    } = {}
+
+    if (searchQuery) queryParams.title = searchQuery
+    if (searchDate?.from) queryParams.startDate = dateFormater(searchDate.from)
+    if (searchDate?.to) queryParams.endDate = dateFormater(searchDate.to)
+
+    // Update the URL query parameters.
+    router.push(
+      {
+        pathname: router.pathname,
+        query: queryParams,
+      },
+      undefined,
+      { shallow: true },
+    )
   }
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {

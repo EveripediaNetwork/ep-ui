@@ -15,6 +15,7 @@ import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
 import { DateRange } from 'react-day-picker'
 import { dateFormater } from '@/lib/utils'
+import { useRouter } from 'next/router'
 
 const EventPage = ({
   events,
@@ -28,12 +29,16 @@ const EventPage = ({
   const [isLoading, setIsLoading] = useState(false)
   const [searchDate, setSearchDate] = useState<DateRange>()
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const router = useRouter()
 
   const clearSearchState = () => {
     setEventData(events)
     setSearchActive(false)
     setSearchDate(undefined)
     setSearchQuery('')
+    router.push({ pathname: router.pathname }, undefined, {
+      shallow: true,
+    })
   }
 
   return (
