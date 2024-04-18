@@ -6,6 +6,7 @@ import { DateRange } from 'react-day-picker'
 import { TEvents } from '@/services/event'
 import {
   fetchEventByBlockchain,
+  fetchEventByLocation,
   fetchFilteredEventList,
 } from '@/services/search/utils'
 import { dateFormater } from '@/lib/utils'
@@ -60,6 +61,8 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
     return fetchFilteredEventList(filter.eventType, startDate, endDate)
   } else if (filter.blockchain) {
     return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
+  } else if (filter.location) {
+    return fetchEventByLocation(filter.location, startDate, endDate)
   } else {
     return fetchFilteredEventList([], startDate, endDate)
   }
@@ -93,6 +96,8 @@ const EventFilter = ({
               case 'eventType':
                 return handleFilter(filters, dateRange)
               case 'blockchain':
+                return handleFilter(filters, dateRange)
+              case 'location':
                 return handleFilter(filters, dateRange)
               case 'date':
                 return handleFilter(filters, dateRange)

@@ -118,6 +118,48 @@ export const GET_EVENTS_BY_BLOCKCHAIN = gql`
   }
 `
 
+export const GET_EVENTS_BY_LOCATION = gql`
+  query GetEventsByLocation(
+    $country: String
+    $continent: String
+    $startDate: String
+    $endDate: String
+  ) {
+    eventsByLocation(
+      country: $country
+      continent: $continent
+      startDate: $startDate
+      endDate: $endDate
+      order: DATE
+      direction: ASC
+    ) {
+      id
+      title
+      summary
+      events {
+        type
+        date
+        multiDateStart
+        multiDateEnd
+      }
+      linkedWikis {
+        speakers
+      }
+      metadata {
+        id
+        value
+      }
+      tags {
+        id
+      }
+      images {
+        id
+        type
+      }
+    }
+  }
+`
+
 export const GET_POPULAR_EVENTS = gql`
   query GetPopularEvents {
     popularEvents {
