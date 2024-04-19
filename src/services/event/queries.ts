@@ -161,8 +161,8 @@ export const GET_EVENTS_BY_LOCATION = gql`
 `
 
 export const GET_POPULAR_EVENTS = gql`
-  query GetPopularEvents {
-    popularEvents {
+  query GetPopularEvents($startDate: String) {
+    popularEvents(startDate: $startDate, order: DATE, direction: ASC) {
       id
       title
       events {

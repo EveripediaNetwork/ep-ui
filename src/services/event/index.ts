@@ -108,8 +108,11 @@ export const eventApi = createApi({
       }),
       transformResponse: (response: TGetEventResponse) => response.events,
     }),
-    getPopularEvents: builder.query<TEvents[], void>({
-      query: () => ({ document: GET_POPULAR_EVENTS }),
+    getPopularEvents: builder.query<TEvents[], { startDate?: string }>({
+      query: ({ startDate }) => ({
+        document: GET_POPULAR_EVENTS,
+        variables: { startDate },
+      }),
       transformResponse: (response: TGetPopularEventResponse) =>
         response.popularEvents,
     }),

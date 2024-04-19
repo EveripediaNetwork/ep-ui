@@ -112,7 +112,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   )
 
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate(),
+    getPopularEvents.initiate({ startDate: dateFormater(new Date()) }),
   )
   return {
     props: {
