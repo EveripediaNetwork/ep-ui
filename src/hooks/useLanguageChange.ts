@@ -1,6 +1,5 @@
 import { useDispatch } from 'react-redux'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
 import { setLanguage } from '@/store/slices/app-slice'
 import { logEvent } from '@/utils/googleAnalytics'
 import { isString } from '@chakra-ui/utils'
@@ -8,13 +7,11 @@ import { setCookie } from 'cookies-next'
 
 const useLanguageChange = () => {
   const dispatch = useDispatch()
-  const { i18n } = useTranslation()
   const router = useRouter()
 
   const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
       dispatch(setLanguage(userLang))
-      i18n.changeLanguage(userLang)
       setCookie('NEXT_LOCALE', userLang, {
         maxAge: 60 * 60 * 24 * 365.25 * 100,
       })
