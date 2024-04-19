@@ -111,6 +111,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { data } = await store.dispatch(getWikiCreatorAndEditor.initiate(slug))
 
   if (!wiki) {
+    console.log(`Wiki: ${wiki} Slug: ${slug}`)
     return {
       redirect: {
         destination: `/NotFound/?wiki=${slug}`,
