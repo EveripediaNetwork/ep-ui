@@ -4,6 +4,7 @@ import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { EventHeader } from '@/components/SEO/Event'
 import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
+import { dateFormater } from '@/lib/utils'
 import { TEvents, getPopularEvents } from '@/services/event'
 import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
@@ -77,7 +78,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     getWiki.initiate(slug),
   )
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate(),
+    getPopularEvents.initiate({ startDate: dateFormater(new Date()) }),
   )
 
   if (eventError)
