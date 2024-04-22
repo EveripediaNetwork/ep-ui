@@ -4,12 +4,14 @@ import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { EventHeader } from '@/components/SEO/Event'
 import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
+import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
 import { dateFormater } from '@/lib/utils'
 import { TEvents, getPopularEvents } from '@/services/event'
 import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
+import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { Wiki } from '@everipedia/iq-utils'
+import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
@@ -23,6 +25,16 @@ const EventDetailsPage = ({
   slug: string
   popularEvents: TEvents[]
 }) => {
+  const referencesRaw =
+    getWikiMetadataById(event, CommonMetaIds.REFERENCES)?.value ?? '[]'
+  let references
+
+  try {
+    references = JSON.parse(referencesRaw)
+  } catch (e) {
+    console.error('Failed to parse JSON:', e)
+    references = []
+  }
   return (
     <>
       <EventHeader
@@ -38,7 +50,7 @@ const EventDetailsPage = ({
         <h1 className="font-semibold capitalize text-2xl xl:text-4xl text-gray900 dark:text-alpha-900">
           {event?.title || 'Paris Blockchain Week, 5th Edition'}
         </h1>
-        <div className="flex flex-col lg:flex-row max-w-[1296px] gap-10 md:gap-6 mx-auto mt-5">
+        <div className="flex flex-col lg:flex-row max-w-[1296px] gap-10 md:gap-6 mx-auto my-5">
           <div className="flex-1 flex flex-col gap-10 md:gap-5 xl:gap-10">
             <EventDetailsContent event={event} />
             <div className="xl:hidden flex flex-col gap-6 mt-10 xl:gap-10">
@@ -61,6 +73,7 @@ const EventDetailsPage = ({
             </div>
           </div>
         </div>
+        <WikiReferences references={references} />
       </div>
     </>
   )
