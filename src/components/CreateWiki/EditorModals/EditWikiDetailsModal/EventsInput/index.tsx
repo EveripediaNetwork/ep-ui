@@ -243,7 +243,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 >
                   {titleProps().value || 'Created'}
                 </option>
-                <option value={EventType.DEFAULT}>Default</option>
+                <option value={EventType.DEFAULT}>Milestone</option>
                 <option value={EventType.MULTIDATE}>Date Range</option>
               </Select>
             </SimpleGrid>
