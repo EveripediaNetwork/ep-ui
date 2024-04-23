@@ -47,7 +47,13 @@ const EventCard = ({
   isLoading,
 }: TEventDetails) => {
   const locationMeta = location?.find((m) => m.id === CommonMetaIds.LOCATION)
-  const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
+  const parsedLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
+  const eventLocation = Array.isArray(parsedLocation)
+    ? parsedLocation.find(
+        (item) =>
+          new Date(item?.year).getFullYear() === new Date().getFullYear(),
+      )
+    : parsedLocation
   return (
     <div className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
