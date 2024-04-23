@@ -51,9 +51,7 @@ const LocationInput = () => {
           onSelectOption={(option) => {
             setValue(option.item.originalValue)
           }}
-          style={{
-            position: 'relative',
-          }}
+          rollNavigation
         >
           <AutoCompleteInput
             value={value}
@@ -63,16 +61,18 @@ const LocationInput = () => {
             placeholder="Enter event location"
             disabled={!ready}
           />
-          <AutoCompleteList>
-            {status === 'OK' &&
-              data.map(({ place_id, description }) => {
-                return (
-                  <AutoCompleteItem key={place_id} value={description}>
-                    {description}
-                  </AutoCompleteItem>
-                )
-              })}
-          </AutoCompleteList>
+          <div className="relative">
+            <AutoCompleteList>
+              {status === 'OK' &&
+                data.map(({ place_id, description }) => {
+                  return (
+                    <AutoCompleteItem key={place_id} value={description}>
+                      {description}
+                    </AutoCompleteItem>
+                  )
+                })}
+            </AutoCompleteList>
+          </div>
         </AutoComplete>
         <Select
           rounded="md"
