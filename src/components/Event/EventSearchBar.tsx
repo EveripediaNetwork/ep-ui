@@ -60,6 +60,7 @@ const EventSearchBar = ({
     // If query parameters exist, perform the search.
     const query = router.query
     if (query.title || query.startDate || query.endDate) {
+      setSearchActive(true)
       const arg = {
         title: (query.title as string) || '',
         startDate: (query.startDate as string) || undefined,
