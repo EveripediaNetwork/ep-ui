@@ -34,7 +34,7 @@ const HighlightsModal = ({
     <Modal onClose={onClose} isOpen={isOpen} isCentered size="2xl" {...rest}>
       <ModalOverlay />
       <ModalContent
-        w="min(95vw, 600px)"
+        w="min(95vw, 800px)"
         _dark={{
           bg: 'gray.800',
         }}
