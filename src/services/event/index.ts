@@ -140,7 +140,7 @@ export const eventApi = createApi({
       query: ({ location, startDate, endDate }: TEventByLocationArg) => {
         return {
           document: GET_EVENTS_BY_LOCATION,
-          variables: { location, startDate, endDate },
+          variables: { country: location, startDate, endDate },
         }
       },
       transformResponse: (response: TEventByLocation) =>

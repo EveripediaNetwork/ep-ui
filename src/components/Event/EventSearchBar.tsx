@@ -1,11 +1,19 @@
 import React, { useEffect } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
-import { getEventByTitle } from '@/services/event'
+import { getEventByLocation, getEventByTitle } from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
-import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
+import {
+  ActiveModifiers,
+  DateRange,
+  SelectRangeEventHandler,
+} from 'react-day-picker'
 import { useRouter } from 'next/router'
+
+type TQuerySearch = {
+  arg: { title: string; startDate?: string; endDate?: string }
+}
 
 const EventSearchBar = ({
   setEventData,
@@ -26,6 +34,27 @@ const EventSearchBar = ({
 }) => {
   const router = useRouter()
 
+  const fetchEventSearch = async ({ arg }: TQuerySearch) => {
+    const { data } = await store.dispatch(getEventByTitle.initiate(arg))
+    const { data: locationData } = await store.dispatch(
+      getEventByLocation.initiate({
+        location: arg.title,
+        startDate: arg.startDate,
+        endDate: arg.endDate,
+      }),
+    )
+
+    const mergedResults = [...(data || []), ...(locationData || [])]
+
+    const uniqueResults = Array.from(
+      new Set(mergedResults.map((event) => event.id)),
+    ).map((id) => {
+      return mergedResults.find((event) => event.id === id)!
+    })
+
+    return uniqueResults
+  }
+
   // This effect will run when the component mounts and anytime router.query changes.
   useEffect(() => {
     // If query parameters exist, perform the search.
@@ -37,13 +66,33 @@ const EventSearchBar = ({
         endDate: (query.endDate as string) || undefined,
       }
 
+      const activeModifiers: ActiveModifiers = {} // assuming this is the correct type
+      const mouseEvent = {} as React.MouseEvent<Element, MouseEvent> //
+      if (query.title) setSearchQuery(query.title)
+      if (query.startDate) {
+        const startDate = new Date(query.startDate as string)
+        setSearchDate(
+          { from: startDate, to: undefined },
+          startDate,
+          activeModifiers,
+          mouseEvent,
+        )
+      }
+      if (query.endDate) {
+        const startDate = new Date(query.startDate as string)
+        const endDate = new Date(query.endDate as string)
+        setSearchDate(
+          { from: startDate, to: endDate },
+          startDate,
+          activeModifiers,
+          mouseEvent,
+        )
+      }
+
       setIsLoading(true)
-      store
-        .dispatch(getEventByTitle.initiate(arg))
+      fetchEventSearch({ arg })
         .then((response) => {
-          if (response.data) {
-            setEventData(response.data)
-          } else if (response.error) console.error(response.error)
+          setEventData(response)
         })
         .catch((err) => console.error(err))
         .finally(() => setIsLoading(false))
