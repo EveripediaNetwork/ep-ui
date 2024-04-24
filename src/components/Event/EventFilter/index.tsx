@@ -22,7 +22,7 @@ const defaultFilters: Filters = {
 
 const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   const today = new Date()
-  let startDate
+  let startDate = dateFormater(today)
   let endDate
 
   switch (filter.date) {
@@ -47,7 +47,7 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
       )
       endDate = dateFormater(lastDayNextMonth)
       break
-    default:
+    case 'Custom Range':
       if (dateRange?.from && dateRange?.to) {
         startDate = dateFormater(dateRange.from)
         endDate = dateFormater(dateRange.to)
@@ -55,6 +55,7 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
         endDate = undefined
       }
       break
+    default:
   }
 
   if (filter.eventType.length > 0) {
@@ -87,6 +88,7 @@ const EventFilter = ({
     const activeFilters = filterKeys.filter((key) =>
       key === 'eventType' ? filters[key].length > 0 : filters[key],
     )
+    console.log({ activeFilters })
     if (activeFilters.length > 0) {
       setIsLoading(true)
       try {
