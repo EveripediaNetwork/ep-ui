@@ -20,10 +20,12 @@ const EventDetailsPage = ({
   event,
   slug,
   popularEvents,
+  country_name,
 }: {
   event: Wiki
   slug: string
   popularEvents: TEvents[]
+  country_name: string
 }) => {
   const referencesRaw =
     getWikiMetadataById(event, CommonMetaIds.REFERENCES)?.value ?? '[]'
@@ -68,7 +70,7 @@ const EventDetailsPage = ({
               )}
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter />
+              <NearbyEventFilter countryName={country_name} />
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
@@ -117,11 +119,24 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       props,
     }
   }
+  let country_name = ''
+  try {
+    const response = await fetch('https://ipapi.co/json/')
+    if (response.ok) {
+      const jsonData = await response.json()
+      country_name = jsonData.country_name
+    } else {
+      console.error('Failed to fetch country name:', response.status)
+    }
+  } catch (error) {
+    console.error('Error fetching the country name:', error)
+  }
 
   return {
     props: {
       event: eventDetails,
       popularEvents: popularEvents?.slice(0, 5) || [],
+      country_name,
       slug,
       ...props,
     },
