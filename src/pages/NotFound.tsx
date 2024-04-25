@@ -1,7 +1,9 @@
 import React from 'react'
 import { LinkButton } from '@/components/Elements'
 import { Flex, Box, Image, Text, Button } from '@chakra-ui/react'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
 
 const WikiNotFound = () => {
   const router = useRouter()
@@ -59,3 +61,11 @@ const WikiNotFound = () => {
 }
 
 export default WikiNotFound
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(context.locale ?? 'en', ['common'])),
+    },
+  }
+}
