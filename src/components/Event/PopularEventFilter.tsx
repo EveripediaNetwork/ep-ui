@@ -46,7 +46,7 @@ const PopularEventFilter = ({
                 {/* biome-ignore lint/a11y/useKeyWithClickEvents: <explanation> */}
                 <span
                   onClick={() => router.push(`/events/${event.id}`)}
-                  className="relative cursor-pointer shrink-0 rounded w-[84px] h-[58px] md:w-[113px] md:h-[79px] lg:w-[52px] lg:h-[40px] xl:w-[93px] xl:h-[69px]"
+                  className="relative overflow-hidden cursor-pointer shrink-0 rounded w-[84px] h-[58px] md:w-[113px] md:h-[79px] lg:w-[52px] lg:h-[40px] xl:w-[93px] xl:h-[69px]"
                 >
                   <Image
                     src={getWikiImageUrl(event.images)}
