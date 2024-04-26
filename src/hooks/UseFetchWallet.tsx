@@ -1,17 +1,16 @@
 import { useEffect, useState } from 'react'
 import { WalletBalanceType } from '@/types/WalletBalanceType'
-import { maticProvider } from '@/utils/WalletUtils/getProvider'
 import axios from 'axios'
 import { env } from '@/env.mjs'
 import { updateWalletDetails } from '@/store/slices/user-slice'
 import { useDispatch } from 'react-redux'
+import config from '@/config'
+import { useBalance } from 'wagmi'
 
 export const getUserIQBalance = async (userAddress: string) => {
   try {
     const response = await axios.post<{ result: string }>(
-      `https://eth-${
-        env.NEXT_PUBLIC_IS_PRODUCTION === 'true' ? 'mainnet' : 'goerli'
-      }.alchemyapi.io/v2/${env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
+      `https://eth-mainnet.alchemyapi.io/v2/${env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
       {
         jsonrpc: '2.0',
         id: 1,
@@ -47,6 +46,9 @@ export const useFetchWalletBalance = (address: string | null) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>([])
   const dispatch = useDispatch()
   const [isLoading, setIsLoading] = useState(false)
+  const { data } = useBalance({
+    address: address as `0x${string}`,
+  })
 
   const refreshBalance = async () => {
     if (!address) {
@@ -57,23 +59,15 @@ export const useFetchWalletBalance = (address: string | null) => {
     setIsLoading(true)
 
     try {
-      const maticBalanceBigNumber = await maticProvider.getBalance({
-        address,
-      })
-      const maticBalance = parseInt(maticBalanceBigNumber, 16) / 10e17
-      const IQBalance = await getUserIQBalance(address)
+      const IQBalance = JSON.parse(config.isProduction)
+        ? await getUserIQBalance(address)
+        : data?.formatted
 
       const balances: WalletBalanceType[] = [
         {
           data: {
-            formatted: IQBalance.toString(),
+            formatted: String(IQBalance),
             symbol: 'IQ',
-          },
-        },
-        {
-          data: {
-            formatted: maticBalance.toString(),
-            symbol: 'MATIC',
           },
         },
       ]

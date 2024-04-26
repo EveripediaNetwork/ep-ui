@@ -35,6 +35,7 @@ import { useAddress } from '@/hooks/useAddress'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
+import { WagmiWrapper } from '../WagmiWrapper'
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -158,7 +159,7 @@ const Navbar = () => {
             </MenuButton>
             <MenuList color="linkColor">
               <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map((langObj) => (
+                {languageData.map(langObj => (
                   <MenuItemOption
                     key={langObj.locale}
                     fontSize="md"
@@ -240,13 +241,15 @@ const Navbar = () => {
           />
         </HStack>
       </Flex>
-      {drawerOperations.isOpen && (
-        <WalletDrawer
-          finalFocusRef={loginButtonRef}
-          setHamburger={setIsHamburgerOpen}
-          toggleOperations={drawerOperations}
-        />
-      )}
+      <WagmiWrapper>
+        {drawerOperations.isOpen && (
+          <WalletDrawer
+            finalFocusRef={loginButtonRef}
+            setHamburger={setIsHamburgerOpen}
+            toggleOperations={drawerOperations}
+          />
+        )}
+      </WagmiWrapper>
       <Collapse
         in={isHamburgerOpen}
         animateOpacity
