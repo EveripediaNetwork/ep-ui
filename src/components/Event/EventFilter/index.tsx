@@ -27,10 +27,20 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
 
   switch (filter.date) {
     case 'Next Week':
-      startDate = dateFormater(today)
-      const nextWeek = new Date(today)
-      nextWeek.setDate(nextWeek.getDate() + 7)
-      endDate = dateFormater(nextWeek)
+      const dayOfWeek = today.getDay()
+      const currentDay = today.getDate()
+
+      // Calculate the next Monday (start of the next week)
+      const daysUntilNextMonday = 8 - dayOfWeek
+      const nextMonday = new Date(today)
+      nextMonday.setDate(currentDay + daysUntilNextMonday)
+
+      // Calculate the Sunday at the end of that next week
+      const nextSunday = new Date(nextMonday)
+      nextSunday.setDate(nextMonday.getDate() + 6)
+
+      startDate = dateFormater(nextMonday)
+      endDate = dateFormater(nextSunday)
       break
     case 'Next Month':
       const firstDayNextMonth = new Date(
