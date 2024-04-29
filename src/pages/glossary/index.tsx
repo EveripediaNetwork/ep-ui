@@ -1,4 +1,4 @@
-import { Stack, Box, VStack, Grid } from '@chakra-ui/react'
+import { Stack, Box, VStack } from '@chakra-ui/react'
 import { GetStaticProps, NextPage } from 'next'
 import React, { useState } from 'react'
 import { glossaryAlphabetsData } from '@/data/GlossaryAlphabetsData'
@@ -7,10 +7,10 @@ import { useGetGlossaryTagWikisQuery } from '@/services/glossary'
 import { useInView } from 'react-intersection-observer'
 import { Wiki } from '@everipedia/iq-utils'
 import GlossaryHero from '@/components/Glossary/GlossaryHero'
-import GlossaryAlphabets from '@/components/Glossary/GlossaryAlphabets'
 import GlossaryIconButton from '@/components/Glossary/GlossaryIconButton'
 import GlossaryFilterSection from '@/components/Glossary/GlossaryFilterSection'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import GlossaryAlphabetSection from '@/components/Glossary/GlossaryAlphabetSection'
 interface GlossaryData {
   offset: number
   wikis: Wiki[]
@@ -105,43 +105,11 @@ const Glossary: NextPage = () => {
           position={shouldBeFixed ? 'fixed' : 'relative'}
           zIndex="sticky"
         >
-          <Box
-            backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
-            _dark={{
-              bg: `${shouldBeFixed ? 'gray.800' : ''} `,
-            }}
-          >
-            <Box
-              backgroundColor={shouldBeFixed ? 'blogPageBg' : ''}
-              _dark={{
-                bg: `${shouldBeFixed ? 'gray.700' : ''} `,
-              }}
-            >
-              <Box
-                w={shouldBeFixed ? 'min(90%, 1100px)' : ''}
-                mx={shouldBeFixed ? 'auto' : ''}
-              >
-                <Grid
-                  templateColumns={{
-                    base: 'repeat(9,1fr)',
-                    md: 'repeat(20,1fr)',
-                    lg: 'repeat(27,1fr)',
-                  }}
-                  gap={3}
-                  py={{ base: '4' }}
-                >
-                  {glossaryAlphabetsData.map((item, i) => (
-                    <GlossaryAlphabets
-                      key={i}
-                      item={item}
-                      heightOfElement={heightOfElement}
-                      shouldBeFixed={shouldBeFixed}
-                    />
-                  ))}
-                </Grid>
-              </Box>
-            </Box>
-          </Box>
+          <GlossaryAlphabetSection
+            shouldBeFixed={shouldBeFixed}
+            heightOfElement={heightOfElement}
+            showAlphabetBlock={!isVisible && !shouldBeFixed}
+          />
           {!shouldBeFixed ? (
             <GlossaryFilterSection
               setSearchText={setSearchText}
@@ -154,14 +122,21 @@ const Glossary: NextPage = () => {
           ) : (
             <>
               {isVisible && (
-                <GlossaryFilterSection
-                  setSearchText={setSearchText}
-                  shouldBeFixed={shouldBeFixed}
-                  searchText={searchText}
-                  searchPage={searchPage}
-                  activeIndex={searchText === '' ? undefined : activeIndex}
-                  setActiveIndex={setActiveIndex}
-                />
+                <>
+                  <GlossaryAlphabetSection
+                    shouldBeFixed={shouldBeFixed}
+                    heightOfElement={heightOfElement}
+                    showAlphabetBlock={isVisible}
+                  />
+                  <GlossaryFilterSection
+                    setSearchText={setSearchText}
+                    shouldBeFixed={shouldBeFixed}
+                    searchText={searchText}
+                    searchPage={searchPage}
+                    activeIndex={searchText === '' ? undefined : activeIndex}
+                    setActiveIndex={setActiveIndex}
+                  />
+                </>
               )}
               <GlossaryIconButton
                 isVisible={isVisible}
