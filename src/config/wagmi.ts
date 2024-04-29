@@ -57,7 +57,7 @@ export const wagmiConfig = createConfig({
         magicSdkConfiguration: {
           network: {
             rpcUrl: JSON.parse(config.isProduction)
-              ? `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`
+              ? `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
               : iqChain.rpcUrls.default.http[0],
             chainId: Number(config.chainId),
           },
