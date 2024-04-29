@@ -20,12 +20,12 @@ const EventDetailsPage = ({
   event,
   slug,
   popularEvents,
-  country_name,
+  countryName,
 }: {
   event: Wiki
   slug: string
   popularEvents: TEvents[]
-  country_name: string
+  countryName: string
 }) => {
   const referencesRaw =
     getWikiMetadataById(event, CommonMetaIds.REFERENCES)?.value ?? '[]'
@@ -70,7 +70,7 @@ const EventDetailsPage = ({
               )}
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter countryName={country_name} />
+              <NearbyEventFilter countryName={countryName} />
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
@@ -136,7 +136,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     props: {
       event: eventDetails,
       popularEvents: popularEvents?.slice(0, 5) || [],
-      country_name,
+      countryName: country_name,
       slug,
       ...props,
     },
