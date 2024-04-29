@@ -107,7 +107,6 @@ const Glossary: NextPage = () => {
         >
           <Box
             backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
-            py={{ base: '4', lg: '0' }}
             _dark={{
               bg: `${shouldBeFixed ? 'gray.800' : ''} `,
             }}
