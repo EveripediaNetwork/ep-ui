@@ -9,10 +9,10 @@ export type Network = {
 export const Networks: Network[] = [
   {
     id: 1,
-    image: '/images/logos/polygon.svg',
-    name: 'Polygon',
+    image: '/images/logos/braindao-logo.svg',
+    name: 'IQ',
     isActive: true,
-    chainId: '0x13881',
+    chainId: '0x333133333737',
   },
   {
     id: 2,

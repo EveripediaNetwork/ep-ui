@@ -36,7 +36,9 @@ const NetworkMenu = () => {
         fontSize="md"
         fontWeight={600}
         variant="outline"
-        leftIcon={<Image src={currentNetwork.image} />}
+        leftIcon={
+          <Image src={currentNetwork.image} w={6} h={6} borderRadius="full" />
+        }
         rightIcon={<ChevronDownIcon />}
       >
         <Text fontSize="sm"> {currentNetwork.name} </Text>
@@ -52,6 +54,8 @@ const NetworkMenu = () => {
               >
                 <Image
                   boxSize="24px"
+                  w={6}
+                  h={6}
                   borderRadius="full"
                   src={network.image}
                   alt={network.name}
