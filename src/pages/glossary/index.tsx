@@ -105,11 +105,18 @@ const Glossary: NextPage = () => {
           position={shouldBeFixed ? 'fixed' : 'relative'}
           zIndex="sticky"
         >
-          <GlossaryAlphabetSection
-            shouldBeFixed={shouldBeFixed}
-            heightOfElement={heightOfElement}
-            showAlphabetBlock={!isVisible && !shouldBeFixed}
-          />
+          <Box
+            backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
+            _dark={{
+              bg: `${shouldBeFixed ? 'gray.800' : ''} `,
+            }}
+            display={{ base: shouldBeFixed ? 'none' : 'block', md: 'block' }}
+          >
+            <GlossaryAlphabetSection
+              shouldBeFixed={shouldBeFixed}
+              heightOfElement={heightOfElement}
+            />
+          </Box>
           {!shouldBeFixed ? (
             <GlossaryFilterSection
               setSearchText={setSearchText}
@@ -123,11 +130,18 @@ const Glossary: NextPage = () => {
             <>
               {isVisible && (
                 <>
-                  <GlossaryAlphabetSection
-                    shouldBeFixed={shouldBeFixed}
-                    heightOfElement={heightOfElement}
-                    showAlphabetBlock={isVisible}
-                  />
+                  <Box
+                    backgroundColor={shouldBeFixed ? '#F9FAFB' : ''}
+                    _dark={{
+                      bg: `${shouldBeFixed ? 'gray.800' : ''} `,
+                    }}
+                    display={{ base: 'block', md: 'none' }}
+                  >
+                    <GlossaryAlphabetSection
+                      shouldBeFixed={shouldBeFixed}
+                      heightOfElement={heightOfElement}
+                    />
+                  </Box>
                   <GlossaryFilterSection
                     setSearchText={setSearchText}
                     shouldBeFixed={shouldBeFixed}
