@@ -40,11 +40,6 @@ const LocationInput = () => {
   const handleAddLocation = () => {
     if (selectRegion === '' && value === '' && selectMonth === '') return
 
-    console.log({
-      year: selectMonth,
-      continent: selectRegion,
-      country: value,
-    })
     dispatch({
       type: 'wiki/updateMetadata',
       payload: {

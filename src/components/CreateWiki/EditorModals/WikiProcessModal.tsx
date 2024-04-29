@@ -40,8 +40,6 @@ const WikiProcessModal = (props: WikiProcessType) => {
   ]
   if (!isOpen) return null
 
-  console.log({ state, activeStep })
-
   return (
     <>
       <AlertDialog
