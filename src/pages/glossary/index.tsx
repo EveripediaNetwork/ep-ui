@@ -101,7 +101,7 @@ const Glossary: NextPage = () => {
           flexDirection="column"
           w="full"
           justifyContent="center"
-          top={shouldBeFixed ? '14' : '0'}
+          top={shouldBeFixed ? '70px' : '0'}
           position={shouldBeFixed ? 'fixed' : 'relative'}
           zIndex="sticky"
         >
@@ -129,7 +129,7 @@ const Glossary: NextPage = () => {
                     lg: 'repeat(27,1fr)',
                   }}
                   gap={3}
-                  py={{ base: '4', lg: '8' }}
+                  py={{ base: '4' }}
                 >
                   {glossaryAlphabetsData.map((item, i) => (
                     <GlossaryAlphabets
