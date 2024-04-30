@@ -55,9 +55,7 @@ const EventSearchBar = ({
     return uniqueResults
   }
 
-  // This effect will run when the component mounts and anytime router.query changes.
   useEffect(() => {
-    // If query parameters exist, perform the search.
     const query = router.query
     if (query.title || query.startDate || query.endDate) {
       setSearchActive(true)
@@ -126,7 +124,6 @@ const EventSearchBar = ({
   }
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    // Your logic here, e.g., logging the input's new value
     setSearchQuery(event.target.value)
   }
 
