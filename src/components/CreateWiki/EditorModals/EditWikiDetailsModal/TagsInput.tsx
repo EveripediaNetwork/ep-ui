@@ -16,13 +16,13 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
   const { t } = useTranslation('wiki')
   const dispatch = useAppDispatch()
   const [value, setValue] = useState<TagValue>(
-    wiki.tags.map((ta) => ({ label: ta.id, value: ta.id })),
+    wiki.tags.map(ta => ({ label: ta.id, value: ta.id })),
   )
   const handleOnchange = (item: TagValue) => {
     setValue(item)
     dispatch({
       type: 'wiki/setTags',
-      payload: item.map((ta) => ({ id: ta.value })),
+      payload: item.map(ta => ({ id: ta.value })),
     })
   }
 
@@ -46,13 +46,13 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
           variant="unstyled"
           isMulti
           size="sm"
-          options={TagsSuggestions.map((suggestion) => {
+          options={TagsSuggestions.map(suggestion => {
             return { value: suggestion.value, label: t(suggestion.label) }
           })}
-          onChange={(item) => handleOnchange(item)}
-          defaultValue={wiki.tags.map((ta) => ({
-            label: ta.id,
-            value: ta.id,
+          onChange={item => handleOnchange(item)}
+          defaultValue={wiki.tags.map(tag => ({
+            label: tag.id,
+            value: tag.id,
           }))}
         />
       </chakra.div>
