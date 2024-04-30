@@ -20,11 +20,11 @@ import { useRouter } from 'next/router'
 const EventPage = ({
   events,
   popularEvents,
-  country_name,
+  countryName,
 }: {
   events: TEvents[]
   popularEvents: TEvents[]
-  country_name: string
+  countryName: string
 }) => {
   const [eventData, setEventData] = useState<TEvents[]>(events)
   const [searchActive, setSearchActive] = useState(false)
@@ -92,7 +92,7 @@ const EventPage = ({
               />
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter countryName={country_name} />
+              <NearbyEventFilter countryName={countryName} />
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
@@ -136,7 +136,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
       ...(await serverSideTranslations(locale ?? 'en', ['event', 'common'])),
       events: events ?? [],
       popularEvents: popularEvents?.slice(0, 5) || [],
-      country_name,
+      countryName: country_name,
     },
   }
 }

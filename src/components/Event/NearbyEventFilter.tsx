@@ -2,9 +2,13 @@ import { useGetEventByLocationQuery } from '@/services/event'
 import { CommonMetaIds } from '@everipedia/iq-utils'
 import { RiEmotionSadLine } from 'react-icons/ri'
 import EventItem from './EventItem'
+import { dateFormater } from '@/lib/utils'
 
 const NearbyEventFilter = ({ countryName }: { countryName: string }) => {
-  const { data } = useGetEventByLocationQuery({ location: countryName })
+  const { data } = useGetEventByLocationQuery({
+    location: countryName,
+    startDate: dateFormater(new Date()),
+  })
 
   return (
     <div className="">
