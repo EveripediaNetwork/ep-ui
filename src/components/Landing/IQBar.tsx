@@ -176,7 +176,7 @@ export const IQBar = () => {
           <Link
             href="https://coinmarketcap.com/currencies/iq/"
             target="_blank"
-            rel="nofollow"
+            rel="noopener nofollow"
             onClick={() =>
               logEvent({
                 category: 'Home',
@@ -216,7 +216,7 @@ export const IQBar = () => {
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
               target="_blank"
-              rel="nofollow"
+              rel="noopener nofollow"
               onClick={() =>
                 logEvent({
                   category: 'Home',
@@ -245,7 +245,7 @@ export const IQBar = () => {
             <Link
               href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
               target="_blank"
-              rel="nofollow"
+              rel="noopener nofollow"
               onClick={() =>
                 logEvent({
                   category: 'Home',
@@ -273,7 +273,7 @@ export const IQBar = () => {
             />
             <Link
               target="_blank"
-              rel="nofollow"
+              rel="noopener nofollow"
               href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
               onClick={() =>
                 logEvent({
@@ -303,7 +303,7 @@ export const IQBar = () => {
             <Link
               href="https://frax.finance/"
               target="_blank"
-              rel="nofollow"
+              rel="noopener nofollow"
               onClick={() =>
                 logEvent({
                   category: 'Home',
