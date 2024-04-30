@@ -5,6 +5,7 @@ import { HYDRATE } from 'next-redux-wrapper'
 import {
   GET_EVENTS,
   GET_EVENTS_BY_BLOCKCHAIN,
+  GET_EVENTS_BY_LOCATION,
   GET_EVENTS_BY_TAGS,
   GET_EVENT_BY_TITLE,
   GET_POPULAR_EVENTS,
@@ -48,6 +49,12 @@ type TEventByBlockchainArg = {
   endDate?: string
 }
 
+type TEventByLocationArg = {
+  location: string
+  startDate?: string
+  endDate?: string
+}
+
 type TGetEventResponse = {
   events: TEvents[]
 }
@@ -61,6 +68,10 @@ type TGetWikiByEventResponse = {
 }
 type TEventByBlockchain = {
   eventsByBlockchain: TEvents[]
+}
+
+type TEventByLocation = {
+  eventsByLocation: TEvents[]
 }
 
 type TEventSearch = {
@@ -97,8 +108,11 @@ export const eventApi = createApi({
       }),
       transformResponse: (response: TGetEventResponse) => response.events,
     }),
-    getPopularEvents: builder.query<TEvents[], void>({
-      query: () => ({ document: GET_POPULAR_EVENTS }),
+    getPopularEvents: builder.query<TEvents[], { startDate?: string }>({
+      query: ({ startDate }) => ({
+        document: GET_POPULAR_EVENTS,
+        variables: { startDate },
+      }),
       transformResponse: (response: TGetPopularEventResponse) =>
         response.popularEvents,
     }),
@@ -122,6 +136,16 @@ export const eventApi = createApi({
       transformResponse: (response: TEventByBlockchain) =>
         response.eventsByBlockchain,
     }),
+    getEventByLocation: builder.query<TEvents[], TEventByLocationArg>({
+      query: ({ location, startDate, endDate }: TEventByLocationArg) => {
+        return {
+          document: GET_EVENTS_BY_LOCATION,
+          variables: { country: location, startDate, endDate },
+        }
+      },
+      transformResponse: (response: TEventByLocation) =>
+        response.eventsByLocation,
+    }),
   }),
 })
 
@@ -131,6 +155,7 @@ export const {
   useGetEventByTitleQuery,
   useGetEventByBlockchainQuery,
   useGetEventsByTagsQuery,
+  useGetEventByLocationQuery,
 } = eventApi
 
 export const {
@@ -139,4 +164,5 @@ export const {
   getEventByTitle,
   getEventByBlockchain,
   getEventsByTags,
+  getEventByLocation,
 } = eventApi.endpoints

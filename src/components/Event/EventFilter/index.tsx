@@ -6,6 +6,7 @@ import { DateRange } from 'react-day-picker'
 import { TEvents } from '@/services/event'
 import {
   fetchEventByBlockchain,
+  fetchEventByLocation,
   fetchFilteredEventList,
 } from '@/services/search/utils'
 import { dateFormater } from '@/lib/utils'
@@ -21,15 +22,25 @@ const defaultFilters: Filters = {
 
 const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   const today = new Date()
-  let startDate
+  let startDate = dateFormater(today)
   let endDate
 
   switch (filter.date) {
     case 'Next Week':
-      startDate = dateFormater(today)
-      const nextWeek = new Date(today)
-      nextWeek.setDate(nextWeek.getDate() + 7)
-      endDate = dateFormater(nextWeek)
+      const dayOfWeek = today.getDay()
+      const currentDay = today.getDate()
+
+      // Calculate the next Monday (start of the next week)
+      const daysUntilNextMonday = 8 - dayOfWeek
+      const nextMonday = new Date(today)
+      nextMonday.setDate(currentDay + daysUntilNextMonday)
+
+      // Calculate the Sunday at the end of that next week
+      const nextSunday = new Date(nextMonday)
+      nextSunday.setDate(nextMonday.getDate() + 6)
+
+      startDate = dateFormater(nextMonday)
+      endDate = dateFormater(nextSunday)
       break
     case 'Next Month':
       const firstDayNextMonth = new Date(
@@ -46,7 +57,7 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
       )
       endDate = dateFormater(lastDayNextMonth)
       break
-    default:
+    case 'Custom Range':
       if (dateRange?.from && dateRange?.to) {
         startDate = dateFormater(dateRange.from)
         endDate = dateFormater(dateRange.to)
@@ -54,12 +65,15 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
         endDate = undefined
       }
       break
+    default:
   }
 
   if (filter.eventType.length > 0) {
     return fetchFilteredEventList(filter.eventType, startDate, endDate)
   } else if (filter.blockchain) {
     return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
+  } else if (filter.location) {
+    return fetchEventByLocation(filter.location, startDate, endDate)
   } else {
     return fetchFilteredEventList([], startDate, endDate)
   }
@@ -84,7 +98,6 @@ const EventFilter = ({
     const activeFilters = filterKeys.filter((key) =>
       key === 'eventType' ? filters[key].length > 0 : filters[key],
     )
-
     if (activeFilters.length > 0) {
       setIsLoading(true)
       try {
@@ -94,6 +107,8 @@ const EventFilter = ({
               case 'eventType':
                 return handleFilter(filters, dateRange)
               case 'blockchain':
+                return handleFilter(filters, dateRange)
+              case 'location':
                 return handleFilter(filters, dateRange)
               case 'date':
                 return handleFilter(filters, dateRange)
@@ -116,7 +131,10 @@ const EventFilter = ({
         setIsLoading(false)
       }
     } else {
-      setEventData(fetchedData)
+      const interestQuery = { ...router.query }
+      if (!interestQuery.tags) {
+        setEventData(fetchedData)
+      }
     }
   }
 
@@ -163,7 +181,7 @@ const EventFilter = ({
 
   useEffect(() => {
     aggregateResults(filters)
-  }, [filters, dateRange, fetchedData])
+  }, [filters, dateRange])
 
   useEffect(() => {
     const updatedFilters: Filters = { ...defaultFilters }
@@ -176,7 +194,7 @@ const EventFilter = ({
           updatedFilters[key] =
             typeof queryParam === 'string' ? queryParam.split(',') : queryParam
         } else if (typeof queryParam === 'string') {
-          if (key === 'date' || key === 'blockchain') {
+          if (key === 'date' || key === 'blockchain' || key === 'location') {
             updatedFilters[key] = queryParam
           }
         }

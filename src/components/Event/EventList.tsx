@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import EventCard from './EventCard'
-import { groupEventsByMonth } from '@/lib/utils'
+import { dateFormater, groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
 import SuggestEventModal from './SuggestEventModal'
 import { TEvents, getEvents } from '@/services/event'
@@ -36,7 +36,13 @@ const EventList = ({
     setIsFetching(true)
     setOffset((prevOffset) => prevOffset + limit) // Increase offset to fetch next set of events
     store
-      .dispatch(getEvents.initiate({ offset: offset, limit }))
+      .dispatch(
+        getEvents.initiate({
+          offset: offset,
+          limit,
+          startDate: dateFormater(new Date()),
+        }),
+      )
       .then(({ data }) => {
         if (data) {
           if (data.length > 0) {

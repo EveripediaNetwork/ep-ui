@@ -1,4 +1,9 @@
-import { RiBankFill, RiCalendarEventFill, RiScan2Fill } from 'react-icons/ri'
+import {
+  RiBankFill,
+  RiCalendarEventFill,
+  RiMapPinRangeFill,
+  RiScan2Fill,
+} from 'react-icons/ri'
 
 export interface IEventData {
   id: number
@@ -22,7 +27,7 @@ export const EventInterestData = [
   'Festival',
   'Forum',
   'Games',
-  'Hackaton',
+  'Hackathon',
   'Bitcoin',
   'AI',
   'DEXes',
@@ -430,18 +435,18 @@ export const eventFilterData = [
     title: 'Date',
     filter: ['Next Week', 'Next Month', 'Custom Range'],
   },
-  // {
-  //   icon: <RiMapPinRangeFill />,
-  //   title: 'Location',
-  //   filter: [
-  //     'Asia',
-  //     'Africa',
-  //     'Europe',
-  //     'North America',
-  //     'South America',
-  //     'Austria/Ocenia',
-  //   ],
-  // },
+  {
+    icon: <RiMapPinRangeFill />,
+    title: 'Location',
+    filter: [
+      'Asia',
+      'Africa',
+      'Europe',
+      'North America',
+      'South America',
+      'Australia',
+    ],
+  },
   {
     icon: <RiScan2Fill />,
     title: 'Event Type',
