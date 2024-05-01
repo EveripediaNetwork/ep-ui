@@ -109,13 +109,14 @@ const BrandingPage = () => {
             top={{ base: '-100px', xl: '-150px', '2xl': '-180px' }}
             justify={'center'}
             align={'center'}
-            bgColor={'aboutIqgptInfoBg'}
+            bgColor="brand.50"
             rounded={'12px'}
             textAlign={'center'}
             h={{ xl: '356px' }}
             py={{ base: 5, lg: '50px' }}
             px={{ base: 5, xl: '80px' }}
             mx={'auto'}
+            _dark={{ bgColor: 'brand.200' }}
           >
             <Text fontSize={{ lg: '20px', xl: 24 }} color={'gray.800'}>
               {t('brandingParagraph1')}
