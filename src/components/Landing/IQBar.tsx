@@ -9,7 +9,6 @@ import {
   Button,
   IconButton,
 } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import OneinchIcon from '../Icons/oneInch'
 import BinanceIcon from '../Icons/binance'
 import UpbitIcon from '../Icons/upbit'
@@ -103,7 +102,7 @@ export const IQBar = () => {
               </Flex>
             </Flex>
           </Box>
-          <NextLink
+          <Link
             href="https://iq.braindao.org/dashboard"
             onClick={() =>
               logEvent({
@@ -126,7 +125,7 @@ export const IQBar = () => {
             >
               <Logo boxSize="2em" />
             </Button>
-          </NextLink>
+          </Link>
         </HStack>
         <HStack
           minW={{ base: 'min(80vw, 360px)', md: '320px', xl: '255px' }}
@@ -215,6 +214,7 @@ export const IQBar = () => {
           <Flex alignItems="center" justifyContent="center" mt={2}>
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
+              isExternal
               target="_blank"
               rel="noopener nofollow"
               onClick={() =>
@@ -244,6 +244,7 @@ export const IQBar = () => {
             />
             <Link
               href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
+              isExternal
               target="_blank"
               rel="noopener nofollow"
               onClick={() =>
@@ -272,6 +273,7 @@ export const IQBar = () => {
               _dark={{ borderColor: 'whiteAlpha.400' }}
             />
             <Link
+              isExternal
               target="_blank"
               rel="noopener nofollow"
               href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
@@ -302,6 +304,7 @@ export const IQBar = () => {
             />
             <Link
               href="https://frax.finance/"
+              isExternal
               target="_blank"
               rel="noopener nofollow"
               onClick={() =>
