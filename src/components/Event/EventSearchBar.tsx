@@ -1,10 +1,19 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
-import { getEventByTitle } from '@/services/event'
+import { getEventByLocation, getEventByTitle } from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
-import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
+import {
+  ActiveModifiers,
+  DateRange,
+  SelectRangeEventHandler,
+} from 'react-day-picker'
+import { useRouter } from 'next/router'
+
+type TQuerySearch = {
+  arg: { title: string; startDate?: string; endDate?: string }
+}
 
 const EventSearchBar = ({
   setEventData,
@@ -23,31 +32,98 @@ const EventSearchBar = ({
   searchQuery: string
   setSearchQuery: Function
 }) => {
+  const router = useRouter()
+
+  const fetchEventSearch = async ({ arg }: TQuerySearch) => {
+    const { data } = await store.dispatch(getEventByTitle.initiate(arg))
+    const { data: locationData } = await store.dispatch(
+      getEventByLocation.initiate({
+        location: arg.title,
+        startDate: arg.startDate,
+        endDate: arg.endDate,
+      }),
+    )
+
+    const mergedResults = [...(data || []), ...(locationData || [])]
+
+    const uniqueResults = Array.from(
+      new Set(mergedResults.map((event) => event.id)),
+    ).map((id) => {
+      return mergedResults.find((event) => event.id === id)!
+    })
+
+    return uniqueResults
+  }
+
+  useEffect(() => {
+    const query = router.query
+    if (query.title || query.startDate || query.endDate) {
+      setSearchActive(true)
+      const arg = {
+        title: (query.title as string) || '',
+        startDate: (query.startDate as string) || undefined,
+        endDate: (query.endDate as string) || undefined,
+      }
+
+      const activeModifiers: ActiveModifiers = {} // assuming this is the correct type
+      const mouseEvent = {} as React.MouseEvent<Element, MouseEvent> //
+      if (query.title) setSearchQuery(query.title)
+      if (query.startDate) {
+        const startDate = new Date(query.startDate as string)
+        setSearchDate(
+          { from: startDate, to: undefined },
+          startDate,
+          activeModifiers,
+          mouseEvent,
+        )
+      }
+      if (query.endDate) {
+        const startDate = new Date(query.startDate as string)
+        const endDate = new Date(query.endDate as string)
+        setSearchDate(
+          { from: startDate, to: endDate },
+          startDate,
+          activeModifiers,
+          mouseEvent,
+        )
+      }
+
+      setIsLoading(true)
+      fetchEventSearch({ arg })
+        .then((response) => {
+          setEventData(response)
+        })
+        .catch((err) => console.error(err))
+        .finally(() => setIsLoading(false))
+    }
+  }, [router.query])
+
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
     setSearchActive(true)
 
-    const arg: { title: string; startDate?: string; endDate?: string } = {
-      title: searchQuery,
-    }
-    if (searchDate?.from || searchDate?.to) {
-      arg.startDate = searchDate?.from && dateFormater(searchDate.from)
-      arg.endDate = searchDate?.to && dateFormater(searchDate.to)
-    }
-    setIsLoading(true)
-    store
-      .dispatch(getEventByTitle.initiate(arg))
-      .then((response) => {
-        if (response.data) {
-          setEventData(response.data)
-        } else if (response.error) console.error(response.error)
-      })
-      .catch((err) => console.error(err))
-      .finally(() => setIsLoading(false))
+    const queryParams: {
+      title?: string
+      startDate?: string
+      endDate?: string
+    } = {}
+
+    if (searchQuery) queryParams.title = searchQuery
+    if (searchDate?.from) queryParams.startDate = dateFormater(searchDate.from)
+    if (searchDate?.to) queryParams.endDate = dateFormater(searchDate.to)
+
+    // Update the URL query parameters.
+    router.push(
+      {
+        pathname: router.pathname,
+        query: queryParams,
+      },
+      undefined,
+      { shallow: true },
+    )
   }
 
   const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
-    // Your logic here, e.g., logging the input's new value
     setSearchQuery(event.target.value)
   }
 

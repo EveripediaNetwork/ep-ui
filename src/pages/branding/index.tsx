@@ -69,11 +69,15 @@ const BrandingPage = () => {
           align={'center'}
           objectFit="cover"
           textAlign={'center'}
-          bgColor="careersBackground"
+          bgColor={'gray.50'}
           px={5}
-          backgroundImage="/images/backgrounds/homepage-bg-white.png"
+          backgroundImage="/images/backgrounds/ranking-bg-light.png"
+          backgroundSize="cover"
+          borderBottom="1px solid #E2E8F0"
           _dark={{
+            bgColor: 'whiteAlpha.50',
             backgroundImage: '/images/backgrounds/careers-background-dark.png',
+            borderBottom: 'none',
           }}
           pb={{ base: '50px', lg: '100px', xl: 180 }}
         >
@@ -109,13 +113,14 @@ const BrandingPage = () => {
             top={{ base: '-100px', xl: '-150px', '2xl': '-180px' }}
             justify={'center'}
             align={'center'}
-            bgColor={'aboutIqgptInfoBg'}
+            bgColor="brand.50"
             rounded={'12px'}
             textAlign={'center'}
             h={{ xl: '356px' }}
             py={{ base: 5, lg: '50px' }}
             px={{ base: 5, xl: '80px' }}
             mx={'auto'}
+            _dark={{ bgColor: 'brand.200' }}
           >
             <Text fontSize={{ lg: '20px', xl: 24 }} color={'gray.800'}>
               {t('brandingParagraph1')}

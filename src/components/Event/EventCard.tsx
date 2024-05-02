@@ -47,7 +47,13 @@ const EventCard = ({
   isLoading,
 }: TEventDetails) => {
   const locationMeta = location?.find((m) => m.id === CommonMetaIds.LOCATION)
-  const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
+  const parsedLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
+  const eventLocation = Array.isArray(parsedLocation)
+    ? parsedLocation.find(
+        (item) =>
+          new Date(item?.year).getFullYear() === new Date().getFullYear(),
+      )
+    : parsedLocation
   return (
     <div className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
@@ -56,12 +62,12 @@ const EventCard = ({
       {isLoading ? (
         <LoadingEventState />
       ) : (
-        <div className="border border-gray200 dark:border-alpha-300 group cursor-pointer bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
+        <div className="border border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
           <div className="flex flex-col flex-1">
             <div className="flex flex-col">
               <Link
                 href={`/events/${id}`}
-                className="font-semibold text-sm dark:text-alpha-900 w-fit group-hover:underline text-gray800"
+                className="font-semibold text-sm dark:text-alpha-900 w-fit hover:underline text-gray800"
               >
                 {title}
               </Link>

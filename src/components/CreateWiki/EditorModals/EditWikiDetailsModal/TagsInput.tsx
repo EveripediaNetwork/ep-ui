@@ -50,9 +50,9 @@ const TagsInput = ({ wiki }: { wiki: Wiki }) => {
             return { value: suggestion.value, label: t(suggestion.label) }
           })}
           onChange={(item) => handleOnchange(item)}
-          defaultValue={wiki.tags.map((ta) => ({
-            label: ta.id,
-            value: ta.id,
+          defaultValue={wiki.tags.map((tag) => ({
+            label: tag.id,
+            value: tag.id,
           }))}
         />
       </chakra.div>

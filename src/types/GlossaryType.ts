@@ -6,6 +6,12 @@ export type GlossaryAlphabetsProps = {
   item: string
 }
 
+export type GlossaryAlphabetsSectionProps = {
+  shouldBeFixed: boolean
+  heightOfElement: number
+  showAlphabetBlock?: boolean
+}
+
 export type GlossaryFilterSectionProps = {
   searchText: string
   searchPage: (value: string) => void

@@ -47,7 +47,6 @@ const EventInterest = ({
         undefined,
         { shallow: true },
       )
-
       return updatedTags
     })
   }

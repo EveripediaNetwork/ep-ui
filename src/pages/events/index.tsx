@@ -13,28 +13,34 @@ import { TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
-// import { dateFormater } from '@/lib/utils'
 import { DateRange } from 'react-day-picker'
 import { dateFormater } from '@/lib/utils'
+import { useRouter } from 'next/router'
 
 const EventPage = ({
   events,
   popularEvents,
+  countryName,
 }: {
   events: TEvents[]
   popularEvents: TEvents[]
+  countryName: string
 }) => {
   const [eventData, setEventData] = useState<TEvents[]>(events)
   const [searchActive, setSearchActive] = useState(false)
   const [isLoading, setIsLoading] = useState(false)
   const [searchDate, setSearchDate] = useState<DateRange>()
   const [searchQuery, setSearchQuery] = useState<string>('')
+  const router = useRouter()
 
   const clearSearchState = () => {
     setEventData(events)
     setSearchActive(false)
     setSearchDate(undefined)
     setSearchQuery('')
+    router.push({ pathname: router.pathname }, undefined, {
+      shallow: true,
+    })
   }
 
   return (
@@ -86,7 +92,7 @@ const EventPage = ({
               />
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter />
+              <NearbyEventFilter countryName={countryName} />
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
@@ -107,14 +113,30 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     }),
   )
 
+  let country_name = ''
+  try {
+    const response = await fetch('https://ipapi.co/json/')
+    if (response.ok) {
+      const jsonData = await response.json()
+      country_name = jsonData.country_name
+    } else {
+      console.error('Failed to fetch country name:', response.status)
+    }
+  } catch (error) {
+    console.error('Error fetching the country name:', error)
+  }
+
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate(),
+    getPopularEvents.initiate({
+      startDate: dateFormater(new Date()),
+    }),
   )
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['event', 'common'])),
       events: events ?? [],
       popularEvents: popularEvents?.slice(0, 5) || [],
+      countryName: country_name,
     },
   }
 }

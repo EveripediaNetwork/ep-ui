@@ -52,6 +52,10 @@ export const TagsSuggestions = [
     value: 'Events',
   },
   {
+    label: 'Forum',
+    value: 'Forum',
+  },
+  {
     label: 'Founders',
     value: 'Founders',
   },

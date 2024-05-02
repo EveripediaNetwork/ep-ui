@@ -11,7 +11,11 @@ import { debounce } from 'debounce'
 
 import { useEffect, useState } from 'react'
 import { logEvent } from '@/utils/googleAnalytics'
-import { getEventByBlockchain, getEventsByTags } from '../event'
+import {
+  getEventByBlockchain,
+  getEventByLocation,
+  getEventsByTags,
+} from '../event'
 
 export type Account = {
   id: string
@@ -62,6 +66,17 @@ export const fetchEventByBlockchain = async (
 ) => {
   const { data } = await store.dispatch(
     getEventByBlockchain.initiate({ blockchain, startDate, endDate }),
+  )
+  return data
+}
+
+export const fetchEventByLocation = async (
+  location: string,
+  startDate?: string,
+  endDate?: string,
+) => {
+  const { data } = await store.dispatch(
+    getEventByLocation.initiate({ location, startDate, endDate }),
   )
   return data
 }
