@@ -5,7 +5,7 @@ import { env } from '@/env.mjs'
 import { updateWalletDetails } from '@/store/slices/user-slice'
 import { useDispatch } from 'react-redux'
 import config from '@/config'
-import { useBalance } from 'wagmi'
+import { useAccount, useBalance } from 'wagmi'
 
 export const getUserIQBalance = async (userAddress: string) => {
   try {
@@ -42,13 +42,14 @@ export const getUserIQBalance = async (userAddress: string) => {
   }
 }
 
-export const useFetchWalletBalance = (address: string | null) => {
+export const useFetchWalletBalance = () => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>([])
   const dispatch = useDispatch()
-  const [isLoading, setIsLoading] = useState(false)
-  const { data } = useBalance({
+  const { address } = useAccount()
+  const { data, isLoading: isBalanceLoading } = useBalance({
     address: address as `0x${string}`,
   })
+  const [isLoading, setIsLoading] = useState(false)
 
   const refreshBalance = async () => {
     if (!address) {
@@ -61,7 +62,7 @@ export const useFetchWalletBalance = (address: string | null) => {
     try {
       const IQBalance = JSON.parse(config.isProduction)
         ? await getUserIQBalance(address)
-        : data?.formatted
+        : data?.formatted || 0
 
       const balances: WalletBalanceType[] = [
         {
@@ -85,5 +86,9 @@ export const useFetchWalletBalance = (address: string | null) => {
     refreshBalance()
   }, [address])
 
-  return { userBalance, refreshBalance, isLoading }
+  return {
+    userBalance,
+    refreshBalance,
+    isLoading: isLoading || isBalanceLoading,
+  }
 }
