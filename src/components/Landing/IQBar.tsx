@@ -104,7 +104,6 @@ export const IQBar = () => {
           </Box>
           <Link
             href="https://iq.braindao.org/dashboard"
-            isExternal
             onClick={() =>
               logEvent({
                 category: 'Home',
@@ -113,6 +112,7 @@ export const IQBar = () => {
                 value: 1,
               })
             }
+            target="_blank"
           >
             <Button
               variant="outline"
@@ -174,7 +174,8 @@ export const IQBar = () => {
           </Box>
           <Link
             href="https://coinmarketcap.com/currencies/iq/"
-            isExternal
+            target="_blank"
+            rel="noopener nofollow"
             onClick={() =>
               logEvent({
                 category: 'Home',
@@ -214,6 +215,8 @@ export const IQBar = () => {
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
               isExternal
+              target="_blank"
+              rel="noopener nofollow"
               onClick={() =>
                 logEvent({
                   category: 'Home',
@@ -242,6 +245,8 @@ export const IQBar = () => {
             <Link
               href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
               isExternal
+              target="_blank"
+              rel="noopener nofollow"
               onClick={() =>
                 logEvent({
                   category: 'Home',
@@ -269,6 +274,8 @@ export const IQBar = () => {
             />
             <Link
               isExternal
+              target="_blank"
+              rel="noopener nofollow"
               href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
               onClick={() =>
                 logEvent({
@@ -298,6 +305,8 @@ export const IQBar = () => {
             <Link
               href="https://frax.finance/"
               isExternal
+              target="_blank"
+              rel="noopener nofollow"
               onClick={() =>
                 logEvent({
                   category: 'Home',
