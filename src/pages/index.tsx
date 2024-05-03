@@ -187,8 +187,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       weekTrendingError,
       monthTrendingError,
     ]
-      .filter(e => e)
-      .map(e => `${e}-${e?.message}`),
+      .filter((e) => e)
+      .map((e) => `${e}-${e?.message}`),
   )
 
   const sortedleaderboards = leaderboard ? sortLeaderboards(leaderboard) : []
