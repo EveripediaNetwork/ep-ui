@@ -158,8 +158,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       todayTrending,
       weekTrending,
       monthTrending,
-    ] = results.map(r => r.data)
-    const errors = results.map(r => r.error).filter(e => e)
+    ] = results.map((r) => r.data)
+    const errors = results.map((r) => r.error).filter((e) => e)
 
     console.log('Retrieved Data', {
       promotedWikis,
@@ -179,7 +179,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     if (errors.length > 0) {
       console.error(
         'Errors encountered:',
-        errors.map(e => `${e}-${e?.message}`),
+        errors.map((e) => `${e}-${e?.message}`),
       )
     }
 
