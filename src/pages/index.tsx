@@ -97,6 +97,10 @@
 //   )
 // }
 
+const Index = () => {
+  return 'Hello'
+}
+
 // export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
 //   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
 //     rangeType: DayRangeType.TODAY,
@@ -241,4 +245,4 @@
 //   }
 // }
 
-// export default Index
+export default Index
