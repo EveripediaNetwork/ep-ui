@@ -73,155 +73,147 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     monthEndDay,
   })
 
-  try {
-    const results = await Promise.all([
-      store.dispatch(getPromotedWikis.initiate()),
-      store.dispatch(getWikis.initiate()),
-      store.dispatch(getLeaderboard.initiate()),
-      store.dispatch(
-        getTags.initiate({
-          startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
-          endDate: Math.floor(Date.now() / 1000),
-        }),
-      ),
-      store.dispatch(
-        getNFTRanking.initiate({
-          kind: 'NFT',
-          limit: RANKING_LIST_LIMIT,
-          offset: 1,
-        }),
-      ),
-      store.dispatch(
-        getTokenRanking.initiate({
-          kind: 'TOKEN',
-          limit: RANKING_LIST_LIMIT,
-          offset: 1,
-        }),
-      ),
-      store.dispatch(
-        getFoundersRanking.initiate({
-          kind: 'TOKEN',
-          limit: RANKING_LIST_LIMIT,
-          offset: 1,
-          founders: true,
-        }),
-      ),
-      store.dispatch(
-        getAiTokenRanking.initiate({
-          kind: 'TOKEN',
-          limit: RANKING_LIST_LIMIT,
-          offset: 1,
-          category: 'AI',
-        }),
-      ),
-      store.dispatch(
-        getStableCoinRanking.initiate({
-          kind: 'TOKEN',
-          limit: RANKING_LIST_LIMIT,
-          offset: 1,
-          category: 'STABLE_COINS',
-        }),
-      ),
-      store.dispatch(
-        getTrendingWikis.initiate({
-          amount: TRENDING_WIKIS_AMOUNT,
-          startDay: todayStartDay,
-          endDay: todayEndDay,
-        }),
-      ),
-      store.dispatch(
-        getTrendingWikis.initiate({
-          amount: TRENDING_WIKIS_AMOUNT,
-          startDay: weekStartDay,
-          endDay: weekEndDay,
-        }),
-      ),
-      store.dispatch(
-        getTrendingWikis.initiate({
-          amount: TRENDING_WIKIS_AMOUNT,
-          startDay: monthStartDay,
-          endDay: monthEndDay,
-        }),
-      ),
-    ])
+  // Initialize an array to store potential errors for frontend handling
+  //@ts-ignore
+  const errors = []
 
-    const [
+  // Helper function to fetch data and handle errors
+  //@ts-ignore
+  const fetchData = async (dispatchFunction, name) => {
+    try {
+      const result = await store.dispatch(dispatchFunction)
+      if (result.error) throw result.error
+      return result.data
+    } catch (error) {
+      //@ts-ignore
+      console.error(`Error fetching ${name}:`, error.message)
+      //@ts-ignore
+      errors.push({ name, message: error.message })
+      return [] // Default empty state for lists, adjust if different data structure is expected
+    }
+  }
+
+  // Perform API calls
+  const promotedWikis = await fetchData(
+    getPromotedWikis.initiate(),
+    'promoted wikis',
+  )
+  const recent = await fetchData(getWikis.initiate(), 'recent wikis')
+  const leaderboard = await fetchData(getLeaderboard.initiate(), 'leaderboard')
+  const tagsData = await fetchData(
+    getTags.initiate({
+      startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
+      endDate: Math.floor(Date.now() / 1000),
+    }),
+    'tags',
+  )
+  const NFTsList = await fetchData(
+    getNFTRanking.initiate({
+      kind: 'NFT',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+    }),
+    'NFT rankings',
+  )
+  const TokensList = await fetchData(
+    getTokenRanking.initiate({
+      kind: 'TOKEN',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+    }),
+    'token rankings',
+  )
+  const foundersData = await fetchData(
+    getFoundersRanking.initiate({
+      kind: 'TOKEN',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+      founders: true,
+    }),
+    'founders rankings',
+  )
+  const aiTokensList = await fetchData(
+    getAiTokenRanking.initiate({
+      kind: 'TOKEN',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+      category: 'AI',
+    }),
+    'AI token rankings',
+  )
+  const stableCoinsList = await fetchData(
+    getStableCoinRanking.initiate({
+      kind: 'TOKEN',
+      limit: RANKING_LIST_LIMIT,
+      offset: 1,
+      category: 'STABLE_COINS',
+    }),
+    'stable coin rankings',
+  )
+  const todayTrending = await fetchData(
+    getTrendingWikis.initiate({
+      amount: TRENDING_WIKIS_AMOUNT,
+      startDay: todayStartDay,
+      endDay: todayEndDay,
+    }),
+    'today trending wikis',
+  )
+  const weekTrending = await fetchData(
+    getTrendingWikis.initiate({
+      amount: TRENDING_WIKIS_AMOUNT,
+      startDay: weekStartDay,
+      endDay: weekEndDay,
+    }),
+    'week trending wikis',
+  )
+  const monthTrending = await fetchData(
+    getTrendingWikis.initiate({
+      amount: TRENDING_WIKIS_AMOUNT,
+      startDay: monthStartDay,
+      endDay: monthEndDay,
+    }),
+    'month trending wikis',
+  )
+
+  // Process data for returning
+  const sortedLeaderboards = leaderboard.length
+    ? sortLeaderboards(leaderboard)
+    : []
+  const rankings = {
+    NFTsListing: NFTsList,
+    aiTokensListing: aiTokensList,
+    TokensListing: TokensList,
+    stableCoinsListing: stableCoinsList,
+    foundersListing: foundersData,
+  }
+  const trending = {
+    todayTrending,
+    weekTrending,
+    monthTrending,
+  }
+
+  // Translation setup, include errors if any
+  const translations = await serverSideTranslations(locale ?? 'en', [
+    'common',
+    'home',
+    'category',
+    'rank',
+    'wiki',
+    'event',
+  ])
+
+  return {
+    props: {
+      ...translations,
       promotedWikis,
       recent,
-      leaderboard,
-      tagsData,
-      NFTsList,
-      TokensList,
-      foundersData,
-      aiTokensList,
-      stableCoinsList,
-      todayTrending,
-      weekTrending,
-      monthTrending,
-    ] = results.map((r) => r.data)
-    const errors = results.map((r) => r.error).filter((e) => e)
-
-    console.log('Retrieved Data', {
-      promotedWikis,
-      recent,
-      leaderboard,
-      tagsData,
-      NFTsList,
-      TokensList,
-      foundersData,
-      aiTokensList,
-      stableCoinsList,
-      todayTrending,
-      weekTrending,
-      monthTrending,
-    })
-
-    if (errors.length > 0) {
-      console.error(
-        'Errors encountered:',
-        errors.map((e) => `${e}-${e?.message}`),
-      )
-    }
-
-    //@ts-ignore
-    const sortedleaderboards = leaderboard ? sortLeaderboards(leaderboard) : []
-    const rankings = {
-      NFTsListing: NFTsList ?? [],
-      aiTokensListing: aiTokensList ?? [],
-      TokensListing: TokensList ?? [],
-      stableCoinsListing: stableCoinsList ?? [],
-      foundersListing: foundersData ?? [],
-    }
-
-    return {
-      props: {
-        ...(await serverSideTranslations(locale ?? 'en', [
-          'common',
-          'home',
-          'category',
-          'rank',
-          'wiki',
-          'event',
-        ])),
-        promotedWikis: promotedWikis ?? [],
-        recentWikis: recent ?? [],
-        popularTags: tagsData ?? [],
-        leaderboards: sortedleaderboards,
-        rankings: rankings,
-        trending: {
-          todayTrending: todayTrending ?? [],
-          weekTrending: weekTrending ?? [],
-          monthTrending: monthTrending ?? [],
-        },
-      },
-    }
-  } catch (error) {
-    console.error('An unexpected error occurred:', error)
-    return {
-      props: {
-        error: 'Failed to load data',
-      },
-    }
+      popularTags: tagsData,
+      leaderboards: sortedLeaderboards,
+      rankings,
+      trending,
+      //@ts-ignore
+      errors: errors.length ? errors : null, // Pass errors to frontend if any
+    },
   }
 }
 
