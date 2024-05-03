@@ -21,7 +21,7 @@ import { Flex } from '@chakra-ui/react'
 //   rankingAPI,
 // } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
-// import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
+import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
 import { GetServerSideProps } from 'next'
 // import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { IQBar } from '@/components/Landing/IQBar'
@@ -62,16 +62,25 @@ const Index = () => {
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
-  //   const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
-  //     rangeType: DayRangeType.TODAY,
-  //   })
-  //   const { startDay: weekStartDay, endDay: weekEndDay } = getDateRange({
-  //     rangeType: DayRangeType.LAST_WEEK,
-  //   })
+  const { startDay: todayStartDay, endDay: todayEndDay } = getDateRange({
+    rangeType: DayRangeType.TODAY,
+  })
+  const { startDay: weekStartDay, endDay: weekEndDay } = getDateRange({
+    rangeType: DayRangeType.LAST_WEEK,
+  })
 
-  //   const { startDay: monthStartDay, endDay: monthEndDay } = getDateRange({
-  //     rangeType: DayRangeType.LAST_MONTH,
-  //   })
+  const { startDay: monthStartDay, endDay: monthEndDay } = getDateRange({
+    rangeType: DayRangeType.LAST_MONTH,
+  })
+
+  console.log({
+    todayStartDay,
+    todayEndDay,
+    weekStartDay,
+    weekEndDay,
+    monthStartDay,
+    monthEndDay,
+  })
 
   //   const { data: promotedWikis, error: promotedWikisError } =
   //     await store.dispatch(getPromotedWikis.initiate())
