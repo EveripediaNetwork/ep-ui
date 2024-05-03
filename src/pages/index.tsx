@@ -39,6 +39,8 @@
 // import EventOverview from '@/components/Landing/EventOverview'
 // import { IQBar } from '@/components/Landing/IQBar'
 
+import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
+
 // const RANKING_LIST_LIMIT = 10
 // const TRENDING_WIKIS_AMOUNT = 5
 
@@ -98,7 +100,7 @@
 // }
 
 const Index = () => {
-  return 'Hello'
+  return <WagmiWrapper>'Hello'</WagmiWrapper>
 }
 
 // export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
