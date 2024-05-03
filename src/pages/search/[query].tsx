@@ -17,6 +17,7 @@ import ActivityCard from '@/components/Activity/ActivityCard'
 import { WikiPreview } from '@everipedia/iq-utils'
 import { Link } from '@/components/Elements'
 import { useRouter } from 'next/router'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface SearchQueryProps {
   query: string
@@ -38,7 +39,7 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
     }
     setIsLoading(true)
     Promise.all([fetchWikisList(query), fetchCategoriesList(query)]).then(
-      (res) => {
+      res => {
         const [wikis = [], categories = []] = res
         if (wikis.length || categories.length) {
           setResults({ wikis, categories })
@@ -51,7 +52,7 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
   const { wikis, categories } = results
   const totalResults = wikis.length + categories.length
 
-  const wikiList = wikis.map((wiki) => {
+  const wikiList = wikis.map(wiki => {
     return (
       <ActivityCard
         key={wiki.id}
@@ -67,7 +68,7 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
       />
     )
   })
-  const categoryList = categories.map((category) => {
+  const categoryList = categories.map(category => {
     return (
       <Link href={`/categories/${category.id}`} key={category.id}>
         <Flex
@@ -132,12 +133,22 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const queryParam = context.params?.query
   const query = queryParam as string
 
   return {
-    props: { query },
+    props: {
+      ...(await serverSideTranslations(context.locale ?? 'en', [
+        'common',
+        'home',
+        'category',
+        'rank',
+        'wiki',
+        'event',
+      ])),
+      query,
+    },
   }
 }
 
