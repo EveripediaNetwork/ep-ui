@@ -32,6 +32,7 @@ const chains = JSON.parse(config.isProduction)
 export const wagmiConfig = createConfig({
   chains,
   multiInjectedProviderDiscovery: false,
+  ssr: true,
   transports: {
     [polygon.id]: fallback([
       http(`https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`),
