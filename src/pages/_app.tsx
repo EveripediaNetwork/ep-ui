@@ -14,7 +14,7 @@ import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
-import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
+import { createWagmiWrapper } from '@/components/Layout/WagmiWrapper'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -35,6 +35,10 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
 
     return () => router.events.off('routeChangeComplete', handleRouteChange)
   }, [router.events])
+
+  const isCreateWikiPath = router.pathname === '/create-wiki'
+  const ssr = !isCreateWikiPath
+  const WagmiWrapper = createWagmiWrapper(ssr)
 
   return (
     <StrictMode>
