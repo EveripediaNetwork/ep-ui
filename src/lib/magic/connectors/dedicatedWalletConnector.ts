@@ -4,13 +4,24 @@ import type {
   MagicSDKAdditionalConfiguration,
   SDKBase,
 } from '@magic-sdk/provider'
-import { createConnector, normalizeChainId } from '@wagmi/core'
+import {
+  ChainNotConfiguredError,
+  createConnector,
+  normalizeChainId,
+} from '@wagmi/core'
 import {
   type MagicConnectorParams,
   type MagicOptions,
   magicConnector,
 } from './magicConnector'
-import { UserRejectedRequestError, getAddress } from 'viem'
+import {
+  AddEthereumChainParameter,
+  ProviderRpcError,
+  SwitchChainError,
+  UserRejectedRequestError,
+  getAddress,
+  numberToHex,
+} from 'viem'
 import { createModal } from '../modal/view'
 
 interface UserDetails {
@@ -244,6 +255,67 @@ export function dedicatedWalletConnector({
 
     onDisconnect: () => {
       config.emitter.emit('disconnect')
+    },
+    async switchChain({ chainId }) {
+      const chain = config.chains.find((chain) => chain.id === chainId)
+      if (!chain) throw new SwitchChainError(new ChainNotConfiguredError())
+
+      const provider = await getProvider()
+
+      if (!provider) {
+        throw new SwitchChainError(
+          Error(
+            'Provider is not available. Please ensure that a provider is connected.',
+          ),
+        )
+      }
+
+      try {
+        await provider.request({
+          method: 'wallet_switchEthereumChain',
+          params: [{ chainId: numberToHex(chain.id) }],
+        })
+        return chain
+      } catch (error) {
+        // Indicates chain is not added to provider
+        if ((error as ProviderRpcError).code === 4902) {
+          try {
+            const blockExplorerUrls = chain.blockExplorers?.default.url
+              ? [chain.blockExplorers?.default.url]
+              : []
+
+            let rpcUrls: readonly string[] | undefined
+            if (chain?.rpcUrls) {
+              if (Array.isArray(chain.rpcUrls)) {
+                rpcUrls = chain.rpcUrls
+              } else if (Array.isArray(chain.rpcUrls.default?.http)) {
+                rpcUrls = chain.rpcUrls.default.http
+              }
+            } else {
+              rpcUrls = []
+            }
+
+            const addEthereumChain = {
+              blockExplorerUrls,
+              chainId: numberToHex(chainId),
+              chainName: chain.name,
+              nativeCurrency: chain?.nativeCurrency ?? chain.nativeCurrency,
+              rpcUrls: rpcUrls ?? [],
+            } satisfies AddEthereumChainParameter
+
+            await provider.request({
+              method: 'wallet_addEthereumChain',
+              params: [addEthereumChain],
+            })
+
+            return chain
+          } catch (error) {
+            throw new UserRejectedRequestError(error as Error)
+          }
+        }
+
+        throw new SwitchChainError(error as Error)
+      }
     },
   }))
 }
