@@ -84,6 +84,7 @@ export const useGetSignedHash = () => {
       })
       .catch((err) => {
         setIsLoading('error')
+        console.log(err)
         setMsg(err.message || defaultErrorMessage)
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',
