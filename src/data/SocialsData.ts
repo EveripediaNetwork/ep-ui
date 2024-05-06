@@ -55,7 +55,7 @@ export const Socials: Social[] = [
   },
   {
     id: 7,
-    href: 'https://web.facebook.com/everipedia?_rdc=1&_rdr',
+    href: 'https://www.facebook.com/iqdotwiki',
     name: 'facebook',
     icon: RiFacebookFill,
   },
