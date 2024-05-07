@@ -5,6 +5,7 @@ import { Wiki } from '@everipedia/iq-utils'
 import TrendingCategoryItem from './TrendingCategoryItem'
 import Autoplay from 'embla-carousel-autoplay'
 import { WikiCarousel } from '../Elements/Carousel/Carousel'
+import { EmblaOptionsType } from 'embla-carousel'
 
 const TrendingCategoryCard = ({
   title,
@@ -15,6 +16,7 @@ const TrendingCategoryCard = ({
   title: string
   wikis: Wiki[]
 }) => {
+  const OPTIONS: EmblaOptionsType = { loop: true }
   return (
     <Box
       bgColor="cardBg"
@@ -36,7 +38,7 @@ const TrendingCategoryCard = ({
           {title}
         </Text>
       </Flex>
-      <WikiCarousel plugins={[Autoplay()]}>
+      <WikiCarousel plugins={[Autoplay()]} options={OPTIONS}>
         {wikis.map((wiki) => (
           <chakra.div
             key={`wiki-${wiki.id}`}
