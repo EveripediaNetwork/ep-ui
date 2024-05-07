@@ -37,18 +37,18 @@ import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useGetEventsQuery } from '@/services/event'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
-import { useAccount } from 'wagmi'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
+import { useAddress } from '@/hooks/useAddress'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
 )
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const { data } = useGetWikiQuery(wiki?.id || '')
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const { address: userAddress } = useAddress()
 
   const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
@@ -133,20 +133,19 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
-  }, [detectedProvider, isUserConnected])
+  }, [detectedProvider, userAddress])
 
   useEffect(() => {
     if (activeStep === 3) {
@@ -238,7 +237,7 @@ export const WikiPublishButton = () => {
       value: 1,
     })
 
-    if (isUserConnected && userAddress) {
+    if (userAddress) {
       const ifWikiExists =
         isNewCreateWiki &&
         !override &&
@@ -259,7 +258,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)

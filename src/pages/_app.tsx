@@ -37,7 +37,11 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
   }, [router.events])
 
   const isCreateWikiPath = router.pathname === '/create-wiki'
+
+  console.log(isCreateWikiPath)
   const ssr = !isCreateWikiPath
+
+  console.log('ssr', ssr)
   const WagmiWrapper = createWagmiWrapper(ssr)
 
   return (
