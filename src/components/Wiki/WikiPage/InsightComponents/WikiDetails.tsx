@@ -56,55 +56,12 @@ export const WikiDetails = ({
       borderColor="rankingListBorder"
     >
       <Stack
-        direction={{ base: 'column', lg: 'row', xl: 'column' }}
+        direction={{ base: 'column', lg: 'column', xl: 'column' }}
         alignItems="center"
         justifyContent="space-between"
         spacing={4}
         w="full"
       >
-        {/* <HStack
-          p={1}
-          fontSize="sm"
-          w="100%"
-          alignItems="center"
-          justifyContent="center"
-          bgColor="wikiCardItemBg"
-          rounded="lg"
-        >
-          <Text>Wiki Powered by</Text>
-          <Link
-            href="https://iq.braindao.org/dashboard"
-            isExternal
-            onClick={() =>
-              logEvent({
-                category: 'Wiki',
-                action: 'Click',
-                label: 'IQ Dashboard',
-                value: 1,
-              })
-            }
-          >
-            <Box
-              as="button"
-              aria-label="IQ"
-              border="1px"
-              borderColor="gray.200"
-              bgColor="rgba(255, 255, 255, 1)"
-              rounded="lg"
-              py={1}
-              px={2}
-              _dark={{
-                borderColor: 'rgba(255, 255, 255, 0.24)',
-                bgColor: 'unset',
-              }}
-            >
-              <Logo boxSize="1.5em" />
-              <Box as="span" mx={2}>
-                IQ
-              </Box>
-            </Box>
-          </Link>
-        </HStack> */}
         <HStack
           p={1}
           fontSize="sm"
@@ -147,7 +104,6 @@ export const WikiDetails = ({
         <AspectRatio
           mx="auto"
           w="100%"
-          // ml="0 !important"
           maxW="700"
           ratio={WIKI_IMAGE_ASPECT_RATIO}
         >
