@@ -81,10 +81,6 @@ export const createWikiConfig = createConfig({
   },
   connectors: [
     injected(),
-    walletConnect({
-      projectId: config.walletConnectProjectId,
-      relayUrl: 'wss://relay.walletconnect.org',
-    }),
     dedicatedWalletConnector({
       //@ts-ignore
       chains,
