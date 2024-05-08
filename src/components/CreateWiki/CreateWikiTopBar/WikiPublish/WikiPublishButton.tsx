@@ -38,7 +38,6 @@ import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useGetEventsQuery } from '@/services/event'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import { useAccount } from 'wagmi'
-import { getCookie } from 'cookies-next'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
 
 const NetworkErrorNotification = dynamic(
@@ -46,7 +45,7 @@ const NetworkErrorNotification = dynamic(
 )
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const { data } = useGetWikiQuery(wiki?.id || '')
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
@@ -74,16 +73,9 @@ export const WikiPublishButton = () => {
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
 
-  const switchChainCookie = getCookie('SWITCH_CHAIN')
-  const switchChainNotAllowed = switchChainCookie
-    ? (JSON.parse(switchChainCookie as string) as boolean)
-    : false
-
   const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
-  const showModal =
-    connectedChainId !== chainId &&
-    !networkSwitchAttempted &&
-    switchChainNotAllowed
+  const showModal = connectedChainId !== chainId && !networkSwitchAttempted
+
   const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')
@@ -141,16 +133,15 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -228,6 +219,11 @@ export const WikiPublishButton = () => {
   const handleWikiPublish = async (override?: boolean) => {
     if (!isValidWiki(toast, wiki)) return
 
+    if (connectedChainId !== chainId) {
+      setShowNetworkModal(true)
+      return
+    }
+
     if (data && wiki) {
       if (isWikiEdited(data, wiki)) {
         toast({
@@ -267,7 +263,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)

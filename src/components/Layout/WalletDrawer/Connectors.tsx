@@ -22,12 +22,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
     useAccount()
 
   useAccountEffect({
-    onConnect: async (data) => {
-      if (data.connector.switchChain) {
-        document.cookie = 'SWITCH_CHAIN=true;'
-      } else {
-        document.cookie = 'SWITCH_CHAIN=false'
-      }
+    onConnect: async () => {
       await triggerSignToken()
     },
   })
@@ -46,7 +41,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
 
   const { connect, connectors } = useConnect({
     mutation: {
-      onError: (error) => {
+      onError: error => {
         logEvent({
           action: 'LOGIN_ERROR',
           label: error.message,
@@ -54,7 +49,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
           category: 'login_status',
         })
       },
-      onSuccess: (data) => {
+      onSuccess: data => {
         logEvent({
           action: 'LOGIN_SUCCESS',
           label: data.accounts[0],
