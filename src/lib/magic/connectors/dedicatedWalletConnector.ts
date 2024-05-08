@@ -262,9 +262,15 @@ export function dedicatedWalletConnector({
         }
 
         const isLoggedIn = await magic.user.isLoggedIn()
-        if (isLoggedIn) return true
 
         const result = await magic.oauth.getRedirectResult()
+
+        if (result) {
+          localStorage.setItem('magicRedirectResult', JSON.stringify(result))
+        }
+
+        if (isLoggedIn) return true
+
         return result !== null
       } catch (error) {
         console.error('Error in isAuthorized:', error)
