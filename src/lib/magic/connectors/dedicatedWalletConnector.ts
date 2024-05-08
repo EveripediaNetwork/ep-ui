@@ -73,6 +73,27 @@ type WagmiStoreState = {
   }
 }
 
+const isMagicConnected = () => {
+  const localStorageData = JSON.parse(
+    localStorage.getItem('wagmi.store') || '',
+  ) as WagmiStoreState
+
+  if (localStorageData?.state?.connections?.value) {
+    // Extract connector details
+    const connections = localStorageData.state.connections.value
+
+    // Check if any of the connections have a connector ID of "magic"
+    return connections.some(([, { connector }]) => {
+      if (connector) {
+        const { id } = connector // Destructure connector
+        return id?.toLowerCase() === 'magic'
+      }
+      return false
+    })
+  }
+  return false
+}
+
 export function dedicatedWalletConnector({
   chains,
   options,
@@ -238,38 +259,14 @@ export function dedicatedWalletConnector({
           return false
         }
 
-        // Retrieve the localStorage data
-        const localStorageData = JSON.parse(
-          localStorage.getItem('wagmi.store') || '',
-        ) as WagmiStoreState
-
-        if (localStorageData?.state?.connections?.value) {
-          // Extract connector details
-          const connections = localStorageData.state.connections.value
-
-          // Check if any of the connections have a connector ID of "magic"
-          const isMagicConnector = connections.some(([, { connector }]) => {
-            if (connector) {
-              const { id } = connector // Destructure connector
-              return id?.toLowerCase() === 'magic'
-            }
-            return false
-          })
-
-          if (!isMagicConnector) {
-            return false // If "magic" connector not found, return false immediately
-          }
+        if (!isMagicConnected()) {
+          return false
         }
 
         const isLoggedIn = await magic.user.isLoggedIn()
 
-        const result = await magic.oauth.getRedirectResult()
-
-        if (result) {
-          localStorage.setItem('magicRedirectResult', JSON.stringify(result))
-        }
-
         if (isLoggedIn) return true
+        const result = await magic.oauth.getRedirectResult()
 
         return result !== null
       } catch (error) {
