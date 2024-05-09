@@ -104,14 +104,14 @@ export const WikiDetails = ({
         <AspectRatio
           mx="auto"
           w="100%"
-          maxW="700"
+          maxW={{ base: '100%', xl: '700' }}
           ratio={WIKI_IMAGE_ASPECT_RATIO}
         >
           <WikiImage
             bgColor="dimColor"
             priority
             imageURL={imgSrc}
-            sizes="(max-width: 600px) 100vw, 400px"
+            sizes="(max-width: 1280px) 100vw, (max-width: 600px) 100vw, 400px"
             alt={title}
           />
         </AspectRatio>
