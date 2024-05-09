@@ -55,6 +55,41 @@ export interface DedicatedWalletConnectorParams extends MagicConnectorParams {
   options: DedicatedWalletOptions
 }
 
+type WagmiStoreState = {
+  state?: {
+    connections?: {
+      value?: [
+        string,
+        {
+          connector?: {
+            id?: string
+            name?: string
+            type?: string
+            uid?: string
+          }
+        },
+      ][]
+    }
+  }
+}
+
+const isMagicConnected = () => {
+  const localStorageData = JSON.parse(
+    localStorage.getItem('wagmi.store') ?? '',
+  ) as WagmiStoreState
+
+  if (localStorageData?.state?.connections?.value) {
+    // Extract connector details
+    const connections = localStorageData.state.connections.value
+
+    // Check if any of the connections have a connector ID of "magic"
+    return connections.some(
+      ([, { connector }]) => connector?.id?.toLowerCase() === 'magic',
+    )
+  }
+  return false
+}
+
 export function dedicatedWalletConnector({
   chains,
   options,
@@ -220,13 +255,20 @@ export function dedicatedWalletConnector({
           return false
         }
 
-        const isLoggedIn = await magic.user.isLoggedIn()
-        if (isLoggedIn) return true
+        if (!isMagicConnected()) {
+          return false
+        }
 
+        const isLoggedIn = await magic.user.isLoggedIn()
+
+        if (isLoggedIn) return true
         const result = await magic.oauth.getRedirectResult()
+
         return result !== null
-      } catch {}
-      return false
+      } catch (error) {
+        console.error('Error in isAuthorized:', error)
+        return false
+      }
     },
 
     onAccountsChanged,
