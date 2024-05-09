@@ -30,6 +30,8 @@ const NetworkErrorNotification = ({
   const { chains, switchChainAsync } = useSwitchChain()
   const toast = useToast()
 
+  console.log('chains', chains)
+
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
   const { isConnected: isUserConnected } = useAccount()
