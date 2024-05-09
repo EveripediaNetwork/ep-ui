@@ -75,7 +75,7 @@ type WagmiStoreState = {
 
 const isMagicConnected = () => {
   const localStorageData = JSON.parse(
-    localStorage.getItem('wagmi.store') || '',
+    localStorage.getItem('wagmi.store') ?? '',
   ) as WagmiStoreState
 
   if (localStorageData?.state?.connections?.value) {
@@ -83,13 +83,9 @@ const isMagicConnected = () => {
     const connections = localStorageData.state.connections.value
 
     // Check if any of the connections have a connector ID of "magic"
-    return connections.some(([, { connector }]) => {
-      if (connector) {
-        const { id } = connector // Destructure connector
-        return id?.toLowerCase() === 'magic'
-      }
-      return false
-    })
+    return connections.some(
+      ([, { connector }]) => connector?.id?.toLowerCase() === 'magic',
+    )
   }
   return false
 }
