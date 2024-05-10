@@ -30,7 +30,7 @@ const NetworkErrorNotification = ({
   const cancelRef = React.useRef<FocusableElement>(null)
   const { chains, switchChainAsync } = useSwitchChain()
   const toast = useToast()
-  const isProduction = JSON.parse(config.isProduction) as boolean
+  const isProduction = config.isProduction
 
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)

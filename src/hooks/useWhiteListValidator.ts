@@ -23,7 +23,7 @@ const useWhiteListValidator = () => {
     const fetchData = async () => {
       try {
         let data
-        if (config.isProduction === 'true') {
+        if (config.isProduction) {
           data = await publicClient.readContract({
             address: config.editorAddress as `0x${string}`,
             abi: EditorABI,

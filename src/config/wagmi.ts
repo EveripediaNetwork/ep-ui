@@ -1,6 +1,6 @@
 import { http, createConfig, fallback } from 'wagmi'
 import { polygon } from 'viem/chains'
-import { injected, walletConnect } from 'wagmi/connectors'
+import { injected } from 'wagmi/connectors'
 import { env } from '@/env.mjs'
 import config from '.'
 import { dedicatedWalletConnector } from '@/lib/magic/connectors/dedicatedWalletConnector'
@@ -25,14 +25,12 @@ const iqChain = defineChain({
   testnet: true,
 })
 
-const chains = JSON.parse(config.isProduction)
-  ? ([polygon] as const)
-  : ([iqChain] as const)
+const chains = config.isProduction ? ([polygon] as const) : ([iqChain] as const)
 
 export const wagmiConfig = createConfig({
   chains,
   multiInjectedProviderDiscovery: false,
-  ssr: true,
+  ssr: false,
   transports: {
     [polygon.id]: fallback([
       http(`https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`),
@@ -42,10 +40,6 @@ export const wagmiConfig = createConfig({
   },
   connectors: [
     injected(),
-    walletConnect({
-      projectId: config.walletConnectProjectId,
-      relayUrl: 'wss://relay.walletconnect.org',
-    }),
     dedicatedWalletConnector({
       //@ts-ignore
       chains,
@@ -57,7 +51,7 @@ export const wagmiConfig = createConfig({
         },
         magicSdkConfiguration: {
           network: {
-            rpcUrl: JSON.parse(config.isProduction)
+            rpcUrl: config.isProduction
               ? `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
               : iqChain.rpcUrls.default.http[0],
             chainId: Number(config.chainId),
@@ -92,7 +86,7 @@ export const createWikiConfig = createConfig({
         },
         magicSdkConfiguration: {
           network: {
-            rpcUrl: JSON.parse(config.isProduction)
+            rpcUrl: config.isProduction
               ? `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
               : iqChain.rpcUrls.default.http[0],
             chainId: Number(config.chainId),

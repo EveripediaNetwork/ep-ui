@@ -18,7 +18,7 @@ import config from '@/config'
 const NetworkMenu = () => {
   const [currentNetwork, setCurrentNetwork] = useState<Network>(Networks[0])
 
-  const { chainId } = JSON.parse(config.isProduction)
+  const { chainId } = config.isProduction
     ? networkMap.POLYGON_MAINNET
     : networkMap.IQ_TESTNET
 

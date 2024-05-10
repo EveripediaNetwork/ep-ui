@@ -60,9 +60,9 @@ export const useFetchWalletBalance = () => {
     setIsLoading(true)
 
     try {
-      const IQBalance = JSON.parse(config.isProduction)
+      const IQBalance = config.isProduction
         ? await getUserIQBalance(address)
-        : data?.formatted || 0
+        : data?.formatted ?? 0
 
       const balances: WalletBalanceType[] = [
         {

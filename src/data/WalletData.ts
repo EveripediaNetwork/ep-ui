@@ -1,6 +1,6 @@
 export const walletsLogos: string[] = [
   'metamask.png',
-  'walletconnect-logo.svg',
+  // 'walletconnect-logo.svg',
   'magiclink.svg',
 ]
 
