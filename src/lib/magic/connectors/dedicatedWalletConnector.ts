@@ -74,6 +74,8 @@ type WagmiStoreState = {
 }
 
 const isMagicConnected = () => {
+  if (typeof window === 'undefined') return false
+
   const localStorageData = JSON.parse(
     localStorage.getItem('wagmi.store') ?? '',
   ) as WagmiStoreState
