@@ -9,7 +9,7 @@ export const useFetchWalletBalance = () => {
   const dispatch = useDispatch()
   const { address } = useAccount()
   const { data, isLoading: isBalanceLoading } = useBalance({
-    address: '0x1dfc530a9b3955d62d16359110e3cf385d47b1a9',
+    address,
   })
   const [isLoading, setIsLoading] = useState(false)
 
