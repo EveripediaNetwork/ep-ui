@@ -61,38 +61,3 @@ export const wagmiConfig = createConfig({
     }),
   ],
 })
-
-export const createWikiConfig = createConfig({
-  chains,
-  multiInjectedProviderDiscovery: false,
-  ssr: false,
-  transports: {
-    [polygon.id]: fallback([
-      http(`https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`),
-      http(`https://polygon-mainnet.infura.io/v3/${config.infuraId}`),
-    ]),
-    [iqChain.id]: http(),
-  },
-  connectors: [
-    injected(),
-    dedicatedWalletConnector({
-      //@ts-ignore
-      chains,
-      options: {
-        apiKey: env.NEXT_PUBLIC_MAGIC_LINK_API_KEY,
-        accentColor: '#ea3b87',
-        oauthOptions: {
-          providers: ['google', 'facebook', 'twitter', 'discord'],
-        },
-        magicSdkConfiguration: {
-          network: {
-            rpcUrl: config.isProduction
-              ? `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
-              : iqChain.rpcUrls.default.http[0],
-            chainId: Number(config.chainId),
-          },
-        },
-      },
-    }),
-  ],
-})
