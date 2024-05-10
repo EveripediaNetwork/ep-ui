@@ -57,8 +57,6 @@ export const WikiPublishButton = () => {
     limit: EVENT_TEST_ITEM_PER_PAGE,
   })
 
-  console.log(' config.isProduction', config.isProduction)
-
   const { chainId } = config.isProduction
     ? networkMap.POLYGON_MAINNET
     : networkMap.IQ_TESTNET
