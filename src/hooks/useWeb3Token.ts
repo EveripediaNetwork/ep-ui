@@ -31,7 +31,7 @@ export const useWeb3Token = () => {
         (msg) => walletClient.signMessage({ message: msg }),
         {
           statement:
-            'Welcome to IQ.GPT ! Click to sign in and accept the IQ.GPT Terms of Service. This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 365 days.',
+            'Welcome to IQ.wiki ! Click to sign in and accept the IQ.GPT Terms of Service. This request will not trigger a blockchain transaction or cost any gas fees. Your authentication status will reset after 365 days.',
           expires_in: '365d',
         },
       )
