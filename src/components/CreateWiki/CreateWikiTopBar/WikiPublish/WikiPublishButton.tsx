@@ -125,7 +125,7 @@ export const WikiPublishButton = () => {
       const provider = (await detectEthereumProvider({
         silent: true,
       })) as ProviderDataType
-      setDetectedProvider(provider as ProviderDataType)
+      setDetectedProvider(provider)
       if (provider) getConnectedChain(provider)
     }
 

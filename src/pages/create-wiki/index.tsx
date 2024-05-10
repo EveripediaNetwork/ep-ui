@@ -38,6 +38,7 @@ import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import isDeepEqual from '@everipedia/iq-utils/build/main/lib/isDeepEqual'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -48,7 +49,7 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 })
 
 const CreateWikiContent = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
 
   const {
     isLoadingWiki,
@@ -70,25 +71,30 @@ const CreateWikiContent = () => {
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
-          content: val || ' ',
+          content: val ?? ' ',
         },
       })
     else
       dispatch({
         type: 'wiki/setContent',
-        payload: val || ' ',
+        payload: val ?? ' ',
       })
   }
 
   useCreateWikiEffects()
 
   useEffect(() => {
-    // get draft wiki if it exists
     let draft: Wiki | undefined
-    if (isNewCreateWiki) draft = getDraftFromLocalStorage()
-    else if (wikiData) draft = getDraftFromLocalStorage()
 
-    if (!toast.isActive('draft-loaded') && draft) {
+    // Load the draft from local storage if creating a new wiki or if wiki data exists
+    if (isNewCreateWiki || wikiData) {
+      draft = getDraftFromLocalStorage()
+    }
+
+    // Use the isDeepEqual function to compare the loaded draft and current wiki data
+    const isDraftDifferent = draft && !isDeepEqual(draft, wikiData)
+
+    if (!toast.isActive('draft-loaded') && draft && isDraftDifferent) {
       toast({
         id: 'draft-loaded',
         title: (
@@ -99,7 +105,6 @@ const CreateWikiContent = () => {
               variant="outline"
               onClick={() => {
                 removeDraftFromLocalStorage()
-                // reload the page to remove the draft
                 window.location.reload()
               }}
               sx={{
@@ -145,11 +150,11 @@ const CreateWikiContent = () => {
       // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
       const wikiDt = initWikiData
       metadata = [
-        ...Object.values(CommonMetaIds).map((mId) => {
+        ...Object.values(CommonMetaIds).map(mId => {
           const meta = getWikiMetadataById(wikiDt, mId)
           return { id: mId, value: meta?.value ?? '' }
         }),
-        ...Object.values(EditSpecificMetaIds).map((mId) => ({
+        ...Object.values(EditSpecificMetaIds).map(mId => ({
           id: mId,
           value: '',
         })),
@@ -228,7 +233,7 @@ const Page: PageWithoutFooter = authenticatedRoute(
 
 Page.noFooter = true
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getServerSideProps: GetServerSideProps = async context => {
   const slug = context.params?.slug
   if (typeof slug === 'string') {
     store.dispatch(getWiki.initiate(slug))
