@@ -10,7 +10,7 @@ const useWhiteListValidator = () => {
     account: config.editorAddress as `0x${string}`,
     abi: EditorABI,
     functionName: 'isEditorWhitelisted',
-    address: address,
+    args: [address],
   })
 
   useEffect(() => {
