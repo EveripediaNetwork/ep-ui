@@ -39,7 +39,7 @@ export const WalletDrawerBody = () => {
   const { address } = useAddress()
   const [isAdmin, setIsAdmin] = React.useState(false)
   const token = useSelector((state: RootState) => state.user.token)
-  const { userBalance } = useFetchWalletBalance(address)
+  const { userBalance, isLoading } = useFetchWalletBalance()
   const { walletDetails, totalBalance, balanceBreakdown, hiiq } = useSelector(
     (state: RootState) => state.user,
   )
@@ -132,12 +132,13 @@ export const WalletDrawerBody = () => {
               </Link>
             </Center>
           </Flex>
-          {totalBalanceIsLoading && (
+          {(isLoading || totalBalanceIsLoading || !userBalance) && (
             <Flex justifyContent="center">
               <Spinner color="color" mt="4" />
             </Flex>
           )}
-          {!totalBalanceIsLoading &&
+          {!isLoading &&
+            !totalBalanceIsLoading &&
             balanceBreakdown &&
             walletDetails &&
             walletDetails.length > 0 && (
@@ -155,7 +156,8 @@ export const WalletDrawerBody = () => {
                       <Divider />
                     </React.Fragment>
                   ))}
-                  {!totalBalanceIsLoading &&
+                  {!isLoading &&
+                    !totalBalanceIsLoading &&
                     hiiq &&
                     walletDetails &&
                     walletDetails.length > 0 &&
@@ -173,7 +175,6 @@ export const WalletDrawerBody = () => {
               </>
             )}
           <>
-            {' '}
             <Divider py={2} />
             <VStack
               alignItems="flex-start"

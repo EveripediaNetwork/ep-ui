@@ -14,7 +14,7 @@ const server = z.object({
 })
 
 const client = z.object({
-  NEXT_PUBLIC_IS_PRODUCTION: z.string(),
+  NEXT_PUBLIC_IS_PRODUCTION: z.preprocess((v) => v === 'true', z.boolean()),
   NEXT_PUBLIC_INFURA_ID: z.string(),
   NEXT_PUBLIC_ALCHEMY_API_KEY: z.string(),
   NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL: z.string().url(),
