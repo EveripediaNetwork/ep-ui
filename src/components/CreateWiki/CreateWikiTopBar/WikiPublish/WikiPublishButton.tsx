@@ -35,8 +35,6 @@ import ReactCanvasConfetti from 'react-canvas-confetti'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
-import { useGetEventsQuery } from '@/services/event'
-import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import { useAccount } from 'wagmi'
 import { getCookie } from 'cookies-next'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
@@ -52,10 +50,6 @@ export const WikiPublishButton = () => {
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
-  const { refetch } = useGetEventsQuery({
-    offset: 0,
-    limit: EVENT_TEST_ITEM_PER_PAGE,
-  })
 
   const { chainId } =
     config.alchemyChain === 'maticmum'
@@ -283,7 +277,6 @@ export const WikiPublishButton = () => {
 
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
-        refetch()
       } else {
         await processWikiPublishError(wikiResult)
       }
