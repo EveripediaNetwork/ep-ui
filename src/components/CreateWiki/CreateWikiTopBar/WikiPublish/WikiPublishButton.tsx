@@ -295,7 +295,7 @@ export const WikiPublishButton = () => {
   return (
     <>
       <Tooltip
-        isDisabled={!!userCanEdit}
+        isDisabled={userCanEdit && isUserConnected}
         p={2}
         rounded="md"
         placement="bottom-start"
@@ -303,7 +303,11 @@ export const WikiPublishButton = () => {
         color="white"
         bg="toolTipBg"
         hasArrow
-        label="Your address is not yet whitelisted"
+        label={
+          !isUserConnected
+            ? 'Your Metamask is locked'
+            : 'Your address is not yet whitelisted'
+        }
         mt="3"
       >
         {!isNewCreateWiki ? (
