@@ -1,8 +1,12 @@
 import { getEns } from '@/services/ens'
 import { store } from '@/store/store'
 import React from 'react'
+import config from '@/config'
 
 export const useENSData = (address?: string | null, skip?: boolean) => {
+  //If netowrk is not mainnet, skip fetching ENS data
+  if (!config.isProduction) return ['', '', false] as const
+
   const [avatar, setAvatar] = React.useState('')
   const [displayName, setDisplayName] = React.useState('')
   const [loading, setLoading] = React.useState(false)
