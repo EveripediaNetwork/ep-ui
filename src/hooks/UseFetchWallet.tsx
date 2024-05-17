@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { WalletBalanceType } from '@/types/WalletBalanceType'
 import { updateWalletDetails } from '@/store/slices/user-slice'
 import { useDispatch } from 'react-redux'
@@ -13,9 +13,8 @@ export const useFetchWalletBalance = () => {
   })
   const [isLoading, setIsLoading] = useState(false)
 
-  const refreshBalance = async () => {
+  const refreshBalance = useCallback(async () => {
     if (!address) {
-      console.log('Address is undefined')
       return
     }
 
@@ -23,7 +22,6 @@ export const useFetchWalletBalance = () => {
 
     try {
       const IQBalance = data?.formatted ?? 0
-
       const balances: WalletBalanceType[] = [
         {
           data: {
@@ -40,11 +38,11 @@ export const useFetchWalletBalance = () => {
     } finally {
       setIsLoading(false)
     }
-  }
+  }, [address, dispatch, data])
 
   useEffect(() => {
     refreshBalance()
-  }, [address])
+  }, [address, dispatch, refreshBalance])
 
   return {
     userBalance,
