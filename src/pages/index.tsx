@@ -13,6 +13,9 @@ import { Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 const CategoriesList = dynamic(
   () => import('@/components/Landing/CategoriesList'),
+  {
+    ssr: false,
+  },
 )
 import { getTags, tagsApi } from '@/services/tags'
 const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
