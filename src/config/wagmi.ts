@@ -6,7 +6,7 @@ import config from '.'
 import { dedicatedWalletConnector } from '@/lib/magic/connectors/dedicatedWalletConnector'
 import { defineChain } from 'viem'
 
-const iqChain = defineChain({
+export const iqChain = defineChain({
   id: 313_377,
   name: 'IQ Chain',
   nativeCurrency: { name: 'IQ Token', symbol: 'IQ', decimals: 18 },
