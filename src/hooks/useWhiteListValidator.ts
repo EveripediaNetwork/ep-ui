@@ -5,20 +5,24 @@ import config from '@/config'
 
 const useWhiteListValidator = () => {
   const { address } = useAccount()
-
+  if (!address) {
+    return {
+      userCanEdit: false,
+      isLoading: false,
+      isError: false,
+    }
+  }
   const { data, isError, isLoading } = useReadContract({
-    account: config.editorAddress as `0x${string}`,
+    address: config.editorAddress as `0x${string}`,
     abi: EditorABI,
     functionName: 'isEditorWhitelisted',
     args: [address],
   })
-
   useEffect(() => {
     if (isError) {
       console.error('Error fetching whitelist data')
     }
   }, [isError])
-
   return {
     userCanEdit: data,
     isLoading,
