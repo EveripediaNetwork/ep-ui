@@ -56,10 +56,16 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     return Data
   })
 
+  //ensure cover_image is not undefined
+  const sanitizedBlogEntries = blogEntries.map((entry) => ({
+    ...entry,
+    cover_image: entry.cover_image ?? null,
+  }))
+
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['blog', 'common'])),
-      blogEntries,
+      sanitizedBlogEntries,
     },
     revalidate: 60 * 5,
   }
