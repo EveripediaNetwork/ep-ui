@@ -23,7 +23,6 @@
   "settingsTabNotifications": "Notifications",
   "settingsTabAdvancedSettings": "Advanced Settings",
   "settingSignEditsWithRelayer": "Sign edits with relayer",
-  "settingsSave": "Save",
   "settingDefaultEdit": "Edits are signed with a relayer by default. If you would like to sign edits with your own wallet, uncheck this option.",
   "settingsSeoTitlePart": "Settings -",
   "settingsSeoDescriptionPart": "Update your profile and notification settings -",

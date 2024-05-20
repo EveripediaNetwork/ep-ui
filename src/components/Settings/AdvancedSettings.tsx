@@ -76,7 +76,7 @@ const AdvancedSettings = () => {
           </Box>
         </VStack>
         <Button type="submit" mt={8} size="lg">
-          {t('settingsSave')}
+          {t('settingSave')}
         </Button>
       </form>
     </>
