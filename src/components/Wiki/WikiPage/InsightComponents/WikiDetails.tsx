@@ -164,7 +164,7 @@ export const WikiDetails = ({
                 )}
                 <Tr>
                   <Td>
-                    <Text>Verification</Text>
+                    <Text>{t('verification')}</Text>
                   </Td>
                   <Td display="flex" align="center">
                     <HStack spacing={4}>
