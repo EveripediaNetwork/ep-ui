@@ -8,6 +8,7 @@ export type Blog = {
   image_sizes: number
   title: string
   timestamp?: number
+  publishedAtTimestamp?: number
   transaction?: string
   publisher?: {
     project: {
