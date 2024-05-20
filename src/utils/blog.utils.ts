@@ -62,12 +62,10 @@ export const getBlogsFromAllAccounts = async () => {
   // eslint-disable-next-line no-plusplus
   for (let i = 0; i < accounts.length; i++) {
     // eslint-disable-next-line no-await-in-loop
-    let { data: entries } = await store.dispatch(
-      getBlogs.initiate(accounts[i]),
-    )
+    let { data: entries } = await store.dispatch(getBlogs.initiate(accounts[i]))
 
     entries = entries?.filter((entry) => entry.publishedAtTimestamp)
-    
+
     if (entries)
       blogs = [...blogs, ...entries.map((b: Blog) => formatBlog(b, true))]
   }
