@@ -91,6 +91,7 @@ export const FETCH_BLOGS = gql`
     digest
     timestamp
     title
+    publishedAtTimestamp
     arweaveTransactionRequest {
       transactionId
     }
