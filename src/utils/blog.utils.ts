@@ -25,8 +25,8 @@ export const formatEntry = async (
   timestamp,
   cover_image: blog.body
     ? (blog.body
-      .split('\n\n')[0]
-      .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+        .split('\n\n')[0]
+        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
     : null,
   image_sizes: 50,
 })
@@ -41,8 +41,8 @@ export const formatBlog = (blog: Blog, hasBody?: boolean) => {
     timestamp: blog.timestamp,
     cover_image: blog.body
       ? (blog.body
-        .split('\n\n')[0]
-        .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
+          .split('\n\n')[0]
+          .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
       : '',
     image_sizes: 50,
   }
@@ -56,16 +56,19 @@ export const formatBlog = (blog: Blog, hasBody?: boolean) => {
 }
 
 export const getBlogsFromAccounts = async () => {
-  const accounts = [config?.blogAccount2, config?.blogAccount3];
+  const accounts = [config?.blogAccount2, config?.blogAccount3]
 
   const blogPromises = accounts.map(async (account) => {
     // eslint-disable-next-line no-await-in-loop
-    const { data: entries } = await store.dispatch(getBlogs.initiate(account));
-    return entries?.filter((entry) => entry.publishedAtTimestamp)
-      .map((b: Blog) => formatBlog(b, true)) || [];
-  });
+    const { data: entries } = await store.dispatch(getBlogs.initiate(account))
+    return (
+      entries
+        ?.filter((entry) => entry.publishedAtTimestamp)
+        .map((b: Blog) => formatBlog(b, true)) || []
+    )
+  })
 
-  const allBlogs = (await Promise.all(blogPromises)).flat();
+  const allBlogs = (await Promise.all(blogPromises)).flat()
 
   allBlogs?.sort((a, b) => {
     const Data =
@@ -74,7 +77,7 @@ export const getBlogsFromAccounts = async () => {
     return Data
   })
 
-  return allBlogs;
+  return allBlogs
 }
 
 export const getEntryPaths = ({
