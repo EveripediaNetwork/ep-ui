@@ -55,22 +55,29 @@ export const formatBlog = (blog: Blog, hasBody?: boolean) => {
   return newBlog
 }
 
-export const getBlogsFromAllAccounts = async () => {
-  let blogs: FormatedBlogType[] = []
+export const getBlogsFromAccounts = async () => {
   const accounts = [config?.blogAccount2, config?.blogAccount3]
 
-  // eslint-disable-next-line no-plusplus
-  for (let i = 0; i < accounts.length; i++) {
+  const blogPromises = accounts.map(async (account) => {
     // eslint-disable-next-line no-await-in-loop
-    let { data: entries } = await store.dispatch(getBlogs.initiate(accounts[i]))
+    const { data: entries } = await store.dispatch(getBlogs.initiate(account))
+    return (
+      entries
+        ?.filter((entry) => entry.publishedAtTimestamp)
+        .map((b: Blog) => formatBlog(b, true)) || []
+    )
+  })
 
-    entries = entries?.filter((entry) => entry.publishedAtTimestamp)
+  const allBlogs = (await Promise.all(blogPromises)).flat()
 
-    if (entries)
-      blogs = [...blogs, ...entries.map((b: Blog) => formatBlog(b, true))]
-  }
+  allBlogs?.sort((a, b) => {
+    const Data =
+      new Date(b.timestamp ? b.timestamp : '').valueOf() -
+      new Date(a.timestamp ? a.timestamp : '').valueOf()
+    return Data
+  })
 
-  return blogs
+  return allBlogs
 }
 
 export const getEntryPaths = ({
