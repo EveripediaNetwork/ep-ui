@@ -6,7 +6,7 @@ import config from '.'
 import { dedicatedWalletConnector } from '@/lib/magic/connectors/dedicatedWalletConnector'
 import { defineChain } from 'viem'
 
-export const iqChain = defineChain({
+export const iqTestnet = defineChain({
   id: 313_377,
   name: 'IQ Chain',
   nativeCurrency: { name: 'IQ Token', symbol: 'IQ', decimals: 18 },
@@ -25,7 +25,9 @@ export const iqChain = defineChain({
   testnet: true,
 })
 
-const chains = config.isProduction ? ([polygon] as const) : ([iqChain] as const)
+const chains = config.isProduction
+  ? ([polygon] as const)
+  : ([iqTestnet] as const)
 
 export const wagmiConfig = createConfig({
   chains,
@@ -36,7 +38,7 @@ export const wagmiConfig = createConfig({
       http(`https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`),
       http(`https://polygon-mainnet.infura.io/v3/${config.infuraId}`),
     ]),
-    [iqChain.id]: http(),
+    [iqTestnet.id]: http(),
   },
   connectors: [
     injected(),
@@ -53,7 +55,7 @@ export const wagmiConfig = createConfig({
           network: {
             rpcUrl: config.isProduction
               ? `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
-              : iqChain.rpcUrls.default.http[0],
+              : iqTestnet.rpcUrls.default.http[0],
             chainId: Number(config.chainId),
           },
         },
