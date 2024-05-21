@@ -70,8 +70,12 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Twitter',
     icon: TwitterIcon,
-    tests: [/https:\/\/(www.)?twitter.com\/\w+/],
+    tests: [
+      /https:\/\/(www\.)?twitter\.com\/\w+/,
+      /https:\/\/(www\.)?x\.com\/\w+/,
+    ],
   },
+
   {
     id: CommonMetaIds.TIKTOK_PROFILE,
     type: LinkType.SOCIAL,
