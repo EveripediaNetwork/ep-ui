@@ -11,7 +11,7 @@ import {
   Link,
 } from '@chakra-ui/react'
 import { store } from '@/store/store'
-import { formatBlog, getBlogsFromAllAccounts } from '@/utils/blog.utils'
+import { formatBlog, getBlogsFromAccounts } from '@/utils/blog.utils'
 import ReactMarkdown from 'react-markdown'
 import { components, uriTransformer } from '@/components/Blog/BlogMdComponents'
 import remarkParse from 'remark-parse'
@@ -169,7 +169,11 @@ export const BlogPostPage = ({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const digest: string = context.params?.digest as string
-  const result = await store.dispatch(getEntry.initiate(digest))
+  const [result, translations, blogEntries] = await Promise.all([
+    store.dispatch(getEntry.initiate(digest)),
+    serverSideTranslations(context.locale ?? 'en', ['blog', 'common']),
+    getBlogsFromAccounts(),
+  ])
   const blog = formatBlog(result.data?.entry as Blog, true)
 
   blog.body = String(
@@ -179,16 +183,11 @@ export const getStaticProps: GetStaticProps = async (context) => {
       .process(blog.body as string),
   )
 
-  const blogEntries = await getBlogsFromAllAccounts()
-
   return {
     props: {
       blog,
       blogEntries,
-      ...(await serverSideTranslations(context.locale ?? 'en', [
-        'blog',
-        'common',
-      ])),
+      ...translations,
     },
   }
 }
