@@ -5,18 +5,11 @@ import config from '@/config'
 
 const useWhiteListValidator = () => {
   const { address } = useAccount()
-  if (!address) {
-    return {
-      userCanEdit: false,
-      isLoading: false,
-      isError: false,
-    }
-  }
   const { data, isError, isLoading } = useReadContract({
     address: config.editorAddress as `0x${string}`,
     abi: EditorABI,
     functionName: 'isEditorWhitelisted',
-    args: [address],
+    args: [address as `0x${string}`],
   })
   useEffect(() => {
     if (isError) {
@@ -24,7 +17,7 @@ const useWhiteListValidator = () => {
     }
   }, [isError])
   return {
-    userCanEdit: data,
+    userCanEdit: data ?? false,
     isLoading,
     isError,
   }
