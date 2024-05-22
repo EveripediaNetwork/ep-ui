@@ -34,13 +34,17 @@ type IsUsernameTakenData = {
 export const profileApi = createApi({
   reducerPath: 'profileApi',
   baseQuery: graphqlRequestBaseQuery({ client: profileApiClient }),
+  tagTypes: ['UserProfile'],
   endpoints: (builder) => ({
     getUserSettings: builder.query<ProfileSettingsData, string>({
       query: (id: string) => ({
         document: GET_USER_SETTINGS,
         variables: { id },
       }),
-      transformResponse: (response: UserProfileData) => response.getProfile,
+      transformResponse: (response: UserProfileData) => {
+        return response.getProfile
+      },
+      providesTags: ['UserProfile'],
     }),
     getUserProfile: builder.query<ProfileSettingsData, string>({
       query: (id: string) => ({
@@ -89,6 +93,7 @@ export const profileApi = createApi({
           profileInfo: JSON.stringify(profileInfo),
         },
       }),
+      invalidatesTags: ['UserProfile'],
     }),
   }),
 })
