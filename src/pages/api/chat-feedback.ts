@@ -7,7 +7,7 @@ export default async function handler(
 ) {
   const { feedbackType, messageId } = JSON.parse(req.body)
   try {
-    const result = await axios.post('https://www.iqgpt.com/api/feedback', {
+    const result = await axios.post('https://chat.iqgpt.com/api/feedback', {
       messageId,
       feedbackType,
     })
