@@ -16,7 +16,9 @@ import networkMap from '@/data/NetworkMap'
 import config from '@/config'
 
 const NetworkMenu = () => {
-  const [currentNetwork, setCurrentNetwork] = useState<Network>(Networks[0])
+  const [currentNetwork, setCurrentNetwork] = useState<Network>(
+    Networks.find((network) => network.isActive) as Network,
+  )
 
   const { chainId } = config.isProduction
     ? networkMap.POLYGON_MAINNET
