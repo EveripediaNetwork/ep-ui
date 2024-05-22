@@ -28,7 +28,7 @@ export default async function handler(
   }
 
   try {
-    const response = await fetch('https://iqgpt.com/api/generate', {
+    const response = await fetch('https://chat.iqgpt.com/api/generate', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
