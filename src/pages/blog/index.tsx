@@ -2,7 +2,7 @@ import { Box, chakra, GridItem, SimpleGrid, Text } from '@chakra-ui/react'
 import React from 'react'
 import { BlogPost } from '@/components/Blog/BlogPost'
 import { GetStaticProps } from 'next'
-import { getBlogsFromAllAccounts } from '@/utils/blog.utils'
+import { getBlogsFromAccounts } from '@/utils/blog.utils'
 import { Blog as BlogType } from '@/types/Blog'
 import BlogHeader from '@/components/SEO/Blog'
 import { store } from '@/store/store'
@@ -46,28 +46,18 @@ export const Blog = ({ blogEntries }: { blogEntries: BlogType[] }) => {
 }
 
 export const getStaticProps: GetStaticProps = async ({ locale }) => {
-  const blogEntries = await getBlogsFromAllAccounts()
-  await Promise.all(store.dispatch(ArweaveApi.util.getRunningQueriesThunk()))
-
-  blogEntries?.sort((a, b) => {
-    const Data =
-      new Date(b.timestamp ? b.timestamp : '').valueOf() -
-      new Date(a.timestamp ? a.timestamp : '').valueOf()
-    return Data
-  })
-
-  //ensure cover_image is not undefined
-  const sanitizedBlogEntries = blogEntries.map((entry) => ({
-    ...entry,
-    cover_image: entry.cover_image ?? null,
-  }))
+  const [blogEntries, translations] = await Promise.all([
+    getBlogsFromAccounts(),
+    serverSideTranslations(locale ?? 'en', ['blog', 'common']),
+    store.dispatch(ArweaveApi.util.getRunningQueriesThunk()),
+  ])
 
   return {
     props: {
-      ...(await serverSideTranslations(locale ?? 'en', ['blog', 'common'])),
-      sanitizedBlogEntries,
+      ...translations,
+      blogEntries,
     },
-    revalidate: 60 * 5,
+    revalidate: 10,
   }
 }
 

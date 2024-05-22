@@ -101,7 +101,6 @@ const Settings = () => {
               : tab === 'advanced'
               ? t('settingAdvancedSettings')
               : ''}{' '}
-            {t('settingSettings')}
           </Heading>
           {(tab === 'profile' || !tab) && (
             <ProfileSettings settingsData={profileData} />

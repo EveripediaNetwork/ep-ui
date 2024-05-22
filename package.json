@@ -152,7 +152,7 @@
     "typescript": "^5.4.2"
   },
   "engines": {
-    "node": ">=18",
+    "node": ">=20",
     "yarn": ">=1.22.0",
     "npm": "please-use-yarn"
   },
