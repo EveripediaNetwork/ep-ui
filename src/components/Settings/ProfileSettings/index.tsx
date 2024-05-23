@@ -32,8 +32,10 @@ interface ProfileSettingsProps {
 }
 
 const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
-  const [postUserProfile, { error: postUserError }] =
-    usePostUserProfileMutation()
+  const [
+    postUserProfile,
+    { error: postProfileError, isLoading, isSuccess: postProfileSuccess },
+  ] = usePostUserProfileMutation()
   const strInitState: StrEntry = { value: '', error: '' }
   const [inputUsername, setInputUsername] = useState<StrEntry>(strInitState)
   const [inputBio, setInputBio] = useState<StrEntry>(strInitState)
@@ -44,7 +46,6 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   const [twitter, setTwitter] = useState('')
   const [avatarIPFSHash, setAvatarIPFSHash] = useState('')
   const [bannerIPFSHash, setBannerIPFSHash] = useState('')
-  const [isLoading, setIsLoading] = useState(false)
   const [isAvatarLoading, setIsAvatarLoading] = useState(false)
   const [isBannerLoading, setIsBannerLoading] = useState(false)
   const { address: userAddress } = useAddress()
@@ -72,6 +73,30 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     }
   }, [settingsData, userENSAddr])
 
+  useEffect(() => {
+    if (postProfileError) {
+      const { toastTitle, toastMessage, toastType } =
+        PostUserMessage(postProfileError)
+      toast({
+        title: toastTitle,
+        description: toastMessage,
+        status: toastType,
+        duration: 5000,
+        isClosable: true,
+      })
+    }
+    if (postProfileSuccess) {
+      const { toastTitle, toastMessage, toastType } = PostUserMessage(undefined)
+      toast({
+        title: toastTitle,
+        description: toastMessage,
+        status: toastType,
+        duration: 5000,
+        isClosable: true,
+      })
+    }
+  }, [postProfileError, postProfileSuccess])
+
   const checkUsername = useCallback(async () => {
     if (inputUsername.value.length > 2) {
       if (
@@ -91,9 +116,8 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   }, [checkUsername])
 
   // form submission handler
-  const handleProfileSettingsSave = async (e: FormEvent<HTMLFormElement>) => {
+  const handleProfileSettingsSave = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsLoading(true)
 
     // Validate all fields
     setInputUsername({
@@ -108,17 +132,14 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     checkUsername()
     if (inputUsername.error) {
       usernameRef.current?.focus()
-      setIsLoading(false)
       return
     }
     if (inputBio.error) {
       bioRef.current?.focus()
-      setIsLoading(false)
       return
     }
     if (inputEmail.error) {
       emailRef.current?.focus()
-      setIsLoading(false)
       return
     }
 
@@ -140,20 +161,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       banner: bannerIPFSHash,
     }
 
-    await postUserProfile({ profileInfo: data })
-
-    // TODO: Error checking
-
-    const { toastTitle, toastMessage, toastType } =
-      PostUserMessage(postUserError)
-    toast({
-      title: toastTitle,
-      description: toastMessage,
-      status: toastType,
-      duration: 5000,
-      isClosable: true,
-    })
-    setIsLoading(false)
+    postUserProfile({ profileInfo: data })
   }
 
   return (

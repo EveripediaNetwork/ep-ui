@@ -93,6 +93,9 @@ export const profileApi = createApi({
           profileInfo: JSON.stringify(profileInfo),
         },
       }),
+      transformErrorResponse: (response) => {
+        return response
+      },
       invalidatesTags: ['UserProfile'],
     }),
   }),
