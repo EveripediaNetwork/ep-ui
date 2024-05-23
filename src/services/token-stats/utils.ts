@@ -13,6 +13,11 @@ const remappingTokenIds = (token: string, cmcToken: string) => {
       return { tokenName: 'binancecoin', cmcTokenName: 'bnb' }
     case 'ordi':
       return { tokenName: 'ordinals', cmcTokenName: 'ordi' }
+    case 'compound':
+      return {
+        tokenName: 'compound-governance-token',
+        cmcTokenName: 'compound',
+      }
     default:
       return { tokenName: token }
   }
