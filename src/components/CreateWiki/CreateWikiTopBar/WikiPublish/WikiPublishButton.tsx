@@ -43,7 +43,7 @@ const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
 )
 
-interface WikiResultError {
+export type TGraphQLError = {
   error?: SerializedError | Pick<ClientError, 'name' | 'message' | 'stack'>
 }
 
@@ -169,7 +169,7 @@ export const WikiPublishButton = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
-  const processWikiPublishError = async (wikiResult: WikiResultError) => {
+  const processWikiPublishError = async (wikiResult: TGraphQLError) => {
     setIsLoading('error')
     let logReason = 'NO_IPFS'
     if (wikiResult && 'error' in wikiResult) {
@@ -280,7 +280,7 @@ export const WikiPublishButton = () => {
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
       } else {
-        await processWikiPublishError(wikiResult as WikiResultError)
+        await processWikiPublishError(wikiResult as TGraphQLError)
       }
 
       setSubmittingWiki.off()
