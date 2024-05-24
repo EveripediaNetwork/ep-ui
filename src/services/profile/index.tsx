@@ -11,7 +11,7 @@ import {
 } from '@/services/profile/queries'
 import config from '@/config'
 import { ProfileSettingsData } from '@/types/ProfileType'
-import { GraphQLClient } from 'graphql-request'
+import { ClientError, GraphQLClient } from 'graphql-request'
 
 export const profileApiClient = new GraphQLClient(config.graphqlUrl)
 
@@ -33,7 +33,21 @@ type IsUsernameTakenData = {
 
 export const profileApi = createApi({
   reducerPath: 'profileApi',
-  baseQuery: graphqlRequestBaseQuery({ client: profileApiClient }),
+  baseQuery: graphqlRequestBaseQuery<Partial<ClientError>>({
+    client: profileApiClient,
+    customErrors: ({ name, stack, response }) => {
+      const { message = '' } = response?.errors?.length
+        ? response.errors[0]
+        : {}
+
+      return {
+        name,
+        stack,
+        response,
+        message,
+      }
+    },
+  }),
   tagTypes: ['UserProfile'],
   endpoints: (builder) => ({
     getUserSettings: builder.query<ProfileSettingsData, string>({
@@ -93,8 +107,8 @@ export const profileApi = createApi({
           profileInfo: JSON.stringify(profileInfo),
         },
       }),
-      transformErrorResponse: (response) => {
-        return response
+      transformErrorResponse: ({ message }) => {
+        return message
       },
       invalidatesTags: ['UserProfile'],
     }),

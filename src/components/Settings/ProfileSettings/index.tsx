@@ -75,8 +75,9 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
 
   useEffect(() => {
     if (postProfileError) {
-      const { toastTitle, toastMessage, toastType } =
-        PostUserMessage(postProfileError)
+      const { toastTitle, toastMessage, toastType } = PostUserMessage(
+        postProfileError as string,
+      )
       toast({
         title: toastTitle,
         description: toastMessage,
