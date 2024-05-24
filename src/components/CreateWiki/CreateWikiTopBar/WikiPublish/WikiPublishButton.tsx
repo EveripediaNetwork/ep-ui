@@ -43,6 +43,10 @@ const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
 )
 
+interface WikiResultError {
+  error?: SerializedError | Pick<ClientError, 'name' | 'message' | 'stack'>
+}
+
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const { data } = useGetWikiQuery(wiki?.id || '')
@@ -165,13 +169,11 @@ export const WikiPublishButton = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
-  const processWikiPublishError = async (wikiResult: {
-    error: Pick<ClientError, 'name' | 'message' | 'stack'> | SerializedError
-  }) => {
+  const processWikiPublishError = async (wikiResult: WikiResultError) => {
     setIsLoading('error')
     let logReason = 'NO_IPFS'
     if (wikiResult && 'error' in wikiResult) {
-      const rawErrMsg = wikiResult.error.message
+      const rawErrMsg = wikiResult.error?.message
       const prefix = 'Http Exception:'
       if (rawErrMsg?.startsWith(prefix)) {
         const errObjString = rawErrMsg.substring(prefix.length)
@@ -278,7 +280,7 @@ export const WikiPublishButton = () => {
       if (wikiResult && 'data' in wikiResult) {
         saveHashInTheBlockchain(String(wikiResult.data))
       } else {
-        await processWikiPublishError(wikiResult)
+        await processWikiPublishError(wikiResult as WikiResultError)
       }
 
       setSubmittingWiki.off()
