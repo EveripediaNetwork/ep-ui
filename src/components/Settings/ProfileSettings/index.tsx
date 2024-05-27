@@ -135,7 +135,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     }
 
     const response = await postUserProfile({ profileInfo: data })
-    let errMsg
+    let errMsg: string | undefined
     if ('data' in response) {
       const { toastTitle, toastMessage, toastType } = PostUserMessage(errMsg)
       toast({
@@ -146,8 +146,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
         isClosable: true,
       })
     } else {
-      console.log(response.error)
-      errMsg = response.error
+      errMsg = response.error as string
       const { toastTitle, toastMessage, toastType } = PostUserMessage(
         errMsg as string,
       )
