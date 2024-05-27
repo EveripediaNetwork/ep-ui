@@ -12,7 +12,9 @@ const LinkButton = ({
 }: ChakraAndNextLinkProps) => {
   return (
     <LinkWrapper href={href} prefetch={prefetch}>
-      <Button {...props}>{children}</Button>
+      <Button as="a" {...props}>
+        {children}
+      </Button>
     </LinkWrapper>
   )
 }
