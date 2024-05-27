@@ -78,7 +78,6 @@ const AboutIqgpt = () => {
             <LinkButton
               href={'https://iqgpt.com/'}
               target="_blank"
-              rel="noopener noreferrer"
               size="lg"
               variant="solid"
               px={{ base: 5 }}
@@ -90,7 +89,6 @@ const AboutIqgpt = () => {
             <LinkButton
               href={'https://iq.wiki/wiki/iq'}
               target="_blank"
-              rel="noopener noreferrer"
               size="lg"
               px={{ base: 5 }}
               fontSize={'12px'}
