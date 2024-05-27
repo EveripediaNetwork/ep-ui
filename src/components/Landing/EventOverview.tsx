@@ -1,6 +1,6 @@
 import React from 'react'
 import { LinkButton } from '../Elements'
-import { useTranslation } from 'react-i18next'
+import { useTranslation } from 'next-i18next'
 import { useGetEventsQuery } from '@/services/event'
 import { dateFormater } from '@/lib/utils'
 import { TrendingEventsCard } from '../Event/TrendingEvent'
