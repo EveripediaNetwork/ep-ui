@@ -32,10 +32,7 @@ interface ProfileSettingsProps {
 }
 
 const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
-  const [
-    postUserProfile,
-    { error: postProfileError, isLoading, isSuccess: postProfileSuccess },
-  ] = usePostUserProfileMutation()
+  const [postUserProfile, { isLoading }] = usePostUserProfileMutation()
   const strInitState: StrEntry = { value: '', error: '' }
   const [inputUsername, setInputUsername] = useState<StrEntry>(strInitState)
   const [inputBio, setInputBio] = useState<StrEntry>(strInitState)
@@ -73,31 +70,6 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
     }
   }, [settingsData, userENSAddr])
 
-  useEffect(() => {
-    if (postProfileError) {
-      const { toastTitle, toastMessage, toastType } = PostUserMessage(
-        postProfileError as string,
-      )
-      toast({
-        title: toastTitle,
-        description: toastMessage,
-        status: toastType,
-        duration: 5000,
-        isClosable: true,
-      })
-    }
-    if (postProfileSuccess) {
-      const { toastTitle, toastMessage, toastType } = PostUserMessage(undefined)
-      toast({
-        title: toastTitle,
-        description: toastMessage,
-        status: toastType,
-        duration: 5000,
-        isClosable: true,
-      })
-    }
-  }, [postProfileError, postProfileSuccess])
-
   const checkUsername = useCallback(async () => {
     if (inputUsername.value.length > 2) {
       if (
@@ -117,7 +89,7 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
   }, [checkUsername])
 
   // form submission handler
-  const handleProfileSettingsSave = (e: FormEvent<HTMLFormElement>) => {
+  const handleProfileSettingsSave = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault()
 
     // Validate all fields
@@ -162,7 +134,31 @@ const ProfileSettings = ({ settingsData }: ProfileSettingsProps) => {
       banner: bannerIPFSHash,
     }
 
-    postUserProfile({ profileInfo: data })
+    const response = await postUserProfile({ profileInfo: data })
+    let errMsg
+    if ('data' in response) {
+      const { toastTitle, toastMessage, toastType } = PostUserMessage(errMsg)
+      toast({
+        title: toastTitle,
+        description: toastMessage,
+        status: toastType,
+        duration: 5000,
+        isClosable: true,
+      })
+    } else {
+      console.log(response.error)
+      errMsg = response.error
+      const { toastTitle, toastMessage, toastType } = PostUserMessage(
+        errMsg as string,
+      )
+      toast({
+        title: toastTitle,
+        description: toastMessage,
+        status: toastType,
+        duration: 5000,
+        isClosable: true,
+      })
+    }
   }
 
   return (
