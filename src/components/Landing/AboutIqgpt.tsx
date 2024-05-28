@@ -77,6 +77,7 @@ const AboutIqgpt = () => {
           <HStack gap={4} pb={'70px'}>
             <LinkButton
               href={'https://iqgpt.com/'}
+              target="_blank"
               size="lg"
               variant="solid"
               px={{ base: 5 }}
@@ -87,6 +88,7 @@ const AboutIqgpt = () => {
             </LinkButton>
             <LinkButton
               href={'https://iq.wiki/wiki/iq'}
+              target="_blank"
               size="lg"
               px={{ base: 5 }}
               fontSize={'12px'}

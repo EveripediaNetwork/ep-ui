@@ -28,8 +28,8 @@ export default async function handler(
             title: 'New Wiki Suggestion',
             description: `Check out the latest Wiki suggestions from ${
               contact ? `from ${contact}` : ''
-            } <@855035222969679902> 
-            ${feedback}`,
+            } <@855035222969679902>
+            ${feedback} \n\n cc <@841092527633072128>`,
           },
         ],
       }),
