@@ -97,7 +97,6 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   }
 
   const tooltipText = t('loginToolTip')
-
   return (
     <>
       {!isUserConnected && (

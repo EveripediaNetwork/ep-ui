@@ -1,3 +1,4 @@
+import { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
 import EventDetailsContent from '@/components/Event/Details/EventDetailsContent'
 import EventSummary from '@/components/Event/Details/EventSummary'
 import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
@@ -89,16 +90,16 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
   const slug = ctx.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 
-  const { data: eventDetails, error: eventError } = await store.dispatch(
+  const { data: eventDetails, error: eventError } = (await store.dispatch(
     getWiki.initiate(slug),
-  )
+  )) as { data: Wiki | undefined; error: TGraphQLError }
   const { data: popularEvents } = await store.dispatch(
     getPopularEvents.initiate({ startDate: dateFormater(new Date()) }),
   )
 
   if (eventError)
     throw new Error(
-      `There was an error fetching the wiki: ${eventError.message}`,
+      `There was an error fetching the wiki: ${eventError.error?.message}`,
     )
 
   if (!eventDetails) {

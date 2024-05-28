@@ -32,6 +32,7 @@ const Settings = () => {
   const { query } = useRouter()
   const { tab } = query
   const { address: userAddress } = useAddress()
+
   const token = useSelector((state: RootState) => state.user.token)
   const { setAccount, profileData } = useUserProfileData(
     UserProfileFetchOptions.WITH_ALL_SETTINGS,
