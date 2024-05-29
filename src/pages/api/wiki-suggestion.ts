@@ -23,8 +23,7 @@ export default async function handler(
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         username: 'IQ.Wiki',
-        content:
-          'Hi <@855035222969679902> \n\ncc <@841092527633072128>',
+        content: 'Hi <@855035222969679902> \n\ncc <@841092527633072128>',
         embeds: [
           {
             title: 'New Wiki Suggestion',
