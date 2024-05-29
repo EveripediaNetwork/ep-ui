@@ -89,7 +89,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   if (wikiError)
     return {
       redirect: {
-        destination: `/404/?wiki=${slug}`,
+        destination: `/NotFound/?wiki=${slug}`,
         permanent: false,
       },
     }
