@@ -87,12 +87,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   )
 
   if (wikiError)
-    return {
-      redirect: {
-        destination: `/NotFound/?wiki=${slug}`,
-        permanent: false,
-      },
-    }
+    throw new Error(
+      `There was an error fetching the wiki: ${wikiError.message}`,
+    )
 
   if (wiki?.hidden) {
     return {
