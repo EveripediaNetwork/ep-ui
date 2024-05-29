@@ -16,8 +16,12 @@ const moduleExports = {
       'react-native': false,
     }
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
-    config.optimization.moduleIds = 'named'
-    config.optimization.runtimeChunk = 'single'
+    config.optimization.moduleIds = 'deterministic'
+    config.optimization.chunkIds = 'deterministic'
+    config.optimization.minimize = true
+    config.optimization.runtimeChunk = {
+      name: (entrypoint) => `runtimechunk~${entrypoint.name}`,
+    }
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
