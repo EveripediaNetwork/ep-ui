@@ -13,6 +13,7 @@ import { getActivityMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
+import { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
 
 interface HistoryPageProps {
   wikiHistory: Activity[]
@@ -121,20 +122,22 @@ const History = ({ wikiHistory, wiki }: HistoryPageProps) => {
 export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { notFound: true }
-  const { data: wikiHistory, error: wikiHistoryError } = await store.dispatch(
+  const { data: wikiHistory, error: wikiHistoryError } = (await store.dispatch(
     getActivityByWiki.initiate(slug),
-  )
+  )) as { data?: Activity[]; error?: TGraphQLError }
 
   if (wikiHistoryError)
-    throw new Error(`Error fetching wiki history: ${wikiHistoryError.message}`)
+    throw new Error(
+      `Error fetching wiki history: ${wikiHistoryError?.error?.message}`,
+    )
 
-  const { data: wiki, error: wikiError } = await store.dispatch(
+  const { data: wiki, error: wikiError } = (await store.dispatch(
     getWiki.initiate(slug),
-  )
+  )) as { data?: Wiki; error?: TGraphQLError }
 
   if (wikiError)
     throw new Error(
-      `Error fetching latest wiki for history: ${wikiError.message}`,
+      `Error fetching latest wiki for history: ${wikiError.error?.message}`,
     )
 
   return {

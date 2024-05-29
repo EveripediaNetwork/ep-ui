@@ -12,6 +12,7 @@ import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { averageRating } from '@/services/admin'
 import Head from 'next/head'
+import { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
 
 interface WikiProps {
   wiki: WikiType
@@ -82,9 +83,9 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const slug = context.params?.slug
   if (typeof slug !== 'string') return { props: {} }
 
-  const { data: wiki, error: wikiError } = await store.dispatch(
+  const { data: wiki, error: wikiError } = (await store.dispatch(
     getWiki.initiate(slug),
-  )
+  )) as { data?: WikiType; error?: TGraphQLError }
 
   if (wikiError)
     throw new Error(
