@@ -13,7 +13,7 @@
     "lint": "biome check . --apply",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
-    "postinstall": "yarn gen:theme-typings",
+    "postinstall": "pnpm gen:theme-typings",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
@@ -22,6 +22,7 @@
   },
   "dependencies": {
     "@chakra-ui/color-mode": "^2.0.0",
+    "@chakra-ui/icon": "^3.0.0",
     "@chakra-ui/icons": "^2.0.0",
     "@chakra-ui/react": "^2.3.7",
     "@chakra-ui/react-utils": "^2.0.0",
@@ -107,7 +108,7 @@
     "react-intersection-observer": "^9.4.0",
     "react-lite-youtube-embed": "^2.3.52",
     "react-markdown": "8.0.7",
-    "react-redux": "^7.2.7",
+    "react-redux": "^7.2.9",
     "react-scroll": "^1.8.8",
     "react-share": "^4.4.0",
     "react-slick": "^0.28.1",
@@ -129,18 +130,20 @@
     "uuid": "^8.3.2",
     "viem": "^2.8.13",
     "wagmi": "^2.5.11",
-    "yarn": "^1.22.18",
     "zod": "^3.21.4"
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
     "@biomejs/biome": "1.1.2",
     "@chakra-ui/cli": "^2.1.8",
+    "@chakra-ui/react-types": "^2.0.6",
+    "@magic-sdk/types": "^15.8.0",
     "@next/bundle-analyzer": "^12.2.2",
     "@types/debounce": "^1.2.1",
     "@types/humanize-plus": "^1.8.0",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
+    "@types/react-redux": "^7.1.16",
     "@types/react-scroll": "^1.8.4",
     "@types/react-slick": "^0.23.8",
     "autoprefixer": "^10.4.17",
@@ -153,8 +156,6 @@
   },
   "engines": {
     "node": ">=20",
-    "yarn": ">=1.22.0",
-    "npm": "please-use-yarn"
-  },
-  "packageManager": "yarn@1.22.5"
+    "pnpm": ">=9"
+  }
 }

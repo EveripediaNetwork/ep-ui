@@ -4,7 +4,7 @@
     "enabled": false
   },
   "files": {
-    "ignore": ["**/node_modules", "yarn.lock", ".next"]
+    "ignore": ["**/node_modules", "pnpm-lock.yaml", ".next"]
   },
   "formatter": {
     "enabled": true,

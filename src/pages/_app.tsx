@@ -27,7 +27,11 @@ export const montserrat = Montserrat({
   display: 'swap',
 })
 
-const App = ({ Component, pageProps, router }: EpAppProps) => {
+const App: React.FC<EpAppProps> = ({
+  Component,
+  pageProps,
+  router,
+}: EpAppProps) => {
   useEffect(() => {
     const handleRouteChange = (url: URL) => pageView(url)
     router.events.on('routeChangeComplete', handleRouteChange)

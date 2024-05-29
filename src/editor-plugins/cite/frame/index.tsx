@@ -2,7 +2,6 @@ import { store } from '@/store/store'
 import { CiteReference, CommonMetaIds } from '@everipedia/iq-utils'
 import {
   chakra,
-  HTMLChakraProps,
   Tab,
   TabList,
   TabPanel,
@@ -11,14 +10,12 @@ import {
 } from '@chakra-ui/react'
 import { PluginContext } from '@toast-ui/editor'
 import React, { useEffect } from 'react'
-import { HTMLMotionProps, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { CiteFromNewURL } from './CiteFromNewURL'
 import { CiteFromExistingRefs } from './CiteFromExistingRefs'
 
-type Merge<P, T> = Omit<P, keyof T> & T
-type MotionBoxProps = Merge<HTMLChakraProps<'div'>, HTMLMotionProps<'div'>>
-export const MotionBox: React.FC<MotionBoxProps> = motion(chakra.div)
+export const MotionBox = motion(chakra.div)
 
 const FrameTab = ({ children }: { children: React.ReactNode }) => (
   <Tab
