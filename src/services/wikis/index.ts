@@ -26,7 +26,7 @@ import config from '@/config'
 import { ActivityBuilder } from '@/types/ActivityDataType'
 import { CommonUser } from '@/types/wiki'
 
-type RecentWikisBuilder = WikiBuilder<
+export type RecentWikisBuilder = WikiBuilder<
   {
     user: CommonUser
   },

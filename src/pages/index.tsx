@@ -7,9 +7,10 @@ import {
   getWikis,
   wikiApi,
   PromotedWikisBuilder,
+  RecentWikisBuilder,
 } from '@/services/wikis'
 import { store } from '@/store/store'
-import { Wiki } from '@everipedia/iq-utils'
+import { BaseTag, Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 const CategoriesList = dynamic(
   () => import('@/components/Landing/CategoriesList'),
@@ -41,6 +42,7 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import EventOverview from '@/components/Landing/EventOverview'
 import { IQBar } from '@/components/Landing/IQBar'
+import { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -113,17 +115,21 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   })
 
   const { data: promotedWikis, error: promotedWikisError } =
-    await store.dispatch(getPromotedWikis.initiate())
-  const { data: recent, error: recentError } = await store.dispatch(
+    (await store.dispatch(getPromotedWikis.initiate())) as {
+      data?: PromotedWikisBuilder[]
+      error: TGraphQLError
+    }
+  const { data: recent, error: recentError } = (await store.dispatch(
     getWikis.initiate(),
-  )
+  )) as { data?: RecentWikisBuilder[]; error: TGraphQLError }
+
   const { data: leaderboard } = await store.dispatch(getLeaderboard.initiate())
-  const { data: tagsData, error: tagsDataError } = await store.dispatch(
+  const { data: tagsData, error: tagsDataError } = (await store.dispatch(
     getTags.initiate({
       startDate: Math.floor(Date.now() / 1000) - 60 * 60 * 24 * 30,
       endDate: Math.floor(Date.now() / 1000),
     }),
-  )
+  )) as { data?: BaseTag[]; error: TGraphQLError }
 
   const { data: NFTsList } = await store.dispatch(
     getNFTRanking.initiate({
@@ -201,10 +207,10 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
   if (promotedWikisError || tagsDataError || recentError) {
     throw new Error(
       `Error fetching data. the error is: ${[
-        JSON.stringify(tagsDataError?.message),
-        JSON.stringify(promotedWikisError?.message),
-        JSON.stringify(tagsDataError?.message),
-        JSON.stringify(recentError?.message),
+        tagsDataError?.error?.message,
+        promotedWikisError?.error?.message,
+        tagsDataError?.error?.message,
+        recentError?.error?.message,
       ].join(' ')}
       }`,
     )

@@ -7,7 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const moduleExports = {
   i18n,
   reactStrictMode: true,
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   webpack(config) {
     config.resolve.fallback = {
       fs: false,
