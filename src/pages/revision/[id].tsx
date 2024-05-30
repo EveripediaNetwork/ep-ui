@@ -166,10 +166,6 @@ export const getStaticProps: GetStaticProps = async (context) => {
       },
     }
 
-  if (activityError) {
-    throw new Error(`Error fetching activity: ${activityError}`)
-  }
-
   return {
     notFound: true,
     props,
