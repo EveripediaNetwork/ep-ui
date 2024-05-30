@@ -174,6 +174,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
     serverSideTranslations(context.locale ?? 'en', ['blog', 'common']),
     getBlogsFromAccounts(),
   ])
+
+  if (!result.data?.entry) {
+    return {
+      notFound: true,
+    }
+  }
+
   const blog = formatBlog(result.data?.entry as Blog, true)
 
   blog.body = String(
