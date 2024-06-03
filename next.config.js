@@ -19,9 +19,6 @@ const moduleExports = {
     config.optimization.moduleIds = 'deterministic'
     config.optimization.chunkIds = 'deterministic'
     config.optimization.minimize = true
-    config.optimization.runtimeChunk = {
-      name: (entrypoint) => `runtimechunk~${entrypoint.name}`,
-    }
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,
