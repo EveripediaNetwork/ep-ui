@@ -7,7 +7,7 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 const moduleExports = {
   i18n,
   reactStrictMode: true,
-  productionBrowserSourceMaps: true,
+  productionBrowserSourceMaps: false,
   webpack(config) {
     config.resolve.fallback = {
       fs: false,
@@ -16,8 +16,9 @@ const moduleExports = {
       'react-native': false,
     }
     config.externals.push('pino-pretty', 'lokijs', 'encoding')
-    config.optimization.moduleIds = 'named'
-    config.optimization.runtimeChunk = 'single'
+    config.optimization.moduleIds = 'deterministic'
+    config.optimization.chunkIds = 'deterministic'
+    config.optimization.minimize = true
     config.module.rules.push({
       test: /\.svg$/i,
       issuer: /\.[jt]sx?$/,

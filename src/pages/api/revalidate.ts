@@ -19,7 +19,7 @@ export default async function handler(
     await res.revalidate(path)
     return res.json({ revalidated: true, path })
   } catch (err) {
-    console.error(JSON.stringify(err))
-    return res.status(500).json({ path: path, error: JSON.stringify(err) })
+    console.warn(JSON.stringify(err))
+    return res.status(400).json({ path: path, error: JSON.stringify(err) })
   }
 }

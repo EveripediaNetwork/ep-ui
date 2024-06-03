@@ -34,22 +34,22 @@ export const formatEntry = async (
 export const formatBlog = (blog: Blog, hasBody?: boolean) => {
   const regex = /\*\*(.*?)\*\*/g
   const newBlog: FormatedBlogType = {
-    title: blog.title,
-    slug: slugify(blog.title || ''),
-    digest: blog.digest,
+    title: blog?.title,
+    slug: slugify(blog?.title || ''),
+    digest: blog?.digest,
     contributor: blog?.publisher?.project?.address || '',
-    timestamp: blog.timestamp,
-    cover_image: blog.body
-      ? (blog.body
+    timestamp: blog?.timestamp,
+    cover_image: blog?.body
+      ? (blog?.body
           .split('\n\n')[0]
           .match(/!\[[^\]]*\]\((.*?)\s*("(?:.*[^"])")?\s*\)/m) || [])?.[1]
       : '',
     image_sizes: 50,
   }
   if (hasBody) {
-    newBlog.body = blog.body
-    newBlog.excerpt = blog.body
-      ? blog.body.split('\n\n')[1].replace(regex, '$1')
+    newBlog.body = blog?.body
+    newBlog.excerpt = blog?.body
+      ? blog?.body.split('\n\n')[1].replace(regex, '$1')
       : ''
   }
   return newBlog
