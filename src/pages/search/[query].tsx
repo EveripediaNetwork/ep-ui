@@ -17,7 +17,6 @@ import ActivityCard from '@/components/Activity/ActivityCard'
 import { WikiPreview } from '@everipedia/iq-utils'
 import { Link } from '@/components/Elements'
 import { useRouter } from 'next/router'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 interface SearchQueryProps {
   query: string
@@ -138,17 +137,7 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
   const query = queryParam as string
 
   return {
-    props: {
-      ...(await serverSideTranslations(context.locale ?? 'en', [
-        'common',
-        'home',
-        'category',
-        'rank',
-        'wiki',
-        'event',
-      ])),
-      query,
-    },
+    props: { query },
   }
 }
 

@@ -8,16 +8,12 @@ const networkMap = {
     rpcUrls: ['https://polygon-rpc.com/'],
     blockExplorerUrls: ['https://www.polygonscan.com/'],
   },
-  IQ_TESTNET: {
-    chainId: toHex(313377), // '0x333133333737'
-    chainName: 'IQ Chain',
-    nativeCurrency: {
-      name: 'IQ Token',
-      symbol: 'IQ',
-      decimals: 18,
-    },
-    rpcUrls: ['https://rpc-testnet.braindao.org/'],
-    blockExplorerUrls: ['https://testnet.braindao.org'],
+  MUMBAI_TESTNET: {
+    chainId: toHex(80001), // '0x13881'
+    chainName: 'Matic(Polygon) Mumbai Testnet',
+    nativeCurrency: { name: 'tMATIC', symbol: 'tMATIC', decimals: 18 },
+    rpcUrls: ['https://rpc-mumbai.maticvigil.com'],
+    blockExplorerUrls: ['https://mumbai.polygonscan.com/'],
   },
 }
 

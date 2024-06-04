@@ -1,55 +1,82 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { WalletBalanceType } from '@/types/WalletBalanceType'
+import { maticProvider } from '@/utils/WalletUtils/getProvider'
+import axios from 'axios'
+import { env } from '@/env.mjs'
 import { updateWalletDetails } from '@/store/slices/user-slice'
 import { useDispatch } from 'react-redux'
-import { useAccount, useBalance, useReadContract } from 'wagmi'
-import config from '@/config'
-import IQABI from '@/abi/erc20Abi'
 
-export const useFetchWalletBalance = () => {
+export const getUserIQBalance = async (userAddress: string) => {
+  try {
+    const response = await axios.post<{ result: string }>(
+      `https://eth-${
+        env.NEXT_PUBLIC_IS_PRODUCTION === 'true' ? 'mainnet' : 'goerli'
+      }.alchemyapi.io/v2/${env.NEXT_PUBLIC_ALCHEMY_API_KEY}`,
+      {
+        jsonrpc: '2.0',
+        id: 1,
+        method: 'eth_call',
+        params: [
+          {
+            from: '0x0000000000000000000000000000000000000000',
+            to: env.NEXT_PUBLIC_IQ_ADDRESS,
+            data: `0x70a08231000000000000000000000000${userAddress.replace(
+              '0x',
+              '',
+            )}`,
+          },
+          'latest',
+        ],
+      },
+    )
+
+    let hexString = response.data.result
+    if (hexString === '0x' || !hexString) {
+      hexString = '0x0'
+    }
+    let IQBalance = parseInt(hexString, 16)
+    IQBalance = Math.floor(IQBalance)
+    return IQBalance
+  } catch (error) {
+    console.log(error)
+    throw new Error('Error getting user IQ balance')
+  }
+}
+
+export const useFetchWalletBalance = (address: string | null) => {
   const [userBalance, setUserBalance] = useState<WalletBalanceType[]>([])
   const dispatch = useDispatch()
-  const { address } = useAccount()
-  const { data, isLoading: isBalanceLoading } = useBalance({
-    address,
-  })
-
-  const { data: iqData } = config.isProduction
-    ? useReadContract({
-        address: config.iqAddress as `0x${string}`,
-        abi: IQABI,
-        functionName: 'balanceOf',
-        args: [address as `0x${string}`],
-      })
-    : { data: null }
-
   const [isLoading, setIsLoading] = useState(false)
 
-  const refreshBalance = useCallback(async () => {
+  const refreshBalance = async () => {
     if (!address) {
+      console.log('Address is undefined')
       return
     }
 
     setIsLoading(true)
 
     try {
-      const nativeBalance = data?.formatted ?? 0
-      const iqBalance = iqData ?? 0
+      const maticBalanceBigNumber = await maticProvider.getBalance({
+        address,
+      })
+      const maticBalance = parseInt(maticBalanceBigNumber, 16) / 10e17
+      const IQBalance = await getUserIQBalance(address)
+
       const balances: WalletBalanceType[] = [
         {
           data: {
-            formatted: String(nativeBalance),
-            symbol: config.isProduction ? 'MATIC' : 'IQ',
+            formatted: IQBalance.toString(),
+            symbol: 'IQ',
+          },
+        },
+        {
+          data: {
+            formatted: maticBalance.toString(),
+            symbol: 'MATIC',
           },
         },
       ]
-      config.isProduction &&
-        balances.push({
-          data: {
-            formatted: String(iqBalance),
-            symbol: 'IQ',
-          },
-        })
 
       setUserBalance(balances)
       dispatch(updateWalletDetails(balances))
@@ -58,15 +85,11 @@ export const useFetchWalletBalance = () => {
     } finally {
       setIsLoading(false)
     }
-  }, [address, dispatch, data])
+  }
 
   useEffect(() => {
     refreshBalance()
-  }, [address, dispatch, refreshBalance])
+  }, [address])
 
-  return {
-    userBalance,
-    refreshBalance,
-    isLoading: isLoading || isBalanceLoading,
-  }
+  return { userBalance, refreshBalance, isLoading }
 }

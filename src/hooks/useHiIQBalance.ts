@@ -21,37 +21,36 @@ const abi = [
 
 export const useHiIQBalance = (address: string | undefined | null) => {
   const dispatch = useDispatch()
-  const getContractDetails = async () => {
+  const getContractDetails = async (functionName: string) => {
     const balance = await provider.readContract({
-      address: config.hiIqAddress as `0x${string}`,
+      address: config.hiIqAddress,
       abi,
-      functionName: 'locked',
-      args: [address as `0x${string}`],
+      functionName: functionName,
+      args: [address],
     })
     return balance
   }
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const getBalance = async () => {
-    const userBalance = await getContractDetails()
-    const fetchedBalance = userBalance ? BigInt(userBalance[0]) : BigInt(0)
-    const hiiqBalance = Number(formatEther(fetchedBalance))
-    const coinGeckoIqPrice = await getIqTokenValue()
-    dispatch(
-      updateHiIQDetails({
-        hiiqBalance,
-        symbol: 'HiIQ',
-        iqPrice: coinGeckoIqPrice,
-        totalUsdBalance: coinGeckoIqPrice * hiiqBalance,
-      }),
-    )
-  }
-
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    const getBalance = async () => {
+      const userBalance = await getContractDetails('locked')
+      const fetchedBalance = userBalance ? BigInt(userBalance[0]) : BigInt(0)
+      const hiiqBalance = Number(formatEther(fetchedBalance))
+      const coinGeckoIqPrice = await getIqTokenValue()
+      dispatch(
+        updateHiIQDetails({
+          hiiqBalance,
+          symbol: 'HiIQ',
+          iqPrice: coinGeckoIqPrice,
+          totalUsdBalance: coinGeckoIqPrice * hiiqBalance,
+        }),
+      )
+    }
     if (address?.length) {
       getBalance()
     }
-  }, [address, dispatch, getBalance])
+  }, [address, dispatch])
 
   return null
 }

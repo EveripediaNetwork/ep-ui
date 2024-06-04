@@ -52,14 +52,13 @@ export const WikiPublishButton = () => {
   const { data } = useGetWikiQuery(wiki?.id || '')
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
-
   const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
 
-  const { chainId } = config.isProduction
-    ? networkMap.POLYGON_MAINNET
-    : networkMap.IQ_TESTNET
-
+  const { chainId } =
+    config.alchemyChain === 'maticmum'
+      ? networkMap.MUMBAI_TESTNET
+      : networkMap.POLYGON_MAINNET
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
   const {
@@ -153,7 +152,7 @@ export const WikiPublishButton = () => {
         )
       }
     }
-  }, [detectedProvider, userAddress])
+  }, [detectedProvider, isUserConnected])
 
   useEffect(() => {
     if (activeStep === 3) {
@@ -243,7 +242,7 @@ export const WikiPublishButton = () => {
       value: 1,
     })
 
-    if (userAddress) {
+    if (isUserConnected && userAddress) {
       const ifWikiExists =
         isNewCreateWiki &&
         !override &&
@@ -298,7 +297,7 @@ export const WikiPublishButton = () => {
   return (
     <>
       <Tooltip
-        isDisabled={(userCanEdit as boolean) && isUserConnected}
+        isDisabled={userCanEdit && isUserConnected}
         p={2}
         rounded="md"
         placement="bottom-start"

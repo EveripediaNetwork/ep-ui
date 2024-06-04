@@ -14,7 +14,6 @@ import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
-import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -50,11 +49,9 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
-          <WagmiWrapper>
-            <Layout noFooter={Component.noFooter}>
-              <Component {...pageProps} />
-            </Layout>
-          </WagmiWrapper>
+          <Layout noFooter={Component.noFooter}>
+            <Component {...pageProps} />
+          </Layout>
         </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />

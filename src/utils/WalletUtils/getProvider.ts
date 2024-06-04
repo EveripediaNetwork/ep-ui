@@ -1,13 +1,23 @@
 import config from '@/config'
+import { env } from '@/env.mjs'
 import { createPublicClient, http } from 'viem'
-import { mainnet } from 'viem/chains'
-import { iqTestnet } from '@/config/wagmi'
+import { mainnet, polygon, polygonMumbai } from 'viem/chains'
 
-//For ENS data and HiIQ balance
-const chain = config.isProduction ? mainnet : iqTestnet
-const transport = config.isProduction ? http(config.ensRPC) : http()
+export const rpcs: {
+  [key: string]: string
+} = {
+  maticmum: `https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`,
+  matic: `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`,
+}
 
 export const provider: any = createPublicClient({
-  chain,
-  transport,
+  chain: mainnet,
+  transport: http(config.ensRPC),
+})
+
+export const maticProvider: any = createPublicClient({
+  chain: env.NEXT_PUBLIC_IS_PRODUCTION === 'true' ? polygon : polygonMumbai,
+  transport: http(
+    env.NEXT_PUBLIC_IS_PRODUCTION === 'true' ? rpcs.matic : rpcs.maticmum,
+  ),
 })

@@ -1,5 +1,3 @@
-import config from '@/config'
-
 export type Network = {
   id: number
   image: string
@@ -13,14 +11,21 @@ export const Networks: Network[] = [
     id: 1,
     image: '/images/logos/polygon.svg',
     name: 'Polygon',
-    isActive: config.isProduction,
+    isActive: true,
     chainId: '0x13881',
   },
   {
     id: 2,
-    image: '/images/logos/braindao-logo.svg',
-    name: 'IQ',
-    isActive: !config.isProduction,
-    chainId: '0x333133333737',
+    image: '/images/logos/ethereum2.svg',
+    name: 'Ethereum',
+    isActive: false,
+    chainId: '0x1',
+  },
+  {
+    id: 3,
+    image: '/images/logos/bsc.svg',
+    name: 'Bsc',
+    isActive: false,
+    chainId: '0x38',
   },
 ]

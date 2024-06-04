@@ -8,6 +8,8 @@ import type {
 import { type EthNetworkConfiguration, Magic } from 'magic-sdk'
 import { type Chain, createWalletClient, custom, getAddress } from 'viem'
 
+const IS_SERVER = typeof window === 'undefined'
+
 export interface MagicOptions {
   apiKey: string
   accentColor?: string
@@ -43,8 +45,6 @@ export function magicConnector({ chains = [], options }: MagicConnectorParams) {
     | InstanceWithExtensions<SDKBase, OAuthExtension[]>
     | InstanceWithExtensions<SDKBase, MagicSDKExtensionsOption<string>>
     | null => {
-    if (typeof window === 'undefined') return null
-
     if (options.connectorType === 'dedicated') {
       return new Magic(options.apiKey, {
         ...options.magicSdkConfiguration,
@@ -99,6 +99,7 @@ export function magicConnector({ chains = [], options }: MagicConnectorParams) {
     name: 'Magic',
     type: 'Magic',
     isModalOpen: false,
+    isReady: IS_SERVER,
     getProvider,
     getMagicSDK,
     getAccount,

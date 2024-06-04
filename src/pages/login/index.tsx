@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
 import { useAddress } from '@/hooks/useAddress'
 import Head from 'next/head'
 
@@ -27,7 +28,7 @@ const Login = () => {
   }
 
   return (
-    <>
+    <WagmiWrapper>
       <Head>
         <link rel="preconnect" href="https://assets.auth.magic.link" />
       </Head>
@@ -39,7 +40,7 @@ const Login = () => {
           <Connectors handleRedirect={handleRedirect} />
         </Box>
       </Container>
-    </>
+    </WagmiWrapper>
   )
 }
 

@@ -16,7 +16,6 @@ import { ProviderDataType } from '@/types/ProviderDataType'
 import { useAccount, useSwitchChain } from 'wagmi'
 import { useDispatch } from 'react-redux'
 import detectEthereumProvider from '@metamask/detect-provider'
-import { wagmiConfig } from '@/config/wagmi'
 
 const NetworkErrorNotification = ({
   modalState,
@@ -30,7 +29,6 @@ const NetworkErrorNotification = ({
   const cancelRef = React.useRef<FocusableElement>(null)
   const { chains, switchChainAsync } = useSwitchChain()
   const toast = useToast()
-  const chainame = wagmiConfig.chains[0].name
 
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
@@ -117,8 +115,8 @@ const NetworkErrorNotification = ({
           </Flex>
           <Text mt="6" w="90%" lineHeight="2">
             Your wallet is currently connected to an unsupported network. To
-            continue with {chainame} network, Switch the network in your wallet
-            to {chainame}.
+            continue with Polygon network, Switch the network in your wallet to
+            Polygon.
           </Text>
           <Text mt="6" w="90%" lineHeight="2">
             Switch wallet if unable to change wallet network.
