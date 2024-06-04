@@ -16,12 +16,13 @@ import networkMap from '@/data/NetworkMap'
 import config from '@/config'
 
 const NetworkMenu = () => {
-  const [currentNetwork, setCurrentNetwork] = useState<Network>(Networks[0])
+  const [currentNetwork, setCurrentNetwork] = useState<Network>(
+    Networks.find((network) => network.isActive) as Network,
+  )
 
-  const { chainId } =
-    config.alchemyChain === 'maticmum'
-      ? networkMap.MUMBAI_TESTNET
-      : networkMap.POLYGON_MAINNET
+  const { chainId } = config.isProduction
+    ? networkMap.POLYGON_MAINNET
+    : networkMap.IQ_TESTNET
 
   const handleNetworkSwitch = (newNetwork: Network) => {
     if (newNetwork.chainId === chainId) {
@@ -36,7 +37,9 @@ const NetworkMenu = () => {
         fontSize="md"
         fontWeight={600}
         variant="outline"
-        leftIcon={<Image src={currentNetwork.image} />}
+        leftIcon={
+          <Image src={currentNetwork.image} w={6} h={6} borderRadius="full" />
+        }
         rightIcon={<ChevronDownIcon />}
       >
         <Text fontSize="sm"> {currentNetwork.name} </Text>
@@ -52,6 +55,8 @@ const NetworkMenu = () => {
               >
                 <Image
                   boxSize="24px"
+                  w={6}
+                  h={6}
                   borderRadius="full"
                   src={network.image}
                   alt={network.name}

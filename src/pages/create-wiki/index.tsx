@@ -38,7 +38,6 @@ import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
 import isDeepEqual from '@everipedia/iq-utils/build/main/lib/isDeepEqual'
 
 type PageWithoutFooter = NextPage & {
@@ -222,11 +221,9 @@ const CreateWiki = () => {
   const wikiState = useCreateWikiState(router)
   const providerValue = useMemo(() => wikiState, [wikiState])
   return (
-    <WagmiWrapper>
-      <CreateWikiProvider value={providerValue}>
-        <CreateWikiContent />
-      </CreateWikiProvider>
-    </WagmiWrapper>
+    <CreateWikiProvider value={providerValue}>
+      <CreateWikiContent />
+    </CreateWikiProvider>
   )
 }
 

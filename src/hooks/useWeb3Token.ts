@@ -36,7 +36,7 @@ export const useWeb3Token = () => {
         },
       )
       setCookie(cookieNames.Enum['x-auth-token'], freshToken, {
-        maxAge: 60 * 60 * 24 * 7,
+        maxAge: 60 * 60 * 24 * 365,
       })
       dispatch(setToken(freshToken))
       return freshToken

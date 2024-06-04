@@ -13,7 +13,7 @@ export const BlogPost = (props: BlogPostType) => {
   const { post, ...rest } = props
 
   return (
-    <LinkWrapper href={`/blog/${post.digest}`}>
+    <LinkWrapper href={`/blog/${post?.digest}`}>
       <Box
         display="flex"
         flexDir="column"
@@ -30,12 +30,12 @@ export const BlogPost = (props: BlogPostType) => {
         cursor={'pointer'}
         {...rest}
       >
-        {post.cover_image ? (
+        {post?.cover_image ? (
           <Image
             h="52"
-            src={post.cover_image.replace('\\_', '_')}
+            src={post?.cover_image.replace('\\_', '_')}
             loading="lazy"
-            alt={post.title}
+            alt={post?.title}
             width="full"
             imgH={IMAGE_BOX_SIZE}
             imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
@@ -51,26 +51,26 @@ export const BlogPost = (props: BlogPostType) => {
           gap={4}
         >
           <Flex gap={3}>
-            <Avatar address={post.contributor} size={20} alt="unknown" />
+            <Avatar address={post?.contributor} size={20} alt="unknown" />
             <Text
               fontSize="sm"
               color="gray.600"
               _dark={{ color: 'whiteAlpha.800' }}
             >
-              {new Date((post.timestamp ?? 0) * 1000).toDateString()}
+              {new Date((post?.timestamp ?? 0) * 1000).toDateString()}
             </Text>
           </Flex>
           <Box flexGrow={1}>
             <Flex align="center" mb={2}>
               <Text fontSize="lg" fontWeight="semibold" noOfLines={3}>
-                {post.title}
+                {post?.title}
               </Text>
             </Flex>
             <ReactMarkdown components={postComponent}>
-              {post.excerpt ?? ''}
+              {post?.excerpt ?? ''}
             </ReactMarkdown>
           </Box>
-          <LinkWrapper href={`/blog/${post.digest}`}>
+          <LinkWrapper href={`/blog/${post?.digest}`}>
             <Flex gap={2} align={'center'}>
               <Text
                 fontSize={{ base: 'sm' }}
