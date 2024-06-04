@@ -49,7 +49,7 @@ export const useGetSignedHash = () => {
   const { refetch } = useWaitForTransactionReceipt({
     hash: txHash as `0x${string}`,
     chainId: Number(config.chainId),
-    confirmations: 2,
+    confirmations: config.isProduction ? 2 : 1,
   })
 
   const { data: feeData } = useEstimateFeesPerGas({
@@ -84,6 +84,7 @@ export const useGetSignedHash = () => {
       })
       .catch((err) => {
         setIsLoading('error')
+        console.log(err)
         setMsg(err.message || defaultErrorMessage)
         logEvent({
           action: 'SUBMIT_WIKI_ERROR',

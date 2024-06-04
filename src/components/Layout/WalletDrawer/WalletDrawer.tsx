@@ -54,7 +54,7 @@ const WalletDrawer = ({
   useHiIQBalance(userAddress)
   const [accountRefreshLoading, setAccountRefreshLoading] = useState(false)
   const toast = useToast()
-  const { refreshBalance } = useFetchWalletBalance(userAddress as string)
+  const { refreshBalance } = useFetchWalletBalance()
   const { t } = useTranslation('common')
 
   const handleNavigation = () => {
