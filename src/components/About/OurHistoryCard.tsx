@@ -2,7 +2,6 @@ import React from 'react'
 import { Flex, Box, Heading, Link, Text } from '@chakra-ui/react'
 import { OurHistoryType } from '@/data/OurHistory'
 import { useTranslation } from 'next-i18next'
-
 interface ParagraphProps {
   text: string
 }

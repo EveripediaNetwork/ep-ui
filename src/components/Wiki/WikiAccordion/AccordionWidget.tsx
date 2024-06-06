@@ -24,6 +24,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import { WikiInsights } from '@/types/WikiInsightsDataType'
 import { getUsername } from '@/utils/DataTransform/getUsername'
+import NextLink from 'next/link'
 
 const AccordionURLTemplate = ({ contentURL }: { contentURL: string }) => (
   <Link
@@ -88,6 +89,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
             avatarIPFS={content.profile?.avatar}
           />
           <Link
+            as={NextLink}
             fontSize="xs"
             href={`/account/${content.id}`}
             color="brandLinkColor"

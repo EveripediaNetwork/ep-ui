@@ -1,13 +1,13 @@
 import { WIKI_IMAGE_ASPECT_RATIO, IMAGE_BOX_SIZE } from '@/data/Constants'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { AspectRatio, Link } from '@chakra-ui/react'
+import { AspectRatio } from '@chakra-ui/react'
 import { Image as ActivityImage } from '@/components/Elements/Image/Image'
 import { ActivityCardImageProps } from '@/types/ActivityDataType'
 
 const ActivityCardImage = (props: ActivityCardImageProps) => {
-  const { title, link, isNotifSubCard, wikiImgObj } = props
+  const { title, isNotifSubCard, wikiImgObj } = props
   return (
-    <Link href={link} mr={4} display={{ base: 'none', md: 'block' }}>
+    <div className="mr-4 hidden md:block">
       <AspectRatio
         ratio={WIKI_IMAGE_ASPECT_RATIO}
         w={{
@@ -27,7 +27,7 @@ const ActivityCardImage = (props: ActivityCardImageProps) => {
           imgBoxSize={IMAGE_BOX_SIZE}
         />
       </AspectRatio>
-    </Link>
+    </div>
   )
 }
 

@@ -3,6 +3,7 @@ import SquareFill from '@/components/Icons/squareFill'
 import { Box, Icon, Link, Text } from '@chakra-ui/react'
 import * as Collapsible from '@radix-ui/react-collapsible'
 import { useState } from 'react'
+import NextLink from 'next/link'
 
 type TocData = Array<{
   id: string
@@ -49,7 +50,9 @@ export function WikiTableOfContentHeader({
           outlineColor="brandLinkColor"
           pl={2}
         >
-          <Link href={`#${toc.id}`}>{toc.title}</Link>
+          <Link as={NextLink} href={`#${toc.id}`}>
+            {toc.title}
+          </Link>
         </Text>
       </Box>
     )
@@ -74,7 +77,9 @@ export function WikiTableOfContentHeader({
           color={activeId === toc.id ? 'brandLinkColor' : 'unset'}
           outlineColor="brandLinkColor"
         >
-          <Link href={`#${toc.id}`}>{toc.title}</Link>
+          <Link as={NextLink} href={`#${toc.id}`}>
+            {toc.title}
+          </Link>
         </Text>
       </Box>
       <Collapsible.Content>
