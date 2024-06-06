@@ -11,6 +11,7 @@ import {
   getWikiSummary,
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
+import { CHAR_SEARCH_LIMIT } from '@/data/Constants'
 
 const DISPLAY_LIMIT = 10
 
@@ -58,9 +59,9 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
     setResults([])
     setWikiSelected(null)
     const windowSelection = window.getSelection()?.toString()
-    setUserSelectedText(windowSelection || null)
-    setSearch(windowSelection || '')
-    if (windowSelection && windowSelection.length > 3) {
+    setUserSelectedText(windowSelection ?? null)
+    setSearch(windowSelection ?? '')
+    if (windowSelection && windowSelection.length > CHAR_SEARCH_LIMIT) {
       setLoading(true)
       debouncedFetchWikis(windowSelection, (data) => {
         setResults(data)
@@ -72,7 +73,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   }, [triggerCleanup])
 
   useEffect(() => {
-    if (search.length >= 3) {
+    if (search.length >= CHAR_SEARCH_LIMIT) {
       setLoading(true)
       debouncedFetchWikis(search, (data) => {
         setResults(data)
@@ -91,7 +92,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
 
     const payload = {
       url: `${config.publicDomain}/wiki/${wikiSelected.id}`,
-      text: userSelectedText || wikiSelected.title,
+      text: userSelectedText ?? wikiSelected.title,
     }
 
     eventEmitter.emit('command', 'wikiLink', payload)

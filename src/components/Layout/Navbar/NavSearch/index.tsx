@@ -32,7 +32,7 @@ import { useRouter } from 'next/router'
 import config from '@/config'
 import { LinkButton } from '@/components/Elements'
 import SearchSEO from '@/components/SEO/Search'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { CHAR_SEARCH_LIMIT, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { logEvent } from '@/utils/googleAnalytics'
@@ -294,8 +294,8 @@ const NavSearch = (props: NavSearchProps) => {
         disableFilter
         suggestWhenEmpty
         emptyState={!isLoading && noResults && emptyState}
-        shouldRenderSuggestions={(q) => q.length >= 3}
-        openOnFocus={query.length >= 3}
+        shouldRenderSuggestions={(q) => q.length >= CHAR_SEARCH_LIMIT}
+        openOnFocus={query.length >= CHAR_SEARCH_LIMIT}
         onSelectOption={(option) => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
