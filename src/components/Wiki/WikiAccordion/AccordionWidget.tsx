@@ -47,7 +47,11 @@ const AccordionAddressTemplate = ({
   hasCopied: boolean
 }) => (
   <HStack>
-    <Link as={NextLink} target="_blank" href={`https://etherscan.io/address/${content}`}>
+    <Link
+      as={NextLink}
+      target="_blank"
+      href={`https://etherscan.io/address/${content}`}
+    >
       {shortenAccount(content)}
     </Link>
     <IconButton

@@ -8,7 +8,12 @@ import NextLink from 'next/link'
 const ActivityCardImage = (props: ActivityCardImageProps) => {
   const { title, link, isNotifSubCard, wikiImgObj } = props
   return (
-    <Link as={NextLink} href={link} mr={4} display={{ base: 'none', md: 'block' }}>
+    <Link
+      as={NextLink}
+      href={link}
+      mr={4}
+      display={{ base: 'none', md: 'block' }}
+    >
       <AspectRatio
         ratio={WIKI_IMAGE_ASPECT_RATIO}
         w={{

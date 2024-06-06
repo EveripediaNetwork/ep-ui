@@ -50,7 +50,9 @@ export function WikiTableOfContentHeader({
           outlineColor="brandLinkColor"
           pl={2}
         >
-          <Link as={NextLink} href={`#${toc.id}`}>{toc.title}</Link>
+          <Link as={NextLink} href={`#${toc.id}`}>
+            {toc.title}
+          </Link>
         </Text>
       </Box>
     )
@@ -75,7 +77,9 @@ export function WikiTableOfContentHeader({
           color={activeId === toc.id ? 'brandLinkColor' : 'unset'}
           outlineColor="brandLinkColor"
         >
-          <Link as={NextLink} href={`#${toc.id}`}>{toc.title}</Link>
+          <Link as={NextLink} href={`#${toc.id}`}>
+            {toc.title}
+          </Link>
         </Text>
       </Box>
       <Collapsible.Content>
