@@ -47,11 +47,7 @@ const AccordionAddressTemplate = ({
   hasCopied: boolean
 }) => (
   <HStack>
-    <Link
-      as={NextLink}
-      target="_blank"
-      href={`https://etherscan.io/address/${content}`}
-    >
+    <Link target="_blank" href={`https://etherscan.io/address/${content}`}>
       {shortenAccount(content)}
     </Link>
     <IconButton
@@ -109,7 +105,6 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
           {content.map((explorer, i) => (
             <HStack key={i}>
               <Link
-                as={NextLink}
                 target="_blank"
                 display="block"
                 fontSize="14px"
