@@ -11,3 +11,4 @@ export const WIKI_SUMMARY_GEN_RATE_LIMIT_MAX_REQUESTS = 5
 export const GPT3_COST_PER_1K_TOKENS = 0.02
 export const GPT3_MAX_TRIES = 3
 export const IMAGE_BOX_SIZE = 150
+export const CHAR_SEARCH_LIMIT = 2

@@ -11,6 +11,7 @@ import {
   getWikiSummary,
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
+import { CHAR_SEARCH_LIMIT } from '@/data/Constants'
 
 const DISPLAY_LIMIT = 10
 
@@ -48,7 +49,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
     setTimeout(() => {
       const popupBtn = document.querySelector('.wikiLink__popupBtn')
       popupBtn?.addEventListener('click', () => {
-        setTriggerCleanup((p) => !p)
+        setTriggerCleanup(p => !p)
       })
     }, 500)
   }, [])
@@ -58,11 +59,11 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
     setResults([])
     setWikiSelected(null)
     const windowSelection = window.getSelection()?.toString()
-    setUserSelectedText(windowSelection || null)
-    setSearch(windowSelection || '')
-    if (windowSelection && windowSelection.length > 3) {
+    setUserSelectedText(windowSelection ?? null)
+    setSearch(windowSelection ?? '')
+    if (windowSelection && windowSelection.length > CHAR_SEARCH_LIMIT) {
       setLoading(true)
-      debouncedFetchWikis(windowSelection, (data) => {
+      debouncedFetchWikis(windowSelection, data => {
         setResults(data)
         setOffset(0)
         setWikiList(data.slice(0, DISPLAY_LIMIT))
@@ -72,9 +73,9 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
   }, [triggerCleanup])
 
   useEffect(() => {
-    if (search.length >= 3) {
+    if (search.length >= CHAR_SEARCH_LIMIT) {
       setLoading(true)
-      debouncedFetchWikis(search, (data) => {
+      debouncedFetchWikis(search, data => {
         setResults(data)
         setWikiList(data.slice(0, DISPLAY_LIMIT))
         setOffset(0)
@@ -91,7 +92,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
 
     const payload = {
       url: `${config.publicDomain}/wiki/${wikiSelected.id}`,
-      text: userSelectedText || wikiSelected.title,
+      text: userSelectedText ?? wikiSelected.title,
     }
 
     eventEmitter.emit('command', 'wikiLink', payload)
@@ -108,7 +109,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
         <input
           className="wikiLink__input"
           value={search}
-          onChange={(e) => setSearch(e.target.value)}
+          onChange={e => setSearch(e.target.value)}
           type="text"
           placeholder="Search Wiki"
         />
@@ -119,7 +120,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
             {shortenText(wikiSelected.title, 30)}
           </h3>
           <div className="wikiLink__previewTagsContainer">
-            {wikiSelected.tags?.map((tag) => (
+            {wikiSelected.tags?.map(tag => (
               <span
                 style={{
                   backgroundColor: `hsl(${Math.floor(
@@ -151,7 +152,7 @@ const WikiLinkFrame = ({ editorContext }: { editorContext: PluginContext }) => {
       )}
       {wikiList.length > 0 && !wikiSelected && (
         <div className="wikiLink__resultsContainer">
-          {wikiList.map((wiki) => (
+          {wikiList.map(wiki => (
             <button
               key={wiki.id}
               type="button"

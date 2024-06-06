@@ -29,7 +29,7 @@ import {
 import { LinkButton } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
 import config from '@/config'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { CHAR_SEARCH_LIMIT, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import {
   RemoveWikiSubscriptionHandler,
@@ -80,7 +80,7 @@ const WikiSubscriptionButton = ({
         alignItems={{ base: 'center' }}
         justifyContent={{ base: 'center' }}
         fontWeight={500}
-        onClick={(e) => {
+        onClick={e => {
           e.stopPropagation()
           SubscribeWikiHandler(email, wiki, userAddress, toast)
         }}
@@ -105,7 +105,7 @@ const WikiSubscriptionButton = ({
       alignItems={{ base: 'center' }}
       justifyContent={{ base: 'center' }}
       fontWeight={500}
-      onClick={(e) => {
+      onClick={e => {
         e.stopPropagation()
         RemoveWikiSubscriptionHandler(email, wiki.id, userAddress!, toast)
       }}
@@ -137,7 +137,7 @@ const SearchWikiNotifications = () => {
   const unrenderedWikis = results.wikis.length - ARTICLES_LIMIT
   const totalUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
 
-  useEventListener('keydown', (event) => {
+  useEventListener('keydown', event => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
     const el = event.target as Element | undefined
@@ -171,14 +171,14 @@ const SearchWikiNotifications = () => {
 
   const articlesSearchList = results.wikis
     .slice(0, ARTICLES_LIMIT)
-    .map((wiki) => {
+    .map(wiki => {
       const articleImage = `${config.pinataBaseUrl}${wiki.images?.[0].id}`
       const value = fillType(wiki, SEARCH_TYPES.WIKI)
       return (
         <AutoCompleteItem
           key={wiki.id}
           value={value}
-          getValue={(art) => art.title}
+          getValue={art => art.title}
           label={wiki.title}
           m={0}
           rounded="none"
@@ -232,9 +232,9 @@ const SearchWikiNotifications = () => {
         disableFilter
         suggestWhenEmpty
         emptyState={!isLoading && noResults && emptyState}
-        openOnFocus={query.length >= 3}
-        shouldRenderSuggestions={(q) => q.length >= 3}
-        onSelectOption={(option) => {
+        openOnFocus={query.length >= CHAR_SEARCH_LIMIT}
+        shouldRenderSuggestions={q => q.length >= CHAR_SEARCH_LIMIT}
+        onSelectOption={option => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
           logEvent({
@@ -248,7 +248,7 @@ const SearchWikiNotifications = () => {
         <form
           key={JSON.stringify(router.query.q) || ''}
           action=""
-          onSubmit={(e) => {
+          onSubmit={e => {
             e.preventDefault()
             router.push({
               pathname: '/settings/account',
@@ -273,7 +273,7 @@ const SearchWikiNotifications = () => {
                 placeholder="Search to add wikis to your list"
                 variant="unstyled"
                 value={query || router.query.q}
-                onChange={(e) => {
+                onChange={e => {
                   setQuery(() => {
                     return e.target.value
                   })

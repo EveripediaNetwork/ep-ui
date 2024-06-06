@@ -16,6 +16,7 @@ import {
   getEventByLocation,
   getEventsByTags,
 } from '../event'
+import { CHAR_SEARCH_LIMIT } from '@/data/Constants'
 
 export type Account = {
   id: string
@@ -124,7 +125,7 @@ export const useNavSearch = () => {
   })
 
   useEffect(() => {
-    if (query && query.length >= 3) {
+    if (query && query.length >= CHAR_SEARCH_LIMIT) {
       setIsLoading(true)
       debouncedFetchResults(query, (res) => {
         if (!res.accounts && !res.wikis && !res.categories) {
