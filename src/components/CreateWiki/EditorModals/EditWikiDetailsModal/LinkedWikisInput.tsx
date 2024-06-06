@@ -25,6 +25,7 @@ import {
 import { store } from '@/store/store'
 import { RiArrowRightDownLine, RiCloseLine } from 'react-icons/ri'
 import { useTranslation } from 'next-i18next'
+import { CHAR_SEARCH_LIMIT } from '@/data/Constants'
 
 const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
@@ -55,7 +56,7 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   )
 
   useEffect(() => {
-    if (search.length >= 3) {
+    if (search.length >= CHAR_SEARCH_LIMIT) {
       setLoading(true)
       debouncedFetchWikis(search, (data) => {
         setResults(data.slice(0, 6))
@@ -131,8 +132,8 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
           <AutoComplete
             disableFilter
             suggestWhenEmpty
-            shouldRenderSuggestions={(q) => q.length >= 3}
-            openOnFocus={search.length >= 3}
+            shouldRenderSuggestions={(q) => q.length >= CHAR_SEARCH_LIMIT}
+            openOnFocus={search.length >= CHAR_SEARCH_LIMIT}
             emptyState={
               <Center>
                 <Text m={5} fontSize="xs" color="linkColor" textAlign="center">

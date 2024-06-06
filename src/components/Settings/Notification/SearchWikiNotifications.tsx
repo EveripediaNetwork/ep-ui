@@ -29,7 +29,7 @@ import {
 import { LinkButton } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
 import config from '@/config'
-import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { CHAR_SEARCH_LIMIT, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import {
   RemoveWikiSubscriptionHandler,
@@ -232,8 +232,8 @@ const SearchWikiNotifications = () => {
         disableFilter
         suggestWhenEmpty
         emptyState={!isLoading && noResults && emptyState}
-        openOnFocus={query.length >= 3}
-        shouldRenderSuggestions={(q) => q.length >= 3}
+        openOnFocus={query.length >= CHAR_SEARCH_LIMIT}
+        shouldRenderSuggestions={(q) => q.length >= CHAR_SEARCH_LIMIT}
         onSelectOption={(option) => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
