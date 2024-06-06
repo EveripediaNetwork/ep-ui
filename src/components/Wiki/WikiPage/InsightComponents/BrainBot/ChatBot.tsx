@@ -1,5 +1,4 @@
 import { Box, Link, Text } from '@chakra-ui/react'
-import NextLink from 'next/link'
 import React, { useEffect } from 'react'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
@@ -82,7 +81,6 @@ const ChatBot = ({ wiki }: { wiki: Wiki }) => {
       </Box>
       <BotChatBox wiki={wiki} />
       <Link
-        as={NextLink}
         target="_blank"
         href="https://www.iqgpt.com/"
         display={'flex'}
