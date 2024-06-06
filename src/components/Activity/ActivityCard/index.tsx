@@ -1,11 +1,11 @@
 import React from 'react'
-import { VStack, Flex, chakra } from '@chakra-ui/react'
+import { VStack, Flex, chakra, Link } from '@chakra-ui/react'
 import ActivityCardTop from './ActivityCardTop'
 import ActivityCardBody from './ActivityCardBody'
 import ActivityCardBottom from './ActivityCardBottom'
 import ActivityCardImage from './ActivityCardImage'
 import { ActivityBodyCardProps } from '@/types/ActivityDataType'
-
+import NextLink from "next/link"
 const ActivityCard = (props: ActivityBodyCardProps) => {
   const {
     isNotifSubCard = false,
@@ -27,7 +27,8 @@ const ActivityCard = (props: ActivityBodyCardProps) => {
   const activity = type === 'CREATED' ? 'New' : 'Edited'
 
   return (
-    <chakra.div
+    <Link href={link} as={NextLink} style={{ textDecoration: 'none' }}>
+      <chakra.div
       minWidth="90%"
       bg="cardBg"
       py={3}
@@ -77,6 +78,8 @@ const ActivityCard = (props: ActivityBodyCardProps) => {
         </VStack>
       </Flex>
     </chakra.div>
+    </Link>
+    
   )
 }
 

@@ -2,7 +2,7 @@ import React from 'react'
 import { Flex, Box, Heading, Link, Text } from '@chakra-ui/react'
 import { OurHistoryType } from '@/data/OurHistory'
 import { useTranslation } from 'next-i18next'
-
+import NextLink from 'next/link'
 interface ParagraphProps {
   text: string
 }
@@ -19,6 +19,7 @@ const Paragraph: React.FC<ParagraphProps> = ({ text }) => {
 
       elements.push(
         <Link
+          as={NextLink}
           color="brandLinkColor"
           key={index}
           href={href}

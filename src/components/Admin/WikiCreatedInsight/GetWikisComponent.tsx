@@ -8,6 +8,7 @@ import {
   Link,
   Stack,
 } from '@chakra-ui/react'
+import NextLink from 'next/link'
 import React from 'react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { WikiImage } from '@/components/WikiImage'
@@ -69,6 +70,7 @@ export const GetWiki = ({ Data }: { Data: CreatedWikisCount | undefined }) => {
                   <HStack>
                     {Data.categories?.map((category, i) => (
                       <Link
+                        as={NextLink}
                         key={i}
                         href={`/categories/${category.id}`}
                         display={{ base: 'none', md: 'block' }}

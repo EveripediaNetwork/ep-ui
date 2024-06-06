@@ -24,6 +24,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import { WikiInsights } from '@/types/WikiInsightsDataType'
 import { getUsername } from '@/utils/DataTransform/getUsername'
+import NextLink from 'next/link'
 
 const AccordionURLTemplate = ({ contentURL }: { contentURL: string }) => (
   <Link
@@ -46,7 +47,7 @@ const AccordionAddressTemplate = ({
   hasCopied: boolean
 }) => (
   <HStack>
-    <Link target="_blank" href={`https://etherscan.io/address/${content}`}>
+    <Link as={NextLink} target="_blank" href={`https://etherscan.io/address/${content}`}>
       {shortenAccount(content)}
     </Link>
     <IconButton
@@ -88,6 +89,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
             avatarIPFS={content.profile?.avatar}
           />
           <Link
+            as={NextLink}
             fontSize="xs"
             href={`/account/${content.id}`}
             color="brandLinkColor"
@@ -103,6 +105,7 @@ const AccordionWidget = ({ type, title, titleTag, content }: WikiInsights) => {
           {content.map((explorer, i) => (
             <HStack key={i}>
               <Link
+                as={NextLink}
                 target="_blank"
                 display="block"
                 fontSize="14px"
