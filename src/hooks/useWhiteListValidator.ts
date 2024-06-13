@@ -1,26 +1,56 @@
-import { useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
 import { useAccount, useReadContract } from 'wagmi'
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
 
-const useWhiteListValidator = () => {
+type UseIsWhitelistedEditorRes = {
+  userCanEdit: boolean
+  isLoading: boolean
+  error: Error | null
+}
+const useIsWhitelistedEditor = (): UseIsWhitelistedEditorRes => {
   const { address } = useAccount()
-  const { data, isError, isLoading } = useReadContract({
+
+  const {
+    data: isWhitelisted,
+    error,
+    isLoading,
+  } = useReadContract({
     address: config.editorAddress as `0x${string}`,
     abi: EditorABI,
     functionName: 'isEditorWhitelisted',
     args: [address as `0x${string}`],
+    query: {
+      enabled: !!address,
+    },
   })
-  useEffect(() => {
-    if (isError) {
-      console.error('Error fetching whitelist data')
-    }
-  }, [isError])
-  return {
-    userCanEdit: data ?? false,
+
+  console.log(
+    'isWhitelisted:',
+    isWhitelisted,
+    'error:',
+    error,
+    'isLoading:',
     isLoading,
-    isError,
+  )
+  const handleContractRead = useCallback(() => {
+    if (error) {
+      console.error(
+        'Error fetching whitelist status:',
+        error.shortMessage || error.message,
+      )
+    }
+  }, [error])
+
+  useEffect(() => {
+    handleContractRead()
+  }, [handleContractRead])
+
+  return {
+    userCanEdit: isWhitelisted ?? false,
+    isLoading,
+    error: error || null,
   }
 }
 
-export default useWhiteListValidator
+export default useIsWhitelistedEditor
