@@ -25,14 +25,6 @@ const useIsWhitelistedEditor = (): UseIsWhitelistedEditorRes => {
     },
   })
 
-  console.log(
-    'isWhitelisted:',
-    isWhitelisted,
-    'error:',
-    error,
-    'isLoading:',
-    isLoading,
-  )
   const handleContractRead = useCallback(() => {
     if (error) {
       console.error(
