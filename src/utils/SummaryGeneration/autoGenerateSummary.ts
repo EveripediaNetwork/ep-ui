@@ -23,7 +23,7 @@ export const generateSummary = async (
     },
   }
   const requestBody = {
-    model: 'gpt-4',
+    model: 'gpt-4o',
     messages: [
       {
         role: 'user',
