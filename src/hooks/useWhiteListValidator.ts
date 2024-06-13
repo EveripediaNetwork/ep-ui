@@ -3,12 +3,7 @@ import { useAccount, useReadContract } from 'wagmi'
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
 
-type UseIsWhitelistedEditorRes = {
-  userCanEdit: boolean
-  isLoading: boolean
-  error: Error | null
-}
-const useIsWhitelistedEditor = (): UseIsWhitelistedEditorRes => {
+const useIsWhitelistedEditor = () => {
   const { address } = useAccount()
 
   const {
@@ -25,7 +20,7 @@ const useIsWhitelistedEditor = (): UseIsWhitelistedEditorRes => {
     },
   })
 
-  const handleContractRead = useCallback(() => {
+  const getContractReadError = useCallback(() => {
     if (error) {
       console.error(
         'Error fetching whitelist status:',
@@ -35,8 +30,8 @@ const useIsWhitelistedEditor = (): UseIsWhitelistedEditorRes => {
   }, [error])
 
   useEffect(() => {
-    handleContractRead()
-  }, [handleContractRead])
+    getContractReadError()
+  }, [getContractReadError])
 
   return {
     userCanEdit: isWhitelisted ?? false,
