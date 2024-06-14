@@ -1,14 +1,7 @@
-import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
+import { Wiki } from '@everipedia/iq-utils'
 import { Box, Heading, useColorMode, Button, Spinner } from '@chakra-ui/react'
-import React, { useMemo, useState, useEffect, useRef } from 'react'
-import ReactMarkdown from 'react-markdown'
-import remarkGfm from 'remark-gfm'
+import React, {useState, useEffect, useRef } from 'react'
 import { store } from '@/store/store'
-import { addToTOC } from '@/components/Wiki/WikiPage/CustomRenderers/customHeadingRender'
-import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { customLinkRenderer } from './CustomRenderers/customLinkRender'
-import { customImageRender } from './CustomRenderers/customImageRender'
-import { customTableRenderer } from './CustomRenderers/customTableRender'
 import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 import { useSelector } from 'react-redux'
@@ -16,11 +9,15 @@ import { RootState } from '@/store/store'
 import { logEvent } from '@/utils/googleAnalytics'
 import { SupportedLanguages } from '@/data/LanguageData'
 import { languageData } from '@/data/LanguageData'
-
+import dynamic from 'next/dynamic'
 interface WikiMainContentProps {
   wiki: Wiki
 }
 
+
+const MarkdownViewer = dynamic(() => import('@/components/CreateWiki/Viewer'), {
+  ssr: false,
+})
 export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   store.dispatch({
     type: 'citeMarks/reset',
@@ -29,34 +26,15 @@ export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
     type: 'toc/reset',
   })
 
-  const referencesString = useMemo(
-    () => getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value,
-    [wiki],
-  )
+  
 
   if (!wiki.content) return null
 
   return (
-    <ReactMarkdown
-      remarkPlugins={[remarkGfm]}
-      components={{
-        h1: addToTOC,
-        h2: addToTOC,
-        h3: addToTOC,
-        h4: addToTOC,
-        h5: addToTOC,
-        h6: addToTOC,
-        a: (props) =>
-          customLinkRenderer({
-            ...props,
-            referencesString,
-          }),
-        img: customImageRender,
-        table: customTableRenderer,
-      }}
-    >
-      {wiki.content}
-    </ReactMarkdown>
+    
+    <MarkdownViewer wiki={wiki}/>
+    
+   
   )
 })
 
