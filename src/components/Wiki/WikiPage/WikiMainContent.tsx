@@ -1,6 +1,6 @@
 import { Wiki } from '@everipedia/iq-utils'
 import { Box, Heading, useColorMode, Button, Spinner } from '@chakra-ui/react'
-import React, {useState, useEffect, useRef } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { store } from '@/store/store'
 import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
@@ -14,7 +14,6 @@ interface WikiMainContentProps {
   wiki: Wiki
 }
 
-
 const MarkdownViewer = dynamic(() => import('@/components/CreateWiki/Viewer'), {
   ssr: false,
 })
@@ -26,16 +25,9 @@ export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
     type: 'toc/reset',
   })
 
-  
-
   if (!wiki.content) return null
 
-  return (
-    
-    <MarkdownViewer wiki={wiki}/>
-    
-   
-  )
+  return <MarkdownViewer wiki={wiki} />
 })
 
 const supportedWikiTranslations = languageData
