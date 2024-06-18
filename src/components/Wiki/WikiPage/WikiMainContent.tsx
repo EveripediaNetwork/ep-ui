@@ -236,11 +236,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
           <SwitchBtn btnLocale={locale} />
         </Box>
       )}
-      <Box
-        className={`${styles.markdownBody} ${
-          colorMode === 'dark' && styles.markdownBodyDark
-        }`}
-      >
+      <Box>
         <MarkdownRender wiki={modifiedContentWiki} />
         <WikiFlaggingSystem id={wikiData.id} />
       </Box>
