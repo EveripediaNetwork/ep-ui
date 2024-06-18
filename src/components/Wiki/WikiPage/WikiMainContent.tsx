@@ -1,8 +1,7 @@
 import { Wiki } from '@everipedia/iq-utils'
-import { Box, Heading, useColorMode, Button, Spinner } from '@chakra-ui/react'
+import { Box, Heading, Button, Spinner } from '@chakra-ui/react'
 import React, { useState, useEffect, useRef } from 'react'
 import { store } from '@/store/store'
-import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
@@ -41,7 +40,6 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const [contentLang, setContentLang] = useState<'en' | 'ko' | 'zh'>('en')
   const [wikiContentState, setWikiContentState] = useState(wikiData.content)
   const cachedWikiTranslation = useRef<WikiContentCache | null>(null)
-  const { colorMode } = useColorMode()
   const locale = useSelector((state: RootState) => state.app.language)
   const isLocaleWikiTranslationSupported =
     supportedWikiTranslations.includes(locale)
