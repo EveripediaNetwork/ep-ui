@@ -119,7 +119,7 @@ const AboutIqgpt = () => {
           <Box
             display={{ base: 'none', md: 'inherit', lg: 'none' }}
             position={'absolute'}
-            bottom={'-55%'}
+            bottom={'-60%'}
           >
             <AboutGPTMockup
               bg={{
