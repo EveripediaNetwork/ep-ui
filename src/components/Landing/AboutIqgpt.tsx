@@ -123,8 +123,8 @@ const AboutIqgpt = () => {
           >
             <AboutGPTMockup
               bg={{
-                light: '/images/mockups/iqgpt-mockup-md.png',
-                dark: '/images/mockups/iqgpt-mockup-md-dark.png',
+                light: '/images/mockups/mockup-md.png',
+                dark: '/images/mockups/mockup-md-dark.png',
               }}
               w={570}
               h={548}
@@ -133,8 +133,8 @@ const AboutIqgpt = () => {
           <Box display={{ md: 'none' }}>
             <AboutGPTMockup
               bg={{
-                light: '/images/mockups/iqgpt-mockup-base.png',
-                dark: '/images/mockups/iqgpt-mockup-base-dark.png',
+                light: '/images/mockups/mockup-sm.png',
+                dark: '/images/mockups/mockup-sm-dark.png',
               }}
               w={500}
               h={360}
