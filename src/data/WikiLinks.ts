@@ -2,6 +2,7 @@ import { AiFillLinkedin, AiFillYoutube } from 'react-icons/ai'
 import CoinGeckoIcon from '@/components/Icons/coingecko'
 import CoinMarketCap from '@/components/Icons/coinmarketcap'
 import TwitterIcon from '@/components/Icons/twitterIcon'
+import MediumIcon from '@/components/Icons/mediumIcon'
 import RedditIcon from '@/components/Icons/redditIcon'
 import InstagramIcon from '@/components/Icons/instagramIcon'
 import FacebookIcon from '@/components/Icons/facebookIcon'
@@ -12,7 +13,7 @@ import { CommonMetaIds } from '@everipedia/iq-utils'
 import { FaFileContract } from 'react-icons/fa'
 import EmailIcon from '@/components/Icons/emailIcon'
 import DiscordIcon from '@/components/Icons/discordIcon'
-import { RiGlobalFill, RiMediumFill } from 'react-icons/ri'
+import { RiGlobalFill } from 'react-icons/ri'
 import MirrorIcon from '@/components/Icons/mirrorIcon'
 import TiktokIcon from '@/components/Icons/tiktokicon'
 
@@ -137,7 +138,7 @@ export const LINK_OPTIONS = [
     id: CommonMetaIds.MEDIUM_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Medium',
-    icon: RiMediumFill,
+    icon: MediumIcon,
     tests: [
       /^(https?:\/\/)?(www\.)?medium\.com\/[a-zA-Z0-9-]+(?:\/[a-zA-Z0-9-]+)*(?:\?[^\s]*)?$/,
       /^https:\/\/[a-zA-Z0-9.-]+\.medium\.com\/.*$/,
