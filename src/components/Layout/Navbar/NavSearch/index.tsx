@@ -41,6 +41,7 @@ import {
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
 import { useTranslation } from 'next-i18next'
+import { usePostHog } from 'posthog-js/react'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -64,6 +65,7 @@ const NavSearch = (props: NavSearchProps) => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
   const { t } = useTranslation('common')
+  const posthog = usePostHog()
 
   const unrenderedWikis = results.wikis.length - WIKIS_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
@@ -304,6 +306,10 @@ const NavSearch = (props: NavSearchProps) => {
             label: ItemPaths[type as SearchItem] + id,
             value: 1,
             category: 'search_tags',
+          })
+          posthog.capture('search_suggestions_click', {
+            label: ItemPaths[type as SearchItem] + id,
+            location: 'nav_search',
           })
         }}
       >

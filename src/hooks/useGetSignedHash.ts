@@ -19,6 +19,7 @@ import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import { domain, types } from '@/utils/CreateWikiUtils/domainType'
 import { useCreateWikiContext } from './useCreateWikiState'
 import config from '@/config'
+import { usePostHog } from 'posthog-js/react'
 
 export const useGetSignedHash = () => {
   const {
@@ -33,6 +34,7 @@ export const useGetSignedHash = () => {
     setCommitMessage,
     dispatch,
   } = useCreateWikiContext()
+  const posthog = usePostHog()
 
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const deadline = useRef(0)
@@ -92,6 +94,9 @@ export const useGetSignedHash = () => {
           category: 'wiki_error',
           value: 1,
         })
+        posthog.capture('submit_wiki_error', {
+          error: err.message,
+        })
       })
   }
 
@@ -114,6 +119,9 @@ export const useGetSignedHash = () => {
                 label: 'TRANSACTION_VERIFICATION_ERROR',
                 category: 'wiki_error',
                 value: 1,
+              })
+              posthog.capture('submit_wiki_error', {
+                error: 'TRANSACTION_VERIFICATION_ERROR',
               })
               clearInterval(_timer)
             }
@@ -146,6 +154,9 @@ export const useGetSignedHash = () => {
             label: errorObject.message,
             category: 'wiki_error',
             value: 1,
+          })
+          posthog.capture('submit_wiki_error', {
+            error: errorObject.message,
           })
           clearInterval(_timer)
         }
@@ -184,6 +195,9 @@ export const useGetSignedHash = () => {
             label: errorObject.response.errors[0].extensions.exception.reason,
             category: 'wiki_error',
             value: 1,
+          })
+          posthog.capture('submit_wiki_error', {
+            error: errorObject.response.errors[0].extensions.exception.reason,
           })
         }
       }

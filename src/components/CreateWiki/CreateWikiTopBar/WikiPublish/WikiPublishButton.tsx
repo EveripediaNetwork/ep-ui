@@ -38,6 +38,7 @@ import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useAccount } from 'wagmi'
 import { getCookie } from 'cookies-next'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
+import { usePostHog } from 'posthog-js/react'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -52,6 +53,7 @@ export const WikiPublishButton = () => {
   const { data } = useGetWikiQuery(wiki?.id || '')
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const posthog = usePostHog()
 
   const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
@@ -195,6 +197,10 @@ export const WikiPublishButton = () => {
       category: 'wiki_error',
       value: 1,
     })
+    posthog.capture('submit_wiki_error', {
+      wiki_slug: await getWikiSlug(wiki),
+      error: logReason,
+    })
   }
 
   const updateCommitMessage = (override: boolean) => {
@@ -241,6 +247,9 @@ export const WikiPublishButton = () => {
       label: await getWikiSlug(wiki),
       category: 'wiki_title',
       value: 1,
+    })
+    posthog.capture('submit_wiki', {
+      wiki_slug: await getWikiSlug(wiki),
     })
 
     if (userAddress) {

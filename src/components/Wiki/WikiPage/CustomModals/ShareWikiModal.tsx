@@ -34,6 +34,7 @@ import { Modal } from '@/components/Elements'
 import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
 import { useTranslation } from 'next-i18next'
+import { usePostHog } from 'posthog-js/react'
 
 const SHARING_OPTIONS = [
   {
@@ -75,6 +76,7 @@ const ShareWikiModal = ({
 }: Partial<ModalProps>) => {
   const { t } = useTranslation('common')
   const router = useRouter()
+  const posthog = usePostHog()
   const url = `${config.publicDomain}${router.asPath}`
   const { hasCopied, onCopy } = useClipboard(url)
   useEffect(() => {
@@ -83,6 +85,9 @@ const ShareWikiModal = ({
       label: router.asPath.replace('/wiki/', ''),
       category: 'open_share_wiki_modal',
       value: 1,
+    })
+    posthog.capture('open_share_wiki_modal', {
+      wiki: router.asPath.replace('/wiki/', ''),
     })
   }, [router.asPath])
 
@@ -133,14 +138,17 @@ const ShareWikiModal = ({
                     href={`https://lenster.xyz/?text=Checkout%20this%20article%20on%20the%20World’s%20Largest%20Blockchain%20Encyclopedia,%20IQ.wiki&url=${url}`}
                     rel="nofollow"
                     target="_blank"
-                    onClick={() =>
+                    onClick={() => {
                       logEvent({
                         action: 'SHARING_WIKI_ON_LENS',
                         label: url,
                         category: 'sharing_wiki_on_lens',
                         value: 1,
                       })
-                    }
+                      posthog.capture('sharing_wiki_on_lens', {
+                        wiki: url,
+                      })
+                    }}
                   >
                     <Image
                       alt="Lenster"
