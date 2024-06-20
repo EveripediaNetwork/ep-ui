@@ -1,8 +1,8 @@
+import { env } from '@/env.mjs'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
-import { env } from '@/env.mjs'
-import { useAccount } from 'wagmi'
 import { useEffect } from 'react'
+import { useAccount } from 'wagmi'
 
 if (typeof window !== 'undefined') {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
@@ -23,15 +23,14 @@ export const CSPostHogProvider = ({
 }
 
 function PosthogAuthWrapper({ children }: React.PropsWithChildren<{}>) {
-  const { address, chainId } = useAccount()
+  const { address, chainId, connector } = useAccount()
 
   useEffect(() => {
     if (address) {
       posthog.identify(address, {
         chainId,
+        connector: connector?.name,
       })
-    } else {
-      posthog.reset()
     }
   }, [address])
 
