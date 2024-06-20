@@ -15,6 +15,7 @@ import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
+import { CSPostHogProvider } from '@/components/Layout/CSPostHogProvider'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -51,9 +52,11 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiWrapper>
-            <Layout noFooter={Component.noFooter}>
-              <Component {...pageProps} />
-            </Layout>
+            <CSPostHogProvider>
+              <Layout noFooter={Component.noFooter}>
+                <Component {...pageProps} />
+              </Layout>
+            </CSPostHogProvider>
           </WagmiWrapper>
         </ChakraProvider>
       </ReduxProvider>
