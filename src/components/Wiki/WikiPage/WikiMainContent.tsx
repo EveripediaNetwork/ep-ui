@@ -16,6 +16,7 @@ import { RootState } from '@/store/store'
 import { logEvent } from '@/utils/googleAnalytics'
 import { SupportedLanguages } from '@/data/LanguageData'
 import { languageData } from '@/data/LanguageData'
+import { usePostHog } from 'posthog-js/react'
 
 interface WikiMainContentProps {
   wiki: Wiki
@@ -72,6 +73,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const [wikiContentState, setWikiContentState] = useState(wikiData.content)
   const cachedWikiTranslation = useRef<WikiContentCache | null>(null)
   const { colorMode } = useColorMode()
+  const posthog = usePostHog()
   const locale = useSelector((state: RootState) => state.app.language)
   const isLocaleWikiTranslationSupported =
     supportedWikiTranslations.includes(locale)
@@ -155,6 +157,10 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
         category: btnLocale,
         label: wikiData.id,
         value: 1,
+      })
+      posthog.capture('translate_wiki', {
+        wikiId: wikiData.id,
+        lang: btnLocale,
       })
 
       if (btnLocale !== contentLang) {

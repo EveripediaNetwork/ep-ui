@@ -17,6 +17,7 @@ import {
   getEventsByTags,
 } from '../event'
 import { CHAR_SEARCH_LIMIT } from '@/data/Constants'
+import { usePostHog } from 'posthog-js/react'
 
 export type Account = {
   id: string
@@ -117,6 +118,7 @@ const debouncedFetchResults = debounce(
 export const useNavSearch = () => {
   const [query, setQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const posthog = usePostHog()
 
   const [results, setResults] = useState<Results>({
     wikis: [],
@@ -134,6 +136,9 @@ export const useNavSearch = () => {
             label: query,
             category: 'search_tag',
             value: 1,
+          })
+          posthog.capture('search_no_results', {
+            query,
           })
         }
         setResults(res)

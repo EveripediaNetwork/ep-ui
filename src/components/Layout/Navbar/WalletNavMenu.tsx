@@ -5,6 +5,7 @@ import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useRouter } from 'next/router'
 import { useAddress } from '@/hooks/useAddress'
 import { useTranslation } from 'next-i18next'
+import { usePostHog } from 'posthog-js/react'
 
 export interface WalletNavMenuProps {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -18,6 +19,8 @@ const WalletNavMenu = ({
   const { address: userAddress } = useAddress()
   const { t } = useTranslation('common')
   const router = useRouter()
+  const posthog = usePostHog()
+
   const handleWalletIconAction = () => {
     logEvent({
       action: 'OPEN_WALLET',
@@ -25,6 +28,7 @@ const WalletNavMenu = ({
       label: userAddress ?? '',
       category: 'open_drawer',
     })
+    posthog.capture('open_wallet')
     setHamburger(false)
     drawerOperations.onToggle()
   }

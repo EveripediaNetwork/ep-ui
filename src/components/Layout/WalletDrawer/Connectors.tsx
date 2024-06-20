@@ -9,6 +9,7 @@ import ConnectionErrorModal from './ConnectionErrorModal'
 import { useTranslation } from 'next-i18next'
 import { ConnectorSignTokenModal } from './ConnectorSignTokenModal'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
+import { usePostHog } from 'posthog-js/react'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -43,6 +44,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
     onClose: closeSignTokenModal,
   } = useDisclosure()
   const [connectorName, setConnectorName] = useState('')
+  const posthog = usePostHog()
 
   const { connect, connectors } = useConnect({
     mutation: {
@@ -53,6 +55,9 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
           value: 0,
           category: 'login_status',
         })
+        posthog.capture('login_error', {
+          error: error.message,
+        })
       },
       onSuccess: (data) => {
         logEvent({
@@ -60,6 +65,9 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
           label: data.accounts[0],
           value: 1,
           category: 'login_status',
+        })
+        posthog.capture('login_success', {
+          address: data.accounts[0],
         })
         openSignTokenModal()
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
