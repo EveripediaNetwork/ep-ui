@@ -41,13 +41,16 @@ function PosthogAuthWrapper({ children }: React.PropsWithChildren<{}>) {
   }, [address])
 
   useEffect(() => {
-    if (address) {
-      posthog.identify(address, {
-        chainId,
-        connector: connector?.name,
-        email: getMagicUserEmail(),
-      })
+    const identifyUser = async () => {
+      if (address) {
+        posthog.identify(address, {
+          chainId,
+          connector: connector?.name,
+          email: (await getMagicUserEmail()) || undefined,
+        })
+      }
     }
+    identifyUser()
   }, [address])
 
   return <>{children}</>
