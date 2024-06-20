@@ -1,10 +1,32 @@
 {
-  "extends": "./configs/nextjs.json",
   "compilerOptions": {
     "baseUrl": ".",
+    "target": "ES2022",
+    "lib": ["dom", "ESNext"],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
     "noEmit": true,
-    "jsx": "preserve"
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "Node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "downlevelIteration": true,
+    "jsx": "preserve",
+    "incremental": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "~/*": ["./*"]
+    },
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "src/**/*", "index.d.ts"],
-  "exclude": ["src/stories/**/*", "node_modules", ".next"]
+  "include": ["next-env.d.ts", "src/**/*", "index.d.ts", ".next/types/**/*.ts"],
+  "typeRoots": ["node_modules/@types"],
+  "exclude": ["node_modules", ".next"]
 }

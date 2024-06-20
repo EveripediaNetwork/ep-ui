@@ -5,6 +5,19 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 })
 
 const moduleExports = {
+  experimental: {
+    turbo: {
+      resolveAlias: {
+        '@lib/utils': './src/@lib/utils',
+      },
+      rules: {
+        '*.svg': {
+          loaders: ['@svgr/webpack'],
+          as: '*.js',
+        },
+      },
+    },
+  },
   i18n,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,

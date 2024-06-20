@@ -1,13 +1,6 @@
 import React, { useEffect } from 'react'
-import {
-  chakra,
-  HTMLChakraProps,
-  BoxProps,
-  Text,
-  VStack,
-  IconButton,
-} from '@chakra-ui/react'
-import { HTMLMotionProps, motion } from 'framer-motion'
+import { chakra, BoxProps, Text, VStack, IconButton } from '@chakra-ui/react'
+import { motion } from 'framer-motion'
 import { ChevronDownIcon, ChevronUpIcon } from '@chakra-ui/icons'
 
 // interface for ToggleTextProps is text and VStack Interface
@@ -16,10 +9,7 @@ interface TextProp {
 }
 
 export type ToggleTextProps = Omit<BoxProps, 'as'> & TextProp
-
-type Merge<P, T> = Omit<P, keyof T> & T
-type MotionBoxProps = Merge<HTMLChakraProps<'div'>, HTMLMotionProps<'div'>>
-export const MotionBox: React.FC<MotionBoxProps> = motion(chakra.div)
+export const MotionBox = motion(chakra.div)
 
 const ToggleText = ({ text, ...rest }: ToggleTextProps) => {
   const [isOpen, setIsOpen] = React.useState(false)
