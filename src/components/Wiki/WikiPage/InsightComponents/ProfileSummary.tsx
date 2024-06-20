@@ -80,7 +80,6 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
       LinkType.EXPLORER,
   )
 
-
   const contractURL = socialMetaData.find(
     (item) => item.id === CommonMetaIds.CONTRACT_URL,
   )?.value
