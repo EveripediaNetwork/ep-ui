@@ -250,6 +250,7 @@ export const WikiPublishButton = () => {
     })
     posthog.capture('submit_wiki', {
       wiki_slug: await getWikiSlug(wiki),
+      isEdit: !isNewCreateWiki,
     })
 
     if (userAddress) {
