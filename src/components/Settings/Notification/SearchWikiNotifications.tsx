@@ -50,6 +50,7 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
+import { usePostHog } from 'posthog-js/react'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -132,6 +133,7 @@ const SearchWikiNotifications = () => {
     address as string,
   )
   const router = useRouter()
+  const posthog = usePostHog()
 
   const noResults = results.wikis.length === 0
   const unrenderedWikis = results.wikis.length - ARTICLES_LIMIT
@@ -242,6 +244,10 @@ const SearchWikiNotifications = () => {
             label: ItemPaths[type as SearchItem] + id,
             value: 1,
             category: 'search_tags',
+          })
+          posthog.capture('search_suggestions_click', {
+            label: ItemPaths[type as SearchItem] + id,
+            location: 'notifications',
           })
         }}
       >

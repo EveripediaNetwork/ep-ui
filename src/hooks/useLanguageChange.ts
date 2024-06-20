@@ -5,11 +5,13 @@ import { setLanguage } from '@/store/slices/app-slice'
 import { logEvent } from '@/utils/googleAnalytics'
 import { isString } from '@chakra-ui/utils'
 import { setCookie } from 'cookies-next'
+import { usePostHog } from 'posthog-js/react'
 
 const useLanguageChange = () => {
   const dispatch = useDispatch()
   const { i18n } = useTranslation()
   const router = useRouter()
+  const posthog = usePostHog()
 
   const handleLangChange = (userLang: string | string[]) => {
     if (isString(userLang)) {
@@ -26,6 +28,7 @@ const useLanguageChange = () => {
         label: userLang,
         value: 1,
       })
+      posthog.capture('change_platform_language', { language: userLang })
     }
   }
 

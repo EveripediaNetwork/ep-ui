@@ -7,6 +7,7 @@ import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Image } from '@/components/Elements/Image/Image'
 import AIGenerateButton from './AIGenerateButton'
+import { usePostHog } from 'posthog-js/react'
 
 const sleep = (ms: number) =>
   new Promise((r) => {
@@ -21,6 +22,7 @@ const SummaryInput = () => {
   const [isGenerating, setIsGenerating] = React.useState(false)
   const [reserveSummaries, setReserveSummaries] = React.useState<string[]>([])
   const toast = useToast()
+  const posthog = usePostHog()
 
   const failedToGenerateSummary = useCallback(() => {
     setShowRed(true)
@@ -60,6 +62,10 @@ const SummaryInput = () => {
 
   const handleAIGenerate = useCallback(async () => {
     setIsGenerating(true)
+
+    posthog.capture('generate_summary', {
+      wiki_id: wiki.id,
+    })
 
     if (reserveSummaries.length > 0) {
       fetchFromReserveSummary()

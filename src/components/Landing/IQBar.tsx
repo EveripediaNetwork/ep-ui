@@ -20,9 +20,12 @@ import IQGraph from './IQGraph'
 import { useGetCgTokenDataQuery } from '@/services/cgTokenDetails'
 import { useGetCmcTokenDataQuery } from '@/services/cmcTokenDetails'
 import * as Humanize from 'humanize-plus'
+import { usePostHog } from 'posthog-js/react'
 
 export const IQBar = () => {
   const { data: iqData, isLoading, isError } = useGetCgTokenDataQuery()
+  const posthog = usePostHog()
+
   const {
     data: cmcData,
     isLoading: cmcLoading,
@@ -104,14 +107,17 @@ export const IQBar = () => {
           </Box>
           <Link
             href="https://iq.braindao.org/dashboard"
-            onClick={() =>
+            onClick={() => {
               logEvent({
                 category: 'Home',
                 action: 'Click',
                 label: 'IQ Dashboard',
                 value: 1,
               })
-            }
+              posthog.capture('check_iq_click', {
+                target: 'IQ Dashboard',
+              })
+            }}
             target="_blank"
           >
             <Button
@@ -176,14 +182,17 @@ export const IQBar = () => {
             href="https://coinmarketcap.com/currencies/iq/"
             target="_blank"
             rel="noopener nofollow"
-            onClick={() =>
+            onClick={() => {
               logEvent({
                 category: 'Home',
                 action: 'Click',
                 label: 'IQ CMC',
                 value: 1,
               })
-            }
+              posthog.capture('check_iq_click', {
+                target: 'IQ CMC',
+              })
+            }}
           >
             <Button
               variant="outline"
@@ -217,14 +226,17 @@ export const IQBar = () => {
               isExternal
               target="_blank"
               rel="noopener nofollow"
-              onClick={() =>
+              onClick={() => {
                 logEvent({
                   category: 'Home',
                   action: 'Click',
                   label: 'Binance',
                   value: 1,
                 })
-              }
+                posthog.capture('check_iq_click', {
+                  target: 'Binance',
+                })
+              }}
             >
               <IconButton
                 variant="outline"
@@ -247,14 +259,17 @@ export const IQBar = () => {
               isExternal
               target="_blank"
               rel="noopener nofollow"
-              onClick={() =>
+              onClick={() => {
                 logEvent({
                   category: 'Home',
                   action: 'Click',
                   label: '1inch',
                   value: 1,
                 })
-              }
+                posthog.capture('check_iq_click', {
+                  target: '1inch',
+                })
+              }}
             >
               <IconButton
                 variant="outline"
@@ -277,14 +292,17 @@ export const IQBar = () => {
               target="_blank"
               rel="noopener nofollow"
               href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
-              onClick={() =>
+              onClick={() => {
                 logEvent({
                   category: 'Home',
                   action: 'Click',
                   label: 'upbit',
                   value: 1,
                 })
-              }
+                posthog.capture('check_iq_click', {
+                  target: 'upbit',
+                })
+              }}
             >
               <IconButton
                 variant="outline"
@@ -307,14 +325,17 @@ export const IQBar = () => {
               isExternal
               target="_blank"
               rel="noopener nofollow"
-              onClick={() =>
+              onClick={() => {
                 logEvent({
                   category: 'Home',
                   action: 'Click',
                   label: 'Binance',
                   value: 1,
                 })
-              }
+                posthog.capture('check_iq_click', {
+                  target: 'frax',
+                })
+              }}
             >
               <IconButton
                 variant="outline"
