@@ -12,11 +12,7 @@ import {
   VStack,
   Wrap,
 } from '@chakra-ui/react'
-import {
-  CommonMetaIds,
-  Wiki,
-  WikiPossibleSocialsList,
-} from '@everipedia/iq-utils'
+import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
 import { FiExternalLink } from 'react-icons/fi'
 import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
@@ -67,8 +63,9 @@ const ProfileListItem = ({
 
 const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
   const socialMetaData = wiki.metadata.filter((meta) =>
-    WikiPossibleSocialsList.includes(meta.id as CommonMetaIds),
+    LINK_OPTIONS.find((option) => option.id === meta.id),
   )
+
   const { t } = useTranslation('wiki')
   if (!socialMetaData.length) return null
 
@@ -82,6 +79,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
       LINK_OPTIONS.find((option) => option.id === item.id)?.type ===
       LinkType.EXPLORER,
   )
+
 
   const contractURL = socialMetaData.find(
     (item) => item.id === CommonMetaIds.CONTRACT_URL,
@@ -172,10 +170,11 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             </Wrap>
           </ProfileListItem>
         )}
+
         {explorerLinksData.length > 0 && (
           <ProfileListItem title={t('Explorers')}>
-            {explorerLinksData.map((item) => (
-              <HStack>
+            {explorerLinksData.map((item, i) => (
+              <HStack key={i}>
                 <Link
                   color="brandLinkColor"
                   fontSize="14px"
@@ -195,6 +194,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             ))}
           </ProfileListItem>
         )}
+
         {wiki.linkedWikis?.founders &&
           wiki.linkedWikis?.founders?.length > 0 && (
             <ProfileListItem

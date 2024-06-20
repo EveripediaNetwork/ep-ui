@@ -234,6 +234,5 @@ export const LINK_OPTIONS = [
     label: 'Tronscan',
     icon: FaFileContract,
     tests: [/https:\/\/(www\.)?tronscan\.org\/#\/token20\/\w+/],
-
   },
 ]
