@@ -234,6 +234,6 @@ export const LINK_OPTIONS = [
     type: LinkType.EXPLORER,
     label: 'Tronscan',
     icon: FaFileContract,
-    tests: [/https:\/\/(www.)?tronscan.com\/\w+/],
+    tests: [/https:\/\/(www\.)?tronscan\.(io|org)\/#\/\w+/],
   },
 ]
