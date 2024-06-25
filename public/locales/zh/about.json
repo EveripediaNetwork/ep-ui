@@ -1,6 +1,7 @@
 {
   "AboutSEOTitle": "关于",
   "AboutSEODescription": "世界上最大的加密知识库，其使命是通过IQ代币将世界的知识上链。",
+  "aboutHeroTitle": "关于 IQ.Wiki",
   "aboutHeroHeading": "我们使用区块链技术和人工智能扩展加密知识。",
   "aboutHeroPhrase": "IQ.wiki是世界上最大的区块链和加密货币百科全书，包含所有主题和加密空间知识分支的数千个wiki。",
   "aboutSignUpBttn": "注册",
@@ -8,14 +9,12 @@
   "aboutFeatHeading": "我们的使命是教育世界关于区块链技术",
   "aboutFeatContent": "我们是今天互联网上关于区块链技术和加密货币相关一切事物的首要知识来源。我们的愿景是使区块链在全世界更容易被发现和访问，并赋予用户他们可以信赖的信息。",
   "abtFeatOneHeading": "将区块链带给世界",
-
   "abtFeatOneContent": "世界上最全面的区块链和加密知识库为用户提供了从比特币、NFTs、DAO等一切内容的数千个wiki。",
   "abtFeatTwoHeading": "由IQ代币驱动",
   "abtFeatTwoContent": "IQ.wiki是IQ生态系统的核心部分。IQ代币是这个百科全书的实用代币。",
   "abtFeatThreeHeading": "民主治理",
   "abtFeatThreeContent": "IQ.wiki完全是Web3，由IQ代币持有者治理和管理平台。",
   "meetTeamHead": "认识我们的团队",
-
   "meetTeamContent": "在IQ.wiki，我们很幸运有一支对教育和区块链行业都有深入了解和热情的团队。",
   "aboutAiHeading": "人工智能的整合",
   "aboutAiParagraph": "IQ.wiki整合了人工智能来扩展我们的知识库。AI使我们能够简化包括总结wiki在内的常规任务。",
@@ -33,10 +32,10 @@
   "aboutKevinDescription": "Kevin Wang是一位经验丰富的中国技术执行官。他管理IQ.wiki在中国的合作伙伴关系、营销和增长。他之前曾担任深圳联网科技有限公司的总裁。",
   "aboutAndyDescription": "Andy Cho最初作为公司的通讯总监加入IQ.wiki（前身为Everipedia），在管理韩国的主要交易和合作伙伴关系几年后，他被提升为业务发展总监。",
   "aboutRobertoDescription": "Roberto Dobrescu，业务开发人员，是一位经验丰富的瑞典企业家。他此前是IM production公司，一家专门从事LED屏幕的公司的首席技术官。",
-  "aboutJustinDescription": "Justin Moore是一位拥有十多年经验的资深软件架构师和全栈开发人员。他于2021年6月加入IQ.wiki团队，担任高级软件工程师。",
   "OurHistory2": "2017年12月，我们宣布了Everipedia成为世界上第一部区块链百科全书的计划，并通过<Wired href='https://www.wired.com/story/everipedia-blockchain/'>Wired</Link>独家报道。",
   "OurHistory3": "2018年2月，Everipedia从Galaxy Digital筹集了3000万美元，用于将Everipedia建设成为世界上第一部区块链百科全书。这次筹资和扩展活动被包括<Engadget href='https://www.engadget.com/2019-02-07-everipedia-mahbod-moghadam-larry-sanger-blockchain.html'>Engadget</Link>、<Reuters href='https://www.reuters.com/article/us-blockchain-investment-galaxy/novogratzs-new-fund-others-invest-30-million-in-online-encyclopedia-idUSKBN1FS322'>Reuters</Link>和<Yahoo News href='https://www.yahoo.com/news/blockchain-rival-wikipedia-raises-30-181838988.html'>Yahoo News</Link>在内的多家媒体报道。2018年7月，Everipedia将其IQ点数系统转变为真实的代币。IQ代币供应的51%进行了空投。在8月，Everipedia通过启动成为世界上第一部区块链百科全书而创造了历史。",
   "OurHistory4": "自然地，Everipedia在2018年成为一部区块链百科全书后，读者和编辑者转向了加密内容。在2020年，Everipedia团队继续专注于区块链创新，开发了OraQles服务，允许经过验证的第一方将现实世界信息上链。2020年11月4日，美联社使用该软件在以太坊上发布了美国选举结果，这是美国选举首次在区块链上被调用。这一历史性时刻被包括<Forbes href='https://www.forbes.com/sites/michaeldelcastillo/2020/11/03/how-to-track-official-election-results-on-ethereum-and-eos/?sh=2eb2ff153269'>Forbes</Link>、<Coindesk href='https://www.coindesk.com/markets/2020/10/15/immutable-calls-ap-election-2020-results-will-be-recorded-on-a-blockchain/'>Coindesk</Link>和<Nasdaq href='https://www.nasdaq.com/articles/immutable-calls%3A-ap-election-2020-results-will-be-recorded-on-a-blockchain-2020-10-15'>Nasdaq.</Link>等出版物报道。",
   "OurHistory5": "2022年，Everipedia迁移到Polygon区块链并<IQ.wiki href='https://iq.wiki/blog/il83x1k4q5FdsuVJBCbAVjMlOytJ4Q5k8tsjSxG9ixg'>更名为IQ.wiki</Link>。与品牌重塑一同，我们增加了几项新的Web3功能和集成，以更好地服务加密社区。过去几年里，NFTs、DeFi以及Web3创新的步伐急剧加快。我们一直热衷于构建并见证空间的增长激励了我们将IQ.wiki建设成为加密知识的中心。我们重命名为IQ.wiki，以强调IQ代币和加密货币对百科全书的中心地位。",
-  "OurHistory6": "2023年2月，IQ.wiki成为世界上第一批集成人工智能的百科全书和去中心化应用之一<IQ.wiki href='https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY'>。IQ.wiki集成了OpenAI的GPT-3来执行任务，如总结文章，后来升级到GPT-4。2023年，BrainDAO旨在进一步在平台内集成AI，开发更多AI驱动工具，并使用IQ代币激励AI模型的训练，作为问题的第一部分。"
+  "OurHistory6": "2023年2月，IQ.wiki成为世界上第一批集成人工智能的百科全书和去中心化应用之一<IQ.wiki href='https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY'>。IQ.wiki集成了OpenAI的GPT-3来执行任务，如总结文章，后来升级到GPT-4。2023年，BrainDAO旨在进一步在平台内集成AI，开发更多AI驱动工具，并使用IQ代币激励AI模型的训练，作为问题的第一部分。",
+  "OurHistory7": "2024년 BrainDAO는 IQ.wiki, IQ.social, IQ GPT를 확장하고 솔리디티(Solidity)와 바이퍼(Vyper)와 같은 블록체인 언어를 위한 최초의 인공지능 코딩 도구인 IQ 코드와 같은 새로운 제품을 출시하여 에코시스템을 계속 성장시킬 것입니다. 향후 발전에 대한 소식을 기대하세요!"
 }

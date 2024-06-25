@@ -1,6 +1,7 @@
 {
   "AboutSEOTitle": "우리에 대해",
   "AboutSEODescription": "IQ 토큰을 통해 세계의 지식을 온체인으로 가져오는 것을 임무로 하는 세계 최대의 암호화 지식 기반입니다.",
+  "aboutHeroTitle": "IQ.Wiki 소개",
   "aboutHeroHeading": "블록체인 기술과 인공지능을 활용하여 암호화폐 지식을 확장합니다.",
   "aboutHeroPhrase": "IQ.wiki는 세계 최대 블록체인 및 암호화폐 백과사전으로, 암호화폐 공간의 모든 주제와 지식 분야에 대한 수천 개의 위키를 보유하고 있습니다.",
   "aboutSignUpBttn": "가입하기",
@@ -32,7 +33,6 @@
   "aboutKevinDescription": "Kevin Wang은 경험이 풍부한 중국 기술 경영자입니다. 그는 IQ.wiki의 중국 내 파트너십, 마케팅 및 성장을 관리합니다. 그는 이전에 Shenzhen Uninet Technology Co.의 사장을 역임했습니다.",
   "aboutAndyDescription": "Andy Cho는 IQ.wiki(이전 Everipedia)에 한국 커뮤니케이션 이사로 처음 합류했습니다. 수년간 한국에서 주요 교환 및 파트너 관계를 관리한 후 그는 사업 개발 이사로 승진했습니다.",
   "aboutRobertoDescription": "비즈니스 개발자인 Roberto Dobrescu는 경험이 풍부한 스웨덴 기업가입니다. 그는 이전에 LED 스크린 전문 회사인 IM Production의 최고 기술 책임자였습니다.",
-  "aboutJustinDescription": "Justin Moore는 10년 이상의 경험을 보유한 숙련된 소프트웨어 설계자이자 풀 스택 개발자입니다. 2021년 6월에 그는 수석 소프트웨어 엔지니어로 IQ.wiki 팀에 합류했습니다.",
   "aboutSuchetDescription": "Suchet Dhindsa는 노르웨이의 경제학자, 기업가, 투자자입니다. Suchet은 글로벌 확장 전략, 벤처 캐피탈 및 신흥 기술 분야에서 10년의 경험을 보유하고 있습니다.",
   "aboutCesarDescription": "재능 있는 엔지니어인 Cesar는 수석 소프트웨어 엔지니어로서 16년 이상의 경력을 갖고 있습니다. Cesar는 IES La Carballeira에서 컴퓨터 과학 석사 학위를 받았습니다.",
   "OurHistory1": "2014년 Sam Kazemain과 Theodor Forselius는 UCLA 기숙사에서 Everipedia를 설립했습니다. Travis Moore는 초기에 공동 창립자이자 회사의 첫 번째 CTO로 합류했습니다.  \n\n원래 Everipedia에 대한 그들의 비전은 Wikipedia에 대한 보다 현대적인 대안인 “모든 것의 백과사전”이 되는 것이었습니다. 오늘날 IQ 토큰은 암호화폐로 알려져 있지만 IQ는 Everipedia에 대한 편집자의 기여를 추적하는 거래 불가능한 포인트 시스템으로 시작되었습니다.",
@@ -40,5 +40,6 @@
   "OurHistory3": "2018년 2월, Everipedia는 Galaxy Digital로부터 3천만 달러를 투자받아 Everipedia를 세계 최초의 블록체인 백과사전으로 만들었습니다. 이러한 인상 및 확장은 Engadget, Reuters 및 Yahoo News을 포함한 여러 매체에서 다루었습니다. \n\n2018년 7월, Everipedia는 IQ 포인트 시스템을 실제 토큰으로 전환했습니다. IQ 토큰 공급량의 51%가 에어드랍되었습니다. 8월, 에브리피디아는 세계 최초의 블록체인 백과사전을 출시하며 역사를 기록했습니다.",
   "OurHistory4": "2018년에 에버리피디아가 블록체인 백과사전으로 전환된 이후, 에버리피디아의 독자와 편집자들은 암호화폐 콘텐츠로 옮겨갔습니다. 2020년, 에버리피디아 팀은 OraQles을 개발하며 블록체인 혁신에 계속해서 집중했는데, 이는 검증된 제1자가 현실 세계의 정보를 체인상으로 가져올 수 있게 하는 서비스입니다. 2020년 11월 4일, <Link href='https://www.forbes.com/sites/michaeldelcastillo/2020/11/03/how-to-track-official-election-results-on-ethereum-and-eos/?sh=2eb2ff153269'>Forbes</Link>, <Link href='https://www.coindesk.com/markets/2020/10/15/immutable-calls-ap-election-2020-results-will-be-recorded-on-a-blockchain/'>Coindesk</Link> 및 <Link href='https://www.nasdaq.com/articles/immutable-calls%3A-ap-election-2020-results-will-be-recorded-on-a-blockchain-2020-10-15'>Nasdaq</Link>와 같은 출판물들에 의해 보도된 역사적인 순간입니다.",
   "OurHistory5": "2022년에 Everipedia는 Polygon 블록체인으로 이전하고 <Link href='https://iq.wiki/blog/il83x1k4q5FdsuVJBCbAVjMlOytJ4Q5k8tsjSxG9ixg'>IQ.wiki로 브랜드를 변경했습니다</Link>. 브랜드 변경과 함께 암호화폐 커뮤니티에 더 나은 서비스를 제공하기 위해 몇 가지 새로운 Web3 기능과 통합을 추가했습니다. 지난 몇 년 동안 NFT, DeFi 및 Web3의 혁신 속도가 폭발적으로 증가했습니다. 우리는 항상 암호화폐 지식의 허브로 IQ.wiki를 구축하는 데 영감을 받아 공간을 구축하고 성장하는 데 열정을 쏟았습니다. IQ 토큰과 암호화폐가 백과사전의 핵심이라는 점을 강조하기 위해 IQ.wiki로 브랜드를 변경했습니다.",
-  "OurHistory6": "2023년 2월, IQ.wiki는 <Link href='https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY'>인공지능을 통합한</Link> 최초의 백과사전 및 디앱 중 하나가 되었습니다. IQ.wiki는 기사 요약과 같은 작업을 위해 OpenAI의 GPT-3을 통합했으며 나중에 GPT-4로 업그레이드했습니다. 2023년에 BrainDAO는 플랫폼 내에서 AI를 더욱 통합하고, 추가 AI 기반 도구를 개발하며, IQ 토큰을 사용하여 문제의 첫 번째 부분에 대한 AI 모델 교육을 장려하는 것을 목표로 합니다."
+  "OurHistory6": "2023년 2월, IQ.wiki는 <Link href='https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY'>인공지능을 통합한</Link> 최초의 백과사전 및 디앱 중 하나가 되었습니다. IQ.wiki는 기사 요약과 같은 작업을 위해 OpenAI의 GPT-3을 통합했으며 나중에 GPT-4로 업그레이드했습니다. 2023년에 BrainDAO는 플랫폼 내에서 AI를 더욱 통합하고, 추가 AI 기반 도구를 개발하며, IQ 토큰을 사용하여 문제의 첫 번째 부분에 대한 AI 모델 교육을 장려하는 것을 목표로 합니다.",
+  "OurHistory7": "2024년 BrainDAO는 IQ.wiki, IQ.social, IQ GPT를 확장하고 솔리디티(Solidity)와 바이퍼(Vyper)와 같은 블록체인 언어를 위한 최초의 인공지능 코딩 도구인 IQ 코드와 같은 새로운 제품을 출시하여 에코시스템을 계속 성장시킬 것입니다. 향후 발전에 대한 소식을 기대하세요!"
 }
