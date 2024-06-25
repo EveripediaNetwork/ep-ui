@@ -14,7 +14,6 @@ import BinanceIcon from '../Icons/binance'
 import UpbitIcon from '../Icons/upbit'
 import FraxIcon from '../Icons/frax'
 import { RiArrowDownLine, RiArrowUpLine, RiGlobalLine } from 'react-icons/ri'
-import { logEvent } from '@/utils/googleAnalytics'
 import { Logo } from '../Elements'
 import IQGraph from './IQGraph'
 import { useGetCgTokenDataQuery } from '@/services/cgTokenDetails'
@@ -108,12 +107,6 @@ export const IQBar = () => {
           <Link
             href="https://iq.braindao.org/dashboard"
             onClick={() => {
-              logEvent({
-                category: 'Home',
-                action: 'Click',
-                label: 'IQ Dashboard',
-                value: 1,
-              })
               posthog.capture('check_iq_click', {
                 target: 'IQ Dashboard',
               })
@@ -181,18 +174,8 @@ export const IQBar = () => {
           <Link
             href="https://coinmarketcap.com/currencies/iq/"
             target="_blank"
+            data-ph-capture-attribute-exchange-link="coinmarketcap"
             rel="noopener nofollow"
-            onClick={() => {
-              logEvent({
-                category: 'Home',
-                action: 'Click',
-                label: 'IQ CMC',
-                value: 1,
-              })
-              posthog.capture('check_iq_click', {
-                target: 'IQ CMC',
-              })
-            }}
           >
             <Button
               variant="outline"
@@ -226,17 +209,7 @@ export const IQBar = () => {
               isExternal
               target="_blank"
               rel="noopener nofollow"
-              onClick={() => {
-                logEvent({
-                  category: 'Home',
-                  action: 'Click',
-                  label: 'Binance',
-                  value: 1,
-                })
-                posthog.capture('check_iq_click', {
-                  target: 'Binance',
-                })
-              }}
+              data-ph-capture-attribute-exchange-link="binance"
             >
               <IconButton
                 variant="outline"
@@ -259,17 +232,7 @@ export const IQBar = () => {
               isExternal
               target="_blank"
               rel="noopener nofollow"
-              onClick={() => {
-                logEvent({
-                  category: 'Home',
-                  action: 'Click',
-                  label: '1inch',
-                  value: 1,
-                })
-                posthog.capture('check_iq_click', {
-                  target: '1inch',
-                })
-              }}
+              data-ph-capture-attribute-exchange-link="1inch"
             >
               <IconButton
                 variant="outline"
@@ -292,17 +255,7 @@ export const IQBar = () => {
               target="_blank"
               rel="noopener nofollow"
               href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
-              onClick={() => {
-                logEvent({
-                  category: 'Home',
-                  action: 'Click',
-                  label: 'upbit',
-                  value: 1,
-                })
-                posthog.capture('check_iq_click', {
-                  target: 'upbit',
-                })
-              }}
+              data-ph-capture-attribute-exchange-link="upbit"
             >
               <IconButton
                 variant="outline"
@@ -325,17 +278,7 @@ export const IQBar = () => {
               isExternal
               target="_blank"
               rel="noopener nofollow"
-              onClick={() => {
-                logEvent({
-                  category: 'Home',
-                  action: 'Click',
-                  label: 'Binance',
-                  value: 1,
-                })
-                posthog.capture('check_iq_click', {
-                  target: 'frax',
-                })
-              }}
+              data-ph-capture-attribute-exchange-link="frax-finance"
             >
               <IconButton
                 variant="outline"

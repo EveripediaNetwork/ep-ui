@@ -18,7 +18,6 @@ import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
 import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { logEvent } from '@/utils/googleAnalytics'
 import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
 import {
   CreateNewWikiSlug,
@@ -49,7 +48,7 @@ export type TGraphQLError = {
 }
 
 export const WikiPublishButton = () => {
-  const wiki = useAppSelector((state) => state.wiki)
+  const wiki = useAppSelector(state => state.wiki)
   const { data } = useGetWikiQuery(wiki?.id || '')
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
@@ -142,16 +141,15 @@ export const WikiPublishButton = () => {
       getDetectedProvider()
     } else {
       getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
+      detectedProvider.on('chainChanged', newlyConnectedChain =>
         setConnectedChainId(newlyConnectedChain),
       )
     }
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', newlyConnectedChain =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -191,12 +189,6 @@ export const WikiPublishButton = () => {
         setMsg(defaultErrorMessage)
       }
     }
-    logEvent({
-      action: 'SUBMIT_WIKI_ERROR',
-      label: await getWikiSlug(wiki),
-      category: 'wiki_error',
-      value: 1,
-    })
     posthog.capture('submit_wiki_error', {
       wiki_slug: await getWikiSlug(wiki),
       error: logReason,
@@ -241,13 +233,6 @@ export const WikiPublishButton = () => {
         return
       }
     }
-
-    logEvent({
-      action: 'SUBMIT_WIKI',
-      label: await getWikiSlug(wiki),
-      category: 'wiki_title',
-      value: 1,
-    })
     posthog.capture('submit_wiki', {
       wiki_slug: await getWikiSlug(wiki),
       isEdit: !isNewCreateWiki,
@@ -274,7 +259,7 @@ export const WikiPublishButton = () => {
         ...wiki,
         user: { id: userAddress },
         content: sanitizeContentToPublish(String(wiki.content)),
-        metadata: wiki.metadata.filter((m) => m.value),
+        metadata: wiki.metadata.filter(m => m.value),
       }
 
       if (finalWiki.id === CreateNewWikiSlug)
