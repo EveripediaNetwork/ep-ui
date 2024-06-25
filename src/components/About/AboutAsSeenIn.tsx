@@ -1,5 +1,5 @@
 import React from 'react'
-import { VStack, Heading, Flex } from '@chakra-ui/react'
+import { Box, VStack, Heading, Flex } from '@chakra-ui/react'
 import CNNLogo from './logos/cnn.svg'
 import ForbesLogo from './logos/forbes.svg'
 import ReutersLogo from './logos/reuters.svg'
@@ -13,14 +13,16 @@ const AboutAsSeenIn = () => (
     maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
     mx="auto"
   >
-    <Flex gap={8} flexWrap="wrap" justifyContent="center" alignItems="center">
+    <Box w="full" textAlign="center" marginY={10}>
       <Heading size="md">AS SEEN IN:</Heading>
+    </Box>
+    <Flex gap={8} flexWrap="wrap" justifyContent="center" alignItems="center">
       <CNNLogo height="min(30px, 6vw)" fill="#8a939b" />
-      <ForbesLogo height="min(30px, 6vw)" fill="#8a939b" />
       <ReutersLogo height="min(30px, 6vw)" fill="#8a939b" />
       <WiredLogo height="min(30px, 6vw)" fill="#8a939b" />
-      <CoinDeskLogo height="min(30px, 6vw)" fill="#8a939b" />
       <FortuneLogo height="min(30px, 6vw)" fill="#8a939b" />
+      <CoinDeskLogo height="min(30px, 6vw)" fill="#8a939b" />
+      <ForbesLogo height="min(30px, 6vw)" fill="#8a939b" />
     </Flex>
   </VStack>
 )

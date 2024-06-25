@@ -18,8 +18,17 @@ const AboutAiIntegration = () => {
       mt={{ base: '12', lg: '20 !important' }}
       mb={{ base: '10', md: '15', lg: 'initial' }}
       mx="auto"
+      className="relative"
     >
-      <SimpleGrid templateColumns="2fr 0.5fr">
+      <Box
+        className="absolute top-0 right-0 z-0"
+        w="100%"
+        height="100%"
+        opacity={0.7}
+        background="linear-gradient(to bottom, rgba(255, 0, 122, 0.1), rgba(251, 0, 120, 0.4))"
+        borderRadius="19px"
+      />
+      <SimpleGrid templateColumns="2fr 0.5fr" className="relative z-0">
         <Box alignSelf="center">
           <Heading
             fontSize={{ base: '16px', md: '24px', lg: '48px' }}
