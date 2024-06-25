@@ -1,55 +1,248 @@
 import React from 'react'
-import { Box, Heading, HStack, Text, useColorModeValue } from '@chakra-ui/react'
+import { Box, Center, Icon, useColorModeValue, Heading } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { Image } from '../Elements/Image/Image'
+import IQLogo from './logos/IQLogo.svg'
+import OrbitingCircles from '../magicui/orbiting-circles'
+
+interface OrbitingCircleProps {
+  imagesrc: string
+  size: number
+  delay?: number
+  radius: number
+  reverse?: boolean
+  imageSize?: number
+}
+
+const OrbitingCircle = ({
+  imagesrc,
+  size,
+  delay,
+  radius,
+  reverse,
+  imageSize,
+}: OrbitingCircleProps) => (
+  <OrbitingCircles
+    className={`h-${size} w-${size} border-none bg-transparent`}
+    duration={20}
+    delay={delay}
+    radius={radius}
+    reverse={reverse}
+  >
+    <Image src={imagesrc} alt="" className={`h-${imageSize} w-${imageSize}`} />
+  </OrbitingCircles>
+)
 
 const AboutHero = () => {
   const { t } = useTranslation('about')
-  const aboutHeroSrc = useColorModeValue(
-    'about-hero-light.svg',
-    'about-hero-dark.svg',
-  )
+  const getIconPath = (iconName: any) => {
+    const mode = useColorModeValue('light', 'dark')
+    return `/images/orbit/${iconName}-${mode}.svg`
+  }
+
   return (
-    <HStack
-      mx="auto"
-      maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
-      spacing={{ base: 0, md: '2' }}
-      flexDirection={{ base: 'column', xl: 'row' }}
-    >
-      <Box mx="auto" mb={{ base: 0, xl: 0 }}>
-        <Heading
-          textAlign={{ base: 'center', xl: 'left' }}
-          w={{ base: '100%' }}
-          pr={{ base: '0', xl: '8' }}
-          mx={{ base: 'auto', xl: 0 }}
-          fontSize={{ base: '32', md: '36', '2xl': '42' }}
-          mt={{ base: 0, md: 10 }}
-          mb={{ base: 5, xl: 10 }}
-          fontWeight="black"
-          lineHeight="shorter"
-        >
+    <Box px={4}>
+      <Box maxW="7xl" mx="auto">
+        <Center>
+          <Heading
+            fontSize="base"
+            fontWeight="semibold"
+            color="brand.500"
+            _dark={{ color: 'brand.800' }}
+          >
+            {t('aboutHeroTitle')}
+          </Heading>
+        </Center>
+
+        <h1 className="text-center  mx-auto text-5xl  max-w-6xl text-3xl lg:text-5xl sm:text-md font-semibold text-gray-800 dark:text-white/90 mt-4">
           {`${t('aboutHeroHeading')}`}
-        </Heading>
-        <Text
-          textAlign={{ base: 'center', xl: 'left' }}
-          fontSize={{ base: '16px', md: '18px', xl: '24px' }}
-          mb={4}
-          mx={{ md: 'auto', xl: '0' }}
-          w={{ base: '100%', md: '80%', xl: '80%' }}
-        >{`${t('aboutHeroPhrase')}`}</Text>
+        </h1>
+
+        <p className="text-gray-600 dark:text-white/80 mt-6 max-w-4xl text-center mx-auto text-sm lg:text-lg md:text-xl font-medium">
+          {`${t('aboutHeroPhrase')}`}
+        </p>
+
+        <div className="relative flex h-[500px] w-full items-center justify-center overflow-hidden">
+          <Icon as={IQLogo} boxSize={16} />
+
+          {/* <OrbitingCircles
+            className="h-[60px] w-[60px] border-none bg-transparent"
+            duration={20}
+            delay={20}
+            radius={80}
+          >
+            <Image
+              src={`${getIconPath('scale')}`}
+              alt=""
+              className="h-20 w-20"
+            />
+            
+
+          </OrbitingCircles>
+
+
+          <OrbitingCircles
+            className="h-[60px] w-[60px] border-none bg-transparent"
+            duration={20}
+            delay={36}
+            radius={80}
+          >
+            <Image
+              src={`${getIconPath('pink-circle')}`}
+              alt=""
+              className="h-12 w-12"
+            />
+          </OrbitingCircles>
+
+          <OrbitingCircles
+            className="h-[60px] w-[60px] border-none bg-transparent"
+            duration={20}
+            delay={10}
+            radius={80}
+          >
+            <Image src={`${getIconPath('jet')}`} alt="" className="h-20 w-20" />
+          </OrbitingCircles>
+
+          <OrbitingCircles
+            className="h-[64px] w-[64px] border-none bg-transparent"
+            duration={20}
+            delay={5}
+            radius={80}
+          >
+            <Image
+              src={`${getIconPath('pink-circle')}`}
+              alt=""
+              className="h-12 w-12"
+            />
+          </OrbitingCircles>
+
+          
+
+          <OrbitingCircles
+            className="h-[80px] w-[80px] border-none bg-transparent"
+            radius={190}
+            duration={80}
+            reverse
+          >
+            <Image
+              src={`${getIconPath('bored-ape')}`}
+              alt=""
+              className="h-20 w-20"
+            />
+          </OrbitingCircles>
+
+          <OrbitingCircles
+            className="h-[80px] w-[80px] border-none bg-transparent"
+            radius={190}
+            duration={20}
+            delay={20}
+            reverse
+          >
+            <Image
+              src={`${getIconPath('hammer')}`}
+              alt=""
+              className="h-20 w-20"
+            />
+          </OrbitingCircles>
+
+          <OrbitingCircles
+            className="h-[80px] w-[80px] border-none bg-transparent"
+            radius={190}
+            duration={20}
+            delay={10}
+            reverse
+          >
+            <Image
+              src={`${getIconPath('globe')}`}
+              alt=""
+              className="h-20 w-20"
+            />
+          </OrbitingCircles>
+
+          <OrbitingCircles
+            className="h-[80px] w-[80px] border-none bg-transparent"
+            radius={190}
+            duration={40}
+            delay={0}
+            reverse
+          >
+            <Image src={`${getIconPath('car')}`} alt="" className="h-20 w-20" />
+          </OrbitingCircles> */}
+
+          <OrbitingCircle
+            imagesrc={`${getIconPath('scale')}`}
+            size={60}
+            delay={20}
+            radius={80}
+            imageSize={20}
+          />
+          <OrbitingCircle
+            imagesrc={`${getIconPath('pink-circle')}`}
+            size={64}
+            delay={36}
+            radius={80}
+            imageSize={20}
+          />
+          <OrbitingCircle
+            imagesrc={`${getIconPath('jet')}`}
+            size={60}
+            delay={10}
+            radius={80}
+            imageSize={20}
+          />
+          <OrbitingCircle
+            imagesrc={`${getIconPath('pink-circle')}`}
+            size={64}
+            delay={5}
+            radius={80}
+            imageSize={20}
+          />
+
+          {/* Reverse Circles */}
+
+          <OrbitingCircle
+            imagesrc={`${getIconPath('bored-ape')}`}
+            size={80}
+            radius={190}
+            reverse
+            imageSize={20}
+          />
+
+          <OrbitingCircle
+            imagesrc={`${getIconPath('pink-circle')}`}
+            size={24}
+            delay={36}
+            radius={80}
+            imageSize={10}
+          />
+
+          <OrbitingCircle
+            imagesrc={`${getIconPath('hammer')}`}
+            size={80}
+            delay={20}
+            radius={190}
+            reverse
+            imageSize={20}
+          />
+          <OrbitingCircle
+            imagesrc={`${getIconPath('globe')}`}
+            size={80}
+            delay={10}
+            radius={190}
+            reverse
+            imageSize={20}
+          />
+
+          <OrbitingCircle
+            imagesrc={`${getIconPath('car')}`}
+            size={80}
+            radius={190}
+            reverse
+            imageSize={20}
+          />
+        </div>
       </Box>
-      <Box>
-        <Image
-          objectFit="contain"
-          imgBoxSize={450}
-          maxW="90vw"
-          className="teamMember__image"
-          src={`/images/svg-images/${aboutHeroSrc}`}
-          alt="Bringing knowledge to the blockchain."
-          priority
-        />
-      </Box>
-    </HStack>
+    </Box>
   )
 }
 

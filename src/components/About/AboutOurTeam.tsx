@@ -34,6 +34,7 @@ const IconButtonSocial = ({
     _active={{ bgColor: 'transparent' }}
     cursor="pointer"
     color="gray"
+    _dark={{ color: 'white' }}
     aria-label={name}
     size="xs"
     as={icon || IQLogo}
@@ -110,7 +111,7 @@ const AboutOurTeam = () => {
                   <Heading
                     as="h3"
                     size="md"
-                    className="text-gray-800 dark:text-white-alpha/900 mt-4"
+                    className="text-gray-800 dark:text-white mt-4"
                   >
                     {person.name}
                   </Heading>
