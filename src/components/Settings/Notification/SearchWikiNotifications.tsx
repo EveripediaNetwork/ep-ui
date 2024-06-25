@@ -27,7 +27,6 @@ import {
   useNavSearch,
 } from '@/services/search/utils'
 import { LinkButton } from '@/components/Elements'
-import { logEvent } from '@/utils/googleAnalytics'
 import config from '@/config'
 import { CHAR_SEARCH_LIMIT, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
@@ -239,12 +238,6 @@ const SearchWikiNotifications = () => {
         onSelectOption={(option) => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
-          logEvent({
-            action: 'CLICK_BY_SEARCH',
-            label: ItemPaths[type as SearchItem] + id,
-            value: 1,
-            category: 'search_tags',
-          })
           posthog.capture('search_suggestions_click', {
             label: ItemPaths[type as SearchItem] + id,
             location: 'notifications',

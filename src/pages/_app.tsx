@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react'
+import React, { StrictMode } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
@@ -9,7 +9,6 @@ import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
 import NextNProgress from 'nextjs-progressbar'
-import { pageView } from '@/utils/googleAnalytics'
 import { Montserrat } from '@next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
@@ -30,13 +29,6 @@ export const montserrat = Montserrat({
 })
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
-  useEffect(() => {
-    const handleRouteChange = (url: URL) => pageView(url)
-    router.events.on('routeChangeComplete', handleRouteChange)
-
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events])
-
   return (
     <StrictMode>
       <style jsx global>{`

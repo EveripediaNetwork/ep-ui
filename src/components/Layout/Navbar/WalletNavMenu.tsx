@@ -1,4 +1,3 @@
-import { logEvent } from '@/utils/googleAnalytics'
 import { Button, UseDisclosureReturn } from '@chakra-ui/react'
 import React from 'react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
@@ -22,13 +21,7 @@ const WalletNavMenu = ({
   const posthog = usePostHog()
 
   const handleWalletIconAction = () => {
-    logEvent({
-      action: 'OPEN_WALLET',
-      value: 1,
-      label: userAddress ?? '',
-      category: 'open_drawer',
-    })
-    posthog.capture('open_wallet')
+    posthog.capture('open_wallet', { userAddress })
     setHamburger(false)
     drawerOperations.onToggle()
   }
