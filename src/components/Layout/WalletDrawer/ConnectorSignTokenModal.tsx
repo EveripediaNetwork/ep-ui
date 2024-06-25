@@ -1,5 +1,4 @@
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { logEvent } from '@/utils/googleAnalytics'
 import {
   Box,
   CloseButton,
@@ -49,12 +48,6 @@ export const ConnectorSignTokenModal = ({
 
     const token = await generateNewToken()
     window.postMessage({ type: 'iqwiki-token-pass', token }, '*')
-    logEvent({
-      action: 'SIGN_ATTEMPT',
-      label: 'SIGN_TOKEN',
-      value: 1,
-      category: 'login',
-    })
     posthog.capture('sign_token_attempt')
     router.push(router.asPath).then(openWalletDrawer)
   }

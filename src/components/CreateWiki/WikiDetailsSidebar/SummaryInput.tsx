@@ -9,12 +9,12 @@ import AIGenerateButton from './AIGenerateButton'
 import { usePostHog } from 'posthog-js/react'
 
 const sleep = (ms: number) =>
-  new Promise(r => {
+  new Promise((r) => {
     setTimeout(r, ms)
   })
 
 const SummaryInput = () => {
-  const wiki = useAppSelector(state => state.wiki)
+  const wiki = useAppSelector((state) => state.wiki)
   const [showRed, setShowRed] = React.useState(false)
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
@@ -53,7 +53,7 @@ const SummaryInput = () => {
       })
     }
     setIsGenerating(false)
-    setReserveSummaries(r => r.slice(1))
+    setReserveSummaries((r) => r.slice(1))
   }, [dispatch, reserveSummaries])
 
   const handleAIGenerate = useCallback(async () => {
@@ -72,7 +72,7 @@ const SummaryInput = () => {
       const { data, headers } = await axios.post('/api/summary-generate', {
         title: wiki.title,
         content: wiki.content,
-        isAboutPerson: !!wiki.categories.find(i => i.id === 'person'),
+        isAboutPerson: !!wiki.categories.find((i) => i.id === 'person'),
       })
 
       if (headers['x-ratelimit-remaining'] === '1') rateLimitReached()

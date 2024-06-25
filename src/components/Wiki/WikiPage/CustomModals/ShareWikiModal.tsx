@@ -31,7 +31,6 @@ import LinkedinIconColor from '@/components/Icons/linkedinIconColor'
 import EmailIconColor from '@/components/Icons/emailIconColor'
 import config from '@/config'
 import { Modal } from '@/components/Elements'
-import { logEvent } from '@/utils/googleAnalytics'
 import Link from '@/components/Elements/LinkElements/Link'
 import { useTranslation } from 'next-i18next'
 import { usePostHog } from 'posthog-js/react'
@@ -80,12 +79,6 @@ const ShareWikiModal = ({
   const url = `${config.publicDomain}${router.asPath}`
   const { hasCopied, onCopy } = useClipboard(url)
   useEffect(() => {
-    logEvent({
-      action: 'OPEN_SHARE_WIKI_MODAL',
-      label: router.asPath.replace('/wiki/', ''),
-      category: 'open_share_wiki_modal',
-      value: 1,
-    })
     posthog.capture('open_share_wiki_modal', {
       wiki: router.asPath.replace('/wiki/', ''),
     })
@@ -126,7 +119,7 @@ const ShareWikiModal = ({
           {t('orShare')}
         </Text>
         <Wrap mt="1rem" spacing="3">
-          {SHARING_OPTIONS.map((item) => {
+          {SHARING_OPTIONS.map(item => {
             return (
               <>
                 {typeof item.label !== 'string' ? (
@@ -139,12 +132,6 @@ const ShareWikiModal = ({
                     rel="nofollow"
                     target="_blank"
                     onClick={() => {
-                      logEvent({
-                        action: 'SHARING_WIKI_ON_LENS',
-                        label: url,
-                        category: 'sharing_wiki_on_lens',
-                        value: 1,
-                      })
                       posthog.capture('sharing_wiki_on_lens', {
                         wiki: url,
                       })

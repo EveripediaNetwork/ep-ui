@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Image, Spinner, Text } from '@chakra-ui/react'
 import { Connector } from 'wagmi'
-import { logEvent } from '@/utils/googleAnalytics'
 import WalletDetailsWrapper from './WalletDetailsWrapper'
 import { ConnectorDetailsType } from '@/types/WalletBalanceType'
 import { usePostHog } from 'posthog-js/react'
@@ -16,12 +15,6 @@ const ConnectorDetails = ({
   const posthog = usePostHog()
 
   const handleConnect = (selectedConnector: Connector) => {
-    logEvent({
-      action: 'LOGIN_ATTEMPT',
-      label: selectedConnector.name,
-      value: 1,
-      category: 'connectors',
-    })
     posthog.capture('login_attempt', {
       connector: selectedConnector.name,
     })

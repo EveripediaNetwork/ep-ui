@@ -8,9 +8,7 @@ import { store } from '@/store/store'
 import { CategoryDataType } from '@/types/CategoryDataTypes'
 import { WikiPreview } from '@everipedia/iq-utils'
 import { debounce } from 'debounce'
-
 import { useEffect, useState } from 'react'
-import { logEvent } from '@/utils/googleAnalytics'
 import {
   getEventByBlockchain,
   getEventByLocation,
@@ -131,12 +129,6 @@ export const useNavSearch = () => {
       setIsLoading(true)
       debouncedFetchResults(query, (res) => {
         if (!res.accounts && !res.wikis && !res.categories) {
-          logEvent({
-            action: 'SEARCH_NO_RESULTS',
-            label: query,
-            category: 'search_tag',
-            value: 1,
-          })
           posthog.capture('search_no_results', {
             query,
           })

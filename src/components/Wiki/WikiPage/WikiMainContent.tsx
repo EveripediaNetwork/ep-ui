@@ -13,7 +13,6 @@ import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { logEvent } from '@/utils/googleAnalytics'
 import { SupportedLanguages } from '@/data/LanguageData'
 import { languageData } from '@/data/LanguageData'
 import { usePostHog } from 'posthog-js/react'
@@ -47,7 +46,7 @@ export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
         h4: addToTOC,
         h5: addToTOC,
         h6: addToTOC,
-        a: (props) =>
+        a: props =>
           customLinkRenderer({
             ...props,
             referencesString,
@@ -62,8 +61,8 @@ export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
 })
 
 const supportedWikiTranslations = languageData
-  .filter((lang) => lang.locale !== 'en')
-  .map((lang) => lang.locale)
+  .filter(lang => lang.locale !== 'en')
+  .map(lang => lang.locale)
 type SupportedWikiTranslations = Exclude<SupportedLanguages, 'en'>
 type WikiContentCache = Partial<Record<SupportedWikiTranslations, string>>
 
@@ -83,7 +82,7 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   let content = wikiContent.replace(/<br( )*\/?>/g, '\n') || ''
 
   const matchRegex = /\$\$widget\d(.*?\))\$\$/
-  content.match(new RegExp(matchRegex, 'g'))?.forEach((match) => {
+  content.match(new RegExp(matchRegex, 'g'))?.forEach(match => {
     const widgetContent = match.match(matchRegex)?.[1]
     if (widgetContent) {
       content = content.replaceAll(match, widgetContent)
@@ -152,12 +151,6 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     )
 
     const handleClick = async () => {
-      logEvent({
-        action: 'TRANSLATE_WIKI',
-        category: btnLocale,
-        label: wikiData.id,
-        value: 1,
-      })
       posthog.capture('translate_wiki', {
         wikiId: wikiData.id,
         lang: btnLocale,
