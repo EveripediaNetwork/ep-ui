@@ -35,7 +35,6 @@ import SearchSEO from '@/components/SEO/Search'
 import { CHAR_SEARCH_LIMIT, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { logEvent } from '@/utils/googleAnalytics'
 import {
   getWikiSummary,
   WikiSummarySize,
@@ -301,12 +300,7 @@ const NavSearch = (props: NavSearchProps) => {
         onSelectOption={(option) => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
-          logEvent({
-            action: 'CLICK_BY_SEARCH',
-            label: ItemPaths[type as SearchItem] + id,
-            value: 1,
-            category: 'search_tags',
-          })
+
           posthog.capture('search_suggestions_click', {
             label: ItemPaths[type as SearchItem] + id,
             location: 'nav_search',

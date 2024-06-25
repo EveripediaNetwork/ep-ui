@@ -1,6 +1,5 @@
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { logEvent } from '@/utils/googleAnalytics'
 import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import React, { ChangeEvent, useCallback } from 'react'
@@ -32,11 +31,8 @@ const SummaryInput = () => {
       description: 'Please try again later.',
       status: 'error',
     })
-    logEvent({
-      action: 'GENERATE_SUMMARY',
-      label: wiki.id,
-      category: 'summary-generate',
-      value: 0,
+    posthog.capture('generate_summary_error', {
+      wiki_id: wiki.id,
     })
   }, [toast, wiki.id])
 
@@ -88,11 +84,8 @@ const SummaryInput = () => {
 
       if (data.length > 1) setReserveSummaries(data.slice(1))
 
-      logEvent({
-        action: 'GENERATE_SUMMARY',
-        label: wiki.id,
-        category: 'summary-generate',
-        value: 1,
+      posthog.capture('generate_summary_success', {
+        wiki_id: wiki.id,
       })
     } catch (error) {
       const { response } = error as AxiosError
