@@ -9,7 +9,6 @@ import AboutAiIntegration from '@/components/About/AboutAIIntegration'
 import OurHistory from '@/components/About/OurHistory'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetServerSideProps } from 'next'
-import { AboutOurTeam } from '@/components/About/AboutOurTeam'
 
 const About = () => (
   <>
