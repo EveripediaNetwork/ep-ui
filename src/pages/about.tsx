@@ -9,6 +9,7 @@ import AboutAiIntegration from '@/components/About/AboutAIIntegration'
 import OurHistory from '@/components/About/OurHistory'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetServerSideProps } from 'next'
+import { AboutOurTeam } from '@/components/About/AboutOurTeam'
 
 const About = () => (
   <>
@@ -17,8 +18,10 @@ const About = () => (
       <AboutHero />
       <AboutFeatures />
       <AboutAsSeenIn />
-      <AboutOurTeam />
       <AboutAiIntegration />
+    </Box>
+    <AboutOurTeam />
+    <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
       <OurHistory />
     </Box>
   </>
