@@ -22,7 +22,7 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
     useAccount()
 
   useAccountEffect({
-    onConnect: async data => {
+    onConnect: async (data) => {
       if (data.connector.switchChain) {
         document.cookie = 'SWITCH_CHAIN=true;'
       } else {
@@ -47,12 +47,12 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
 
   const { connect, connectors } = useConnect({
     mutation: {
-      onError: error => {
+      onError: (error) => {
         posthog.capture('login_error', {
           error: error.message,
         })
       },
-      onSuccess: data => {
+      onSuccess: (data) => {
         posthog.capture('login_success', {
           address: data.accounts[0],
         })

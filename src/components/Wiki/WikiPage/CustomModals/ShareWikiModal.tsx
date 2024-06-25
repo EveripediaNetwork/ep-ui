@@ -119,7 +119,7 @@ const ShareWikiModal = ({
           {t('orShare')}
         </Text>
         <Wrap mt="1rem" spacing="3">
-          {SHARING_OPTIONS.map(item => {
+          {SHARING_OPTIONS.map((item) => {
             return (
               <>
                 {typeof item.label !== 'string' ? (
