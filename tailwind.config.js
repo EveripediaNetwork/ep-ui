@@ -1,3 +1,7 @@
+const {
+  default: flattenColorPalette,
+} = require('tailwindcss/lib/util/flattenColorPalette')
+
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   darkMode: ['class'],
@@ -56,6 +60,7 @@ module.exports = {
       },
       fontFamily: {
         montserrat: ['var(--font-family-montserrat)'],
+        mooLahLah: ['var(--font-family-moo-lah-lah)'],
       },
       keyframes: {
         'accordion-down': {
@@ -66,12 +71,38 @@ module.exports = {
           from: { height: 'var(--radix-accordion-content-height)' },
           to: { height: '0' },
         },
+        orbit: {
+          '0%': {
+            transform:
+              'rotate(0deg) translateY(calc(var(--radius) * 1px)) rotate(0deg)',
+          },
+          '100%': {
+            transform:
+              'rotate(360deg) translateY(calc(var(--radius) * 1px)) rotate(-360deg)',
+          },
+        },
       },
       animation: {
         'accordion-down': 'accordion-down 0.2s ease-out',
         'accordion-up': 'accordion-up 0.2s ease-out',
+        orbit: 'orbit calc(var(--duration)*1s) linear infinite',
+      },
+      backgroundImage: {
+        'custom-gradient':
+          'linear-gradient(to right, #FF5CAA 28%, #7CE3FA 67%, rgba(242, 172, 206, 0.5) 100%)',
       },
     },
   },
-  plugins: [require('tailwindcss-animate')],
+  plugins: [require('tailwindcss-animate'), addVariablesForColors],
+}
+
+function addVariablesForColors({ addBase, theme }) {
+  const allColors = flattenColorPalette(theme('colors'))
+  const newVars = Object.fromEntries(
+    Object.entries(allColors).map(([key, val]) => [`--${key}`, val]),
+  )
+
+  addBase({
+    ':root': newVars,
+  })
 }
