@@ -4,14 +4,13 @@ import {
   VStack,
   Box,
   Center,
-  Icon,
   useColorModeValue,
   Heading,
   useBreakpointValue,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { Image } from '../Elements/Image/Image'
-import IQLogo from './logos/IQLogo.svg'
+// import IQLogo from './logos/IQLogo.svg'
 import OrbitingCircles from '../magicui/orbiting-circles'
 
 interface OrbitingCircleProps {
@@ -61,47 +60,47 @@ const AboutHero = () => {
   const { t } = useTranslation('about')
   const orbits: OrbitingCircleProps[] = [
     { iconName: 'scale', size: 24, delay: 20, radius: 110 },
-    { iconName: 'pink-circle', size: 56, delay: 35, radius: 110 },
+    { iconName: 'pink-circle', size: 52, delay: 35, radius: 110 },
     { iconName: 'jet', size: 24, delay: 10, radius: 110 },
-    { iconName: 'pink-circle', size: 56, delay: 5, radius: 110 },
+    { iconName: 'pink-circle', size: 52, delay: 5, radius: 110 },
     {
       iconName: 'bored-ape',
       size: 24,
       delay: 20,
-      radius: 240,
+      radius: 280,
       reverse: true,
     },
     {
       iconName: 'pink-circle',
       size: 24,
       delay: 18,
-      radius: 240,
+     radius: 280,
       reverse: true,
     },
     {
       iconName: 'hammer',
       size: 24,
       delay: 35,
-      radius: 240,
+     radius: 280,
       reverse: true,
     },
     {
       iconName: 'globe',
       size: 24,
       delay: 10,
-      radius: 240,
+     radius: 280,
       reverse: true,
     },
     {
       iconName: 'car',
       size: 24,
       delay: 5,
-      radius: 240,
+     radius: 280,
       reverse: true,
     },
   ]
 
-  const boxHeight = useResponsiveValue(400, 550)
+  const boxHeight = useResponsiveValue(400, 700)
 
   return (
     <Box px={4}>
@@ -150,7 +149,7 @@ const AboutHero = () => {
           overflow="hidden"
           marginTop={16}
         >
-          <Icon as={IQLogo} w={15} h={18} />
+          {/* <Icon as={IQLogo} w={15} h={18} /> */}
 
           {orbits.map((orbit, index) => (
             <Orbit key={index} {...orbit} />

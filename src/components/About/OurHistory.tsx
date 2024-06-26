@@ -16,7 +16,7 @@ const OurHistory = () => {
   return (
     <Box
       mt={{ base: 18, md: '24 !important' }}
-      maxW={{ base: '100%', lg: '80%', '2xl': '75%' }}
+      maxW={{ base: '100%', lg: '100%', '2xl': '75%' }}
       mx="auto"
       my={20}
     >

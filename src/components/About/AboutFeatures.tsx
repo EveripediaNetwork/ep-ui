@@ -73,14 +73,15 @@ const AboutFeatures = () => {
           style={{
             width: '70%',
             height: '80%',
-            transform: 'rotate(-20deg)',
+            transform: 'rotate(-8deg)',
             opacity: 0.2,
           }}
         />
       </Flex>
+
       <SimpleGrid
         columns={[1, 1, 2, 2, 3]}
-        spacing={{ base: '8', md: 4 }}
+        spacing={{ base: '8', md: 20 }}
         mt={{ base: '45px !important ', md: '24 !important' }}
       >
         <AboutFeaturesCard
