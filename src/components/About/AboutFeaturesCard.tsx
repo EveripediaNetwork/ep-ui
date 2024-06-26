@@ -18,7 +18,7 @@ const AboutFeaturesCard = ({
       'flex h-[250px] w-full flex-col md:h-[400px] lg:h-[320px] lg:flex-row'
     }
   >
-    <MagicCard className="flex w-full cursor-pointer flex-col text-left overflow-hidden bg-[radial-gradient(var(--mask-size)_circle_at_var(--mouse-x)_var(--mouse-y),#ffaa40_0,#9c40ff_50%,transparent_100%)] p-10 shadow-2xl">
+    <MagicCard className="flex w-full cursor-pointer flex-col text-left overflow-hidden bg-[radial-gradient(var(--mask-size)_circle_at_var(--mouse-x)_var(--mouse-y),#ffaa40_0,#9c40ff_50%,transparent_100%)] p-10">
       <Icon as={icon} mb={4} w="50px" h="50px" />
       <Heading fontWeight={700} fontSize={{ base: '18px', lg: '20px' }} mb={4}>
         {title}
