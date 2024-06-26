@@ -20,6 +20,18 @@ import { useCreateWikiContext } from './useCreateWikiState'
 import config from '@/config'
 import { usePostHog } from 'posthog-js/react'
 
+const getErrorMessage = (errorObject: any) => {
+  if (errorObject.response?.errors && errorObject.response.errors.length > 0) {
+    const firstError = errorObject.response.errors[0]
+    if (firstError.extensions?.exception?.reason) {
+      return firstError.extensions.exception.reason
+    } else if (firstError.message) {
+      return firstError.message
+    }
+  }
+  return 'An unknown error occurred'
+}
+
 export const useGetSignedHash = () => {
   const {
     setWikiHash,
@@ -170,10 +182,11 @@ export const useGetSignedHash = () => {
         } catch (err) {
           const errorObject = err as Dict
           setIsLoading('error')
-          setMsg(errorObject.response.errors[0].extensions.exception.reason)
-
+          console.log(errorObject)
+          const error = getErrorMessage(errorObject)
+          setMsg(error)
           posthog.capture('submit_wiki_error', {
-            error: errorObject.response.errors[0].extensions.exception.reason,
+            error,
           })
         }
       }
