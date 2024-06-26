@@ -57,11 +57,6 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
           address: data.accounts[0],
         })
         openSignTokenModal()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const w = window as any
-        w.gtag('config', env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
-          user_id: data.accounts[0],
-        })
       },
     },
   })
