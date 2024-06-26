@@ -19,6 +19,7 @@ interface OrbitingCircleProps {
   size: string
   delay: number
   radius: number
+  orbitSize: number
   reverse?: boolean
 }
 const useResponsiveValue = (mobileValue: number, desktopValue: number) => {
@@ -50,7 +51,7 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
       <Image
         src={getIconPath(iconName)}
         alt="orbit"
-        className={`h-${responsiveSize} w-${responsiveSize}`}
+        className={`h-${responsiveSize} w-${responsiveSize} z-10`}
       />
     </OrbitingCircles>
   )
@@ -58,29 +59,51 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
 
 const AboutHero = () => {
   const { t } = useTranslation('about')
-
   const orbits: OrbitingCircleProps[] = [
-    { iconName: 'scale', size: '20', delay: 20, radius: 80 },
-    { iconName: 'pink-circle', size: '44', delay: 35, radius: 80 },
-    { iconName: 'jet', size: '20', delay: 10, radius: 80 },
-    { iconName: 'pink-circle', size: '44', delay: 5, radius: 80 },
+    { iconName: 'scale', size: '20', delay: 20, radius: 120, orbitSize: 60 },
+    { iconName: 'car', size: '40', delay: 35, radius: 120, orbitSize: 60 },
+    { iconName: 'jet', size: '20', delay: 10, radius: 120, orbitSize: 60 },
+    { iconName: 'car', size: '40', delay: 5, radius: 120, orbitSize: 60 },
     {
       iconName: 'bored-ape',
       size: '20',
       delay: 20,
-      radius: 190,
+      radius: 240,
+      orbitSize: 60,
       reverse: true,
     },
     {
       iconName: 'pink-circle',
       size: '20',
       delay: 18,
-      radius: 190,
+      radius: 240,
+      orbitSize: 60,
       reverse: true,
     },
-    { iconName: 'hammer', size: '20', delay: 35, radius: 190, reverse: true },
-    { iconName: 'globe', size: '20', delay: 10, radius: 190, reverse: true },
-    { iconName: 'car', size: '20', delay: 5, radius: 190, reverse: true },
+    {
+      iconName: 'hammer',
+      size: '20',
+      delay: 35,
+      radius: 240,
+      reverse: true,
+      orbitSize: 60,
+    },
+    {
+      iconName: 'globe',
+      size: '20',
+      delay: 10,
+      radius: 240,
+      reverse: true,
+      orbitSize: 60,
+    },
+    {
+      iconName: 'car',
+      size: '20',
+      delay: 5,
+      radius: 240,
+      reverse: true,
+      orbitSize: 60,
+    },
   ]
 
   const boxHeight = useResponsiveValue(300, 500)
@@ -121,6 +144,7 @@ const AboutHero = () => {
             {t('aboutHeroPhrase')}
           </Text>
         </VStack>
+
         <Box
           position="relative"
           display="flex"
@@ -129,6 +153,7 @@ const AboutHero = () => {
           alignItems="center"
           justifyContent="center"
           overflow="hidden"
+          marginTop={16}
         >
           <Icon as={IQLogo} boxSize={15} className="z-10" />
 

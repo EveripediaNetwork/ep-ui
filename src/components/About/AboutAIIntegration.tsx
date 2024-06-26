@@ -67,14 +67,11 @@ const AboutAiIntegration = () => {
       />
 
       <SimpleGrid
-        templateColumns={{ base: '1fr', md: '2fr 0.5fr' }}
+        templateColumns={{ base: '1fr', xl: '2fr 0.5fr' }}
         className="relative z-0"
         gap={6}
       >
-        <Box
-          // order={{ base: 2, md: 1 }}
-          alignSelf="center"
-        >
+        <Box alignSelf="center">
           <Heading
             fontSize={{ base: '16px', md: '24px', lg: '48px' }}
             maxW={{ base: 'full', md: '90%' }}

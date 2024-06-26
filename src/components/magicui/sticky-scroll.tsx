@@ -114,22 +114,22 @@ export const StickyScrollReveal = ({
           mooLahLah.className,
         )}
       >
-      <div className="relative w-full h-0 p-36">
-        <div className="absolute inset-0">
-          <Image
-            src={Star}
-            alt="star_background"
-            className='w-full h-full'
-            width={500}
-            height={500}
-            priority
-          />
-          <div className="absolute inset-0 flex items-center justify-center z-10">
-            <div className="text-center font-bold">
-              {content[activeCard].year ?? null}
+        <div className="relative w-full h-0 p-36">
+          <div className="absolute inset-0">
+            <Image
+              src={Star}
+              alt="star_background"
+              className="w-full h-full"
+              width={500}
+              height={500}
+              priority
+            />
+            <div className="absolute inset-0 flex items-center justify-center z-10">
+              <div className="text-center font-bold">
+                {content[activeCard].year ?? null}
+              </div>
             </div>
           </div>
-        </div>
         </div>
       </div>
     </motion.div>
