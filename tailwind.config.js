@@ -93,7 +93,22 @@ module.exports = {
       },
     },
   },
-  plugins: [require('tailwindcss-animate'), addVariablesForColors],
+  plugins: [
+    require('tailwindcss-animate'),
+    addVariablesForColors,
+    function ({ addUtilities }) {
+      const newUtilities = {
+        '.scrollbar-hide': {
+          '-ms-overflow-style': 'none',
+          'scrollbar-width': 'none',
+          '&::-webkit-scrollbar': {
+            display: 'none',
+          },
+        },
+      }
+      addUtilities(newUtilities)
+    },
+  ],
 }
 
 function addVariablesForColors({ addBase, theme }) {
