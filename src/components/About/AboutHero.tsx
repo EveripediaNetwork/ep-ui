@@ -130,7 +130,6 @@ const AboutHero = () => {
           justifyContent="center"
           overflow="hidden"
         >
-          {/* <Box className="relative flex h-[500px] w-full items-center justify-center overflow-hidden"> */}
           <Icon as={IQLogo} boxSize={15} className="z-10" />
 
           {orbits.map((orbit, index) => (
