@@ -10,7 +10,7 @@ import {
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { Image } from '../Elements/Image/Image'
-// import IQLogo from './logos/IQLogo.svg'
+import IQLogo from './logos/IQLogo.png'
 import OrbitingCircles from '../magicui/orbiting-circles'
 
 interface OrbitingCircleProps {
@@ -149,8 +149,15 @@ const AboutHero = () => {
           overflow="hidden"
           marginTop={16}
         >
-          {/* <Icon as={IQLogo} w={15} h={18} /> */}
-
+          <Box
+            position="absolute"
+            top="50%"
+            left="50%"
+            transform="translate(-50%, -50%)"
+            zIndex={10}
+          >
+            <Image src={IQLogo} alt="IQLogo" imgBoxSize={80} w="full" />
+          </Box>
           {orbits.map((orbit, index) => (
             <Orbit key={index} {...orbit} />
           ))}
