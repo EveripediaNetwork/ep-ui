@@ -72,10 +72,10 @@ export const StickyScrollReveal = ({
   }
   return (
     <motion.div
-      className="h-[30rem] overflow-y-auto flex justify-center relative space-x-10 rounded-md p-10 mt-20 scrollbar-hide"
+      className="h-[30rem] overflow-y-auto flex justify-center relative space-x-10 rounded-md  mt-20 scrollbar-hide"
       ref={ref}
     >
-      <div className="div relative flex items-start px-4">
+      <div className="relative flex items-start ">
         <div>
           {content.map((item, index) => (
             <div key={item.title + index} className="my-20">
@@ -86,7 +86,7 @@ export const StickyScrollReveal = ({
                 animate={{
                   opacity: activeCard === index ? 1 : 0.3,
                 }}
-                className="text-4xl font-bold text-gray-800 dark:text-white max-w-lg"
+                className="text-xl font-bold text-gray-800 dark:text-white"
               >
                 {item.title}
               </motion.h2>
