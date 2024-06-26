@@ -16,10 +16,9 @@ import OrbitingCircles from '../magicui/orbiting-circles'
 
 interface OrbitingCircleProps {
   iconName: string
-  size: string
+  size: number
   delay: number
   radius: number
-  orbitSize: number
   reverse?: boolean
 }
 const useResponsiveValue = (mobileValue: number, desktopValue: number) => {
@@ -38,8 +37,8 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
     return `/images/orbit/${name}-${mode}.svg`
   }
 
-  const responsiveRadius = useResponsiveValue(radius * 0.7, radius)
-  const responsiveSize = useResponsiveValue(Number(size) * 0.6, Number(size))
+  const responsiveRadius = useResponsiveValue(radius * 0.6, radius)
+  const responsiveSize = useResponsiveValue(Number(size) * 0.5, size)
   return (
     <OrbitingCircles
       className="border-none bg-transparent"
@@ -51,7 +50,8 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
       <Image
         src={getIconPath(iconName)}
         alt="orbit"
-        className={`h-${responsiveSize} w-${responsiveSize} z-10`}
+        width={responsiveSize}
+        height={responsiveSize}
       />
     </OrbitingCircles>
   )
@@ -60,53 +60,48 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
 const AboutHero = () => {
   const { t } = useTranslation('about')
   const orbits: OrbitingCircleProps[] = [
-    { iconName: 'scale', size: '20', delay: 20, radius: 120, orbitSize: 60 },
-    { iconName: 'car', size: '40', delay: 35, radius: 120, orbitSize: 60 },
-    { iconName: 'jet', size: '20', delay: 10, radius: 120, orbitSize: 60 },
-    { iconName: 'car', size: '40', delay: 5, radius: 120, orbitSize: 60 },
+    { iconName: 'scale', size: 24, delay: 20, radius: 110 },
+    { iconName: 'pink-circle', size: 56, delay: 35, radius: 110 },
+    { iconName: 'jet', size: 24, delay: 10, radius: 110 },
+    { iconName: 'pink-circle', size: 56, delay: 5, radius: 110 },
     {
       iconName: 'bored-ape',
-      size: '20',
+      size: 24,
       delay: 20,
       radius: 240,
-      orbitSize: 60,
       reverse: true,
     },
     {
       iconName: 'pink-circle',
-      size: '20',
+      size: 24,
       delay: 18,
       radius: 240,
-      orbitSize: 60,
       reverse: true,
     },
     {
       iconName: 'hammer',
-      size: '20',
+      size: 24,
       delay: 35,
       radius: 240,
       reverse: true,
-      orbitSize: 60,
     },
     {
       iconName: 'globe',
-      size: '20',
+      size: 24,
       delay: 10,
       radius: 240,
       reverse: true,
-      orbitSize: 60,
     },
     {
       iconName: 'car',
-      size: '20',
+      size: 24,
       delay: 5,
       radius: 240,
       reverse: true,
-      orbitSize: 60,
     },
   ]
 
-  const boxHeight = useResponsiveValue(300, 500)
+  const boxHeight = useResponsiveValue(400, 550)
 
   return (
     <Box px={4}>
@@ -148,14 +143,14 @@ const AboutHero = () => {
         <Box
           position="relative"
           display="flex"
-          height={[`${boxHeight}px`, '500px']}
+          height={[`${boxHeight}px`]}
           width={['100%', 'full']}
           alignItems="center"
           justifyContent="center"
           overflow="hidden"
           marginTop={16}
         >
-          <Icon as={IQLogo} boxSize={15} className="z-10" />
+          <Icon as={IQLogo} w={15} h={18} />
 
           {orbits.map((orbit, index) => (
             <Orbit key={index} {...orbit} />
