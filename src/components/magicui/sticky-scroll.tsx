@@ -4,6 +4,8 @@ import { motion, useMotionValueEvent, useScroll } from 'framer-motion'
 import { cn } from '@/lib/utils'
 import { Link } from '@chakra-ui/react'
 import { mooLahLah } from '@/pages/_app'
+import Image from 'next/image'
+import Star from './star.png'
 
 export const StickyScrollReveal = ({
   content,
@@ -112,7 +114,20 @@ export const StickyScrollReveal = ({
           mooLahLah.className,
         )}
       >
-        {content[activeCard].year ?? null}
+        <div className="relative">
+          <Image
+            src={Star}
+            alt="star_background"
+            className="w-full h-full"
+            width={200}
+            height={150}
+          />
+          <div className="absolute inset-0 flex items-center justify-center z-10">
+            <div className="text-center font-bold">
+              {content[activeCard].year ?? null}
+            </div>
+          </div>
+        </div>
       </div>
     </motion.div>
   )
