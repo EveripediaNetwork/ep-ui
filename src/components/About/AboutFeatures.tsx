@@ -68,7 +68,7 @@ const AboutFeatures = () => {
           ))}
         </Box>
         <Box
-          className="absolute top-0 right-0 z-10 bg-gradient-to-r from-sky-400 to-pink-500 via-indigo-500 blur-[100px]"
+          className="absolute hidden lg:block top-0 right-0 z-10 bg-gradient-to-r from-sky-400 to-pink-500 via-indigo-500 blur-[100px]"
           blur={20}
           style={{
             width: '70%',
