@@ -37,7 +37,7 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
   }
 
   const responsiveRadius = useResponsiveValue(radius * 0.6, radius)
-  const responsiveSize = useResponsiveValue(Number(size) * 0.5, size)
+  const responsiveSize = useResponsiveValue(Number(size) * 0.2, size)
   return (
     <OrbitingCircles
       className="border-none bg-transparent"
@@ -60,10 +60,10 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
 const AboutHero = () => {
   const { t } = useTranslation('about')
   const orbits: OrbitingCircleProps[] = [
-    { iconName: 'scale', size: 24, delay: 20, radius: 120 },
-    { iconName: 'pink-circle', size: 52, delay: 35, radius: 120 },
-    { iconName: 'jet', size: 24, delay: 10, radius: 120 },
-    { iconName: 'pink-circle', size: 52, delay: 5, radius: 120 },
+    { iconName: 'scale', size: 24, delay: 20, radius: 140 },
+    { iconName: 'pink-circle', size: 52, delay: 35, radius: 140 },
+    { iconName: 'jet', size: 24, delay: 10, radius: 140 },
+    { iconName: 'pink-square', size: 80, delay: 5, radius: 140 },
     {
       iconName: 'bored-ape',
       size: 24,
@@ -157,7 +157,7 @@ const AboutHero = () => {
             transform="translate(-50%, -50%)"
             zIndex={10}
           >
-            <Image src={IQLogo} alt="IQLogo" imgBoxSize={80} w="full" />
+            <Image src={IQLogo} alt="IQLogo" imgBoxSize={120} w="full" />
           </Box>
           {orbits.map((orbit, index) => (
             <Orbit key={index} {...orbit} />
