@@ -81,7 +81,7 @@ const AboutFeatures = () => {
 
       <SimpleGrid
         columns={[1, 1, 2, 2, 3]}
-        spacing={{ base: '8', md: 20 }}
+        spacing={{ base: '8', md: '5' }}
         mt={{ base: '45px !important ', md: '24 !important' }}
       >
         <AboutFeaturesCard

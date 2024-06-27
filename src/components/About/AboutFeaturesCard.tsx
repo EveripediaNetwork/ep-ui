@@ -1,7 +1,8 @@
 import React from 'react'
-import { Heading, Text, Icon } from '@chakra-ui/react'
+import { Heading, Text, Icon, Box } from '@chakra-ui/react'
 import { IconType } from 'react-icons/lib'
-import { MagicCard, MagicContainer } from '@/components/magicui/magic-card'
+import { MagicCard } from '@/components/magicui/magic-card'
+import { BorderBeam } from '../magicui/border-beam'
 interface AboutFeaturesCardProps {
   title: string
   content: string
@@ -13,12 +14,12 @@ const AboutFeaturesCard = ({
   content,
   icon,
 }: AboutFeaturesCardProps) => (
-  <MagicContainer
+  <Box
     className={
-      'flex h-[250px] w-full flex-col md:h-[400px] lg:h-[350px] lg:flex-row'
+      'flex xs-[250px] sm-[340px] w-full flex-col md:h-[400px] lg:h-[350px] lg:flex-row'
     }
   >
-    <MagicCard className="flex w-full cursor-pointer flex-col text-left overflow-hidden bg-white">
+    <MagicCard className="flex w-full cursor-pointer flex-col text-left overflow-hidden bg-white rounded-xl border border-gray200 dark:border-gray700">
       <Icon as={icon} mb={4} w="50px" h="50px" />
       <Heading
         fontWeight={700}
@@ -36,9 +37,10 @@ const AboutFeaturesCard = ({
         _dark={{ color: 'white' }}
       >
         {content}
+        <BorderBeam size={250} duration={9} delay={5} className="rounded-xl" />
       </Text>
     </MagicCard>
-  </MagicContainer>
+  </Box>
 )
 
 export default AboutFeaturesCard

@@ -46,16 +46,14 @@ const AboutAiIntegration = () => {
 
   return (
     <Box
-      maxW={{ base: '100%', lg: '80%', '2xl': '90%' }}
-      bgColor="aboutFeaturesCardBg"
-      border="1px solid"
-      borderColor="aboutFeaturesCardBorder"
+      maxW={{ base: '100%', '2xl': '1280px' }}
       p={{ base: 3, md: 8 }}
       borderRadius="20px"
       mt={{ base: '12', lg: '20 !important' }}
       mb={{ base: '10', md: '15', lg: 'initial' }}
       mx="auto"
       className="relative"
+      bgColor="white"
     >
       <Box
         className="absolute top-0 right-0 z-0"
@@ -73,8 +71,8 @@ const AboutAiIntegration = () => {
       >
         <Box alignSelf="center">
           <Heading
-            fontSize={{ base: '16px', md: '24px', lg: '48px' }}
-            maxW={{ base: 'full', md: '90%' }}
+            fontSize={{ base: '20px', md: '24px', lg: '48px' }}
+            maxW={{ base: '80%', md: '90%' }}
             color="brandLinkColor"
           >
             {t('aboutAiHeading')}

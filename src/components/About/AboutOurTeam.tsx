@@ -93,7 +93,6 @@ const AboutOurTeam = () => {
                   src={person.image}
                   alt={person.name}
                   objectFit="cover"
-                  // boxSize={{base: '340px', md:'320', lg:'280px'}}
                   h={{
                     base: '410px',
                     sm: '373px',
@@ -102,7 +101,6 @@ const AboutOurTeam = () => {
                     xl: '300px',
                     '2xl': '324px',
                   }}
-                  w="full"
                   rounded="md"
                   priority
                 />
