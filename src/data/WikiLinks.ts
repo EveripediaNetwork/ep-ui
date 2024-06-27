@@ -156,7 +156,7 @@ export const LINK_OPTIONS = [
     type: LinkType.CONTRACT,
     label: 'Contract URL',
     icon: FaFileContract,
-    tests: [/i/],
+    tests: [/[a-z]/],
   },
   {
     id: CommonMetaIds.ETHERSCAN_PROFILE,
@@ -205,7 +205,7 @@ export const LINK_OPTIONS = [
     type: LinkType.EXPLORER,
     label: 'FTMScan',
     icon: FaFileContract,
-    tests: [/https:\/\/(www.)?ftmscan.com\/\w+/],
+    tests: [/https:\/\/((www.)?ftmscan.com|explorer.fantom.network)\/\w+/],
   },
   {
     id: CommonMetaIds.SOLSCAN_PROFILE,
