@@ -15,7 +15,7 @@ import OrbitingCircles from '../magicui/orbiting-circles'
 
 interface OrbitingCircleProps {
   iconName: string
-  size: number
+  size: [number, number] 
   delay: number
   radius: number
   reverse?: boolean
@@ -37,7 +37,8 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
   }
 
   const responsiveRadius = useResponsiveValue(radius * 0.6, radius)
-  const responsiveSize = useResponsiveValue(Number(size) * 0.2, size)
+  const responsiveSize = useResponsiveValue(size[0] , size[1])
+
   return (
     <OrbitingCircles
       className="border-none bg-transparent"
@@ -60,41 +61,41 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
 const AboutHero = () => {
   const { t } = useTranslation('about')
   const orbits: OrbitingCircleProps[] = [
-    { iconName: 'scale', size: 24, delay: 20, radius: 140 },
-    { iconName: 'pink-circle', size: 52, delay: 35, radius: 140 },
-    { iconName: 'jet', size: 24, delay: 10, radius: 140 },
-    { iconName: 'pink-square', size: 80, delay: 5, radius: 140 },
+    { iconName: 'scale', size: [20, 24], delay: 20, radius: 140 },
+    { iconName: 'pink-circle', size: [ 40, 52], delay: 35, radius: 140 },
+    { iconName: 'jet', size: [20, 24], delay: 10, radius: 140 },
+    { iconName: 'pink-square', size: [50, 80], delay: 5, radius: 140 },
     {
       iconName: 'bored-ape',
-      size: 24,
+      size: [20, 24],
       delay: 20,
       radius: 280,
       reverse: true,
     },
     {
       iconName: 'pink-circle',
-      size: 24,
+      size: [20, 24],
       delay: 18,
       radius: 280,
       reverse: true,
     },
     {
       iconName: 'hammer',
-      size: 24,
+      size: [20, 24],
       delay: 35,
       radius: 280,
       reverse: true,
     },
     {
       iconName: 'globe',
-      size: 24,
+      size: [20, 24],
       delay: 10,
       radius: 280,
       reverse: true,
     },
     {
       iconName: 'car',
-      size: 24,
+      size: [20, 24],
       delay: 5,
       radius: 280,
       reverse: true,
@@ -144,7 +145,8 @@ const AboutHero = () => {
           position="relative"
           display="flex"
           height={[`${boxHeight}px`]}
-          width={['100%', 'full']}
+          // width={['100%', 'full']}
+
           alignItems="center"
           justifyContent="center"
           overflow="hidden"
