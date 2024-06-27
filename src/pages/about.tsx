@@ -20,7 +20,7 @@ const About = () => (
       <AboutAiIntegration />
     </Box>
     <AboutOurTeam />
-    <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
+    <Box px={{ base: 6, lg: 8 }} py={{ base: '10', lg: 15 }}>
       <OurHistory />
     </Box>
   </>

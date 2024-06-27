@@ -60,10 +60,10 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
 const AboutHero = () => {
   const { t } = useTranslation('about')
   const orbits: OrbitingCircleProps[] = [
-    { iconName: 'scale', size: 24, delay: 20, radius: 110 },
-    { iconName: 'pink-circle', size: 52, delay: 35, radius: 110 },
-    { iconName: 'jet', size: 24, delay: 10, radius: 110 },
-    { iconName: 'pink-circle', size: 52, delay: 5, radius: 110 },
+    { iconName: 'scale', size: 24, delay: 20, radius: 120 },
+    { iconName: 'pink-circle', size: 52, delay: 35, radius: 120 },
+    { iconName: 'jet', size: 24, delay: 10, radius: 120 },
+    { iconName: 'pink-circle', size: 52, delay: 5, radius: 120 },
     {
       iconName: 'bored-ape',
       size: 24,

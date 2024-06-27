@@ -79,7 +79,7 @@ const AboutAiIntegration = () => {
           >
             {t('aboutAiHeading')}
           </Heading>
-          <Text mt="5" fontSize={{ base: '14px', lg: '19px' }}>
+          <Text mt="5" fontSize={{ base: '14px', lg: '19px' }} color="gray.800">
             {processText(t('aboutAiParagraph'))}
           </Text>
         </Box>

@@ -3,7 +3,6 @@ import { Box, Heading, Text, Center } from '@chakra-ui/react'
 import React from 'react'
 import { useTranslation } from 'next-i18next'
 import { StickyScrollReveal } from '../magicui/sticky-scroll'
-
 const OurHistory = () => {
   const { t } = useTranslation('about')
 
