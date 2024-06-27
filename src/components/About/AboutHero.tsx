@@ -51,6 +51,7 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
         alt="orbit"
         width={responsiveSize}
         height={responsiveSize}
+        objectFit={'contain'}
       />
     </OrbitingCircles>
   )
