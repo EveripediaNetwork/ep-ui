@@ -1,7 +1,15 @@
 import React, { useRef, useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
-import { Box, Text, VStack, Flex, Link, AspectRatio, useBreakpointValue } from '@chakra-ui/react'
-import { Image } from "../Elements/Image/Image"
+import {
+  Box,
+  Text,
+  VStack,
+  Flex,
+  Link,
+  AspectRatio,
+  useBreakpointValue,
+} from '@chakra-ui/react'
+import { Image } from '../Elements/Image/Image'
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { mooLahLah } from '@/pages/_app'
 
@@ -35,7 +43,10 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
         const containerHeight = containerRef.current.clientHeight
         const scrollHeight = containerRef.current.scrollHeight
         const progress = scrollPosition / (scrollHeight - containerHeight)
-        const index = Math.min(Math.floor(progress * cardLength), cardLength - 1)
+        const index = Math.min(
+          Math.floor(progress * cardLength),
+          cardLength - 1,
+        )
         setActiveCard(index)
       }
     }
@@ -57,12 +68,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
       lastIndex = index + match.length
 
       elements.push(
-        <Link
-          color="brandLinkColor"
-          key={index}
-          href={href}
-          isExternal
-        >
+        <Link color="brandLinkColor" key={index} href={href} isExternal>
           {linkText}
         </Link>,
       )
@@ -76,48 +82,62 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
   }
 
   return (
-    
-    <Flex 
-      direction={{ base: "column", lg: "row" }}
-      position="relative" 
-      height={{ base: "auto", lg: "30rem" }} 
+    <Flex
+      direction={{ base: 'column', lg: 'row' }}
+      position="relative"
+      height={{ base: 'auto', lg: '30rem' }}
       mt={20}
     >
       <Box
         ref={containerRef}
         flex={1}
-        overflowY={{ base: "visible", lg: "auto" }}
+        overflowY={{ base: 'visible', lg: 'auto' }}
         pr={{ base: 0, lg: 10 }}
-        className='scrollbar-hide'
+        className="scrollbar-hide"
       >
         <VStack spacing={12}>
           {content.map((item, index) => (
-            <Box key={item.title + index} 
-              height={{ base: "auto", lg: "24rem" }} 
+            <Box
+              key={item.title + index}
+              height={{ base: 'auto', lg: '24rem' }}
               justifyContent="center"
-              display="flex" 
-              flexDirection="column" 
+              display="flex"
+              flexDirection="column"
               mb={{ base: 10, lg: 0 }}
             >
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: isDesktop ? (activeCard === index ? 1 : 0.3) : 1 }}
+                animate={{
+                  opacity: isDesktop ? (activeCard === index ? 1 : 0.3) : 1,
+                }}
               >
-                <Text fontSize="xl" fontWeight="bold" color="gray.800" _dark={{color: 'white'}}>
+                <Text
+                  fontSize="xl"
+                  fontWeight="bold"
+                  color="gray.800"
+                  _dark={{ color: 'white' }}
+                >
                   {item.title}
                 </Text>
               </motion.div>
               <motion.div
                 initial={{ opacity: 0 }}
-                animate={{ opacity: isDesktop ? (activeCard === index ? 1 : 0.3) : 1 }}
+                animate={{
+                  opacity: isDesktop ? (activeCard === index ? 1 : 0.3) : 1,
+                }}
               >
-                <Text fontSize="md" color="gray.800" _dark={{color: 'white'}} maxWidth="xl" mt={5}>
+                <Text
+                  fontSize="md"
+                  color="gray.800"
+                  _dark={{ color: 'white' }}
+                  maxWidth="xl"
+                  mt={5}
+                >
                   {processText(item.description)}
                 </Text>
               </motion.div>
               {!isDesktop && (
-                <Box 
-                  position="relative" >
+                <Box position="relative">
                   <AspectRatio
                     ratio={WIKI_IMAGE_ASPECT_RATIO}
                     w="100%"
@@ -130,15 +150,15 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                       src="/images/star.png"
                     />
                   </AspectRatio>
-                  <Text 
-                    fontWeight="bold" 
-                    position="absolute" 
-                    top="50%" 
-                    left="50%" 
-                    transform="translate(-50%, -50%)" 
-                    zIndex={1} 
+                  <Text
+                    fontWeight="bold"
+                    position="absolute"
+                    top="50%"
+                    left="50%"
+                    transform="translate(-50%, -50%)"
+                    zIndex={1}
                     color="brand.500"
-                    _dark={{color: 'brand.800'}}
+                    _dark={{ color: 'brand.800' }}
                     fontSize="6xl"
                     className={`${contentClassName} ${mooLahLah.className}`}
                   >
@@ -155,16 +175,16 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
         <Flex
           justify="center"
           align="center"
-          position={{ base: "relative", lg: "sticky" }}
+          position={{ base: 'relative', lg: 'sticky' }}
           right={30}
-          height={{ base: "auto", lg: "100%" }}
-          width={{ base: "100%", lg: "40%" }}
+          height={{ base: 'auto', lg: '100%' }}
+          width={{ base: '100%', lg: '40%' }}
           paddingRight={20}
           overflow="hidden"
           color="brand.500"
-          _dark={{color: 'brand.800'}}
+          _dark={{ color: 'brand.800' }}
           textAlign="center"
-          fontSize={{ base: "6xl", lg: "9xl" }}
+          fontSize={{ base: '6xl', lg: '9xl' }}
           className={`${contentClassName} ${mooLahLah.className}`}
         >
           <AspectRatio
@@ -181,7 +201,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               src="/images/star.png"
             />
           </AspectRatio>
-          <Text fontWeight="bold" zIndex={1} >
+          <Text fontWeight="bold" zIndex={1}>
             {content[isDesktop ? activeCard : 0]?.year ?? null}
           </Text>
         </Flex>
