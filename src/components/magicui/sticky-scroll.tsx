@@ -127,15 +127,16 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                 }}
               >
                 <Text
-                  fontSize="md"
+                  fontSize={{ base: 'sm', lg: 'md' }}
                   color="gray.800"
                   _dark={{ color: 'white' }}
-                  maxWidth="xl"
+                  maxWidth={{ base: 'xl', md: 'full', lg: 'xl' }}
                   mt={5}
                 >
                   {processText(item.description)}
                 </Text>
               </motion.div>
+
               {!isDesktop && (
                 <Box position="relative">
                   <AspectRatio
