@@ -15,9 +15,9 @@ import OrbitingCircles from '../magicui/orbiting-circles'
 
 interface OrbitingCircleProps {
   iconName: string
-  size: [number, number] 
+  size: [number, number]
   delay: number
-  radius: number
+  radius: [number, number]
   reverse?: boolean
 }
 const useResponsiveValue = (mobileValue: number, desktopValue: number) => {
@@ -36,12 +36,18 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
     return `/images/orbit/${name}-${mode}.svg`
   }
 
-  const responsiveRadius = useResponsiveValue(radius * 0.6, radius)
-  const responsiveSize = useResponsiveValue(size[0] , size[1])
+  // radius[0] and radius[1] represent the radii for
+  // the base and md breakpoints respectively
+  const responsiveRadius = useResponsiveValue(radius[0], radius[1])
+
+  // size[0] and size[1] represent the size of the orbit images for
+  // the base and md breakpoints respectively
+  const responsiveSize = useResponsiveValue(size[0], size[1])
+
 
   return (
     <OrbitingCircles
-      className="border-none bg-transparent"
+      className="border-none bg-transparent z-10"
       duration={20}
       delay={delay}
       radius={responsiveRadius}
@@ -60,44 +66,45 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
 
 const AboutHero = () => {
   const { t } = useTranslation('about')
+
   const orbits: OrbitingCircleProps[] = [
-    { iconName: 'scale', size: [20, 24], delay: 20, radius: 140 },
-    { iconName: 'pink-circle', size: [ 40, 52], delay: 35, radius: 140 },
-    { iconName: 'jet', size: [20, 24], delay: 10, radius: 140 },
-    { iconName: 'pink-square', size: [50, 80], delay: 5, radius: 140 },
+    { iconName: 'scale', size: [16, 24], delay: 20, radius: [80, 140] },
+    { iconName: 'pink-circle', size: [20, 52], delay: 35, radius: [80, 140] },
+    { iconName: 'jet', size: [16, 24], delay: 10, radius: [80, 140] },
+    { iconName: 'pink-square', size: [24, 64], delay: 5, radius: [80, 140] },
     {
       iconName: 'bored-ape',
-      size: [20, 24],
+      size: [16, 24],
       delay: 20,
-      radius: 280,
+      radius: [145, 280],
       reverse: true,
     },
     {
       iconName: 'pink-circle',
-      size: [20, 24],
+      size: [16, 24],
       delay: 18,
-      radius: 280,
+      radius: [145, 280],
       reverse: true,
     },
     {
       iconName: 'hammer',
-      size: [20, 24],
+      size: [16, 24],
       delay: 35,
-      radius: 280,
+      radius: [145, 280],
       reverse: true,
     },
     {
       iconName: 'globe',
-      size: [20, 24],
+      size: [16, 24],
       delay: 10,
-      radius: 280,
+      radius: [145, 280],
       reverse: true,
     },
     {
       iconName: 'car',
-      size: [20, 24],
+      size: [16, 24],
       delay: 5,
-      radius: 280,
+      radius: [145, 280],
       reverse: true,
     },
   ]
@@ -107,59 +114,60 @@ const AboutHero = () => {
   return (
     <Box px={4}>
       <Box maxW="7xl" mx="auto">
-        <Center>
-          <Heading
-            fontSize="base"
-            fontWeight="semibold"
-            color="brand.500"
-            _dark={{ color: 'brand.800' }}
-          >
-            {t('aboutHeroTitle')}
-          </Heading>
-        </Center>
+        <Box px={{ base: 6, lg: 16 }} pt={{ base: '10', lg: 15 }}>
+          <Center>
+            <Heading
+              fontSize="base"
+              fontWeight="semibold"
+              color="brand.500"
+              _dark={{ color: 'brand.800' }}
+            >
+              {t('aboutHeroTitle')}
+            </Heading>
+          </Center>
 
-        <VStack spacing={6} align="center" maxW="6xl" mx="auto" mt={4}>
-          <Heading
-            as="h1"
-            textAlign="center"
-            fontSize={['xl', '3xl', '3xl', '5xl']}
-            fontWeight="semibold"
-            color="gray.800"
-            _dark={{ color: 'whiteAlpha.900' }}
-          >
-            {t('aboutHeroHeading')}
-          </Heading>
-          <Text
-            color="gray.600"
-            _dark={{ color: 'whiteAlpha.800' }}
-            maxW="4xl"
-            textAlign="center"
-            fontSize={['sm', 'md', 'xl', 'lg']}
-            fontWeight="medium"
-          >
-            {t('aboutHeroPhrase')}
-          </Text>
-        </VStack>
+          <VStack spacing={6} align="center" maxW="6xl" mx="auto" mt={4}>
+            <Heading
+              as="h1"
+              textAlign="center"
+              fontSize={['xl', '3xl', '3xl', '5xl']}
+              fontWeight="semibold"
+              color="gray.800"
+              _dark={{ color: 'whiteAlpha.900' }}
+            >
+              {t('aboutHeroHeading')}
+            </Heading>
+            <Text
+              color="gray.600"
+              _dark={{ color: 'whiteAlpha.800' }}
+              maxW="4xl"
+              textAlign="center"
+              fontSize={['sm', 'md', 'xl', 'lg']}
+              fontWeight="medium"
+            >
+              {t('aboutHeroPhrase')}
+            </Text>
+          </VStack>
+        </Box>
 
         <Box
           position="relative"
           display="flex"
           height={[`${boxHeight}px`]}
-          // width={['100%', 'full']}
-
+          width={['100%', 'full']}
           alignItems="center"
           justifyContent="center"
           overflow="hidden"
-          marginTop={16}
+          marginTop={8}
         >
           <Box
             position="absolute"
             top="50%"
             left="50%"
             transform="translate(-50%, -50%)"
-            zIndex={10}
+            zIndex={30}
           >
-            <Image src={IQLogo} alt="IQLogo" imgBoxSize={120} w="full" />
+            <Image src={IQLogo} alt="IQLogo" imgBoxSize={120}  w="full" />
           </Box>
           {orbits.map((orbit, index) => (
             <Orbit key={index} {...orbit} />

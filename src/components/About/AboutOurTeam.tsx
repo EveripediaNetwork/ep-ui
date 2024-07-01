@@ -69,7 +69,7 @@ const AboutOurTeam = () => {
           </Heading>
 
           <Text
-            maxW={'4xl'}
+            maxW={{base: 'md', md:"4xl"}}
             mx="auto"
             textAlign="center"
             fontSize={{ base: 'sm', md: 'xl', lg: 'lg' }}
