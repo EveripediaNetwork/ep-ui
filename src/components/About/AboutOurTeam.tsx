@@ -83,7 +83,7 @@ const AboutOurTeam = () => {
 
         <Container maxW="container.xl" p={5}>
           <SimpleGrid
-            columns={{ sm: 1, md: 2, lg: 4 }}
+            columns={[1,1,2,3,4]}
             spacing={10}
             padding={5}
           >

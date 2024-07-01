@@ -103,7 +103,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               justifyContent="center"
               display="flex"
               flexDirection="column"
-              mb={{ base: 10, lg: 0 }}
+              mb={{ base: 20, lg: 0 }}
             >
               <motion.div
                 initial={{ opacity: 0 }}
@@ -132,10 +132,14 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                   _dark={{ color: 'white' }}
                   maxWidth={{ base: 'xl', md: 'full', lg: 'xl' }}
                   mt={5}
+                  
                 >
                   {processText(item.description)}
                 </Text>
               </motion.div>
+
+
+
 
               {!isDesktop && (
                 <Box position="relative">
@@ -147,6 +151,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                     <Image
                       boxSize="100%"
                       objectFit="cover"
+
                       alt="Star Background"
                       src="/images/star.png"
                     />
@@ -154,13 +159,13 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                   <Text
                     fontWeight="bold"
                     position="absolute"
-                    top="50%"
-                    left="50%"
+                    top="55%"
+                    left="52%"
                     transform="translate(-50%, -50%)"
                     zIndex={1}
                     color="brand.500"
                     _dark={{ color: 'brand.800' }}
-                    fontSize="6xl"
+                    fontSize="7xl"
                     className={`${contentClassName} ${mooLahLah.className}`}
                   >
                     {item.year}
@@ -171,13 +176,13 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
           ))}
         </VStack>
       </Box>
-
+      
       {isDesktop && (
         <Flex
           justify="center"
           align="center"
           position={{ base: 'relative', lg: 'sticky' }}
-          right={30}
+          left={{md: 20}}
           height={{ base: 'auto', lg: '100%' }}
           width={{ base: '100%', lg: '40%' }}
           paddingRight={20}
@@ -185,13 +190,13 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
           color="brand.500"
           _dark={{ color: 'brand.800' }}
           textAlign="center"
-          fontSize={{ base: '6xl', lg: '9xl' }}
+          // fontSize={{ base: '6xl', lg: '9xl' }}
           className={`${contentClassName} ${mooLahLah.className}`}
         >
           <AspectRatio
             ratio={WIKI_IMAGE_ASPECT_RATIO}
-            w={{ base: '150px', sm: '200px', md: '100%' }}
-            h={{ base: '150px', sm: '200px', md: '100%' }}
+            w={'full'}
+            h={'full'}
             position="absolute"
             zIndex={0}
           >
@@ -202,7 +207,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               src="/images/star.png"
             />
           </AspectRatio>
-          <Text fontWeight="bold" zIndex={1}>
+          <Text fontWeight="bold" zIndex={1} fontSize={{ base: '6xl', md:'7xl', lg: '9xl' }}>
             {content[isDesktop ? activeCard : 0]?.year ?? null}
           </Text>
         </Flex>

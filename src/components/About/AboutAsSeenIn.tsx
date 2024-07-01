@@ -10,7 +10,7 @@ import FortuneLogo from './logos/fortune.svg'
 const AboutAsSeenIn = () => (
   <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
     <VStack
-      mt={{ base: 20, md: '24 !important' }}
+      mt={{ base: 20, md: '0' }}
       maxW={{ base: '100%', lg: '90%', '2xl': '65%' }}
       mx="auto"
     >

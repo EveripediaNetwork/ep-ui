@@ -80,27 +80,30 @@ const AboutFeatures = () => {
           </Box>
         </Flex>
 
-        <SimpleGrid
-          columns={[1, 1, 2, 2, 3]}
-          spacing={{ base: '8', md: '5' }}
-          mt={{ base: '45px !important ', md: '24 !important' }}
-        >
-          <AboutFeaturesCard
-            title={`${t('abtFeatOneHeading')}`}
-            content={`${t('abtFeatOneContent')}`}
-            icon={GlobeIcon}
-          />
-          <AboutFeaturesCard
-            title={`${t('abtFeatTwoHeading')}`}
-            content={`${t('abtFeatTwoContent')}`}
-            icon={IQLogo}
-          />
-          <AboutFeaturesCard
-            title={`${t('abtFeatThreeHeading')}`}
-            content={`${t('abtFeatThreeContent')}`}
-            icon={GroupIcon}
-          />
-        </SimpleGrid>
+        <Box pt={{lg:28}}>
+          <SimpleGrid
+            columns={[1, 1, 2, 2, 3]}
+            spacing={{ base: '8', md: '5' }}
+            mt={{ base: '45px !important ', md: '24 !important' }}
+          >
+            <AboutFeaturesCard
+              title={`${t('abtFeatOneHeading')}`}
+              content={`${t('abtFeatOneContent')}`}
+              icon={GlobeIcon}
+            />
+            <AboutFeaturesCard
+              title={`${t('abtFeatTwoHeading')}`}
+              content={`${t('abtFeatTwoContent')}`}
+              icon={IQLogo}
+            />
+            <AboutFeaturesCard
+              title={`${t('abtFeatThreeHeading')}`}
+              content={`${t('abtFeatThreeContent')}`}
+              icon={GroupIcon}
+            />
+          </SimpleGrid>
+        </Box>
+      
       </VStack>
     </Box>
   )
