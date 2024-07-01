@@ -44,7 +44,6 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
   // the base and md breakpoints respectively
   const responsiveSize = useResponsiveValue(size[0], size[1])
 
-
   return (
     <OrbitingCircles
       className="border-none bg-transparent z-10"
@@ -167,7 +166,7 @@ const AboutHero = () => {
             transform="translate(-50%, -50%)"
             zIndex={30}
           >
-            <Image src={IQLogo} alt="IQLogo" imgBoxSize={120}  w="full" />
+            <Image src={IQLogo} alt="IQLogo" imgBoxSize={120} w="full" />
           </Box>
           {orbits.map((orbit, index) => (
             <Orbit key={index} {...orbit} />
