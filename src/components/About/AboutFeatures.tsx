@@ -80,7 +80,7 @@ const AboutFeatures = () => {
           </Box>
         </Flex>
 
-        <Box pt={{lg:28}}>
+        <Box pt={{ lg: 28 }}>
           <SimpleGrid
             columns={[1, 1, 2, 2, 3]}
             spacing={{ base: '8', md: '5' }}
@@ -103,7 +103,6 @@ const AboutFeatures = () => {
             />
           </SimpleGrid>
         </Box>
-      
       </VStack>
     </Box>
   )

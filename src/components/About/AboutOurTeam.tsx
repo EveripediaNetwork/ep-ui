@@ -82,11 +82,7 @@ const AboutOurTeam = () => {
         </Box>
 
         <Container maxW="container.xl" p={5}>
-          <SimpleGrid
-            columns={[1,1,2,3,4]}
-            spacing={10}
-            padding={5}
-          >
+          <SimpleGrid columns={[1, 1, 2, 3, 4]} spacing={10} padding={5}>
             {TeamData.map((person, index) => (
               <Box key={index}>
                 <Image

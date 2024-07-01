@@ -132,14 +132,10 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                   _dark={{ color: 'white' }}
                   maxWidth={{ base: 'xl', md: 'full', lg: 'xl' }}
                   mt={5}
-                  
                 >
                   {processText(item.description)}
                 </Text>
               </motion.div>
-
-
-
 
               {!isDesktop && (
                 <Box position="relative">
@@ -151,7 +147,6 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                     <Image
                       boxSize="100%"
                       objectFit="cover"
-
                       alt="Star Background"
                       src="/images/star.png"
                     />
@@ -176,13 +171,13 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
           ))}
         </VStack>
       </Box>
-      
+
       {isDesktop && (
         <Flex
           justify="center"
           align="center"
           position={{ base: 'relative', lg: 'sticky' }}
-          left={{md: 20}}
+          left={{ md: 20 }}
           height={{ base: 'auto', lg: '100%' }}
           width={{ base: '100%', lg: '40%' }}
           paddingRight={20}
@@ -207,7 +202,11 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               src="/images/star.png"
             />
           </AspectRatio>
-          <Text fontWeight="bold" zIndex={1} fontSize={{ base: '6xl', md:'7xl', lg: '9xl' }}>
+          <Text
+            fontWeight="bold"
+            zIndex={1}
+            fontSize={{ base: '6xl', md: '7xl', lg: '9xl' }}
+          >
             {content[isDesktop ? activeCard : 0]?.year ?? null}
           </Text>
         </Flex>
