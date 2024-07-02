@@ -17,7 +17,7 @@ const OurHistory = () => {
     <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
       <Box
         mt={{ base: 18, md: '24 !important' }}
-        maxW={{ base: '100%', lg: '100%', '2xl': '75%' }}
+        maxW={{ base: '100%', lg: '100%', '2xl': '1280px' }}
         mx="auto"
         my={20}
       >

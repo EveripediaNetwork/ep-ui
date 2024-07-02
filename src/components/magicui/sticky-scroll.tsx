@@ -85,7 +85,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
     <Flex
       direction={{ base: 'column', lg: 'row' }}
       position="relative"
-      height={{ base: 'auto', lg: '30rem' }}
+      height={{ base: 'auto', lg: '30rem'}}
       mt={20}
     >
       <Box
@@ -149,6 +149,8 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                       objectFit="cover"
                       alt="Star Background"
                       src="/images/star.png"
+                      position='relative'
+                      top={{ base: "auto", xl: 0 }}
                     />
                   </AspectRatio>
                   <Text
@@ -179,13 +181,13 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
           position={{ base: 'relative', lg: 'sticky' }}
           left={{ md: 20 }}
           height={{ base: 'auto', lg: '100%' }}
-          width={{ base: '100%', lg: '40%' }}
+          width={{ base: '100%', lg: '40%' }}          
           paddingRight={20}
           overflow="hidden"
           color="brand.500"
           _dark={{ color: 'brand.800' }}
           textAlign="center"
-          // fontSize={{ base: '6xl', lg: '9xl' }}
+          fontSize={{ base: '6xl', lg: '9xl' }}
           className={`${contentClassName} ${mooLahLah.className}`}
         >
           <AspectRatio
@@ -205,12 +207,13 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
           <Text
             fontWeight="bold"
             zIndex={1}
-            fontSize={{ base: '6xl', md: '7xl', lg: '9xl' }}
+            fontSize={{ base: '6xl', md: '12xl', lg: '9xl' }}
           >
             {content[isDesktop ? activeCard : 0]?.year ?? null}
           </Text>
         </Flex>
       )}
     </Flex>
+    
   )
 }
