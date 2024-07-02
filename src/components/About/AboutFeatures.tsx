@@ -17,7 +17,13 @@ const AboutFeatures = () => {
   ]
 
   return (
-    <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
+    <Box 
+      px={{ base: 6, lg: 16 }} 
+      py={{ base: '10', lg: 15 }}
+      maxW={{base: "100%", xl:'90%', '2xl': '1280px'}}
+      mt={{base: 5, md: '24'}}
+      mx='auto'
+    >
       <Flex
         direction={{ base: 'column', md: 'row' }}
         className="relative"
