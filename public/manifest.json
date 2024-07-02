@@ -44,5 +44,18 @@
       "sizes": "512x512",
       "type": "image/png"
     }
+  ],
+  "categories": [
+    "finance",
+    "crypto",
+    "blockchain",
+    "technology",
+    "economics",
+    "investment",
+    "business",
+    "news",
+    "education",
+    "science",
+    "art"
   ]
 }
