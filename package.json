@@ -90,6 +90,7 @@
     "match-sorter": "^6.3.1",
     "next": "^13.0.3",
     "next-i18next": "^15.1.1",
+    "next-pwa": "^5.6.0",
     "next-redux-wrapper": "^7.0.5",
     "next-seo": "^5.4.0",
     "nextjs-progressbar": "^0.0.14",

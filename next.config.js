@@ -4,6 +4,12 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
 
+const withPWA = require('next-pwa')({
+  dest: 'public',
+  register: true,
+  skipWaiting: true,
+})
+
 const moduleExports = {
   i18n,
   reactStrictMode: true,
@@ -56,6 +62,6 @@ const moduleExports = {
     ]
   },
   // This is required to support PostHog trailing slash API requests
-  skipTrailingSlashRedirect: true,
+  trailingSlash: true,
 }
-module.exports = withBundleAnalyzer(moduleExports)
+module.exports = withPWA(withBundleAnalyzer(moduleExports))
