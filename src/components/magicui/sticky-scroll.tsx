@@ -196,6 +196,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
             h={'full'}
             position="absolute"
             zIndex={0}
+            top={{ lg: 5 }}
           >
             <Image
               boxSize="100%"

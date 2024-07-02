@@ -75,35 +75,35 @@ const AboutHero = () => {
       iconName: 'bored-ape',
       size: [16, 24],
       delay: 20,
-      radius: [145, 290],
+      radius: [145, 295],
       reverse: true,
     },
     {
       iconName: 'pink-circle',
       size: [16, 24],
       delay: 18,
-      radius: [145, 290],
+      radius: [145, 295],
       reverse: true,
     },
     {
       iconName: 'hammer',
       size: [16, 24],
       delay: 35,
-      radius: [145, 290],
+      radius: [145, 295],
       reverse: true,
     },
     {
       iconName: 'globe',
       size: [16, 24],
       delay: 10,
-      radius: [145, 290],
+      radius: [145, 295],
       reverse: true,
     },
     {
       iconName: 'car',
       size: [16, 24],
       delay: 5,
-      radius: [145, 290],
+      radius: [145, 295],
       reverse: true,
     },
   ]
@@ -166,7 +166,14 @@ const AboutHero = () => {
             transform="translate(-50%, -50%)"
             zIndex={30}
           >
-            <Image src={IQLogo} alt="IQLogo" imgBoxSize={80} w="full" />
+            <Image
+              src={IQLogo}
+              alt="IQLogo"
+              objectFit="contain"
+              boxSize={{ base: 24, md: 140 }}
+              w="full"
+              h="full"
+            />
           </Box>
           {orbits.map((orbit, index) => (
             <Orbit key={index} {...orbit} />

@@ -61,7 +61,7 @@ const AboutOurTeam = () => {
       >
         <Box className="mt-16" textAlign="center">
           <h2 className="text-brand-500 dark:text-brand-800 text-md font-semibold pt-0">
-            Our Team
+            {t('meetTeamTitle')}
           </h2>
 
           <Heading size="lg" className="mt-8">
