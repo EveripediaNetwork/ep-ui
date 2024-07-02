@@ -3,12 +3,11 @@ import { useConnect, useAccount, Connector, useAccountEffect } from 'wagmi'
 import { Box, Divider, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
-import { logEvent } from '@/utils/googleAnalytics'
-import { env } from '@/env.mjs'
 import ConnectionErrorModal from './ConnectionErrorModal'
 import { useTranslation } from 'next-i18next'
 import { ConnectorSignTokenModal } from './ConnectorSignTokenModal'
 import { useWeb3Token } from '@/hooks/useWeb3Token'
+import { usePostHog } from 'posthog-js/react'
 
 interface ConnectorsProps {
   openWalletDrawer?: () => void
@@ -43,30 +42,20 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
     onClose: closeSignTokenModal,
   } = useDisclosure()
   const [connectorName, setConnectorName] = useState('')
+  const posthog = usePostHog()
 
   const { connect, connectors } = useConnect({
     mutation: {
       onError: (error) => {
-        logEvent({
-          action: 'LOGIN_ERROR',
-          label: error.message,
-          value: 0,
-          category: 'login_status',
+        posthog.capture('login_error', {
+          error: error.message,
         })
       },
       onSuccess: (data) => {
-        logEvent({
-          action: 'LOGIN_SUCCESS',
-          label: data.accounts[0],
-          value: 1,
-          category: 'login_status',
+        posthog.capture('login_success', {
+          address: data.accounts[0],
         })
         openSignTokenModal()
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        const w = window as any
-        w.gtag('config', env.NEXT_PUBLIC_GOOGLE_ANALYTICS, {
-          user_id: data.accounts[0],
-        })
       },
     },
   })

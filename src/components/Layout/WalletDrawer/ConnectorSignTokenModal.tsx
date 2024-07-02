@@ -1,5 +1,4 @@
 import { useWeb3Token } from '@/hooks/useWeb3Token'
-import { logEvent } from '@/utils/googleAnalytics'
 import {
   Box,
   CloseButton,
@@ -19,6 +18,7 @@ import {
   RiWallet3Line,
 } from 'react-icons/ri'
 import { useTranslation } from 'next-i18next'
+import { usePostHog } from 'posthog-js/react'
 
 export const ConnectorSignTokenModal = ({
   isOpen,
@@ -34,6 +34,7 @@ export const ConnectorSignTokenModal = ({
   const { t } = useTranslation()
   const router = useRouter()
   const { generateNewToken, fetchStoredToken } = useWeb3Token()
+  const posthog = usePostHog()
 
   const handleWalletSign = async () => {
     const storedToken = await fetchStoredToken()
@@ -47,12 +48,7 @@ export const ConnectorSignTokenModal = ({
 
     const token = await generateNewToken()
     window.postMessage({ type: 'iqwiki-token-pass', token }, '*')
-    logEvent({
-      action: 'SIGN_ATTEMPT',
-      label: 'SIGN_TOKEN',
-      value: 1,
-      category: 'login',
-    })
+    posthog.capture('sign_token_attempt')
     router.push(router.asPath).then(openWalletDrawer)
   }
 

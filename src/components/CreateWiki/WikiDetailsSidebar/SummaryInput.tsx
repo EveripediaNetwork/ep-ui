@@ -1,12 +1,12 @@
 import { WIKI_SUMMARY_LIMIT } from '@/data/Constants'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
-import { logEvent } from '@/utils/googleAnalytics'
 import { Box, HStack, Tag, Text, Textarea, useToast } from '@chakra-ui/react'
 import axios, { AxiosError } from 'axios'
 import React, { ChangeEvent, useCallback } from 'react'
 import { useTranslation } from 'next-i18next'
 import { Image } from '@/components/Elements/Image/Image'
 import AIGenerateButton from './AIGenerateButton'
+import { usePostHog } from 'posthog-js/react'
 
 const sleep = (ms: number) =>
   new Promise((r) => {
@@ -21,6 +21,7 @@ const SummaryInput = () => {
   const [isGenerating, setIsGenerating] = React.useState(false)
   const [reserveSummaries, setReserveSummaries] = React.useState<string[]>([])
   const toast = useToast()
+  const posthog = usePostHog()
 
   const failedToGenerateSummary = useCallback(() => {
     setShowRed(true)
@@ -30,11 +31,8 @@ const SummaryInput = () => {
       description: 'Please try again later.',
       status: 'error',
     })
-    logEvent({
-      action: 'GENERATE_SUMMARY',
-      label: wiki.id,
-      category: 'summary-generate',
-      value: 0,
+    posthog.capture('generate_summary_error', {
+      wiki_id: wiki.id,
     })
   }, [toast, wiki.id])
 
@@ -61,6 +59,10 @@ const SummaryInput = () => {
   const handleAIGenerate = useCallback(async () => {
     setIsGenerating(true)
 
+    posthog.capture('generate_summary', {
+      wiki_id: wiki.id,
+    })
+
     if (reserveSummaries.length > 0) {
       fetchFromReserveSummary()
       return
@@ -82,11 +84,8 @@ const SummaryInput = () => {
 
       if (data.length > 1) setReserveSummaries(data.slice(1))
 
-      logEvent({
-        action: 'GENERATE_SUMMARY',
-        label: wiki.id,
-        category: 'summary-generate',
-        value: 1,
+      posthog.capture('generate_summary_success', {
+        wiki_id: wiki.id,
       })
     } catch (error) {
       const { response } = error as AxiosError

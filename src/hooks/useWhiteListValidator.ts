@@ -1,54 +1,43 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useCallback } from 'react'
+import { useAccount, useReadContract } from 'wagmi'
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
-import { polygon } from 'viem/chains'
-import { createPublicClient, http } from 'viem'
-import { useAddress } from './useAddress'
 
-export const publicClient: any = createPublicClient({
-  chain: polygon,
-  transport: http(),
-})
+const useIsWhitelistedEditor = () => {
+  const { address } = useAccount()
 
-const useWhiteListValidator = () => {
-  const [userCanEdit, setUserCanEdit] = useState(false)
-  const { address } = useAddress()
+  const {
+    data: isWhitelisted,
+    error,
+    isLoading,
+  } = useReadContract({
+    address: config.editorAddress as `0x${string}`,
+    abi: EditorABI,
+    functionName: 'isEditorWhitelisted',
+    args: [address as `0x${string}`],
+    query: {
+      enabled: !!address,
+    },
+  })
+
+  const getContractReadError = useCallback(() => {
+    if (error) {
+      console.error(
+        'Error fetching whitelist status:',
+        error.shortMessage || error.message,
+      )
+    }
+  }, [error])
 
   useEffect(() => {
-    if (!address) {
-      setUserCanEdit(false)
-      return
-    }
-
-    const fetchData = async () => {
-      try {
-        let data
-        if (config.isProduction === 'true') {
-          data = await publicClient.readContract({
-            address: config.editorAddress as `0x${string}`,
-            abi: EditorABI,
-            functionName: 'isEditorWhitelisted',
-            args: [address],
-          })
-        } else {
-          data = true
-        }
-        setUserCanEdit(data)
-      } catch (error) {
-        console.error('Error fetching whitelist data:', error)
-      }
-    }
-
-    if (address !== null) {
-      fetchData()
-    } else {
-      setUserCanEdit(false)
-    }
-  }, [address])
+    getContractReadError()
+  }, [getContractReadError])
 
   return {
-    userCanEdit,
+    userCanEdit: isWhitelisted ?? false,
+    isLoading,
+    error: error || null,
   }
 }
 
-export default useWhiteListValidator
+export default useIsWhitelistedEditor

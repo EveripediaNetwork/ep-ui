@@ -6,6 +6,7 @@ import { ActivityCardBottomProps } from '@/types/ActivityDataType'
 import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
+import NextLink from 'next/link'
 
 const ActivityCardBottom = (props: ActivityCardBottomProps) => {
   const { editor, isNotifSubCard, lastModTimeStamp, activity, tags } = props
@@ -33,6 +34,7 @@ const ActivityCardBottom = (props: ActivityCardBottomProps) => {
           color="linkColor"
         >
           <Link
+            as={NextLink}
             href={`/account/${editor.id}`}
             color="brandLinkColor"
             fontWeight="bold"

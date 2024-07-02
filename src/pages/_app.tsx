@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react'
+import React, { StrictMode } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
@@ -9,11 +9,12 @@ import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
 import NextNProgress from 'nextjs-progressbar'
-import { pageView } from '@/utils/googleAnalytics'
 import { Montserrat, Moo_Lah_Lah } from '@next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
+import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
+import { CSPostHogProvider } from '@/components/Layout/CSPostHogProvider'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -34,13 +35,6 @@ export const mooLahLah = Moo_Lah_Lah({
 })
 
 const App = ({ Component, pageProps, router }: EpAppProps) => {
-  useEffect(() => {
-    const handleRouteChange = (url: URL) => pageView(url)
-    router.events.on('routeChangeComplete', handleRouteChange)
-
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events])
-
   return (
     <StrictMode>
       <style jsx global>{`
@@ -56,9 +50,13 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
-          <Layout noFooter={Component.noFooter}>
-            <Component {...pageProps} />
-          </Layout>
+          <WagmiWrapper>
+            <CSPostHogProvider>
+              <Layout noFooter={Component.noFooter}>
+                <Component {...pageProps} />
+              </Layout>
+            </CSPostHogProvider>
+          </WagmiWrapper>
         </ChakraProvider>
       </ReduxProvider>
       <ToastContainer />

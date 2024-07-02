@@ -1,35 +1,47 @@
 import { http, createConfig, fallback } from 'wagmi'
-import { polygon, polygonMumbai } from 'viem/chains'
-import { injected, walletConnect } from 'wagmi/connectors'
+import { polygon } from 'viem/chains'
+import { injected } from 'wagmi/connectors'
 import { env } from '@/env.mjs'
 import config from '.'
-import { rpcs } from '@/utils/WalletUtils/getProvider'
 import { dedicatedWalletConnector } from '@/lib/magic/connectors/dedicatedWalletConnector'
+import { defineChain } from 'viem'
 
-const chains =
-  config.alchemyChain === 'matic'
-    ? ([polygon] as const)
-    : ([polygonMumbai] as const)
+export const iqTestnet = defineChain({
+  id: 313_377,
+  name: 'IQ Chain',
+  nativeCurrency: { name: 'IQ Token', symbol: 'IQ', decimals: 18 },
+  rpcUrls: {
+    default: {
+      http: ['https://rpc-testnet.braindao.org/'],
+    },
+  },
+  blockExplorers: {
+    default: {
+      name: 'BrainScan',
+      url: 'https://testnet.braindao.org',
+      apiUrl: 'https://testnet.braindao.org/api/v2/',
+    },
+  },
+  testnet: true,
+})
+
+const chains = config.isProduction
+  ? ([polygon] as const)
+  : ([iqTestnet] as const)
 
 export const wagmiConfig = createConfig({
   chains,
   multiInjectedProviderDiscovery: false,
+  ssr: false,
   transports: {
     [polygon.id]: fallback([
       http(`https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`),
       http(`https://polygon-mainnet.infura.io/v3/${config.infuraId}`),
     ]),
-    [polygonMumbai.id]: fallback([
-      http(`https://polygon-mumbai.g.alchemy.com/v2/${config.alchemyApiKey}`),
-      http(`https://polygon-mumbai.infura.io/v3/${config.infuraId}`),
-    ]),
+    [iqTestnet.id]: http(),
   },
   connectors: [
     injected(),
-    walletConnect({
-      projectId: config.walletConnectProjectId,
-      relayUrl: 'wss://relay.walletconnect.org',
-    }),
     dedicatedWalletConnector({
       //@ts-ignore
       chains,
@@ -41,7 +53,9 @@ export const wagmiConfig = createConfig({
         },
         magicSdkConfiguration: {
           network: {
-            rpcUrl: rpcs[config.alchemyChain],
+            rpcUrl: config.isProduction
+              ? `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
+              : iqTestnet.rpcUrls.default.http[0],
             chainId: Number(config.chainId),
           },
         },

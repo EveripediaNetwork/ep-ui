@@ -7,11 +7,13 @@ import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
+import { usePostHog } from 'posthog-js/react'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
+  const posthog = usePostHog()
 
   const handleLogOut = () => {
     dispatch(setStateToDefault())
@@ -21,6 +23,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
         localStorage.removeItem(key)
       }
     }
+    posthog.reset()
     window.location.reload()
   }
 

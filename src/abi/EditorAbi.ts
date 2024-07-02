@@ -53,4 +53,4 @@ export const EditorABI = [
     stateMutability: 'nonpayable',
     type: 'function',
   },
-]
+] as const

@@ -3,7 +3,7 @@ export const fetchTokenRate = async (
   versusCurrency = 'usd',
 ) => {
   const res = await fetch(
-    `api/token-rate?ids=${tokenName}&vs_currencies=${versusCurrency}`,
+    `/api/token-rate?ids=${tokenName}&vs_currencies=${versusCurrency}`,
   )
   const data = await res.json()
   return data[tokenName][versusCurrency]

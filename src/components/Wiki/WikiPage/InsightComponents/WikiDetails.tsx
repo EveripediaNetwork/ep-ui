@@ -23,11 +23,10 @@ import { WikiImage } from '@/components/WikiImage'
 import { BaseCategory, WikiPreview } from '@everipedia/iq-utils'
 import Link from '@/components/Elements/LinkElements/Link'
 import config from '@/config'
-
 import { WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { useTranslation } from 'next-i18next'
-import { logEvent } from '@/utils/googleAnalytics'
 import { Logo } from '@/components/Elements'
+import { usePostHog } from 'posthog-js/react'
 
 export const WikiDetails = ({
   wikiTitle,
@@ -47,6 +46,8 @@ export const WikiDetails = ({
   const { title, tags, id: wikiId } = wikiTitle
   const wikiViews = views !== undefined && views > 250 ? views : undefined
   const { t } = useTranslation('wiki')
+  const posthog = usePostHog()
+
   return (
     <Box
       borderWidth="1px"
@@ -75,14 +76,11 @@ export const WikiDetails = ({
           <Link
             href="https://iq.braindao.org/dashboard"
             isExternal
-            onClick={() =>
-              logEvent({
-                category: 'Wiki',
-                action: 'Click',
-                label: 'IQ Dashboard',
-                value: 1,
+            onClick={() => {
+              posthog.capture('wiki_powered_by_iq_click', {
+                label: 'IQ dashboard',
               })
-            }
+            }}
           >
             <IconButton
               aria-label="IQ"

@@ -14,13 +14,12 @@ const server = z.object({
 })
 
 const client = z.object({
-  NEXT_PUBLIC_IS_PRODUCTION: z.string(),
+  NEXT_PUBLIC_IS_PRODUCTION: z.preprocess((v) => v === 'true', z.boolean()),
   NEXT_PUBLIC_INFURA_ID: z.string(),
   NEXT_PUBLIC_ALCHEMY_API_KEY: z.string(),
   NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL: z.string().url(),
   NEXT_PUBLIC_MAGIC_LINK_API_KEY: z.string(),
   NEXT_PUBLIC_ENS_RPC: z.string().url(),
-  NEXT_PUBLIC_GOOGLE_ANALYTICS: z.string(),
   NEXT_PUBLIC_EDITOR_API: z.string().url(),
   NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3: z.string().startsWith('0x').length(42),
   NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2: z.string().startsWith('0x').length(42),
@@ -36,6 +35,7 @@ const client = z.object({
   NEXT_PUBLIC_EP_API: z.string().url(),
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID: z.string(),
   NEXT_PUBLIC_GOOGLE_MAPS_API_KEY: z.string(),
+  NEXT_PUBLIC_POSTHOG_KEY: z.string(),
 })
 
 /**
@@ -58,7 +58,6 @@ const processEnv = {
   NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL:
     process.env.NEXT_PUBLIC_PINATA_GATEWAY_BASE_URL,
   NEXT_PUBLIC_INFURA_ID: process.env.NEXT_PUBLIC_INFURA_ID,
-  NEXT_PUBLIC_GOOGLE_ANALYTICS: process.env.NEXT_PUBLIC_GOOGLE_ANALYTICS,
   NEXT_PUBLIC_IS_PRODUCTION: process.env.NEXT_PUBLIC_IS_PRODUCTION,
   NEXT_PUBLIC_ALCHEMY_API_KEY: process.env.NEXT_PUBLIC_ALCHEMY_API_KEY,
   NEXT_PUBLIC_ALCHEMY_CHAIN: process.env.NEXT_PUBLIC_ALCHEMY_CHAIN,
@@ -76,6 +75,7 @@ const processEnv = {
     process.env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3,
   NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID:
     process.env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+  NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
   BOT_API_KEY: process.env.BOT_API_KEY,
   DISCORD_WEBHOOK_TOKEN: process.env.DISCORD_WEBHOOK_TOKEN,
   COINGECKO_API_KEY: process.env.COINGECKO_API_KEY,

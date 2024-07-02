@@ -8,14 +8,14 @@ import { store } from '@/store/store'
 import { CategoryDataType } from '@/types/CategoryDataTypes'
 import { WikiPreview } from '@everipedia/iq-utils'
 import { debounce } from 'debounce'
-
 import { useEffect, useState } from 'react'
-import { logEvent } from '@/utils/googleAnalytics'
 import {
   getEventByBlockchain,
   getEventByLocation,
   getEventsByTags,
 } from '../event'
+import { CHAR_SEARCH_LIMIT } from '@/data/Constants'
+import { usePostHog } from 'posthog-js/react'
 
 export type Account = {
   id: string
@@ -116,6 +116,7 @@ const debouncedFetchResults = debounce(
 export const useNavSearch = () => {
   const [query, setQuery] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const posthog = usePostHog()
 
   const [results, setResults] = useState<Results>({
     wikis: [],
@@ -124,15 +125,12 @@ export const useNavSearch = () => {
   })
 
   useEffect(() => {
-    if (query && query.length >= 3) {
+    if (query && query.length >= CHAR_SEARCH_LIMIT) {
       setIsLoading(true)
       debouncedFetchResults(query, (res) => {
         if (!res.accounts && !res.wikis && !res.categories) {
-          logEvent({
-            action: 'SEARCH_NO_RESULTS',
-            label: query,
-            category: 'search_tag',
-            value: 1,
+          posthog.capture('search_no_results', {
+            query,
           })
         }
         setResults(res)
