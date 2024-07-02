@@ -37,6 +37,7 @@ build/**
 dist/**
 .next/**
 
+yarn.lock
 
 .idea
 lsp

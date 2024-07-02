@@ -18,6 +18,7 @@ html {
 /* CAROUSAL STYLES */
 /* =========================== */
 
+
 :root[data-theme='dark'] .slick-dots {
   filter: invert(1);
 }
