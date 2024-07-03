@@ -65,9 +65,6 @@ importers:
       '@metamask/detect-provider':
         specifier: ^1.2.0
         version: 1.2.0
-      '@next/font':
-        specifier: ^13.0.3
-        version: 13.5.6
       '@radix-ui/react-collapsible':
         specifier: ^1.0.3
         version: 1.1.0(@types/react-dom@18.3.0)(@types/react@18.3.3)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -155,9 +152,6 @@ importers:
       cookies-next:
         specifier: ^2.1.1
         version: 2.1.2
-      crypto:
-        specifier: ^1.0.1
-        version: 1.0.1
       date-fns:
         specifier: ^3.3.0
         version: 3.6.0
@@ -2293,9 +2287,6 @@ packages:
   '@next/env@13.5.6':
     resolution: {integrity: sha512-Yac/bV5sBGkkEXmAX5FWPS9Mmo2rthrOPRQQNfycJPkjUAUclomCPH7QFVCDQ4Mp2k2K1SSM6m0zrxYrOwtFQw==}
 
-  '@next/font@13.5.6':
-    resolution: {integrity: sha512-urmUq05uCVJsBqAAJEV+xK5OTTodrSxdiG+351SOSjlWctywdBM6qX+K9pIe3K48RxjfnxlBbXjGyOJAji+pfw==}
-
   '@next/swc-darwin-arm64@13.5.6':
     resolution: {integrity: sha512-5nvXMzKtZfvcu4BhtV0KH1oGv4XEW+B+jOfmBdpFI3C7FrB/MfujRpWYSBBO64+qbW8pkZiSyQv9eiwnn5VIQA==}
     engines: {node: '>= 10'}
@@ -3957,10 +3948,6 @@ packages:
     peerDependenciesMeta:
       uWebSockets.js:
         optional: true
-
-  crypto@1.0.1:
-    resolution: {integrity: sha512-VxBKmeNcqQdiUQUW2Tzq0t377b54N2bMtXO/qiLa+6eRRmmC4qT3D4OnTGoT/U6O9aklQ/jTwbOtRMTTY8G0Ig==}
-    deprecated: This package is no longer supported. It's now a built-in Node module. If you've depended on crypto, you should switch to the one that's built-in.
 
   css-box-model@1.2.1:
     resolution: {integrity: sha512-a7Vr4Q/kd/aw96bnJG332W9V9LkJO69JRcaCYDUqjp6/z0w6VcZjgAcTbgFxEPfBgdnAwlh3iwu+hLopa+flJw==}
@@ -10156,8 +10143,6 @@ snapshots:
 
   '@next/env@13.5.6': {}
 
-  '@next/font@13.5.6': {}
-
   '@next/swc-darwin-arm64@13.5.6':
     optional: true
 
@@ -12356,8 +12341,6 @@ snapshots:
       which: 2.0.2
 
   crossws@0.2.4: {}
-
-  crypto@1.0.1: {}
 
   css-box-model@1.2.1:
     dependencies:
