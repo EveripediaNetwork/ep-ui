@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npx post-merge-install "yarn install"
+npx post-merge-install "pnpm install"
