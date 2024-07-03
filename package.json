@@ -156,5 +156,8 @@
     "yarn": ">=1.22.0",
     "npm": "please-use-yarn"
   },
-  "packageManager": "yarn@1.22.5"
+  "packageManager": "yarn@1.22.5",
+  "resolutions": {
+    "@toast-ui/react-editor": "^3.2.3"
+  }
 }
