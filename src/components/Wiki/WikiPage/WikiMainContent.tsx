@@ -74,8 +74,12 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const { colorMode } = useColorMode()
   const posthog = usePostHog()
   const locale = useSelector((state: RootState) => state.app.language)
+
+  // const isLocaleWikiTranslationSupported =
+  // supportedWikiTranslations.includes(locale) || locale === 'en';
+
   const isLocaleWikiTranslationSupported =
-    supportedWikiTranslations.includes(locale)
+    locale === 'en' || supportedWikiTranslations.includes(locale)
 
   const wikiContent = wikiContentState ?? wikiData.content
 
