@@ -345,6 +345,9 @@ importers:
       '@chakra-ui/cli':
         specifier: ^2.1.8
         version: 2.4.1
+      '@magic-sdk/types':
+        specifier: ^24.0.5
+        version: 24.0.5
       '@next/bundle-analyzer':
         specifier: ^12.2.2
         version: 12.3.4(bufferutil@4.0.8)(utf-8-validate@5.0.10)
@@ -2134,6 +2137,9 @@ packages:
 
   '@magic-sdk/types@15.8.0':
     resolution: {integrity: sha512-xLQsBAg2JXUn39dRfZW6Z3LUT50qz/3pg6R658oVBr4LbJd/L8iAR0zCRmjLLNXzfYm1RkJYZWuHaxjJgKlkSA==}
+
+  '@magic-sdk/types@24.0.5':
+    resolution: {integrity: sha512-RTG3AmAxX+ZGqv3gdJ9+cPZoAa2j0MG1v0OCPcf9kaDbO51xD+FjBbh4Evbcx1ch6092Pq2t50c4VgiSG7KGSg==}
 
   '@metamask/detect-provider@1.2.0':
     resolution: {integrity: sha512-ocA76vt+8D0thgXZ7LxFPyqw3H7988qblgzddTDA6B8a/yU0uKV42QR/DhA+Jh11rJjxW0jKvwb5htA6krNZDQ==}
@@ -9883,6 +9889,8 @@ snapshots:
       - supports-color
 
   '@magic-sdk/types@15.8.0': {}
+
+  '@magic-sdk/types@24.0.5': {}
 
   '@metamask/detect-provider@1.2.0': {}
 
