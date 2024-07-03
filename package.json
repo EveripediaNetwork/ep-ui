@@ -11,9 +11,9 @@
     "test": "echo \"Next-app tests\"",
     "format": "biome format . --write",
     "lint": "biome check . --apply",
+    "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
-    "postinstall": "yarn gen:theme-typings",
     "analyze": "cross-env ANALYZE=true next build",
     "analyze:server": "cross-env BUNDLE_ANALYZE=server next build",
     "analyze:browser": "cross-env BUNDLE_ANALYZE=browser next build",
@@ -129,7 +129,6 @@
     "uuid": "^8.3.2",
     "viem": "^2.8.13",
     "wagmi": "^2.5.11",
-    "yarn": "^1.22.18",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -141,8 +140,10 @@
     "@types/humanize-plus": "^1.8.0",
     "@types/react": "^18.0.9",
     "@types/react-dom": "^18.0.3",
+    "@types/react-redux": "^7.1.33",
     "@types/react-scroll": "^1.8.4",
     "@types/react-slick": "^0.23.8",
+    "@types/unist": "^3.0.2",
     "autoprefixer": "^10.4.17",
     "cross-env": "^7.0.3",
     "husky": "^8.0.0",
@@ -152,14 +153,6 @@
     "typescript": "^5.4.2"
   },
   "engines": {
-    "node": ">=20",
-    "yarn": ">=1.22.0",
-    "npm": "please-use-yarn"
-  },
-  "packageManager": "yarn@1.22.5",
-  "overrides": { 
-    "@toast-ui/react-editor": 
-      { "react": "^18" 
-    } 
+    "node": ">=20"
   }
 }
