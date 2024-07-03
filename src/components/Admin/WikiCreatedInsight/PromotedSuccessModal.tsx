@@ -1,8 +1,8 @@
-import Icon from '@chakra-ui/icon'
 import {
   Flex,
   Spacer,
   Box,
+  Icon,
   Image,
   Text,
   Button,

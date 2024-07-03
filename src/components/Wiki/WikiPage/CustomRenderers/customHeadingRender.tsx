@@ -2,7 +2,7 @@ import { store } from '@/store/store'
 import React from 'react'
 import { HeadingProps } from 'react-markdown/lib/ast-to-react'
 
-export const addToTOC = ({
+export const addToTOC: React.FunctionComponent<HeadingProps> = ({
   children,
   ...props
 }: React.PropsWithChildren<HeadingProps>) => {
