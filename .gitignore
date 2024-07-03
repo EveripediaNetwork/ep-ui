@@ -37,7 +37,7 @@ build/**
 dist/**
 .next/**
 
-pnpm-lock.yaml
+
 
 .idea
 lsp
