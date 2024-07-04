@@ -7,40 +7,53 @@ import {
   IconButton,
   SimpleGrid,
   Container,
+  useColorMode,
 } from '@chakra-ui/react'
 import React from 'react'
 import { TeamData } from '@/data/MeetOurTeamData'
 import { IconType } from 'react-icons/lib'
 import { useTranslation } from 'next-i18next'
-import { RiLinkedinFill, RiTwitterXFill } from 'react-icons/ri'
-import IQLogo from './logos/iq-grey.svg'
+import IQLogo from './logos/IQLight.svg'
+import IQLogoDark from './logos/iqlogo-dark.svg'
+import LinkedinLight from './logos/linkedin-light.svg'
+import TwitterLight from './logos/twitter-light.svg'
+import TwitterDark from './logos/twitter-dark.svg'
+import LinkedinDark from './logos/linkedin-dark.svg'
 import { Image } from '../Elements/Image/Image'
 
 const IconButtonSocial = ({
   name,
   icon,
+  darkIcon,
   onClick,
 }: {
   name: string
   icon?: IconType
+  darkIcon?: IconType
   onClick: () => void
-}) => (
-  <IconButton
-    display="grid"
-    placeItems="left"
-    bgColor="transparent"
-    _hover={{ bgColor: 'transparent' }}
-    _focus={{ bgColor: 'transparent' }}
-    _active={{ bgColor: 'transparent' }}
-    cursor="pointer"
-    color="gray"
-    _dark={{ color: 'white' }}
-    aria-label={name}
-    size="xs"
-    as={icon || IQLogo}
-    onClick={onClick}
-  />
-)
+}) => {
+  const { colorMode } = useColorMode()
+  const IconComponent = colorMode === 'dark' ? darkIcon || icon : icon
+
+  return (
+    <IconButton
+      display="grid"
+      placeItems="left"
+      bgColor="transparent"
+      _hover={{ bgColor: 'transparent' }}
+      _focus={{ bgColor: 'transparent' }}
+      _active={{ bgColor: 'transparent' }}
+      cursor="pointer"
+      color="gray"
+      _dark={{ color: 'white' }}
+      aria-label={name}
+      size="xs"
+      h="full"
+      as={IconComponent || (colorMode === 'dark' ? IQLogoDark : IQLogo)}
+      onClick={onClick}
+    />
+  )
+}
 const AboutOurTeam = () => {
   const { t } = useTranslation('about')
 
@@ -117,11 +130,12 @@ const AboutOurTeam = () => {
                   >
                     {person.title}
                   </Heading>
-                  <HStack spacing={2}>
+                  <HStack spacing={3}>
                     {person.socials.twitter && (
                       <IconButtonSocial
                         name="twitter"
-                        icon={RiTwitterXFill}
+                        icon={TwitterLight}
+                        darkIcon={TwitterDark}
                         onClick={() => window.open(person.socials.twitter)}
                       />
                     )}
@@ -136,7 +150,8 @@ const AboutOurTeam = () => {
                     {person.socials.linkedin && (
                       <IconButtonSocial
                         name="linked in"
-                        icon={RiLinkedinFill}
+                        icon={LinkedinLight}
+                        darkIcon={LinkedinDark}
                         onClick={() => window.open(person.socials.linkedin)}
                       />
                     )}
