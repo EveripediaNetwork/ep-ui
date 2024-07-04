@@ -69,7 +69,9 @@ export default function media(context: PluginContext): PluginInfo {
           imageUrl: payload.src,
           altText: payload.alt,
         })
-        dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
+        if (img) {
+          dispatch(state.tr.replaceSelectionWith(img).scrollIntoView())
+        }
         return true
       },
       insertVideo: (payload) => {

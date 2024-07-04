@@ -92,10 +92,12 @@ const isMagicConnected = () => {
   return false
 }
 
+// Define the return type of createConnector
+type ConnectorType = ReturnType<typeof createConnector>
 export function dedicatedWalletConnector({
   chains,
   options,
-}: DedicatedWalletConnectorParams) {
+}: DedicatedWalletConnectorParams): ConnectorType {
   let {
     id,
     name,
