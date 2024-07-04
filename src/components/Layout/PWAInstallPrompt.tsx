@@ -20,11 +20,10 @@ const PWAInstallPrompt = () => {
   const isBrowser = typeof window !== 'undefined'
   const isMobileScreen = () =>
     isBrowser && window.matchMedia('(max-width: 768px)').matches
-  // console.log('<InstallPrompt />')
+
   useEffect(() => {
     const handleInstallPrompt = (e: any) => {
       e.preventDefault()
-      console.log('Install ⚙️  event fired')
       onOpen()
     }
 
