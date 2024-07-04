@@ -22,7 +22,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
     try {
       dispatch(setStateToDefault())
       disconnect()
-      if (!!magic && magic?.user) {
+      if (magic && (await magic?.user.isLoggedIn())) {
         await magic.user.logout()
       }
       deleteCookie(cookieNames.Enum['x-auth-token'])
