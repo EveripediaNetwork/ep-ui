@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react'
-import { useAccount, useReadContract } from 'wagmi'
+import { useAccount, useContractRead } from 'wagmi'
 import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
 
@@ -10,22 +10,17 @@ const useIsWhitelistedEditor = () => {
     data: isWhitelisted,
     error,
     isLoading,
-  } = useReadContract({
+  } = useContractRead({
     address: config.editorAddress as `0x${string}`,
     abi: EditorABI,
     functionName: 'isEditorWhitelisted',
     args: [address as `0x${string}`],
-    query: {
-      enabled: !!address,
-    },
+    enabled: !!address,
   })
 
   const getContractReadError = useCallback(() => {
     if (error) {
-      console.error(
-        'Error fetching whitelist status:',
-        error.shortMessage || error.message,
-      )
+      console.error('Error fetching whitelist status:', error.message || error)
     }
   }, [error])
 
