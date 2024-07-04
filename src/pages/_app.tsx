@@ -40,11 +40,11 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
       </Head>
-      <PWAInstallPrompt />
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
+          <PWAInstallPrompt />
           <WagmiWrapper>
             <CSPostHogProvider>
               <Layout noFooter={Component.noFooter}>
