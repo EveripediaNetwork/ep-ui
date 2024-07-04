@@ -38,6 +38,7 @@
     "@everipedia/web3-signer": "^0.0.11",
     "@fortaine/fetch-event-source": "^3.0.6",
     "@magic-ext/oauth": "^22.0.7",
+    "@magiclabs/wagmi-connector": "^1.1.0",
     "@metamask/detect-provider": "^1.2.0",
     "@next/font": "^13.0.3",
     "@radix-ui/react-collapsible": "^1.0.3",
