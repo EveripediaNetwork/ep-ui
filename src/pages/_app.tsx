@@ -1,4 +1,4 @@
-import React, { StrictMode, useEffect } from 'react'
+import React, { StrictMode } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'
@@ -9,12 +9,12 @@ import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
 import NextNProgress from 'nextjs-progressbar'
-import { pageView } from '@/utils/googleAnalytics'
-import { Montserrat } from '@next/font/google'
+import { Montserrat, Moo_Lah_Lah } from 'next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
+import { CSPostHogProvider } from '@/components/Layout/CSPostHogProvider'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -28,19 +28,23 @@ export const montserrat = Montserrat({
   display: 'swap',
 })
 
-const App = ({ Component, pageProps, router }: EpAppProps) => {
-  useEffect(() => {
-    const handleRouteChange = (url: URL) => pageView(url)
-    router.events.on('routeChangeComplete', handleRouteChange)
+export const mooLahLah = Moo_Lah_Lah({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+})
 
-    return () => router.events.off('routeChangeComplete', handleRouteChange)
-  }, [router.events])
-
+const App: React.FC<EpAppProps> = ({
+  Component,
+  pageProps,
+  router,
+}: EpAppProps) => {
   return (
     <StrictMode>
       <style jsx global>{`
         :root {
           --montserrat-font: ${montserrat.style.fontFamily};
+          --moo-lah-lah-font: ${mooLahLah.style.fontFamily};
         }
       `}</style>
       <Head>
@@ -51,9 +55,11 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiWrapper>
-            <Layout noFooter={Component.noFooter}>
-              <Component {...pageProps} />
-            </Layout>
+            <CSPostHogProvider>
+              <Layout noFooter={Component.noFooter}>
+                <Component {...pageProps} />
+              </Layout>
+            </CSPostHogProvider>
           </WagmiWrapper>
         </ChakraProvider>
       </ReduxProvider>

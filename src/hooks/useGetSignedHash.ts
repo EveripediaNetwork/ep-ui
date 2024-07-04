@@ -13,12 +13,24 @@ import {
   successMessage,
   editedMessage,
 } from '@/utils/CreateWikiUtils/createWikiMessages'
-import { logEvent } from '@/utils/googleAnalytics'
 import { Dict } from '@chakra-ui/utils'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import { domain, types } from '@/utils/CreateWikiUtils/domainType'
 import { useCreateWikiContext } from './useCreateWikiState'
 import config from '@/config'
+import { usePostHog } from 'posthog-js/react'
+
+const getErrorMessage = (errorObject: any) => {
+  if (errorObject.response?.errors && errorObject.response.errors.length > 0) {
+    const firstError = errorObject.response.errors[0]
+    if (firstError.extensions?.exception?.reason) {
+      return firstError.extensions.exception.reason
+    } else if (firstError.message) {
+      return firstError.message
+    }
+  }
+  return 'An unknown error occurred'
+}
 
 export const useGetSignedHash = () => {
   const {
@@ -33,6 +45,7 @@ export const useGetSignedHash = () => {
     setCommitMessage,
     dispatch,
   } = useCreateWikiContext()
+  const posthog = usePostHog()
 
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const deadline = useRef(0)
@@ -86,11 +99,8 @@ export const useGetSignedHash = () => {
         setIsLoading('error')
         console.log(err)
         setMsg(err.message || defaultErrorMessage)
-        logEvent({
-          action: 'SUBMIT_WIKI_ERROR',
-          label: err.message,
-          category: 'wiki_error',
-          value: 1,
+        posthog.capture('submit_wiki_error', {
+          error: err.message,
         })
       })
   }
@@ -109,11 +119,8 @@ export const useGetSignedHash = () => {
             if (trx.error) {
               setIsLoading('error')
               setMsg(defaultErrorMessage)
-              logEvent({
-                action: 'SUBMIT_WIKI_ERROR',
-                label: 'TRANSACTION_VERIFICATION_ERROR',
-                category: 'wiki_error',
-                value: 1,
+              posthog.capture('submit_wiki_error', {
+                error: 'TRANSACTION_VERIFICATION_ERROR',
               })
               clearInterval(_timer)
             }
@@ -141,11 +148,8 @@ export const useGetSignedHash = () => {
           const errorObject = err as Dict
           setIsLoading('error')
           setMsg(defaultErrorMessage)
-          logEvent({
-            action: 'SUBMIT_WIKI_ERROR',
-            label: errorObject.message,
-            category: 'wiki_error',
-            value: 1,
+          posthog.capture('submit_wiki_error', {
+            error: errorObject.message,
           })
           clearInterval(_timer)
         }
@@ -178,12 +182,11 @@ export const useGetSignedHash = () => {
         } catch (err) {
           const errorObject = err as Dict
           setIsLoading('error')
-          setMsg(errorObject.response.errors[0].extensions.exception.reason)
-          logEvent({
-            action: 'SUBMIT_WIKI_ERROR',
-            label: errorObject.response.errors[0].extensions.exception.reason,
-            category: 'wiki_error',
-            value: 1,
+          console.log(errorObject)
+          const error = getErrorMessage(errorObject)
+          setMsg(error)
+          posthog.capture('submit_wiki_error', {
+            error,
           })
         }
       }

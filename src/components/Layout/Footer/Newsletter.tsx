@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Stack, Text } from '@chakra-ui/react'
-import { logEvent } from '@/utils/googleAnalytics'
+import { usePostHog } from 'posthog-js/react'
 
 const Newsletter = ({
   header,
@@ -14,13 +14,10 @@ const Newsletter = ({
   url: string
   buttonTitle: string
 }) => {
+  const posthog = usePostHog()
+
   const buttonHandler = () => {
-    logEvent({
-      action: 'SUBSCRIBE_BUTTON',
-      label: buttonTitle,
-      category: 'newsletter',
-      value: 1,
-    })
+    posthog.capture('newsletter_subscribe_click', { label: buttonTitle })
   }
   return (
     <Stack

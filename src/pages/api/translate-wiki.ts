@@ -24,7 +24,7 @@ export default async function handler(
   const [translatedTitle, ...translatedTexts] = await Promise.all(
     chunks.map(async (chunk: string) => {
       return openai.chat.completions.create({
-        model: 'gpt-3.5-turbo',
+        model: 'gpt-4o',
         temperature: 0,
         messages: [
           {

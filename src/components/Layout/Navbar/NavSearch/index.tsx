@@ -35,12 +35,12 @@ import SearchSEO from '@/components/SEO/Search'
 import { CHAR_SEARCH_LIMIT, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { logEvent } from '@/utils/googleAnalytics'
 import {
   getWikiSummary,
   WikiSummarySize,
 } from '@/utils/WikiUtils/getWikiSummary'
 import { useTranslation } from 'next-i18next'
+import { usePostHog } from 'posthog-js/react'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -64,6 +64,7 @@ const NavSearch = (props: NavSearchProps) => {
   const { query, setQuery, isLoading, results } = useNavSearch()
   const router = useRouter()
   const { t } = useTranslation('common')
+  const posthog = usePostHog()
 
   const unrenderedWikis = results.wikis.length - WIKIS_LIMIT
   const unrenderedCategories = results.categories.length - CATEGORIES_LIMIT
@@ -299,11 +300,10 @@ const NavSearch = (props: NavSearchProps) => {
         onSelectOption={(option) => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
-          logEvent({
-            action: 'CLICK_BY_SEARCH',
+
+          posthog.capture('search_suggestions_click', {
             label: ItemPaths[type as SearchItem] + id,
-            value: 1,
-            category: 'search_tags',
+            location: 'nav_search',
           })
         }}
       >

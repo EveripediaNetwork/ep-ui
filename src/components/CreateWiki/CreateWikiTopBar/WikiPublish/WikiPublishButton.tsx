@@ -18,7 +18,6 @@ import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
 import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { logEvent } from '@/utils/googleAnalytics'
 import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
 import {
   CreateNewWikiSlug,
@@ -38,6 +37,7 @@ import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useAccount } from 'wagmi'
 import { getCookie } from 'cookies-next'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
+import { usePostHog } from 'posthog-js/react'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -52,6 +52,7 @@ export const WikiPublishButton = () => {
   const { data } = useGetWikiQuery(wiki?.id || '')
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
+  const posthog = usePostHog()
 
   const { userCanEdit } = useWhiteListValidator()
   const [connectedChainId, setConnectedChainId] = useState<string>()
@@ -189,11 +190,9 @@ export const WikiPublishButton = () => {
         setMsg(defaultErrorMessage)
       }
     }
-    logEvent({
-      action: 'SUBMIT_WIKI_ERROR',
-      label: await getWikiSlug(wiki),
-      category: 'wiki_error',
-      value: 1,
+    posthog.capture('submit_wiki_error', {
+      wiki_slug: await getWikiSlug(wiki),
+      error: logReason,
     })
   }
 
@@ -235,12 +234,9 @@ export const WikiPublishButton = () => {
         return
       }
     }
-
-    logEvent({
-      action: 'SUBMIT_WIKI',
-      label: await getWikiSlug(wiki),
-      category: 'wiki_title',
-      value: 1,
+    posthog.capture('submit_wiki', {
+      wiki_slug: await getWikiSlug(wiki),
+      isEdit: !isNewCreateWiki,
     })
 
     if (userAddress) {

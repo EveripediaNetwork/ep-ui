@@ -1,21 +1,27 @@
-import { Wiki } from '@everipedia/iq-utils'
-import { Box, Heading, Button, Spinner } from '@chakra-ui/react'
-import React, { useState, useEffect, useRef } from 'react'
+import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
+import { Box, Heading, useColorMode, Button, Spinner } from '@chakra-ui/react'
+import React, { useMemo, useState, useEffect, useRef } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { store } from '@/store/store'
+import { addToTOC } from '@/components/Wiki/WikiPage/CustomRenderers/customHeadingRender'
+import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import { customLinkRenderer } from './CustomRenderers/customLinkRender'
+import { customImageRender } from './CustomRenderers/customImageRender'
+import { customTableRenderer } from './CustomRenderers/customTableRender'
+import styles from '../../../styles/markdown.module.css'
 import { WikiFlaggingSystem } from './WikiFlaggingSystem'
 import { useSelector } from 'react-redux'
 import { RootState } from '@/store/store'
-import { logEvent } from '@/utils/googleAnalytics'
 import { SupportedLanguages } from '@/data/LanguageData'
 import { languageData } from '@/data/LanguageData'
-import dynamic from 'next/dynamic'
+import { usePostHog } from 'posthog-js/react'
+
 interface WikiMainContentProps {
   wiki: Wiki
 }
 
-const MarkdownViewer = dynamic(() => import('@/components/CreateWiki/Viewer'), {
-  ssr: false,
-})
+
 export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
   store.dispatch({
     type: 'citeMarks/reset',
@@ -24,9 +30,35 @@ export const MarkdownRender = React.memo(({ wiki }: { wiki: Wiki }) => {
     type: 'toc/reset',
   })
 
+  const referencesString = useMemo(
+    () => getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value,
+    [wiki],
+  )
+
   if (!wiki.content) return null
 
-  return <MarkdownViewer wiki={wiki} />
+  return (
+    <ReactMarkdown
+      remarkPlugins={[remarkGfm]}
+      components={{
+        h1: addToTOC,
+        h2: addToTOC,
+        h3: addToTOC,
+        h4: addToTOC,
+        h5: addToTOC,
+        h6: addToTOC,
+        a: (props) =>
+          customLinkRenderer({
+            ...props,
+            referencesString,
+          }),
+        img: customImageRender,
+        table: customTableRenderer,
+      }}
+    >
+      {wiki.content}
+    </ReactMarkdown>
+  )
 })
 
 const supportedWikiTranslations = languageData
@@ -40,9 +72,13 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
   const [contentLang, setContentLang] = useState<'en' | 'ko' | 'zh'>('en')
   const [wikiContentState, setWikiContentState] = useState(wikiData.content)
   const cachedWikiTranslation = useRef<WikiContentCache | null>(null)
+  const { colorMode } = useColorMode()
+  const posthog = usePostHog()
   const locale = useSelector((state: RootState) => state.app.language)
+
   const isLocaleWikiTranslationSupported =
-    supportedWikiTranslations.includes(locale)
+    locale !== 'en' &&
+    supportedWikiTranslations.includes(locale as SupportedWikiTranslations)
 
   const wikiContent = wikiContentState ?? wikiData.content
 
@@ -118,11 +154,9 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
     )
 
     const handleClick = async () => {
-      logEvent({
-        action: 'TRANSLATE_WIKI',
-        category: btnLocale,
-        label: wikiData.id,
-        value: 1,
+      posthog.capture('translate_wiki', {
+        wikiId: wikiData.id,
+        lang: btnLocale,
       })
 
       if (btnLocale !== contentLang) {
@@ -234,7 +268,11 @@ const WikiMainContent = ({ wiki: wikiData }: WikiMainContentProps) => {
           <SwitchBtn btnLocale={locale} />
         </Box>
       )}
-      <Box>
+      <Box
+        className={`${styles.markdownBody} ${
+          colorMode === 'dark' && styles.markdownBodyDark
+        }`}
+      >
         <MarkdownRender wiki={modifiedContentWiki} />
         <WikiFlaggingSystem id={wikiData.id} />
       </Box>

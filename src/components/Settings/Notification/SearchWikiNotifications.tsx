@@ -27,7 +27,6 @@ import {
   useNavSearch,
 } from '@/services/search/utils'
 import { LinkButton } from '@/components/Elements'
-import { logEvent } from '@/utils/googleAnalytics'
 import config from '@/config'
 import { CHAR_SEARCH_LIMIT, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { WikiImage } from '@/components/WikiImage'
@@ -50,6 +49,7 @@ import { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
+import { usePostHog } from 'posthog-js/react'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -132,6 +132,7 @@ const SearchWikiNotifications = () => {
     address as string,
   )
   const router = useRouter()
+  const posthog = usePostHog()
 
   const noResults = results.wikis.length === 0
   const unrenderedWikis = results.wikis.length - ARTICLES_LIMIT
@@ -237,11 +238,9 @@ const SearchWikiNotifications = () => {
         onSelectOption={(option) => {
           const { id, type } = option.item.originalValue
           router.push(ItemPaths[type as SearchItem] + id)
-          logEvent({
-            action: 'CLICK_BY_SEARCH',
+          posthog.capture('search_suggestions_click', {
             label: ItemPaths[type as SearchItem] + id,
-            value: 1,
-            category: 'search_tags',
+            location: 'notifications',
           })
         }}
       >
