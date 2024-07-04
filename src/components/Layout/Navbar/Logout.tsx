@@ -8,23 +8,34 @@ import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
 import { usePostHog } from 'posthog-js/react'
+import { useDisconnect } from 'wagmi'
+import { magic } from '@/utils/WalletUtils/getMagicSDK'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
+  const { disconnect } = useDisconnect()
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
   const posthog = usePostHog()
 
-  const handleLogOut = () => {
-    dispatch(setStateToDefault())
-    deleteCookie(cookieNames.Enum['x-auth-token'])
-    for (const key of Object.keys(localStorage)) {
-      if (key.startsWith('wagmi')) {
-        localStorage.removeItem(key)
+  const handleLogOut = async () => {
+    try {
+      dispatch(setStateToDefault())
+      disconnect()
+      if (magic && (await magic.user.isLoggedIn())) {
+        await magic.user.logout()
       }
+      deleteCookie(cookieNames.Enum['x-auth-token'])
+      for (const key of Object.keys(localStorage)) {
+        if (key.startsWith('wagmi')) {
+          localStorage.removeItem(key)
+        }
+      }
+      posthog.reset()
+      window.location.reload()
+    } catch (e) {
+      console.log(e)
     }
-    posthog.reset()
-    window.location.reload()
   }
 
   return (
