@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useConnect, useAccount, Connector, useAccountEffect } from 'wagmi'
+import { useConnect, useAccount, Connector } from 'wagmi'
 import { Box, Divider, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
@@ -20,9 +20,9 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const { isConnected: isUserConnected, isConnecting: isUserConnecting } =
     useAccount()
 
-  useAccountEffect({
+  useAccount({
     onConnect: async (data) => {
-      if (data.connector.switchChain) {
+      if (data.connector?.switchChain) {
         document.cookie = 'SWITCH_CHAIN=true;'
       } else {
         document.cookie = 'SWITCH_CHAIN=false'
@@ -45,18 +45,16 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const posthog = usePostHog()
 
   const { connect, connectors } = useConnect({
-    mutation: {
-      onError: (error) => {
-        posthog.capture('login_error', {
-          error: error.message,
-        })
-      },
-      onSuccess: (data) => {
-        posthog.capture('login_success', {
-          address: data.accounts[0],
-        })
-        openSignTokenModal()
-      },
+    onError: (error) => {
+      posthog.capture('login_error', {
+        error: error.message,
+      })
+    },
+    onSuccess: (data) => {
+      posthog.capture('login_success', {
+        address: data.account,
+      })
+      openSignTokenModal()
     },
   })
 
