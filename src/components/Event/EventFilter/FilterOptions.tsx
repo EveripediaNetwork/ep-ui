@@ -7,7 +7,7 @@ import {
 } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
 import { DateRange } from 'react-day-picker'
-import { cn } from '~/@lib/utils'
+import { cn } from '@lib/utils'
 import { Filters } from './index.type'
 
 interface FilterOptionProps {

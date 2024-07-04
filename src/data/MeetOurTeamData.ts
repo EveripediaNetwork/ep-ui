@@ -2,16 +2,6 @@ import { TeamDataType } from '@/types/TeamDataType'
 
 export const TeamData: TeamDataType = [
   {
-    image: '/images/team/navin-new.png',
-    name: 'Navin Vethanayagam',
-    title: 'Chief Brain',
-    about: 'aboutNavinDescription',
-    socials: {
-      iqWiki: 'https://iq.wiki/wiki/navin-vethanayagam',
-      twitter: 'https://twitter.com/NavV96',
-    },
-  },
-  {
     image: '/images/team/ted-new.png',
     name: 'Theodor Forselius',
     title: 'Co-founder',
@@ -29,7 +19,7 @@ export const TeamData: TeamDataType = [
     socials: {
       iqWiki: 'https://iq.wiki/wiki/travis-moore',
       twitter: 'https://twitter.com/travismo123',
-      linkedin: 'https://www.linkedin.com/pub/travis-moore/5a/510/692',
+      linkedin: 'https://www.linkedin.com/in/travis-moore-0a74a4135/',
     },
   },
   {
@@ -43,30 +33,24 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/violetta-new.png',
-    name: 'Violetta Ziborova',
-    title: 'Content Manager',
-    about: 'aboutViolettaDescription',
+    image: '/images/team/navin.png',
+    name: 'Navin Vethanayagam',
+    title: 'Chief Brain',
+    about: 'aboutNavinDescription',
     socials: {
-      iqWiki: 'https://iq.wiki/wiki/violetta-ziborova',
+      iqWiki: 'https://iq.wiki/wiki/navin-vethanayagam',
+      twitter: 'https://twitter.com/NavV96',
     },
   },
   {
-    image: '/images/team/kevin-new.png',
-    name: 'Kevin Wang',
-    title: 'Director Business of Development in China',
-    about: 'aboutKevinDescription',
+    image: '/images/team/kesar-new.png',
+    name: 'César Rodríguez',
+    title: 'Chief Technology Officer',
+    about: 'aboutCesarDescription',
     socials: {
-      iqWiki: 'https://iq.wiki/wiki/kevin-wang',
-    },
-  },
-  {
-    image: '/images/team/cho.png',
-    name: 'Andy Cho',
-    title: 'Director of Business Development',
-    about: 'aboutAndyDescription',
-    socials: {
-      iqWiki: 'https://iq.wiki/wiki/andy-cho',
+      iqWiki: 'https://iq.wiki/wiki/cesar-rodriguez',
+      twitter: 'https://twitter.com/kesarito',
+      linkedin: 'https://www.linkedin.com/in/kesarito',
     },
   },
   {
@@ -79,13 +63,21 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/justin-moore-new.png',
-    name: 'Justin Moore',
-    title: 'Senior Software Engineer',
-    about: 'aboutJustinDescription',
+    image: '/images/team/violetta.png',
+    name: 'Violetta Ziborova',
+    title: 'Content Manager',
+    about: 'aboutViolettaDescription',
     socials: {
-      iqWiki: 'https://iq.wiki/wiki/justin-moore',
-      linkedin: 'https://www.linkedin.com/in/justin-moore-83b31758/',
+      iqWiki: 'https://iq.wiki/wiki/violetta-ziborova',
+    },
+  },
+  {
+    image: '/images/team/cho.png',
+    name: 'Andy Cho',
+    title: 'Director of Business Development',
+    about: 'aboutAndyDescription',
+    socials: {
+      iqWiki: 'https://iq.wiki/wiki/andy-cho',
     },
   },
   {
@@ -98,14 +90,12 @@ export const TeamData: TeamDataType = [
     },
   },
   {
-    image: '/images/team/kesar-new.png',
-    name: 'César Rodríguez',
-    title: 'Chief Technology Officer',
-    about: 'aboutCesarDescription',
+    image: '/images/team/kevin-new.png',
+    name: 'Kevin Wang',
+    title: 'Director Business of Development in China',
+    about: 'aboutKevinDescription',
     socials: {
-      iqWiki: 'https://iq.wiki/wiki/cesar-rodriguez',
-      twitter: 'https://twitter.com/kesarito',
-      linkedin: 'https://www.linkedin.com/in/kesarito',
+      iqWiki: 'https://iq.wiki/wiki/kevin-wang',
     },
   },
 ]

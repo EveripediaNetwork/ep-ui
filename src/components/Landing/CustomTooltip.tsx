@@ -1,6 +1,6 @@
 import React from 'react'
 import { Dict } from '@chakra-ui/utils'
-import { Box } from '@chakra-ui/layout'
+import { Box } from '@chakra-ui/react'
 
 const CustomTooltip = ({ active, payload }: Dict) => {
   if (active && payload && payload.length) {

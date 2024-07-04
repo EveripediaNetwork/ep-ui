@@ -25,7 +25,7 @@ Here is a list of handy information to develop using this repo.
 To develop in local, run the following command:
 
 ```bash
-yarn dev
+pnpm dev
 ```
 
 ### Prepare (Husky)
@@ -33,7 +33,7 @@ yarn dev
 First time you install the repo make sure you run the following command to use our git hooks:
 
 ```bash
-yarn prepare
+pnpm prepare
 ```
 
 ### Build
@@ -41,7 +41,7 @@ yarn prepare
 To build run the following command:
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ## Contributing
