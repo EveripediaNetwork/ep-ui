@@ -12,6 +12,13 @@ import {
 } from '@chakra-ui/react'
 import { useEffect } from 'react'
 
+const isSafari = () => {
+  const userAgent = navigator.userAgent
+  const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
+  const isMacSafari = /^((?!chrome|android).)*safari/i.test(userAgent)
+  return isIOS || isMacSafari
+}
+
 /*
  * Adds an event listener for the install event for the PWA
  */
@@ -22,18 +29,27 @@ const PWAInstallPrompt = () => {
     isBrowser && window.matchMedia('(max-width: 768px)').matches
 
   useEffect(() => {
-    const handleInstallPrompt = (e: any) => {
-      e.preventDefault()
-      onOpen()
-    }
+    if (isSafari() && isMobileScreen()) {
+      const hasPrompted = localStorage.getItem('hasPromptedInstall')
 
-    if (isBrowser && isMobileScreen()) {
-      window.addEventListener('beforeinstallprompt', handleInstallPrompt)
-    }
+      if (!hasPrompted) {
+        onOpen() // Open the modal
+        localStorage.setItem('hasPromptedInstall', 'true')
+      }
+    } else {
+      const handleInstallPrompt = (e: any) => {
+        e.preventDefault()
+        onOpen()
+      }
 
-    return () => {
       if (isBrowser && isMobileScreen()) {
-        window.removeEventListener('beforeinstallprompt', handleInstallPrompt)
+        window.addEventListener('beforeinstallprompt', handleInstallPrompt)
+      }
+
+      return () => {
+        if (isBrowser && isMobileScreen()) {
+          window.removeEventListener('beforeinstallprompt', handleInstallPrompt)
+        }
       }
     }
   }, [])
