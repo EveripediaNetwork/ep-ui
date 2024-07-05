@@ -40,6 +40,9 @@ const WikiProcessModal = (props: WikiProcessType) => {
   ]
   if (!isOpen) return null
 
+  const messageInMsg = /"message"\:\s+"([^"]+)"/
+  const message = msg.match(messageInMsg)
+
   return (
     <>
       <AlertDialog
@@ -78,7 +81,7 @@ const WikiProcessModal = (props: WikiProcessType) => {
                     state={state}
                     labelOrientation="vertical"
                     colorScheme="pink"
-                    activeStep={activeStep}
+                    activeStep={1}
                   >
                     {steps.map(({ label }) => (
                       <Step label={label} key={label} />
@@ -87,8 +90,13 @@ const WikiProcessModal = (props: WikiProcessType) => {
                 </Flex>
               </Center>
               <Center p={3} bg="pageBg">
-                <Text fontSize="xs" lineHeight="2">
-                  {msg}
+                <Text
+                  fontSize="xs"
+                  lineHeight="2"
+                  maxWidth="max"
+                  overflow="hidden"
+                >
+                  {message ? message[1] : msg}
                 </Text>
               </Center>
               <Center mt="16">
