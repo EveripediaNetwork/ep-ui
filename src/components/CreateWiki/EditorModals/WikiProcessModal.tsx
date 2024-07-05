@@ -40,9 +40,6 @@ const WikiProcessModal = (props: WikiProcessType) => {
   ]
   if (!isOpen) return null
 
-  const messageInMsg = /"message"\:\s+"([^"]+)"/
-  const message = msg.match(messageInMsg)
-
   return (
     <>
       <AlertDialog
@@ -96,7 +93,7 @@ const WikiProcessModal = (props: WikiProcessType) => {
                   maxWidth="max"
                   overflow="hidden"
                 >
-                  {message ? message[1] : msg}
+                  {msg}
                 </Text>
               </Center>
               <Center mt="16">

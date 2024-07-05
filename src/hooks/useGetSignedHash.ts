@@ -23,11 +23,17 @@ import { usePostHog } from 'posthog-js/react'
 const getErrorMessage = (errorObject: any) => {
   if (errorObject.response?.errors && errorObject.response.errors.length > 0) {
     const firstError = errorObject.response.errors[0]
+    let msg = ''
     if (firstError.extensions?.exception?.reason) {
-      return firstError.extensions.exception.reason
+      msg = firstError.extensions.exception.reason
     } else if (firstError.message) {
-      return firstError.message
+      msg = firstError.message
     }
+
+    const hasInnerMsg = msg.match(/"message"\:\s+"([^"]+)"/)
+    const properMsg = hasInnerMsg ? hasInnerMsg[1] : msg
+
+    return properMsg
   }
   return 'An unknown error occurred'
 }
@@ -87,7 +93,7 @@ export const useGetSignedHash = () => {
         deadline: deadline.current,
       },
     })
-      .then((response) => {
+      .then(response => {
         if (response) {
           setActiveStep(1)
         } else {
@@ -95,7 +101,7 @@ export const useGetSignedHash = () => {
           setMsg(defaultErrorMessage)
         }
       })
-      .catch((err) => {
+      .catch(err => {
         setIsLoading('error')
         console.log(err)
         setMsg(err.message || defaultErrorMessage)
@@ -129,7 +135,7 @@ export const useGetSignedHash = () => {
               setActiveStep(3)
               setMsg(isNewCreateWiki ? successMessage : editedMessage)
               // clear all edit based metadata from redux state
-              Object.values(EditSpecificMetaIds).forEach((id) => {
+              Object.values(EditSpecificMetaIds).forEach(id => {
                 dispatch({
                   type: 'wiki/updateMetadata',
                   payload: {
