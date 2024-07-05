@@ -1,5 +1,5 @@
 import { getUsername } from '@/utils/DataTransform/getUsername'
-import { HStack, Link, Text, chakra } from '@chakra-ui/react'
+import { HStack, Link, Text, Box } from '@chakra-ui/react'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import ActivityCardTags from './ActivityCardTags'
 import { ActivityCardBottomProps } from '@/types/ActivityDataType'
@@ -42,9 +42,9 @@ const ActivityCardBottom = (props: ActivityCardBottomProps) => {
             {getUsername(editor)}
           </Link>
         </Text>
-        <chakra.div display={{ base: 'none', md: 'block' }}>
+        <Box display={{ base: 'none', md: 'block' }}>
           <ActivityCardTags tags={tags} />
-        </chakra.div>
+        </Box>
       </HStack>
       <Text
         mt="3px"
