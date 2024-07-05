@@ -78,7 +78,7 @@ const WikiProcessModal = (props: WikiProcessType) => {
                     state={state}
                     labelOrientation="vertical"
                     colorScheme="pink"
-                    activeStep={1}
+                    activeStep={activeStep}
                   >
                     {steps.map(({ label }) => (
                       <Step label={label} key={label} />
