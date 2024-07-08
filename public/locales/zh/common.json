@@ -117,6 +117,7 @@
   "subscribeMessage": "订阅此 wiki，以获得对此 wiki 更改的通知。",
   "unsubscribeMessage": "您已经订阅了此 wiki！点击下面的按钮停止获取对此 wiki 更改的通知。",
   "checkingStatus": "检查订阅状态...",
+  "SuggestionNote": "您刚刚搜索的 wiki 不可访问。如果您要对 Wiki 提出建议，可以发送反馈给我们",
   "SuggestWiki": "建议 Wiki",
   "SuggestWikiText": "我们的 wiki 数据库正在增长，以满足加密空间中的多样化兴趣。有您希望我们涵盖的主题或领域吗？欢迎建议 wikis！",
   "Submit": "提交",
