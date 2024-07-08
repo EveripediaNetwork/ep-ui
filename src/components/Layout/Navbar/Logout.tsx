@@ -13,17 +13,20 @@ import { magic } from '@/utils/WalletUtils/getMagicSDK'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
-  const { disconnect } = useDisconnect()
+  const { disconnectAsync, status } = useDisconnect()
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
   const posthog = usePostHog()
 
+  const isLogoutLoading = status === 'loading'
+
   const handleLogOut = async () => {
     try {
       dispatch(setStateToDefault())
-      disconnect()
-      if (magic && (await magic?.user.isLoggedIn())) {
+      if (magic && (await magic.user?.isLoggedIn())) {
         await magic.user.logout()
+      } else {
+        await disconnectAsync()
       }
       deleteCookie(cookieNames.Enum['x-auth-token'])
       for (const key of Object.keys(localStorage)) {
@@ -48,6 +51,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
       cursor={isUserConnected ? 'pointer' : 'not-allowed'}
       display={isUserConnected ? 'flex' : 'none'}
       w="full"
+      isLoading={isLogoutLoading}
     >
       <Icon
         fontSize="4xl"
