@@ -83,6 +83,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
 
   return (
     <Flex
+      ref={containerRef}
       direction={{ base: 'column', lg: 'row' }}
       position="relative"
       height={{ base: 'auto', lg: '30rem' }}
@@ -92,8 +93,8 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
         ref={containerRef}
         flex={1}
         overflowY={{ base: 'visible', lg: 'auto' }}
-        pr={{ base: 0, lg: 10 }}
-        className="scrollbar-hide"
+        // pr={{ base: 0, lg: 40 }}
+        // className="scrollbar-hide"
       >
         <VStack spacing={12}>
           {content.map((item, index) => (
@@ -103,6 +104,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               justifyContent="center"
               display="flex"
               flexDirection="column"
+              minW="full"
               mb={{ base: 20, lg: 0 }}
             >
               <motion.div
@@ -151,6 +153,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
                       src="/images/star.png"
                       position="relative"
                       top={{ base: 'auto', xl: 0 }}
+                      mr={{ base: 0, lg: 10 }}
                     />
                   </AspectRatio>
                   <Text
@@ -173,7 +176,6 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
           ))}
         </VStack>
       </Box>
-
       {isDesktop && (
         <Flex
           justify="center"

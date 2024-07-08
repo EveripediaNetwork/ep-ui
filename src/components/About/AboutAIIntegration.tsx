@@ -45,9 +45,14 @@ const AboutAiIntegration = () => {
   }
 
   return (
-    <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
+    <Box
+      className=""
+      px={{ base: 6, lg: 16, '2xl': 0 }}
+      py={{ base: '10', lg: 15 }}
+      maxW={{ base: '100%', xl: '90%', '2xl': '1440px' }}
+      mx="auto"
+    >
       <Box
-        maxW={{ base: '100%', '2xl': '1280px' }}
         p={{ base: 3, md: 8 }}
         borderRadius="20px"
         mt={{ base: '12', lg: '20 !important' }}
