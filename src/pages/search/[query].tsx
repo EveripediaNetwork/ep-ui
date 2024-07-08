@@ -34,7 +34,7 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
     categories: [],
   })
   useEffect(() => {
-    if (query.length <= 2) {
+    if (query.length <= 1) {
       router.push('/404')
     }
     setIsLoading(true)
