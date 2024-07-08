@@ -17,7 +17,6 @@ const OurHistory = () => {
     <Box
       px={{ base: 6, lg: 16, '2xl': 0 }}
       py={{ base: '10', lg: 15 }}
-      maxW={{ base: '100%', xl: '90%', '2xl': '1440px' }}
       mx="auto"
       className=""
     >
@@ -45,6 +44,7 @@ const OurHistory = () => {
           textAlign="center"
           fontSize={{ base: 'sm', md: 'xl', lg: 'lg' }}
           fontWeight="medium"
+          mb={{ base: 10, lg: 20 }}
           className="text-gray-600 dark:text-white/80"
         >
           {`${t('historyBrief')}`}

@@ -31,12 +31,12 @@ const AboutAsSeenIn = () => {
         justifyContent="center"
         alignItems="center"
       >
-        <CNNLogo height="35" fill="#8a939b" />
-        <ReutersLogo height="35" fill="#8a939b" />
-        <WiredLogo height="35" fill="#8a939b" />
-        <FortuneLogo height="35" fill="#8a939b" />
-        <CoinDeskLogo height="35" fill="#8a939b" />
-        <ForbesLogo height="35" fill="#8a939b" />
+        <CNNLogo height="37" fill="#8a939b" />
+        <ReutersLogo height="37" fill="#8a939b" />
+        <WiredLogo height="37" fill="#8a939b" />
+        <FortuneLogo height="37" fill="#8a939b" />
+        <CoinDeskLogo height="37" fill="#8a939b" />
+        <ForbesLogo height="37" fill="#8a939b" />
       </Flex>
     </Flex>
   )

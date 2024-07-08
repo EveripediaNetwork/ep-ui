@@ -26,8 +26,6 @@ const IconButtonSocial = ({
   onClick: () => void
 }) => (
   <IconButton
-    display="grid"
-    placeItems="left"
     bgColor="transparent"
     _hover={{ bgColor: 'transparent' }}
     _focus={{ bgColor: 'transparent' }}
@@ -35,9 +33,11 @@ const IconButtonSocial = ({
     cursor="pointer"
     color="gray"
     _dark={{ color: 'white' }}
-    aria-label={name}
+    as={icon}
     size="xs"
-    as={icon || IQLogo}
+    w="6"
+    h="6"
+    aria-label={name}
     onClick={onClick}
   />
 )
@@ -129,6 +129,7 @@ const AboutOurTeam = () => {
                   {person.socials.iqWiki && (
                     <IconButtonSocial
                       name="IQ.wiki"
+                      icon={IQLogo}
                       onClick={() => window.open(person.socials.iqWiki)}
                     />
                   )}

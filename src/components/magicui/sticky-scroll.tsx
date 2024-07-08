@@ -87,6 +87,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
       position="relative"
       height={{ base: 'auto', lg: '30rem' }}
       mt={20}
+      className="min-w-min"
     >
       <Flex
         flexDirection={{ base: 'column', lg: 'row' }}
@@ -94,6 +95,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
         justifyContent={'space-between'}
         flex={1}
         overflowY={{ base: 'visible', lg: 'auto' }}
+        px={{ base: 0, lg: 0, '2xl': 52 }}
         className="scrollbar-hide"
       >
         <VStack spacing={12}>
@@ -106,7 +108,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               flexDirection="column"
               minW="full"
               mb={{ base: 20, lg: 0 }}
-              py="20vh"
+              py={{ base: 0, lg: 0, xl: '20vh' }}
             >
               <motion.div
                 initial={{ opacity: 0 }}
@@ -198,7 +200,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               h={'full'}
               position="absolute"
               zIndex={0}
-              top={{ lg: 5 }}
+              top={{ lg: -4 }}
             >
               <Image
                 boxSize="100%"
