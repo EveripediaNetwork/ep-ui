@@ -1,5 +1,6 @@
 import React, { useRef } from 'react'
 import {
+  Button,
   Center,
   Flex,
   InputGroup,
@@ -11,6 +12,7 @@ import {
   useEventListener,
   Wrap,
   Avatar,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -41,6 +43,7 @@ import {
 } from '@/utils/WikiUtils/getWikiSummary'
 import { useTranslation } from 'next-i18next'
 import { usePostHog } from 'posthog-js/react'
+import SuggestWikiModal from '../SuggestWiki'
 
 export type NavSearchProps = {
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
@@ -86,6 +89,12 @@ const NavSearch = (props: NavSearchProps) => {
 
   const inputRef = useRef<HTMLInputElement | null>(null)
 
+  const {
+    isOpen: isSuggestWikiOpen,
+    onOpen: onSuggestWikiOpen,
+    onClose: onSuggestWikiClose,
+  } = useDisclosure()
+
   useEventListener('keydown', (event) => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
@@ -104,17 +113,30 @@ const NavSearch = (props: NavSearchProps) => {
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
-      <chakra.span fontWeight="semibold">No search Results</chakra.span>
-      <LinkButton
+      <Text
+        maxW={'75%'}
+        textAlign="center"
+        fontWeight="medium"
+        fontSize={{ sm: '12', lg: '14' }}
+        color="gray.600"
+        _dark={{ color: 'white' }}
+      >
+        {t('SuggestionNote')}
+      </Text>
+
+      <Button
         variant="outline"
         px="10"
         w="fit-content"
         fontWeight="semibold"
         fontSize="xs"
-        href="/create-wiki"
+        onClick={() => {
+          onSuggestWikiOpen()
+          setHamburger(false)
+        }}
       >
-        Create New Wiki
-      </LinkButton>
+        {t('Suggest Wiki')}
+      </Button>
     </Flex>
   )
 
@@ -356,6 +378,10 @@ const NavSearch = (props: NavSearchProps) => {
           )}
         </AutoCompleteList>
       </AutoComplete>
+      <SuggestWikiModal
+        isOpen={isSuggestWikiOpen}
+        onClose={onSuggestWikiClose}
+      />
     </>
   )
 }
