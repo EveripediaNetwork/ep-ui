@@ -52,6 +52,7 @@ const AboutOurTeam = () => {
         height="100%"
         background="linear-gradient(340.01deg, rgba(255, 92, 170, 0.2) 0.96%, rgba(124, 227, 250, 0.1) 56.11%, rgba(238, 135, 184, 0.15) 95.04%)"
       />
+      <div className="absolute inset-0 -z-10 h-full w-full dark:bg-[radial-gradient(#103849_1px,transparent_1px)] bg-[radial-gradient(#e5e7eb_1px,transparent_1px)] [background-size:16px_16px]" />
       <VStack
         spacing={8}
         maxW={{ base: '100%', xl: '90%', '2xl': '1440px' }}

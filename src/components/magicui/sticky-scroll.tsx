@@ -83,18 +83,18 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
 
   return (
     <Flex
-      ref={containerRef}
       direction={{ base: 'column', lg: 'row' }}
       position="relative"
       height={{ base: 'auto', lg: '30rem' }}
       mt={20}
     >
-      <Box
+      <Flex
+        flexDirection={{ base: 'column', lg: 'row' }}
         ref={containerRef}
+        justifyContent={'space-between'}
         flex={1}
         overflowY={{ base: 'visible', lg: 'auto' }}
-        // pr={{ base: 0, lg: 40 }}
-        // className="scrollbar-hide"
+        className="scrollbar-hide"
       >
         <VStack spacing={12}>
           {content.map((item, index) => (
@@ -106,6 +106,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               flexDirection="column"
               minW="full"
               mb={{ base: 20, lg: 0 }}
+              py="20vh"
             >
               <motion.div
                 initial={{ opacity: 0 }}
@@ -175,47 +176,47 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
             </Box>
           ))}
         </VStack>
-      </Box>
-      {isDesktop && (
-        <Flex
-          justify="center"
-          align="center"
-          position={{ base: 'relative', lg: 'sticky' }}
-          left={{ md: 20 }}
-          height={{ base: 'auto', lg: '100%' }}
-          width={{ base: '100%', lg: '40%' }}
-          paddingRight={20}
-          overflow="hidden"
-          color="brand.500"
-          _dark={{ color: 'brand.800' }}
-          textAlign="center"
-          fontSize={{ base: '6xl', lg: '9xl' }}
-          className={`${contentClassName} ${mooLahLah.className}`}
-        >
-          <AspectRatio
-            ratio={WIKI_IMAGE_ASPECT_RATIO}
-            w={'full'}
-            h={'full'}
-            position="absolute"
-            zIndex={0}
-            top={{ lg: 5 }}
+        {isDesktop && (
+          <Flex
+            justify="center"
+            align="center"
+            top={{ base: 'auto', lg: '0' }}
+            position={{ base: 'relative', lg: 'sticky' }}
+            left={{ md: 20 }}
+            height={{ base: 'auto', lg: '100%' }}
+            width={{ base: '100%', lg: '40%' }}
+            overflow="hidden"
+            color="brand.500"
+            _dark={{ color: 'brand.800' }}
+            textAlign="center"
+            fontSize={{ base: '6xl', lg: '9xl' }}
+            className={`${contentClassName} ${mooLahLah.className}`}
           >
-            <Image
-              boxSize="100%"
-              objectFit="cover"
-              alt="Star Background"
-              src="/images/star.png"
-            />
-          </AspectRatio>
-          <Text
-            fontWeight="bold"
-            zIndex={1}
-            fontSize={{ base: '6xl', md: '12xl', lg: '9xl' }}
-          >
-            {content[isDesktop ? activeCard : 0]?.year ?? null}
-          </Text>
-        </Flex>
-      )}
+            <AspectRatio
+              ratio={WIKI_IMAGE_ASPECT_RATIO}
+              w={'full'}
+              h={'full'}
+              position="absolute"
+              zIndex={0}
+              top={{ lg: 5 }}
+            >
+              <Image
+                boxSize="100%"
+                objectFit="cover"
+                alt="Star Background"
+                src="/images/star.png"
+              />
+            </AspectRatio>
+            <Text
+              fontWeight="bold"
+              zIndex={1}
+              fontSize={{ base: '6xl', md: '12xl', lg: '9xl' }}
+            >
+              {content[isDesktop ? activeCard : 0]?.year ?? null}
+            </Text>
+          </Flex>
+        )}
+      </Flex>
     </Flex>
   )
 }
