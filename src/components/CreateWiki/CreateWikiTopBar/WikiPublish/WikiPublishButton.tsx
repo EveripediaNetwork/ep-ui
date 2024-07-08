@@ -158,17 +158,10 @@ export const WikiPublishButton = () => {
   }, [detectedProvider, userAddress])
 
   useEffect(() => {
-    const handleAsyncOperations = async () => {
-      if (activeStep === 3) {
-        prevEditedWiki.current.isPublished = true
-        posthog.capture('submit_wiki', {
-          wiki_slug: getWikiSlug(wiki),
-          isEdit: !isNewCreateWiki,
-        })
-        fireConfetti()
-      }
+    if (activeStep === 3) {
+      prevEditedWiki.current.isPublished = true
+      fireConfetti()
     }
-    handleAsyncOperations()
   }, [activeStep, fireConfetti])
 
   useEffect(() => {
