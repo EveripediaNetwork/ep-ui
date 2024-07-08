@@ -4,15 +4,14 @@ import React from 'react'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'next-i18next'
-import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
 import { usePostHog } from 'posthog-js/react'
-import { useDisconnect } from 'wagmi'
+import { useAccount, useDisconnect } from 'wagmi'
 import { magic } from '@/utils/WalletUtils/getMagicSDK'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
-  const { address: isUserConnected } = useAddress()
+  const { isConnected: isUserConnected } = useAccount()
   const { disconnect, status } = useDisconnect()
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
@@ -48,7 +47,12 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
       px={isInMobileMenu ? 0 : 3}
       bgColor="transparent"
       sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
-      onClick={isUserConnected ? handleLogOut : undefined}
+      onClick={() => {
+        console.log('FIRED!!!')
+        if (isUserConnected) {
+          handleLogOut()
+        }
+      }}
       cursor={isUserConnected ? 'pointer' : 'not-allowed'}
       display={isUserConnected ? 'flex' : 'none'}
       w="full"
