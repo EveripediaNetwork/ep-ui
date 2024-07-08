@@ -15,6 +15,10 @@ export const useAddress = () => {
     const isInjectorConnected = !!localStorage.getItem(
       'wagmi.injected.connected',
     )
+    //log
+    console.log('isWalletConnected', isWalletConnected)
+    console.log('isConnectorConnected', isConnectorConnected)
+    console.log('isInjectorConnected', isInjectorConnected)
 
     if (isInjectorConnected) {
       setIsConnected(isInjectorConnected)
