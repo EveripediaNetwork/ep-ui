@@ -8,7 +8,6 @@ import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
 import { usePostHog } from 'posthog-js/react'
 import { useAccount, useDisconnect } from 'wagmi'
-import { magic } from '@/utils/WalletUtils/getMagicSDK'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { isConnected: isUserConnected } = useAccount()
@@ -21,23 +20,31 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
 
   const handleLogOut = async () => {
     try {
-      if (magic && (await magic.user?.isLoggedIn())) {
-        await magic.user.logout()
-      } else {
-        disconnect()
-      }
+      console.log('Checking if magic is defined and user is logged in...')
 
+      disconnect()
+
+      console.log('Deleting x-auth-token cookie...')
       deleteCookie(cookieNames.Enum['x-auth-token'])
+
+      console.log('Removing items from localStorage...')
       for (const key of Object.keys(localStorage)) {
         if (key.startsWith('wagmi')) {
+          console.log(`Removing localStorage item: ${key}`)
           localStorage.removeItem(key)
         }
       }
+
+      console.log('Dispatching setStateToDefault...')
       dispatch(setStateToDefault())
+
+      console.log('Resetting posthog...')
       posthog.reset()
+
+      console.log('Reloading window...')
       window.location.reload()
     } catch (e) {
-      console.log(e)
+      console.log('Error occurred in handleLogOut:', e)
     }
   }
 
@@ -50,6 +57,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
       onClick={() => {
         console.log('FIRED!!!')
         if (isUserConnected) {
+          console.log('isUserConnected', isUserConnected)
           handleLogOut()
         }
       }}
