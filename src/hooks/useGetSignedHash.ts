@@ -23,17 +23,17 @@ import { usePostHog } from 'posthog-js/react'
 const getErrorMessage = (errorObject: any) => {
   if (errorObject.response?.errors && errorObject.response.errors.length > 0) {
     const firstError = errorObject.response.errors[0]
-    let msg = ''
+    let message = ''
     if (firstError.extensions?.exception?.reason) {
-      msg = firstError.extensions.exception.reason
+      message = firstError.extensions.exception.reason
     } else if (firstError.message) {
-      msg = firstError.message
+      message = firstError.message
     }
 
-    const hasInnerMsg = msg.match(/"message"\:\s+"([^"]+)"/)
-    const properMsg = hasInnerMsg ? hasInnerMsg[1] : msg
+    const extractedMessage = message.match(/"message"\:\s+"([^"]+)"/)
+    message = extractedMessage ? extractedMessage[1] : message
 
-    return properMsg
+    return message
   }
   return 'An unknown error occurred'
 }
