@@ -13,7 +13,7 @@ import { magic } from '@/utils/WalletUtils/getMagicSDK'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
   const { address: isUserConnected } = useAddress()
-  const { disconnectAsync, status } = useDisconnect()
+  const { disconnect, status } = useDisconnect()
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
   const posthog = usePostHog()
@@ -22,18 +22,19 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
 
   const handleLogOut = async () => {
     try {
-      dispatch(setStateToDefault())
       if (magic && (await magic.user?.isLoggedIn())) {
         await magic.user.logout()
       } else {
-        await disconnectAsync()
+        disconnect()
       }
+
       deleteCookie(cookieNames.Enum['x-auth-token'])
       for (const key of Object.keys(localStorage)) {
         if (key.startsWith('wagmi')) {
           localStorage.removeItem(key)
         }
       }
+      dispatch(setStateToDefault())
       posthog.reset()
       window.location.reload()
     } catch (e) {
