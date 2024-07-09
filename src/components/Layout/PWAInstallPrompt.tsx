@@ -31,7 +31,6 @@ const PWAInstallPrompt = () => {
       window.matchMedia('(max-width: 768px)').matches,
     )
 
-    console.log('isMobileScreen', isMobileScreen)
     const isInstalled = Boolean(window.localStorage.getItem('appInstalled'))
     alert(isInstalled)
     const isApp = Boolean(

@@ -8,13 +8,16 @@ const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: true,
+  cacheOnFrontEndNav: true,
+  disable: process.env.NODE_ENV === 'development',
+  disableDevLogs: true,
 })
 
 const moduleExports = {
   i18n,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
-  webpack(config) {
+  webpack(config, { isServer }) {
     config.resolve.fallback = {
       fs: false,
       net: false,
@@ -30,6 +33,24 @@ const moduleExports = {
       issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
     })
+    if (!isServer) {
+      const workboxPluginIndex = config.plugins.findIndex(
+        (plugin) => plugin.constructor.name === 'GenerateSW',
+      )
+
+      if (workboxPluginIndex !== -1) {
+        config.plugins.splice(workboxPluginIndex, 1)
+      }
+
+      const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
+      config.plugins.push(
+        new WorkboxWebpackPlugin.GenerateSW({
+          clientsClaim: true,
+          skipWaiting: true,
+        }),
+      )
+    }
+
     return config
   },
   images: {
