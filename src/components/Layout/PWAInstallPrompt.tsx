@@ -49,12 +49,12 @@ const PWAInstallPrompt = () => {
     }
 
     if (isMobileScreen && !isInstalled) {
-      const hasPrompted = window.localStorage.getItem('hasPromptedInstall')
+      // const hasPrompted = window.localStorage.getItem('hasPromptedInstall')
 
-      if (!hasPrompted) {
-        onOpen() // Open the modal
-        localStorage.setItem('hasPromptedInstall', 'true')
-      }
+      onOpen() // Open the modal
+      // if (!hasPrompted) {
+      //   localStorage.setItem('hasPromptedInstall', 'true')
+      // }
     }
 
     return () => {
