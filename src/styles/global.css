@@ -337,8 +337,8 @@ html[data-theme='dark'],
   left: -10rem;
   top: -10rem;
   will-change: transform;
-  -webkit-animation: noise 1s steps(2) infinite;
-  animation: noise 1s steps(2) infinite;
+  /* -webkit-animation: noise 1s steps(2) infinite;
+  animation: noise 1s steps(2) infinite; */
 }
 
 @-webkit-keyframes noise {
