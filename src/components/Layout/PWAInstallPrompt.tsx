@@ -29,6 +29,15 @@ const PWAInstallPrompt = () => {
     isBrowser && window.matchMedia('(max-width: 768px)').matches
 
   useEffect(() => {
+    if (
+      isBrowser &&
+      isMobileScreen() &&
+      window.matchMedia('(display-mode: standalone)').matches
+    ) {
+      // Track this as a likely installation
+      alert('This is running as a standalone.')
+    }
+
     if (isSafari() && isMobileScreen()) {
       const hasPrompted = localStorage.getItem('hasPromptedInstall')
 
