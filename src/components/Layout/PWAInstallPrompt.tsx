@@ -12,7 +12,7 @@ import {
 } from '@chakra-ui/react'
 import { useEffect } from 'react'
 
-const isSafari = () => {
+const _isSafari = () => {
   const userAgent = navigator.userAgent
   const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
   const isMacSafari = /^((?!chrome|android).)*safari/i.test(userAgent)
@@ -24,41 +24,45 @@ const isSafari = () => {
  */
 const PWAInstallPrompt = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
-  const isBrowser = typeof window !== 'undefined'
-  const isMobileScreen = () =>
-    isBrowser && window.matchMedia('(max-width: 768px)').matches
+  // const isBrowser = typeof window !== 'undefined'
 
   useEffect(() => {
-    if (
-      isBrowser &&
-      isMobileScreen() &&
-      window.matchMedia('(display-mode: standalone)').matches
-    ) {
-      // Track this as a likely installation
-      alert('This is running as a standalone.')
+    const isMobileScreen = Boolean(
+      window.matchMedia('(max-width: 768px)').matches,
+    )
+
+    console.log('isMobileScreen', isMobileScreen)
+    const isInstalled = Boolean(window.localStorage.getItem('appInstalled'))
+    alert(isInstalled)
+    const isApp = Boolean(
+      window.matchMedia('(display-mode: standalone)').matches,
+    )
+
+    const handleInstallPrompt = (e: any) => {
+      e.preventDefault()
     }
 
-    if (isSafari() && isMobileScreen()) {
-      const hasPrompted = localStorage.getItem('hasPromptedInstall')
+    if (isApp) {
+      window.localStorage.setItem('appInstalled', 'true')
+      alert('You just installed the app')
+    }
+
+    if (isMobileScreen) {
+      window.addEventListener('beforeinstallprompt', handleInstallPrompt)
+    }
+
+    if (isMobileScreen) {
+      const hasPrompted = window.localStorage.getItem('hasPromptedInstall')
 
       if (!hasPrompted) {
         onOpen() // Open the modal
         localStorage.setItem('hasPromptedInstall', 'true')
       }
-    } else {
-      const handleInstallPrompt = (e: any) => {
-        e.preventDefault()
-        onOpen()
-      }
+    }
 
-      if (isBrowser && isMobileScreen()) {
-        window.addEventListener('beforeinstallprompt', handleInstallPrompt)
-      }
-
-      return () => {
-        if (isBrowser && isMobileScreen()) {
-          window.removeEventListener('beforeinstallprompt', handleInstallPrompt)
-        }
+    return () => {
+      if (isMobileScreen) {
+        window.removeEventListener('beforeinstallprompt', handleInstallPrompt)
       }
     }
   }, [])
