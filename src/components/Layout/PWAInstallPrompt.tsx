@@ -48,13 +48,8 @@ const PWAInstallPrompt = () => {
       window.addEventListener('beforeinstallprompt', handleInstallPrompt)
     }
 
-    if (isMobileScreen && !isInstalled) {
-      // const hasPrompted = window.localStorage.getItem('hasPromptedInstall')
-
+    if (isMobileScreen && !isInstalled && !isApp) {
       onOpen() // Open the modal
-      // if (!hasPrompted) {
-      //   localStorage.setItem('hasPromptedInstall', 'true')
-      // }
     }
 
     return () => {
