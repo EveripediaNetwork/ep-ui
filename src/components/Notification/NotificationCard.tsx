@@ -42,7 +42,7 @@ interface NotificationCardProps {
 export const SubscribeWikiHandler = async (
   email: string | null | undefined,
   wiki: ActivityCardDetails | undefined,
-  userAddress: `0x${string}` | undefined,
+  userAddress: string | null,
   toast: (arg0: UseToastOptions) => void,
 ) => {
   if (!userAddress) {
