@@ -77,7 +77,7 @@ const AboutAiIntegration = () => {
           <Box alignSelf="center">
             <Heading
               fontSize={{ base: '20px', md: '24px', lg: '48px' }}
-              maxW={{ base: '80%', md: '90%' }}
+              maxW={{ base: '80%', md: '80%' }}
               color="brandLinkColor"
             >
               {t('aboutAiHeading')}
