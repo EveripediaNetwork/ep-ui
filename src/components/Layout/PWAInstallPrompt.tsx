@@ -38,7 +38,6 @@ const PWAInstallPrompt = () => {
 
     if (isApp && !isInstalled) {
       window.localStorage.setItem('appInstalled', 'true')
-      alert('You just installed the app')
       posthog.capture('app_installed', {
         isPWAInstalled: true,
       })
