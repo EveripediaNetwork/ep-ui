@@ -44,9 +44,9 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       <SEOHeader router={router} />
       <ReduxProvider store={store}>
         <ChakraProvider resetCSS theme={chakraTheme}>
-          <PWAInstallPrompt />
           <WagmiWrapper>
             <CSPostHogProvider>
+              <PWAInstallPrompt />
               <Layout noFooter={Component.noFooter}>
                 <Component {...pageProps} />
               </Layout>

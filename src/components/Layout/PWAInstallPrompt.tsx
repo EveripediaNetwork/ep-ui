@@ -10,20 +10,15 @@ import {
   useDisclosure,
   VStack,
 } from '@chakra-ui/react'
+import { usePostHog } from 'posthog-js/react'
 import { useEffect } from 'react'
-
-const _isSafari = () => {
-  const userAgent = navigator.userAgent
-  const isIOS = /iPad|iPhone|iPod/.test(userAgent) && !window.MSStream
-  const isMacSafari = /^((?!chrome|android).)*safari/i.test(userAgent)
-  return isIOS || isMacSafari
-}
 
 /*
  * Adds an event listener for the install event for the PWA
  */
 const PWAInstallPrompt = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
+  const posthog = usePostHog()
   // const isBrowser = typeof window !== 'undefined'
 
   useEffect(() => {
@@ -32,7 +27,7 @@ const PWAInstallPrompt = () => {
     )
 
     const isInstalled = Boolean(window.localStorage.getItem('appInstalled'))
-    alert(isInstalled)
+
     const isApp = Boolean(
       window.matchMedia('(display-mode: standalone)').matches,
     )
@@ -41,16 +36,19 @@ const PWAInstallPrompt = () => {
       e.preventDefault()
     }
 
-    if (isApp) {
+    if (isApp && !isInstalled) {
       window.localStorage.setItem('appInstalled', 'true')
       alert('You just installed the app')
+      posthog.capture('app_installed', {
+        isPWAInstalled: true,
+      })
     }
 
     if (isMobileScreen) {
       window.addEventListener('beforeinstallprompt', handleInstallPrompt)
     }
 
-    if (isMobileScreen) {
+    if (isMobileScreen && !isInstalled) {
       const hasPrompted = window.localStorage.getItem('hasPromptedInstall')
 
       if (!hasPrompted) {
