@@ -17,7 +17,7 @@ const moduleExports = {
   i18n,
   reactStrictMode: true,
   productionBrowserSourceMaps: false,
-  webpack(config, { isServer }) {
+  webpack(config) {
     config.resolve.fallback = {
       fs: false,
       net: false,
@@ -33,23 +33,6 @@ const moduleExports = {
       issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
     })
-    if (!isServer) {
-      const workboxPluginIndex = config.plugins.findIndex(
-        (plugin) => plugin.constructor.name === 'GenerateSW',
-      )
-
-      if (workboxPluginIndex !== -1) {
-        config.plugins.splice(workboxPluginIndex, 1)
-      }
-
-      const WorkboxWebpackPlugin = require('workbox-webpack-plugin')
-      config.plugins.push(
-        new WorkboxWebpackPlugin.GenerateSW({
-          clientsClaim: true,
-          skipWaiting: true,
-        }),
-      )
-    }
 
     return config
   },
