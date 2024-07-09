@@ -85,7 +85,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
     <Flex
       direction={{ base: 'column', lg: 'row' }}
       position="relative"
-      height={{ base: 'auto', lg: '30rem' }}
+      height={{ base: 'auto', lg: '30rem', '2xl': '40rem' }}
       mt={20}
       className="min-w-min"
     >
@@ -95,7 +95,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
         justifyContent={'space-between'}
         flex={1}
         overflowY={{ base: 'visible', lg: 'auto' }}
-        px={{ base: 0, lg: 0, '2xl': 52 }}
+        px={{ base: 0, lg: 0, '2xl': 52, '3xl': 270 }}
         className="scrollbar-hide"
       >
         <VStack spacing={12}>
@@ -108,7 +108,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               flexDirection="column"
               minW="full"
               mb={{ base: 20, lg: 0 }}
-              py={{ base: 0, lg: 0, xl: '20vh' }}
+              py={{ base: 0, lg: '10vh', xl: '15vh' }}
             >
               <motion.div
                 initial={{ opacity: 0 }}
@@ -200,7 +200,7 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               h={'full'}
               position="absolute"
               zIndex={0}
-              top={{ lg: -4 }}
+              top={{ lg: 6, xl: -4, '2xl': -18, '3xl': -6 }}
             >
               <Image
                 boxSize="100%"
@@ -213,6 +213,8 @@ export const StickyScrollReveal: React.FC<StickyScrollRevealProps> = ({
               fontWeight="bold"
               zIndex={1}
               fontSize={{ base: '6xl', md: '12xl', lg: '9xl' }}
+              position="absolute"
+              top={{ lg: 36, xl: 28, '2xl': 32, '3xl': 56 }}
             >
               {content[isDesktop ? activeCard : 0]?.year ?? null}
             </Text>

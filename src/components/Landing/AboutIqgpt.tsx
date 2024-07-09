@@ -54,7 +54,7 @@ const AboutIqgpt = () => {
           <HStack px={{ base: 3 }}>
             <Text
               fontWeight={'600'}
-              maxW={{ md: '400', lg: '600' }}
+              maxW={{ md: '400', lg: '900' }}
               lineHeight={{ base: '32px', md: '48px' }}
               textAlign={'center'}
               fontSize={{ base: '24px', md: '30px', lg: '36px' }}
