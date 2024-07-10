@@ -66,16 +66,16 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
   function getRankCatByTag(tag: string) {
     const tagMappings = [
       {
-        category: 'Cryptocurrencies',
+        category: 'cryptocurrencies',
         tags: ['Ethereum', 'Blockchains', 'Protocols', 'Memecoins', ''],
       },
-      { category: 'StableCoins', tags: ['DEXes'] },
-      { category: 'AI', tags: ['AI'] },
+      { category: 'stableCoins', tags: ['DEXes'] },
+      { category: 'aitokens', tags: ['AI'] },
       {
-        category: 'Founders',
+        category: 'founders',
         tags: ['Founders', 'Organizations', 'PeopleInDeFi', 'Developers'],
       },
-      { category: 'NFTs', tags: ['Entertainment', 'Collections'] },
+      { category: 'nfts', tags: ['Entertainment', 'Collections'] },
     ]
 
     return (
