@@ -262,7 +262,7 @@ export const LINK_OPTIONS = [
     type: LinkType.EXPLORER,
     label: 'Celoscan',
     icon: FaFileContract,
-    tests: [/https:\/\/(www\.)?(celoscan)\.io\/\w+/],
+    tests: [/https:\/\/(www\.)?(celoscan|explorer.celo)\.(io|org)\/\w+/],
   },
   {
     id: CommonMetaIds.CRONOSCAN_PROFILE,
