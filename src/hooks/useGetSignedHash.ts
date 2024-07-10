@@ -19,6 +19,8 @@ import { domain, types } from '@/utils/CreateWikiUtils/domainType'
 import { useCreateWikiContext } from './useCreateWikiState'
 import config from '@/config'
 import { usePostHog } from 'posthog-js/react'
+import { useAppSelector } from '@/store/hook'
+import { getWikiSlug } from '@/utils/CreateWikiUtils/getWikiSlug'
 
 const getErrorMessage = (errorObject: any) => {
   if (errorObject.response?.errors && errorObject.response.errors.length > 0) {
@@ -52,6 +54,8 @@ export const useGetSignedHash = () => {
     dispatch,
   } = useCreateWikiContext()
   const posthog = usePostHog()
+
+  const wiki = useAppSelector((state) => state.wiki)
 
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const deadline = useRef(0)
@@ -143,6 +147,10 @@ export const useGetSignedHash = () => {
                     value: '',
                   },
                 })
+              })
+              posthog.capture('submit_wiki', {
+                wiki_slug: await getWikiSlug(wiki),
+                isEdit: !isNewCreateWiki,
               })
               setCommitMessage('')
               removeDraftFromLocalStorage()
