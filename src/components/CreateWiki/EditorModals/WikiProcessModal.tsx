@@ -87,7 +87,12 @@ const WikiProcessModal = (props: WikiProcessType) => {
                 </Flex>
               </Center>
               <Center p={3} bg="pageBg">
-                <Text fontSize="xs" lineHeight="2">
+                <Text
+                  fontSize="xs"
+                  lineHeight="2"
+                  maxWidth="max"
+                  overflow="hidden"
+                >
                   {msg}
                 </Text>
               </Center>
