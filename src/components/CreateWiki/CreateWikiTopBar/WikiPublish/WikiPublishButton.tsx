@@ -50,6 +50,7 @@ export type TGraphQLError = {
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const { data } = useGetWikiQuery(wiki?.id || '')
+
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const posthog = usePostHog()
@@ -234,10 +235,6 @@ export const WikiPublishButton = () => {
         return
       }
     }
-    posthog.capture('submit_wiki', {
-      wiki_slug: await getWikiSlug(wiki),
-      isEdit: !isNewCreateWiki,
-    })
 
     if (userAddress) {
       const ifWikiExists =
