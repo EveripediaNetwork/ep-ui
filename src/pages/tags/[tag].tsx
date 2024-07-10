@@ -31,8 +31,6 @@ interface TagPageProps {
 const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
   const router = useRouter()
 
-  
-
   const tag = router.query.tag as string
   const {
     data: wikisByTag,
@@ -91,15 +89,15 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           </Text>
           <Box fontSize={20} width="min(90%, 1200px)" mx="auto" mt={6}>
             <Link
-              href={`/rank/${(tagId)}`}
+              href={`/rank/${tagId}`}
               as={HStack}
               rounded="md"
               border="solid 1px"
               borderColor="gray.300"
               bgColor="cardBg"
-              w='fit-content'
+              w="fit-content"
               p={2}
-              _hover={{ textDecoration: "none", bgColor: "gray.100" }}
+              _hover={{ textDecoration: 'none', bgColor: 'gray.100' }}
             >
               <RiOrganizationChart />
               <Text fontSize="sm">View on Rank Table</Text>
