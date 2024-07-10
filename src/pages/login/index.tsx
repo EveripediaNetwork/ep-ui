@@ -8,11 +8,14 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import Head from 'next/head'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store/store'
 
 const Login = () => {
   const { t } = useTranslation('common')
   const { address: userAddress } = useAddress()
   const router = useRouter()
+  const { token } = useSelector((state: RootState) => state.user)
 
   const handleRedirect = () => {
     if (router.query.from) {
@@ -22,7 +25,7 @@ const Login = () => {
     }
   }
 
-  if (userAddress) {
+  if (userAddress && token) {
     handleRedirect()
   }
 
