@@ -276,7 +276,7 @@ export const LINK_OPTIONS = [
     type: LinkType.EXPLORER,
     label: 'Zkscan',
     icon: FaFileContract,
-    tests: [/https:\/\/(www\.)?explorer.zksync\.io\/\w+/],
+    tests: [/https:\/\/(www\.)?(explorer.zksync|zkscan)\.io\/\w+/],
   },
   {
     id: CommonMetaIds.EXPLORER_INJECTIVE,
