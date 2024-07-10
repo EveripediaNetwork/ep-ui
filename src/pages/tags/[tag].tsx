@@ -112,13 +112,28 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
             <Link
               href={`/rank/${getRankCatByTag(tagId)}`}
               as={HStack}
-              rounded="md"
               border="solid 1px"
               borderColor="gray.300"
               bgColor="cardBg"
               w="fit-content"
               p={2}
-              _hover={{ textDecoration: 'none', bgColor: 'gray.100' }}
+              rounded="full"
+              color="gray.600"
+              fontWeight="500"
+              sx={{
+                '&:hover, &:focus, &:active': {
+                  bgColor: 'gray.200',
+                  textDecoration: 'none',
+                  boxShadow: 'none',
+                  _dark: {
+                    bgColor: 'whiteAlpha.400',
+                  },
+                },
+              }}
+              _dark={{
+                color: 'whiteAlpha.900',
+                borderColor: 'whiteAlpha.700',
+              }}
             >
               <RiOrganizationChart />
               <Text fontSize="sm">View on Rank Table</Text>
