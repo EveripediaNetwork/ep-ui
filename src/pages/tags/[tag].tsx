@@ -91,7 +91,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           </Text>
           <Box fontSize={20} width="min(90%, 1200px)" mx="auto" mt={6}>
             <Link
-              href={`/rank/${getRankCatByTag(tagId)}`}
+              href={`/rank/${(tagId)}`}
               as={HStack}
               rounded="md"
               border="solid 1px"
