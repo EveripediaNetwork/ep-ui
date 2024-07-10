@@ -63,6 +63,27 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     onLoadMore: fetchMoreWikis,
   })
 
+  function getRankCatByTag(tag: string) {
+    const tagMappings = [
+      {
+        category: 'Cryptocurrencies',
+        tags: ['Ethereum', 'Blockchains', 'Protocols', 'Memecoins', ''],
+      },
+      { category: 'StableCoins', tags: ['DEXes'] },
+      { category: 'AI', tags: ['AI'] },
+      {
+        category: 'Founders',
+        tags: ['Founders', 'Organizations', 'PeopleInDeFi', 'Developers'],
+      },
+      { category: 'NFTs', tags: ['Entertainment', 'Collections'] },
+    ]
+
+    return (
+      tagMappings.find((mapping) => mapping.tags.includes(tag))?.category ||
+      null
+    )
+  }
+
   const { t } = useTranslation('tag')
   return (
     <>
@@ -89,7 +110,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           </Text>
           <Box fontSize={20} width="min(90%, 1200px)" mx="auto" mt={6}>
             <Link
-              href={`/rank/${tagId}`}
+              href={`/rank/${getRankCatByTag(tagId)}`}
               as={HStack}
               rounded="md"
               border="solid 1px"
