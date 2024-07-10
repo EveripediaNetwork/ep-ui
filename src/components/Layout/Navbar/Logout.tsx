@@ -20,7 +20,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
 
   const handleLogOut = async () => {
     try {
-      console.log('Checking if magic is defined and user is logged in...')
+      console.log('disconnecting...')
 
       disconnect()
 
@@ -55,7 +55,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
       bgColor="transparent"
       sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
       onClick={() => {
-        console.log('FIRED!!!')
+        console.log(' logout clicked')
         if (isUserConnected) {
           console.log('isUserConnected', isUserConnected)
           handleLogOut()
