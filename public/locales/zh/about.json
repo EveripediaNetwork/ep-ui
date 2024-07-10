@@ -20,10 +20,10 @@
   "meetTeamHead": "认识我们的团队",
   "meetTeamContent": "在IQ.wiki，我们很幸运有一支对教育和区块链行业都有深入了解和热情的团队。",
   "aboutAiHeading": "人工智能的整合",
-  "aboutAiParagraph": "IQ.wiki 利用人工智能来增强我们的知识库，简化例如总结维基等常规任务。此外，<Link href='https://chat.igqpt.com'>IQ GPT 聊天机器人</Link>帮助用户使用 AI 在维基页面上执行活动。该聊天机器人接受了各种工具和插件的训练，以向用户提供与上下文相关的信息和价值。",
+  "aboutAiParagraph": "IQ.wiki 是训练 <Link href='https://chat.igqpt.com'>IQ GPT</Link> 的关键资源，IQ GPT 是区块链知识的领先 AI 代理。<Link href='https://iqgpt.com/'>IQ GPT</Link> 是百科全书的重要组成部分，通过利用 AI 提升用户体验。它通过执行快速任务，如 ELI5（像我五岁一样解释）摘要，生成额外的百科内容，并提供相关问题的答案，帮助用户在百科页面内进行各种活动。",
   "historyTitle": "历史",
   "historyHeading": "关于我们的历史",
-  "historyBrief": "世界上最大的区块链百科全书并非一夜之间诞生。IQ.wiki最初是作为“一切事物的百科全书”Everipedia于2014年开始，2018年成为世界上第一部区块链百科全书，随后在2022年扩展到Polygon区块链并更名为IQ.wiki。",
+  "historyBrief": "世界上最大的区块链百科全书并非一夜之间诞生。IQ.wiki于2014年作为“万事百科”Everipedia开始，并在2018年推出IQ代币后成为世界上第一个区块链百科全书。2022年，Everipedia扩展到Polygon区块链并更名为IQ.wiki。2023年，IQ.wiki团队推出了IQ GPT，这是用于区块链知识的AI代理。",
   "OurMission1": "我们是今天互联网上关于区块链技术和加密货币相关一切事物的首要知识来源。我们的愿景是使区块链在全世界更容易被发现和访问，并赋予用户他们可以信赖的信息。",
   "OurMission2": "为了完全透明，IQ.wiki上的每一次编辑都记录在Polygon区块链上，并将交易哈希存储在链上。作为每个wiki的一部分上传的数据和图片都存储在IPFS网络上，每个页面都包含了哈希供用户验证。",
   "OurMission3": "IQ.wiki还在我们教育世界关于区块链技术的使命中整合了人工智能。我们使用AI扩展我们的内容，使知识共享变得更加容易。IQ.wiki整合了OpenAI的GPT-4来执行包括总结wiki文章在内的任务。",
@@ -50,6 +50,6 @@
   "OurHistoryDescription3": "2018년 2월, 에브리피디아는 Galaxy Digital로부터 3천만 달러를 모금하여 세계 최초의 블록체인 백과사전을 구축했습니다. 이 자금 조달과 확장은 <Link href='https://www.engadget.com/2019-02-07-everipedia-mahbod-moghadam-larry-sanger-blockchain.html'>Engadget</Link>, <Link href='https://www.reuters.com/article/us-blockchain-investment-galaxy/novogratzs-new-fund-others-invest-30-million-in-online-encyclopedia-idUSKBN1FS322'>Reuters</Link>, <Link href='https://www.yahoo.com/news/blockchain-rival-wikipedia-raises-30-181838988.html'>Yahoo News</Link> 등 여러 매체에서 다뤄졌습니다.\n\n2018년 7월, 에브리피디아는 IQ 포인트 시스템을 실제 토큰으로 전환했습니다. IQ 토큰 공급량의 51%가 에어드롭되었습니다. 8월에는 세계 최초의 블록체인 백과사전을 출시하며 역사를 만들었습니다.",
   "OurHistoryDescription4": "자연스럽게 2018년 에브리피디아가 블록체인 백과사전이 된 후, 에브리피디아의 독자층과 편집자층은 암호화폐 콘텐츠로 이동했습니다. 2020년, 에브리피디아 팀은 블록체인 혁신에 계속 집중하여 OraQles를 개발했습니다. 이는 검증된 제1자가 실제 정보를 체인에 가져올 수 있게 하는 서비스입니다. 2020년 11월 4일, AP통신은 이 소프트웨어를 사용하여 미국 선거 결과를 이더리움에 게시했습니다. 이는 미국 선거 결과가 블록체인에 기록된 최초의 사례였습니다. 이 역사적인 순간은 <Link href='https://www.forbes.com/sites/michaeldelcastillo/2020/11/03/how-to-track-official-election-results-on-ethereum-and-eos/?sh=2eb2ff153269'>Forbes</Link>, <Link href='https://www.coindesk.com/markets/2020/10/15/immutable-calls-ap-election-2020-results-will-be-recorded-on-a-blockchain/'>Coindesk</Link>, <Link href='https://www.nasdaq.com/articles/immutable-calls%3A-ap-election-2020-results-will-be-recorded-on-a-blockchain-2020-10-15'>Nasdaq</Link> 등의 매체에서 다뤄졌습니다.",
   "OurHistoryDescription5": "2022년, 에브리피디아는 Polygon 블록체인으로 이전하고 <Link href='https://iq.wiki/blog/il83x1k4q5FdsuVJBCbAVjMlOytJ4Q5k8tsjSxG9ixg'>IQ.wiki로 리브랜딩</Link>했습니다. 리브랜딩과 함께 암호화폐 커뮤니티를 더 잘 지원하기 위해 여러 새로운 Web3 기능과 통합을 추가했습니다. 지난 몇 년 동안 NFT, DeFi, Web3의 혁신 속도가 폭발적으로 증가했습니다. 우리는 항상 구축에 열정적이었고 이 분야의 성장을 보면서 IQ.wiki를 암호화폐 지식의 허브로 구축하도록 영감을 받았습니다. IQ 토큰과 암호화폐가 백과사전의 중심이라는 점을 강조하기 위해 IQ.wiki로 리브랜딩했습니다.",
-  "OurHistoryDescription6": "2023년 2월, IQ.wiki는 <Link href='https://iq.wiki/blog/qQL4YXD5VnzFRTDmDmJfwbewg8QS--PWFKtmiK4meQY'>인공지능을 통합한</Link> 최초의 백과사전과 탈중앙화 애플리케이션 중 하나가 되었습니다. IQ.wiki는 기사 요약 등의 작업을 위해 OpenAI의 GPT-3를 통합했고 나중에 GPT-4로 업그레이드했습니다. 2023년에 BrainDAO는 플랫폼 내 AI를 더욱 통합하고, 추가 AI 기반 도구를 개발하며, IQ 토큰을 사용하여 이 문제의 첫 부분에 대한 AI 모델 훈련을 장려하는 것을 목표로 합니다.",
-  "OurHistoryDescription7": "2024년, BrainDAO는 IQ.wiki, IQ.social, IQ GPT를 확장하고 Solidity와 Vyper와 같은 블록체인 언어를 위한 최초의 AI 코딩 도구인 IQ Code와 같은 새로운 제품을 출시함으로써 생태계를 계속 성장시킬 것입니다. 추가 발전 사항을 기대해 주세요!"
+  "OurHistoryDescription6": "2023年，BrainDAO推出了首个区块链知识AI代理<Link href='https://iqgpt.com/'>IQ GPT</Link>。IQ GPT使用全球最大的加密百科全书IQ.wiki以及DeFiLlama、币安学院、CoinGecko、CoinNess等来源的数据进行训练。BrainDAO还推出了<Link href='https://iq.social/'>IQ.social</Link>，并宣布开发首个智能合约AI模型<Link href='https://iqcode.ai/'>IQ Code</Link>。",
+  "OurHistoryDescription7": "2024年，BrainDAO将继续开发围绕IQ代币构建的AI去中心化应用生态系统。团队正在努力增强IQ.wiki、IQ.social和IQGPT.com，并推出如IQ Code等新产品，这是首个用于智能合约审计和编码的AI工具。"
 }
