@@ -18,9 +18,9 @@ const AboutFeatures = () => {
 
   return (
     <Box
-      px={{ base: 6, lg: 16 }}
+      px={{ base: 6, lg: 16, '2xl': 0 }}
       py={{ base: '10', lg: 15 }}
-      maxW={{ base: '100%', xl: '90%', '2xl': '1280px' }}
+      maxW={{ base: '100%', xl: '90%', '2xl': '1440px' }}
       mt={{ base: 5, md: '24' }}
       mx="auto"
     >

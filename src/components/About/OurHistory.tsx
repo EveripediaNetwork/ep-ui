@@ -14,13 +14,13 @@ const OurHistory = () => {
   }))
 
   return (
-    <Box px={{ base: 6, lg: 16 }} py={{ base: '10', lg: 15 }}>
-      <Box
-        mt={{ base: 18, md: '24 !important' }}
-        maxW={{ base: '100%', lg: '100%', '2xl': '1280px' }}
-        mx="auto"
-        my={20}
-      >
+    <Box
+      px={{ base: 6, lg: 16, '2xl': 0 }}
+      py={{ base: '10', lg: 15 }}
+      mx="auto"
+      className=""
+    >
+      <Box mt={{ base: 18, md: '24 !important' }} my={20}>
         <Center>
           <Heading
             fontSize="base"
@@ -44,6 +44,7 @@ const OurHistory = () => {
           textAlign="center"
           fontSize={{ base: 'sm', md: 'xl', lg: 'lg' }}
           fontWeight="medium"
+          mb={{ base: 10, lg: 20 }}
           className="text-gray-600 dark:text-white/80"
         >
           {`${t('historyBrief')}`}
