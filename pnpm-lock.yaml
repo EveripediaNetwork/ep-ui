@@ -48,8 +48,8 @@ importers:
         specifier: ^11.8.1
         version: 11.11.5(@emotion/react@11.11.4(@types/react@18.3.3)(react@18.3.1))(@types/react@18.3.3)(react@18.3.1)
       '@everipedia/iq-utils':
-        specifier: ^0.2.8
-        version: 0.2.8
+        specifier: ^0.2.9
+        version: 0.2.9
       '@everipedia/web3-signer':
         specifier: ^0.0.11
         version: 0.0.11(bufferutil@4.0.8)(typescript@5.5.3)(utf-8-validate@5.0.10)(zod@3.23.8)
@@ -2023,8 +2023,8 @@ packages:
   '@ethersproject/transactions@5.7.0':
     resolution: {integrity: sha512-kmcNicCp1lp8qanMTC3RIikGgoJ80ztTyvtsFvCYpSCfkjhD0jZ2LOrnbcuxuToLIUYYf+4XwD1rP+B/erDIhQ==}
 
-  '@everipedia/iq-utils@0.2.8':
-    resolution: {integrity: sha512-uhoyOS2i18/Dwpd8Z8cgc0E/Asb7jLVxLpBhACxe8VrhAcu/qfnoGWqjzr9scMkrBnBLsqNtm+jBqytpXv5H4A==}
+  '@everipedia/iq-utils@0.2.9':
+    resolution: {integrity: sha512-oGirV4p+9GWmQj+vNmsK852jB3TBA3zZ2eDzlMe4gNKrcDl67o1hz0R66UkccDuIsyz7xRDhVQyYbslQaNqyzA==}
     engines: {node: '>=10'}
 
   '@everipedia/web3-signer@0.0.11':
@@ -9737,7 +9737,7 @@ snapshots:
       '@ethersproject/rlp': 5.7.0
       '@ethersproject/signing-key': 5.7.0
 
-  '@everipedia/iq-utils@0.2.8': {}
+  '@everipedia/iq-utils@0.2.9': {}
 
   '@everipedia/web3-signer@0.0.11(bufferutil@4.0.8)(typescript@5.5.3)(utf-8-validate@5.0.10)(zod@3.23.8)':
     dependencies:
