@@ -75,7 +75,7 @@
     "embla-carousel": "^8.0.0-rc19",
     "embla-carousel-autoplay": "^8.0.0-rc01",
     "embla-carousel-react": "^8.0.0-rc19",
-    "framer-motion": "^11.2.12",
+    "framer-motion": "^6.5.1",
     "fuse.js": "^6.6.2",
     "graphql": "^15.8.0",
     "graphql-request": "4.3.0",
