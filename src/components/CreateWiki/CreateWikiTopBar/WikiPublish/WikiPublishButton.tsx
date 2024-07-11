@@ -50,6 +50,7 @@ export type TGraphQLError = {
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const { data } = useGetWikiQuery(wiki?.id || '')
+  const eventTriggered = useRef(false)
 
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
@@ -158,10 +159,33 @@ export const WikiPublishButton = () => {
   }, [detectedProvider, userAddress])
 
   useEffect(() => {
-    if (activeStep === 3) {
-      prevEditedWiki.current.isPublished = true
-      fireConfetti()
+    const handleAsync = async () => {
+      if (activeStep === 3) {
+        if (!eventTriggered.current) {
+          posthog.capture('submit_wiki', {
+            wiki_slug: await getWikiSlug(wiki),
+            isEdit: !isNewCreateWiki,
+          })
+        }
+        prevEditedWiki.current.isPublished = true
+        eventTriggered.current = true
+        fireConfetti()
+      }
+      const now = new Date()
+      const timeUntilMidnight =
+        new Date(
+          now.getFullYear(),
+          now.getMonth(),
+          now.getDate() + 1,
+          0,
+          0,
+          0,
+        ).getTime() - now.getTime()
+      setTimeout(() => {
+        eventTriggered.current = false
+      }, timeUntilMidnight)
     }
+    handleAsync()
   }, [activeStep, fireConfetti])
 
   useEffect(() => {
