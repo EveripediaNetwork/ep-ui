@@ -28,7 +28,14 @@ const NetworkErrorNotification = ({
   setNetworkSwitchAttempted: (state: boolean) => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
-  const { chains, switchNetworkAsync } = useSwitchNetwork()
+  const { chains, switchNetwork } = useSwitchNetwork({
+    onSuccess: () => {
+      toast({
+        title: 'Chain successfully switched 🎊',
+        status: 'success',
+      })
+    },
+  })
   const toast = useToast()
   const chainame = wagmiClient.chains?.[0]?.name || ''
 
@@ -54,12 +61,8 @@ const NetworkErrorNotification = ({
     setNetworkSwitchAttempted(true)
 
     try {
-      switchNetworkAsync?.(chains[0]?.id)
+      switchNetwork?.(chains[0]?.id)
       setModalState(false)
-      toast({
-        title: 'Chain successfully switched 🎊',
-        status: 'success',
-      })
       return true
     } catch (error: any) {
       setModalState(false)
