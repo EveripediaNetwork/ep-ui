@@ -95,6 +95,12 @@ const NavSearch = (props: NavSearchProps) => {
     onClose: onSuggestWikiClose,
   } = useDisclosure()
 
+  // close Autocomplete container and clear query from the search field on modal close
+  const handleSuggestWikiClose = () => {
+    setQuery('')
+    onSuggestWikiClose()
+  }
+
   useEventListener('keydown', (event) => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
@@ -380,7 +386,7 @@ const NavSearch = (props: NavSearchProps) => {
       </AutoComplete>
       <SuggestWikiModal
         isOpen={isSuggestWikiOpen}
-        onClose={onSuggestWikiClose}
+        onClose={handleSuggestWikiClose}
         prePopulatedSearch={query}
       />
     </>
