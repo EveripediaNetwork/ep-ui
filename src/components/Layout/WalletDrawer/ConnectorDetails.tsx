@@ -13,7 +13,6 @@ const ConnectorDetails = ({
 }: ConnectorDetailsType) => {
   const [isClicked, setIsClicked] = useState<boolean>(false)
   const posthog = usePostHog()
-  console.log('connector', connector)
   const handleConnect = (selectedConnector: Connector) => {
     posthog.capture('login_attempt', {
       connector: selectedConnector.name,

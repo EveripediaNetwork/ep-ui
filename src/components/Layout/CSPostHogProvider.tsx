@@ -26,8 +26,6 @@ function PosthogAuthWrapper({ children }: React.PropsWithChildren<{}>) {
   const { address, connector } = useAccount()
   const { chain } = useNetwork()
   const chainId = chain?.id
-  console.log('address', address)
-  console.log('connector', connector)
 
   const getMagicUserEmail = useCallback(async () => {
     try {
