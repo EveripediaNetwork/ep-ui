@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { Box, Container, Heading } from '@chakra-ui/react'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { useRouter } from 'next/router'
@@ -25,9 +25,11 @@ const Login = () => {
     }
   }
 
-  if (userAddress && token) {
-    handleRedirect()
-  }
+  useEffect(() => {
+    if (userAddress && token) {
+      handleRedirect()
+    }
+  }, [userAddress, token])
 
   return (
     <>

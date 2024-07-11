@@ -49,14 +49,13 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
       posthog.capture('login_success', {
         address: data.account,
       })
-      openSignTokenModal()
     },
   })
 
   async function triggerSignToken() {
     const storedToken = await fetchStoredToken()
     if (storedToken) {
-      console.error('Token already exists')
+      console.warn('Token already exists')
       closeSignTokenModal()
       handleRedirect()
       return
