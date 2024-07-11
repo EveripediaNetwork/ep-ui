@@ -116,6 +116,7 @@
   "Submit": "Submit",
   "details": "write your wiki suggestions here...",
   "Suggest Wiki": "Suggest Wiki",
+  "SuggestionNote": "The wiki you just searched is not available. You can send us suggestions for wikis",
   "signIn": "Sign In",
   "loginDescription": "To login to IQ.wiki, you need to sign a token that will authenticate your account for access.",
   "signToken": "Sign Token"
