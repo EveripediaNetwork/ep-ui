@@ -1,4 +1,5 @@
 import { Modal } from '@/components/Elements'
+import { useState, useEffect } from 'react'
 import {
   Box,
   Button,
@@ -30,16 +31,26 @@ const sumbitButton = (
   )
 }
 
+interface SuggestWikiModalProps extends Partial<ModalProps> {
+  prePopulatedSearch?: string
+}
+
 const SuggestWikiModal = ({
   onClose = () => {},
   isOpen = true,
-}: Partial<ModalProps>) => {
+  prePopulatedSearch = '',
+}: SuggestWikiModalProps) => {
   const { t } = useTranslation('common')
-  const [input, setInput] = React.useState('')
-  const [email, setEmail] = React.useState('')
-  const [isSubmitted, setIsSubmitted] = React.useState(false)
-  const [loading, setLoading] = React.useState(false)
+  const [input, setInput] = useState(prePopulatedSearch)
+  const [email, setEmail] = useState('')
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [loading, setLoading] = useState(false)
   const [error, setError] = React.useState('')
+
+  useEffect(() => {
+    setInput(prePopulatedSearch)
+  }, [prePopulatedSearch])
+
   const handleInputChange: ChangeEventHandler<HTMLTextAreaElement> = (e) => {
     const inputValue = e.target.value
     setInput(inputValue)

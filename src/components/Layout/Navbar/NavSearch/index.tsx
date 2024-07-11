@@ -381,6 +381,7 @@ const NavSearch = (props: NavSearchProps) => {
       <SuggestWikiModal
         isOpen={isSuggestWikiOpen}
         onClose={onSuggestWikiClose}
+        prePopulatedSearch={query}
       />
     </>
   )
