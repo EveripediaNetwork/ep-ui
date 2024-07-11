@@ -64,25 +64,6 @@ export const PrivacyPolicySEO = () => (
   />
 )
 
-export const CareersHeader = () => (
-  <NextSeo
-    title="Jobs"
-    description="Join us to spread the knowledge of blockchain | Search Job Openings across IQ.wiki Network"
-    titleTemplate="%s | IQ.wiki"
-    canonical="https://iq.wiki/careers"
-    openGraph={{
-      title: 'Jobs',
-      description:
-        'Join us to spread the knowledge of blockchain | Search Job Openings across IQ.wiki Network',
-    }}
-    twitter={{
-      cardType: 'summary_large_image',
-      handle: '@IQWiki',
-      site: 'IQWiki',
-    }}
-  />
-)
-
 export const CaPrivacyRightsHeader = () => (
   <NextSeo
     title="CA Privacy Rights"
