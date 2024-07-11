@@ -20,28 +20,20 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
 
   const handleLogOut = async () => {
     try {
-      console.log('disconnecting...')
-
       disconnect()
 
-      console.log('Deleting x-auth-token cookie...')
       deleteCookie(cookieNames.Enum['x-auth-token'])
 
-      console.log('Removing items from localStorage...')
       for (const key of Object.keys(localStorage)) {
         if (key.startsWith('wagmi')) {
-          console.log(`Removing localStorage item: ${key}`)
           localStorage.removeItem(key)
         }
       }
 
-      console.log('Dispatching setStateToDefault...')
       dispatch(setStateToDefault())
 
-      console.log('Resetting posthog...')
       posthog.reset()
 
-      console.log('Reloading window...')
       window.location.reload()
     } catch (e) {
       console.log('Error occurred in handleLogOut:', e)
@@ -55,9 +47,7 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
       bgColor="transparent"
       sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
       onClick={() => {
-        console.log(' logout clicked')
         if (isUserConnected) {
-          console.log('isUserConnected', isUserConnected)
           handleLogOut()
         }
       }}
