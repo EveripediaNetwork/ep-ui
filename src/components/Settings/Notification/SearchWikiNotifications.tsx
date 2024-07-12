@@ -5,12 +5,12 @@ import {
   Flex,
   InputGroup,
   Spinner,
-  chakra,
   Button,
   Text,
   useEventListener,
   useToast,
   Icon,
+  useDisclosure,
 } from '@chakra-ui/react'
 import { Search2Icon } from '@chakra-ui/icons'
 import {
@@ -50,6 +50,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import { usePostHog } from 'posthog-js/react'
+import SuggestWikiModal from '@/components/Layout/Navbar/SuggestWiki'
 
 const ItemPaths = {
   [SEARCH_TYPES.WIKI]: '/wiki/',
@@ -138,6 +139,12 @@ const SearchWikiNotifications = () => {
   const unrenderedWikis = results.wikis.length - ARTICLES_LIMIT
   const totalUnrenderedWikis = unrenderedWikis > 0 ? unrenderedWikis : 0
 
+  const {
+    isOpen: isSuggestWikiOpen,
+    onOpen: onSuggestWikiOpen,
+    onClose: onSuggestWikiClose,
+  } = useDisclosure()
+
   useEventListener('keydown', (event) => {
     const isMac = /(Mac|iPhone|iPod|iPad)/i.test(navigator?.userAgent)
     const hotkey = isMac ? 'metaKey' : 'ctrlKey'
@@ -156,17 +163,29 @@ const SearchWikiNotifications = () => {
 
   const emptyState = (
     <Flex direction="column" gap="6" align="center" justify="center" py="16">
-      <chakra.span fontWeight="semibold">No search Results</chakra.span>
-      <LinkButton
+      <Text
+        maxW={{ sm: '70%', lg: '50%' }}
+        textAlign="center"
+        fontWeight="medium"
+        fontSize={{ sm: '12', lg: '14' }}
+        color="gray.600"
+        _dark={{ color: 'white' }}
+      >
+        {t('SuggestionNote')}
+      </Text>
+
+      <Button
         variant="outline"
         px="10"
         w="fit-content"
         fontWeight="semibold"
         fontSize="xs"
-        href="/create-wiki"
+        onClick={() => {
+          onSuggestWikiOpen()
+        }}
       >
-        Create New Wiki
-      </LinkButton>
+        {t('Suggest Wiki')}
+      </Button>
     </Flex>
   )
 
@@ -337,6 +356,10 @@ const SearchWikiNotifications = () => {
           </InputGroup>
         </form>
       </AutoComplete>
+      <SuggestWikiModal
+        isOpen={isSuggestWikiOpen}
+        onClose={onSuggestWikiClose}
+      />
     </Flex>
   )
 }

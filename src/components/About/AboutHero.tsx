@@ -12,6 +12,7 @@ import { useTranslation } from 'next-i18next'
 import { Image } from '../Elements/Image/Image'
 import IQLogo from './logos/IQLogo.png'
 import OrbitingCircles from '../magicui/orbiting-circles'
+import { cn } from '~/@lib/utils'
 
 interface OrbitingCircleProps {
   iconName: string
@@ -58,6 +59,10 @@ const Orbit: React.FC<OrbitingCircleProps> = ({
         width={responsiveSize}
         height={responsiveSize}
         objectFit={'contain'}
+        className={cn(
+          'z-30 bg-white dark:bg-gray-800 rounded-full',
+          iconName === 'pink-circle' && '-z-10',
+        )}
       />
     </OrbitingCircles>
   )
