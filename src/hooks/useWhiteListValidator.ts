@@ -5,6 +5,7 @@ import config from '@/config'
 
 const useIsWhitelistedEditor = () => {
   const { address } = useAccount()
+  console.log('address', address)
 
   const {
     data: isWhitelisted,
@@ -14,7 +15,7 @@ const useIsWhitelistedEditor = () => {
     address: config.editorAddress as `0x${string}`,
     abi: EditorABI,
     functionName: 'isEditorWhitelisted',
-    args: [address as `0x${string}`],
+    args: address ? [address] : undefined,
     enabled: !!address,
   })
 
