@@ -20,8 +20,10 @@ import { useGetCgTokenDataQuery } from '@/services/cgTokenDetails'
 import { useGetCmcTokenDataQuery } from '@/services/cmcTokenDetails'
 import * as Humanize from 'humanize-plus'
 import { usePostHog } from 'posthog-js/react'
+import { useTranslation } from 'next-i18next'
 
 export const IQBar = () => {
+  const { t } = useTranslation('home')
   const { data: iqData, isLoading, isError } = useGetCgTokenDataQuery()
   const posthog = usePostHog()
 
@@ -72,12 +74,12 @@ export const IQBar = () => {
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
           <Box>
-            <Text fontSize="xs">IQ Price</Text>
+            <Text fontSize="xs">{t('iqPrice')}</Text>
             {cmcLoading ? (
               <Spinner size="sm" />
             ) : cmcError ? (
               <Text fontSize="sm" color="red.500">
-                Error fetching price
+                {t('errorPrice')}
               </Text>
             ) : (
               <Text fontSize="xl" fontWeight="semibold">
@@ -139,12 +141,12 @@ export const IQBar = () => {
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
           <Box>
-            <Text fontSize="xs">Market Cap</Text>
+            <Text fontSize="xs">{t('iqMarketCap')}</Text>
             {isLoading ? (
               <Spinner size="sm" />
             ) : isError ? (
               <Text fontSize="sm" color="red.500">
-                Error fetching market cap
+                {t('errorMarketCap')}
               </Text>
             ) : (
               <Text fontSize="xl" fontWeight="semibold">
@@ -202,7 +204,7 @@ export const IQBar = () => {
           className="iq-get-iq"
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
-          <Text fontSize="xs">Exchanges</Text>
+          <Text fontSize="xs">{t('exchanges')}</Text>
           <Flex alignItems="center" justifyContent="center" mt={2}>
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
@@ -305,12 +307,12 @@ export const IQBar = () => {
           _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
         >
           <HStack justifyContent={'space-between'}>
-            <Text fontSize="xs"> IQ Historical Graph (1 Month)</Text>
+            <Text fontSize="xs">{t('iqGraph')}</Text>
             <Text>{`$${price}`}</Text>
           </HStack>
           {isError ? (
             <Text fontSize="sm" color="red.500">
-              Error fetching graph data
+              {t('errorGraphData')}
             </Text>
           ) : (
             <IQGraph areaGraphData={areaGraphData} />
