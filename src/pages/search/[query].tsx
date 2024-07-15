@@ -19,11 +19,14 @@ import { Link } from '@/components/Elements'
 import { useRouter } from 'next/router'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
+import { useTranslation } from 'next-i18next'
+
 interface SearchQueryProps {
   query: string
 }
 
 const SearchQuery = ({ query }: SearchQueryProps) => {
+  const { t } = useTranslation('common')
   const router = useRouter()
   const [isLoading, setIsLoading] = useState(false)
   const [results, setResults] = useState<{
@@ -108,18 +111,18 @@ const SearchQuery = ({ query }: SearchQueryProps) => {
       />
       <Box w="min(90%, 1100px)" mx="auto" my={{ base: '10', lg: '16' }}>
         <Heading mt={8} mb={4} as="h1" size="2xl" letterSpacing="wide">
-          Results for {query}
+          {t('resultsFor')} {query}
         </Heading>
         {!isLoading && wikis.length !== 0 && (
           <Stack spacing="4">
-            <Text>Showing {totalResults} results </Text>
-            <Heading fontSize="2xl">Wikis</Heading>
+            <Text>{t('showingResults', { count: totalResults })}</Text>
+            <Heading fontSize="2xl"> {t('Wikis')}</Heading>
             <Flex direction="column" gap="4">
               {wikiList}
             </Flex>
             {categories.length !== 0 && (
               <>
-                <Heading fontSize="2xl">Categories</Heading>
+                <Heading fontSize="2xl">{t('Categories')}</Heading>
                 <Flex direction="column" gap="4">
                   {categoryList}
                 </Flex>
