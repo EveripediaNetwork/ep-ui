@@ -5,10 +5,11 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerOverlay,
+  HStack,
   Image,
   Text,
+  useColorModeValue,
   useDisclosure,
-  VStack,
 } from '@chakra-ui/react'
 import { usePostHog } from 'posthog-js/react'
 import { useEffect } from 'react'
@@ -19,6 +20,10 @@ import { useEffect } from 'react'
 const PWAInstallPrompt = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const posthog = usePostHog()
+  const promptLogoSrc = useColorModeValue(
+    'prompt-logo-light.svg',
+    'prompt-logo-dark.svg',
+  )
   // const isBrowser = typeof window !== 'undefined'
 
   useEffect(() => {
@@ -27,6 +32,9 @@ const PWAInstallPrompt = () => {
     )
 
     const isInstalled = Boolean(window.localStorage.getItem('appInstalled'))
+    const hasShownInstallPrompt = Boolean(
+      window.localStorage.getItem('showPrompt'),
+    )
 
     const isApp = Boolean(
       window.matchMedia('(display-mode: standalone)').matches,
@@ -47,8 +55,9 @@ const PWAInstallPrompt = () => {
       window.addEventListener('beforeinstallprompt', handleInstallPrompt)
     }
 
-    if (isMobileScreen && !isInstalled && !isApp) {
+    if (isMobileScreen && !hasShownInstallPrompt && !isApp) {
       onOpen() // Open the modal
+      window.localStorage.setItem('showPrompt', 'true')
     }
 
     return () => {
@@ -64,12 +73,13 @@ const PWAInstallPrompt = () => {
       <DrawerContent color={'btnBgColor'} rounded={'8px'}>
         <DrawerCloseButton color={'careersTextColor'} />
         <DrawerHeader pb={0}>
-          <VStack justify={'flex-start'} align={'start'}>
+          <HStack justify={'flex-start'} align={'center'}>
             <Image
-              src="/images/svg-images/prompt-logo-dark.svg"
-              width={'30px'}
-              height={'30px'}
+              src={`/images/svg-images/${promptLogoSrc}`}
+              width={'56px'}
+              height={'56px'}
               alt="prompt-logo"
+              flexShrink={0}
             />
             <Text
               fontWeight={'bold'}
@@ -78,7 +88,7 @@ const PWAInstallPrompt = () => {
             >
               Install IQ.wiki
             </Text>
-          </VStack>
+          </HStack>
         </DrawerHeader>
 
         <DrawerBody>
