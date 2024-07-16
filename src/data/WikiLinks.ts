@@ -64,7 +64,7 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Instagram',
     icon: InstagramIcon,
-    tests: [/https:\/\/(www.)?instagram.com\/\w+/],
+    tests: [/https:\/\/(www.)?instagram.com\/[\p{L}\p{N}\p{M}._]+\/?$/u],
   },
   {
     id: CommonMetaIds.TWITTER_PROFILE,
@@ -72,8 +72,8 @@ export const LINK_OPTIONS = [
     label: 'Twitter',
     icon: TwitterIcon,
     tests: [
-      /https:\/\/(www\.)?twitter\.com\/\w+/,
-      /https:\/\/(www\.)?x\.com\/\w+/,
+      /https:\/\/(www\.)?twitter\.com\/[\p{L}\p{N}\p{M}_]+\/?$/u,
+      /https:\/\/(www\.)?x\.com\/[\p{L}\p{N}\p{M}_]+\/?$/u,
     ],
   },
 
@@ -82,14 +82,16 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Tiktok',
     icon: TiktokIcon,
-    tests: [/https?:\/\/(www\.)?tiktok\.com\/@\w+/],
+    tests: [/https?:\/\/(www\.)?tiktok\.com\/@[\p{L}\p{N}\p{M}._-]+\/?$/u],
   },
   {
     id: CommonMetaIds.LINKEDIN_PROFILE,
     type: LinkType.SOCIAL,
     label: 'Linkedin',
     icon: AiFillLinkedin,
-    tests: [/https:\/\/(www.)?linkedin.com\/(in|company)\/\w+/],
+    tests: [
+      /https:\/\/(www.)?linkedin.com\/(in|company)\/[\p{L}\p{N}\p{M}-]+\/?$/u,
+    ],
   },
   {
     id: CommonMetaIds.YOUTUBE_PROFILE,
@@ -103,7 +105,9 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Facebook',
     icon: FacebookIcon,
-    tests: [/https:\/\/(www.)?((web|m).)?facebook.com\/\w+/],
+    tests: [
+      /https:\/\/(www\.)?(web\.|m\.)?facebook\.com\/[\p{L}\p{N}\p{M}.-]+\/?$/u,
+    ],
   },
 
   {
@@ -132,7 +136,9 @@ export const LINK_OPTIONS = [
     type: LinkType.SOCIAL,
     label: 'Mirror',
     icon: MirrorIcon,
-    tests: [/https:\/\/(?:\w+\.)?mirror\.xyz(?:\/\S*)?/],
+    tests: [
+      /https:\/\/([\p{L}\p{N}\p{M}-]+\.)?mirror\.xyz(\/[\p{L}\p{N}\p{M}-]+)*\/?$/u,
+    ],
   },
   {
     id: CommonMetaIds.MEDIUM_PROFILE,
@@ -141,8 +147,8 @@ export const LINK_OPTIONS = [
     icon: MediumIcon,
     tests: [
       /^(https?:\/\/)?(www\.)?medium\.com\/[a-zA-Z0-9-]+(?:\/[a-zA-Z0-9-]+)*(?:\?[^\s]*)?$/,
-      /^https:\/\/[a-zA-Z0-9.-]+\.medium\.com\/.*$/,
-      /^https:\/\/medium\.com\/@[^/]+/,
+      /^https:\/\/[\p{L}\p{N}\p{M}-]+\.medium\.com\/.*$/u,
+      /^https:\/\/medium\.com\/@[\p{L}\p{N}\p{M}._-]+\/?$/u,
     ],
   },
   {
