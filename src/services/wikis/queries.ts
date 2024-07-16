@@ -410,8 +410,8 @@ export const POST_WIKI_VIEW_COUNT = gql`
   }
 `
 export const POST_FLAG_WIKI = gql`
-  mutation flagWiki($report: String!, $wikiId: String!, $userId: String!) {
-    flagWiki(report: $report, wikiId: $wikiId, userId: $userId)
+  mutation flagWiki($report: String!, $wikiId: String!) {
+    flagWiki(report: $report, wikiId: $wikiId)
   }
 `
 export const POST_IMG =

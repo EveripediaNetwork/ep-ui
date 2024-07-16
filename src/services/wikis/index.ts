@@ -139,7 +139,6 @@ type WikiCreatorAndEditorResponse = {
 type FlagWikiArgs = {
   report: string
   wikiId: string
-  userId: string
 }
 
 type PostFlagWikiResponse = {
@@ -348,7 +347,6 @@ export const wikiApi = createApi({
           variables: {
             report: flagWikiArgs.report,
             wikiId: flagWikiArgs.wikiId,
-            userId: flagWikiArgs.userId,
           },
         }
       },

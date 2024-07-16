@@ -56,7 +56,6 @@ const FlaggingSystemModal = ({
     const postFlagWikiData = await postFlagWiki({
       report: flagContent,
       wikiId: id,
-      userId: address,
     })
 
     if (!Object.keys(postFlagWikiData).includes('error')) {
