@@ -12,7 +12,7 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { usePostHog } from 'posthog-js/react'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
 /*
@@ -26,12 +26,15 @@ const PWAInstallPrompt = () => {
     'prompt-logo-light.svg',
     'prompt-logo-dark.svg',
   )
+  const [isSafari, setIsSafari] = useState(false)
 
   useEffect(() => {
     const isMobileScreen = Boolean(
       window.matchMedia('(max-width: 768px)').matches,
     )
 
+    setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent))
+    
     const isInstallCaptured = Boolean(
       window.localStorage.getItem('appInstalled'),
     )
@@ -96,7 +99,7 @@ const PWAInstallPrompt = () => {
 
         <DrawerBody>
           <Text color={'homeDescriptionColor'} fontSize={'xs'}>
-            {t('description')}
+            {isSafari ? t('safari_description') : t('description')}
           </Text>
         </DrawerBody>
       </DrawerContent>
