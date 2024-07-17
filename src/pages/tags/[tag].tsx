@@ -23,6 +23,7 @@ import { useTranslation } from 'next-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { RiOrganizationChart } from 'react-icons/ri'
+import { rankTagsMapping } from '@/data/rankTagsMapping'
 
 interface TagPageProps {
   tagId: string
@@ -64,22 +65,8 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
   })
 
   function getRankCatByTag(tag: string) {
-    const tagMappings = [
-      {
-        category: 'cryptocurrencies',
-        tags: ['Ethereum', 'Blockchains', 'Protocols', 'Memecoins', ''],
-      },
-      { category: 'stableCoins', tags: ['DEXes'] },
-      { category: 'aitokens', tags: ['AI'] },
-      {
-        category: 'founders',
-        tags: ['Founders', 'Organizations', 'PeopleInDeFi', 'Developers'],
-      },
-      { category: 'nfts', tags: ['Entertainment', 'Collections'] },
-    ]
-
     return (
-      tagMappings.find((mapping) => mapping.tags.includes(tag))?.category ||
+      rankTagsMapping.find((mapping) => mapping.tags.includes(tag))?.category ||
       null
     )
   }
