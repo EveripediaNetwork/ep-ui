@@ -104,7 +104,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
               bgColor="cardBg"
               w="fit-content"
               p={2}
-              rounded="full"
+              rounded="md"
               color="gray.600"
               fontWeight="500"
               sx={{
