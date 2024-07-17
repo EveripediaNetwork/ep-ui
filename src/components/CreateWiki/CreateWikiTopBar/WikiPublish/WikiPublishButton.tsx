@@ -158,10 +158,22 @@ export const WikiPublishButton = () => {
   }, [detectedProvider, userAddress])
 
   useEffect(() => {
-    if (activeStep === 3) {
-      prevEditedWiki.current.isPublished = true
-      fireConfetti()
+    const handleAsync = async () => {
+      if (activeStep === 3) {
+        const currentDate = new Date().toDateString()
+        const lastUpdatedDate = new Date(wiki.updated ?? '').toDateString()
+
+        if (currentDate !== lastUpdatedDate) {
+          posthog.capture('submit_wiki', {
+            wiki_slug: await getWikiSlug(wiki),
+            isEdit: !isNewCreateWiki,
+          })
+        }
+        prevEditedWiki.current.isPublished = true
+        fireConfetti()
+      }
     }
+    handleAsync()
   }, [activeStep, fireConfetti])
 
   useEffect(() => {
