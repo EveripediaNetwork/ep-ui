@@ -34,7 +34,7 @@ const PWAInstallPrompt = () => {
     )
 
     setIsSafari(/^((?!chrome|android).)*safari/i.test(navigator.userAgent))
-    
+
     const isInstallCaptured = Boolean(
       window.localStorage.getItem('appInstalled'),
     )
