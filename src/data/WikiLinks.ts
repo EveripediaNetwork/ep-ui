@@ -291,4 +291,11 @@ export const LINK_OPTIONS = [
     icon: FaFileContract,
     tests: [/https:\/\/(www\.)?explorer.injective.network\/\w+/],
   },
+  {
+    id: CommonMetaIds.BLASTSCAN_PROFILE,
+    type: LinkType.EXPLORER,
+    label: 'Blastscan',
+    icon: FaFileContract,
+    tests: [/^https:\/\/blastscan\.io\/token\/0x[a-fA-F0-9]{40}$/],
+  },
 ]
