@@ -124,5 +124,7 @@
   "Suggest Wiki": "建议 Wiki",
   "signIn": "登录",
   "loginDescription": "要登录到IQ.wiki，您需要签署一个令牌，该令牌将认证您的账户以获取访问权限。",
-  "signToken": "签名令牌"
+  "signToken": "签名令牌",
+  "title": "安裝 IQ.wiki",
+  "description": "將 IQ.wiki 新增到您的主畫面以便於存取。導航至工具列並選擇“新增至主畫面”或“安裝應用程式。”"
 }

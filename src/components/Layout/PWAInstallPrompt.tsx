@@ -13,6 +13,7 @@ import {
 } from '@chakra-ui/react'
 import { usePostHog } from 'posthog-js/react'
 import { useEffect } from 'react'
+import { useTranslation } from 'react-i18next'
 
 /*
  * Adds an event listener for the install event for the PWA
@@ -20,11 +21,11 @@ import { useEffect } from 'react'
 const PWAInstallPrompt = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const posthog = usePostHog()
+  const { t } = useTranslation('common')
   const promptLogoSrc = useColorModeValue(
     'prompt-logo-light.svg',
     'prompt-logo-dark.svg',
   )
-  // const isBrowser = typeof window !== 'undefined'
 
   useEffect(() => {
     const isMobileScreen = Boolean(
@@ -88,15 +89,14 @@ const PWAInstallPrompt = () => {
               fontSize={'sm'}
               color={'careersTextColor'}
             >
-              Install IQ.wiki
+              {t('title')}
             </Text>
           </HStack>
         </DrawerHeader>
 
         <DrawerBody>
           <Text color={'homeDescriptionColor'} fontSize={'xs'}>
-            Add IQ.wiki to your home screen for easy access. Navigate to your
-            toolbar and select "Add to Home Screen" or "Install App."
+            {t('description')}
           </Text>
         </DrawerBody>
       </DrawerContent>
