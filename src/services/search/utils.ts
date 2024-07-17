@@ -23,10 +23,7 @@ export type Account = {
   bio: string
   avatar: string
 }
-type AccountArgs = {
-  id: string
-  username: string
-}
+
 type Results = {
   wikis: WikiPreview[]
   categories: CategoryDataType[]
@@ -94,7 +91,7 @@ export const fetchCategoriesList = async (query: string) => {
   return data
 }
 
-export const fetchAccountsList = async (query: AccountArgs) => {
+export const fetchAccountsList = async (query: string) => {
   const { data } = await store.dispatch(getAccountsByTitle.initiate(query))
   return data
 }
@@ -104,7 +101,7 @@ const debouncedFetchResults = debounce(
     Promise.all([
       fetchWikisList(query),
       fetchCategoriesList(query),
-      fetchAccountsList({ id: query, username: query }),
+      fetchAccountsList(query),
     ]).then((res) => {
       const [wikis = [], categories = [], accounts = []] = res
       cb({ wikis, categories, accounts })
