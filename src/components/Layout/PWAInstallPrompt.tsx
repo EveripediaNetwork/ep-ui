@@ -31,7 +31,9 @@ const PWAInstallPrompt = () => {
       window.matchMedia('(max-width: 768px)').matches,
     )
 
-    const isInstalled = Boolean(window.localStorage.getItem('appInstalled'))
+    const isInstallCaptured = Boolean(
+      window.localStorage.getItem('appInstalled'),
+    )
     const hasShownInstallPrompt = Boolean(
       window.localStorage.getItem('showPrompt'),
     )
@@ -44,7 +46,7 @@ const PWAInstallPrompt = () => {
       e.preventDefault()
     }
 
-    if (isApp && !isInstalled) {
+    if (isApp && !isInstallCaptured) {
       window.localStorage.setItem('appInstalled', 'true')
       posthog.capture('app_installed', {
         isPWAInstalled: true,
