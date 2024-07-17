@@ -35,7 +35,7 @@
     "@emotion/react": "^11.8.2",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.8.1",
-    "@everipedia/iq-utils": "^0.2.9",
+    "@everipedia/iq-utils": "^0.2.10",
     "@everipedia/web3-signer": "^0.0.11",
     "@fortaine/fetch-event-source": "^3.0.6",
     "@magic-ext/oauth": "^12.3.0",
