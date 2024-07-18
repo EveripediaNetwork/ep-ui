@@ -110,7 +110,7 @@ const Rank = ({
   totalTokens: number
   totalAiTokens: number
   totalStableCoins: number
-  pagination: { category: any; page: number }
+  pagination: { category: string; page: number }
 }) => {
   const hasRenderedInitialItems = useRef(false)
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
