@@ -39,11 +39,8 @@ const App = ({ Component, pageProps, router }: EpAppProps) => {
       `}</style>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        <link rel="apple-touch-icon" sizes="192x192" href="/icon-192x192.png" />
-        <link rel="apple-touch-icon" sizes="256x256" href="/icon-256x256.png" />
-        <link rel="apple-touch-icon" sizes="384x384" href="/icon-384x384.png" />
-        <link rel="apple-touch-icon" sizes="512x512" href="/icon-512x512.png" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="#ff3396" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="#1A202C" />
       </Head>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
