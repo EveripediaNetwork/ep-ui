@@ -17,6 +17,7 @@ import { Box, Button } from '@chakra-ui/react'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ComboBoxProps } from '@/types/EditWikiTypes'
+import { useColorMode } from '@chakra-ui/react'
 
 const ComboBoxPopup = ({
   groupedOptions,
@@ -27,6 +28,7 @@ const ComboBoxPopup = ({
   t,
 }: ComboBoxProps) => {
   const [open, setOpen] = useState<boolean>(false)
+  const { colorMode } = useColorMode()
 
   const flattenedOptions = groupedOptions?.flatMap((group) => group.options)
 
@@ -50,7 +52,11 @@ const ComboBoxPopup = ({
           _hover={{ bgColor: 'transparent', opacity: 1 }}
         >
           {vSelected || placeholder}
-          <Box bg="tetiaryDark" position="absolute" right={0}>
+          <Box
+            bg={colorMode === 'dark' ? 'tetiaryDark' : 'white'}
+            position="absolute"
+            right={0}
+          >
             <ChevronDown className="ml-2 h-4 w-4 shrink-0 mr-2" />
           </Box>
         </Button>
