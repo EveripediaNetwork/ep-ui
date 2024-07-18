@@ -113,7 +113,12 @@ const MenuFooter = () => {
                 prefetch={false}
                 href="/about"
               >{`${t('aboutUs')}`}</Link>
-              <Box as="span" display="flex" alignItems="center">
+              <Box
+                as="span"
+                display="flex"
+                alignItems="center"
+                whiteSpace="nowrap"
+              >
                 <Link
                   textAlign={{ base: 'center', md: 'left' }}
                   prefetch={false}
@@ -128,7 +133,7 @@ const MenuFooter = () => {
                   bgColor="brandLinkColor"
                   fontSize="10px"
                 >
-                  We&apos;re hiring
+                  {t('hiring')}
                 </Tag>
               </Box>
               <Link
@@ -141,14 +146,14 @@ const MenuFooter = () => {
                 target="_blank"
                 href="https://iqgpt.com"
               >
-                IQ GPT
+                {t('IQ GPT')}
               </Link>
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 target="_blank"
                 href="https://iq.braindao.org"
               >
-                IQ Dashboard
+                {t('IQ Dashboard')}
               </Link>
             </Stack>
           </GridItem>
