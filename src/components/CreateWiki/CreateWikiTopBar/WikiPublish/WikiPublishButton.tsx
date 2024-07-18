@@ -318,7 +318,7 @@ export const WikiPublishButton = () => {
         ) : (
           <Button
             onClick={() => handleWikiPublish()}
-            disabled={!userCanEdit}
+            isDisabled={isPublishDisabled}
             _disabled={{
               opacity: isPublishDisabled ? 0.5 : undefined,
               _hover: { bgColor: 'grey !important', cursor: 'not-allowed' },
