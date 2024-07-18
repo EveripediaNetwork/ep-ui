@@ -126,7 +126,7 @@ const Rank = ({
   const searchPage = searchParams.get('p')
 
   const [nftOffset, setNftOffset] = useState<number>(
-    pagination.category === 'nfts' ? pagination.page : 1,
+    pagination.category === 'nfts' || Number(searchPage) ? pagination.page : 1,
   )
   const [tokensOffset, setTokensOffset] = useState<number>(
     pagination.category === 'cryptocurrencies' || Number(searchPage)
@@ -134,7 +134,9 @@ const Rank = ({
       : 1,
   )
   const [aiTokensOffset, setAiTokensOffset] = useState<number>(
-    pagination.category === 'aitokens' ? pagination.page : 1,
+    pagination.category === 'aitokens' || Number(searchPage)
+      ? pagination.page
+      : 1,
   )
 
   const [stableCoinOffset, setStableCoinOffset] = useState<number>(
