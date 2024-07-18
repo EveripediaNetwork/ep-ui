@@ -13,7 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { Button } from '@chakra-ui/react'
+import { Box, Button } from '@chakra-ui/react'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ComboBoxProps } from '@/types/EditWikiTypes'
@@ -46,10 +46,13 @@ const ComboBoxPopup = ({
           fontWeight="medium"
           overflowX="hidden"
           pr={7}
+          fontSize={['xs', 'sm']}
           _hover={{ bgColor: 'transparent', opacity: 1 }}
         >
           {vSelected || placeholder}
-          <ChevronDown className="ml-2 h-4 w-4 shrink-0 absolute right-2" />
+          <Box bg="tetiaryDark" position="absolute" right={0}>
+            <ChevronDown className="ml-2 h-4 w-4 shrink-0 mr-2" />
+          </Box>
         </Button>
       </PopoverTrigger>
 
