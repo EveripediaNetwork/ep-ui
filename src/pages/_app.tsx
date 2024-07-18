@@ -51,7 +51,7 @@ const App: React.FC<EpAppProps> = ({
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
         <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
-        <meta name="apple-mobile-web-app-status-bar-style" content="#1A202C" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
       </Head>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
