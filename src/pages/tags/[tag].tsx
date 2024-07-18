@@ -9,6 +9,7 @@ import {
   Text,
   Center,
   Spinner,
+  HStack,
 } from '@chakra-ui/react'
 import useInfiniteScroll from 'react-infinite-scroll-hook'
 import { store } from '@/store/store'
@@ -21,6 +22,8 @@ import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'next-i18next'
 import { useInfiniteData } from '@/hooks/useInfiniteData'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { RiOrganizationChart } from 'react-icons/ri'
+import { rankTagsMapping } from '@/data/rankTagsMapping'
 
 interface TagPageProps {
   tagId: string
@@ -28,6 +31,7 @@ interface TagPageProps {
 }
 const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
   const router = useRouter()
+
   const tag = router.query.tag as string
   const {
     data: wikisByTag,
@@ -59,6 +63,14 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     hasNextPage: hasMore,
     onLoadMore: fetchMoreWikis,
   })
+
+  function getRankCatByTag(tag: string) {
+    return (
+      rankTagsMapping.find((mapping) => mapping.tags.includes(tag))?.category ||
+      null
+    )
+  }
+
   const { t } = useTranslation('tag')
   return (
     <>
@@ -83,6 +95,37 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
             </Link>
             .{t('description2')}
           </Text>
+          <Box fontSize={20} width="min(90%, 1200px)" mx="auto" mt={6}>
+            <Link
+              href={`/rank/${getRankCatByTag(tagId)}`}
+              as={HStack}
+              border="solid 1px"
+              borderColor="gray.300"
+              bgColor="cardBg"
+              w="fit-content"
+              p={2}
+              rounded="md"
+              color="gray.600"
+              fontWeight="500"
+              sx={{
+                '&:hover, &:focus, &:active': {
+                  bgColor: 'gray.200',
+                  textDecoration: 'none',
+                  boxShadow: 'none',
+                  _dark: {
+                    bgColor: 'whiteAlpha.400',
+                  },
+                },
+              }}
+              _dark={{
+                color: 'whiteAlpha.900',
+                borderColor: 'whiteAlpha.700',
+              }}
+            >
+              <RiOrganizationChart />
+              <Text fontSize="sm">View on Rank Table</Text>
+            </Link>
+          </Box>
 
           <SimpleGrid
             columns={{ base: 1, sm: 2, lg: 3 }}
