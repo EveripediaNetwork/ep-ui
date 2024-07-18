@@ -5,6 +5,7 @@ import {
   Heading,
   SimpleGrid,
   Stack,
+  Tag,
   Text,
 } from '@chakra-ui/react'
 import { Logo, Link } from '@/components/Elements'
@@ -116,27 +117,20 @@ const MenuFooter = () => {
                 <Link
                   textAlign={{ base: 'center', md: 'left' }}
                   prefetch={false}
-                  href="/careers"
+                  href="https://join.com/companies/iq"
                 >
                   {`${t('careers')}`}
                 </Link>
-                {/* {AllCareers.length !== 0 && (
-                  <Tag
-                    ml="2"
-                    size="sm"
-                    variant="solid"
-                    bgColor="brandLinkColor"
-                    fontSize="10px"
-                  >
-                    We&apos;re hiring
-                  </Tag>
-                )} */}
+                <Tag
+                  ml="2"
+                  size="sm"
+                  variant="solid"
+                  bgColor="brandLinkColor"
+                  fontSize="10px"
+                >
+                  We&apos;re hiring
+                </Tag>
               </Box>
-              {/* <Link
-                textAlign={{ base: 'center', md: 'left' }}
-                prefetch={false}
-                href="/us-careers"
-              >{`${t('usCareers')}`}</Link> */}
               <Link
                 textAlign={{ base: 'center', md: 'left' }}
                 prefetch={false}

@@ -33,9 +33,10 @@ const moduleExports = {
       issuer: /\.[jt]sx?$/,
       use: ['@svgr/webpack'],
     })
-
+    config.ignoreWarnings = [{ module: /node_modules\/next-i18next/ }]
     return config
   },
+
   images: {
     minimumCacheTTL: 31536000,
     domains: [
@@ -66,6 +67,7 @@ const moduleExports = {
     ]
   },
   // This is required to support PostHog trailing slash API requests
+
   trailingSlash: true,
 }
 module.exports = withPWA(withBundleAnalyzer(moduleExports))

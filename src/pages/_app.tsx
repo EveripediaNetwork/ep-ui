@@ -9,7 +9,7 @@ import Layout from '@/components/Layout/Layout/Layout'
 import SEOHeader from '@/components/SEO/Default'
 import { store } from '@/store/store'
 import NextNProgress from 'nextjs-progressbar'
-import { Montserrat } from '@next/font/google'
+import { Montserrat, Moo_Lah_Lah } from 'next/font/google'
 import chakraTheme from '../theme'
 import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
@@ -29,12 +29,23 @@ export const montserrat = Montserrat({
   display: 'swap',
 })
 
-const App = ({ Component, pageProps, router }: EpAppProps) => {
+export const mooLahLah = Moo_Lah_Lah({
+  subsets: ['latin'],
+  weight: ['400'],
+  display: 'swap',
+})
+
+const App: React.FC<EpAppProps> = ({
+  Component,
+  pageProps,
+  router,
+}: EpAppProps) => {
   return (
     <StrictMode>
       <style jsx global>{`
         :root {
           --montserrat-font: ${montserrat.style.fontFamily};
+          --moo-lah-lah-font: ${mooLahLah.style.fontFamily};
         }
       `}</style>
       <Head>

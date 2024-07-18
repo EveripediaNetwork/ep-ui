@@ -38,6 +38,7 @@ dist/**
 .next/**
 
 
+
 .idea
 lsp
 .vscode
