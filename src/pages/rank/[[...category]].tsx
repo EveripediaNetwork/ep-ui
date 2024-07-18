@@ -46,6 +46,7 @@ import { CategoryKeyType } from '@/types/RankDataTypes'
 import FounderRankingItem from '@/components/Rank/FounderRankCardItem'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useSearchParams } from 'next/navigation'
 
 export const LISTING_LIMIT = 20
 
@@ -121,21 +122,32 @@ const Rank = ({
 
   const router = useRouter()
 
+  const searchParams = useSearchParams()
+  const searchPage = searchParams.get('p')
+
   const [nftOffset, setNftOffset] = useState<number>(
-    pagination.category === 'nfts' ? pagination.page : 1,
+    pagination.category === 'nfts' || Number(searchPage) ? pagination.page : 1,
   )
   const [tokensOffset, setTokensOffset] = useState<number>(
-    pagination.category === 'cryptocurrencies' ? pagination.page : 1,
+    pagination.category === 'cryptocurrencies' || Number(searchPage)
+      ? pagination.page
+      : 1,
   )
   const [aiTokensOffset, setAiTokensOffset] = useState<number>(
-    pagination.category === 'aitokens' ? pagination.page : 1,
+    pagination.category === 'aitokens' || Number(searchPage)
+      ? pagination.page
+      : 1,
   )
 
   const [stableCoinOffset, setStableCoinOffset] = useState<number>(
-    pagination.category === 'stableCoins' ? pagination.page : 1,
+    pagination.category === 'stableCoins' || Number(searchPage)
+      ? pagination.page
+      : 1,
   )
   const [foundersOffset, setFoundersOffset] = useState<number>(
-    pagination.category === 'founders' ? pagination.page : 1,
+    pagination.category === 'founders' || Number(searchPage)
+      ? pagination.page
+      : 1,
   )
 
   const totalTokenOffset = LISTING_LIMIT * (tokensOffset - 1)
