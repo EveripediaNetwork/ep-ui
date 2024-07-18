@@ -1,13 +1,12 @@
 import { TFunction } from 'i18next'
-import { Dispatch, SetStateAction } from 'react'
 
-type ComboBoxOption = { id: string; label: string }
+type ComboBoxOption = { id: string; label: string; disabled?: boolean }
 
 export type ComboBoxProps = {
   groupedOptions?: { title: string; options: ComboBoxOption[] }[]
   options?: string[]
-  selected?: string
-  setSelected: Dispatch<SetStateAction<any>>
-  placeholder: string
+  defaultSelected?: string
+  onSelect?: (selected?: string) => void
+  placeholder?: string
   t?: TFunction<'wiki', undefined>
 }

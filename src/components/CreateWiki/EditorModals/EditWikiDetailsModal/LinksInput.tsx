@@ -124,8 +124,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
         <ComboBoxPopup
           groupedOptions={groupedOptions}
           placeholder={t('selectOption')}
-          selected={currentLink}
-          setSelected={setCurrentLink}
+          onSelect={(selected) => setCurrentLink(selected)}
         />
         <Input
           disabled={!currentLink}

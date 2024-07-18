@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-
 import {
   Command,
   CommandEmpty,
@@ -22,11 +21,12 @@ import { useColorMode } from '@chakra-ui/react'
 const ComboBoxPopup = ({
   groupedOptions,
   options,
-  selected,
-  setSelected,
+  defaultSelected,
+  onSelect,
   placeholder,
   t,
 }: ComboBoxProps) => {
+  const [selected, setSelected] = useState(defaultSelected)
   const [open, setOpen] = useState<boolean>(false)
   const { colorMode } = useColorMode()
 
@@ -47,7 +47,7 @@ const ComboBoxPopup = ({
           rounded="md"
           fontWeight="medium"
           overflowX="hidden"
-          pr={7}
+          pr={9}
           fontSize={['xs', 'sm']}
           _hover={{ bgColor: 'transparent', opacity: 1 }}
         >
@@ -76,8 +76,10 @@ const ComboBoxPopup = ({
                   <CommandItem
                     key={el.id}
                     value={el.id}
+                    disabled={el.disabled}
                     onSelect={(value) => {
-                      setSelected(value === selected ? '' : value)
+                      setSelected(value)
+                      onSelect?.(el.id)
                       setOpen(false)
                     }}
                   >
@@ -96,7 +98,8 @@ const ComboBoxPopup = ({
                 key={option}
                 value={option}
                 onSelect={(value) => {
-                  setSelected(value === selected ? '' : value)
+                  setSelected(value)
+                  onSelect?.(value)
                   setOpen(false)
                 }}
               >
