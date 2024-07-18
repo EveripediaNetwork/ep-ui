@@ -28,7 +28,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   const { t } = useTranslation('wiki')
 
   const getWikiAttribute = (attr: string) => {
-    const attribute = wiki.metadata.find(att => att.id === attr)?.value
+    const attribute = wiki.metadata.find((att) => att.id === attr)?.value
     return {
       isDefined: !!attribute,
       value: attribute,
@@ -51,14 +51,14 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
 
   const insertLinks = () => {
     if (currentLinkValue) {
-      const link = LINK_OPTIONS.find(l => l.id === currentLink)
+      const link = LINK_OPTIONS.find((l) => l.id === currentLink)
 
       if (currentLinkValue.length > WIKI_METADATA_VALUE_LIMIT) {
         setError(`Link exceeds limit of ${WIKI_METADATA_VALUE_LIMIT}.`)
         return
       }
 
-      const linkIsValid = link?.tests?.some(t => t.test(currentLinkValue))
+      const linkIsValid = link?.tests?.some((t) => t.test(currentLinkValue))
 
       if (linkIsValid) {
         updateLink(currentLink, currentLinkValue)
@@ -69,7 +69,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
     }
   }
 
-  const linksWithValue = LINK_OPTIONS.filter(med => {
+  const linksWithValue = LINK_OPTIONS.filter((med) => {
     return !!wiki.metadata.find((m: MData) => m.id === med.id)?.value
   })
 
@@ -95,13 +95,13 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   }, [currentLink])
 
   const socialOptions = LINK_OPTIONS.filter(
-    option => option.type === LinkType.SOCIAL,
+    (option) => option.type === LinkType.SOCIAL,
   )
   const explorerOptions = LINK_OPTIONS.filter(
-    option => option.type === LinkType.EXPLORER,
+    (option) => option.type === LinkType.EXPLORER,
   )
   const otherOptions = LINK_OPTIONS.filter(
-    option =>
+    (option) =>
       option.type !== LinkType.SOCIAL && option.type !== LinkType.EXPLORER,
   )
 
@@ -133,7 +133,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           rounded="md"
           placeholder={t('enterLink')}
           value={currentLinkValue}
-          onChange={event => {
+          onChange={(event) => {
             setCurrentLinkValue(event.target.value)
           }}
           type="url"
@@ -153,7 +153,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
       <chakra.span color="red.300">{error}</chakra.span>
       {linksWithValue.length > 0 && (
         <Wrap gap="1">
-          {linksWithValue.map(network => (
+          {linksWithValue.map((network) => (
             <Button
               key={network.id}
               display="flex"

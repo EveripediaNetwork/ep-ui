@@ -28,11 +28,11 @@ const ComboBoxPopup = ({
 }: ComboBoxProps) => {
   const [open, setOpen] = useState<boolean>(false)
 
-  const flattenedOptions = groupedOptions?.flatMap(group => group.options)
+  const flattenedOptions = groupedOptions?.flatMap((group) => group.options)
 
   const vSelected =
-    flattenedOptions?.find(option => option.id === selected)?.label ||
-    options?.find(option => option === selected)
+    flattenedOptions?.find((option) => option.id === selected)?.label ||
+    options?.find((option) => option === selected)
 
   const hideSearch = (flattenedOptions?.length || options?.length || 0) < 10
 
@@ -64,13 +64,13 @@ const ComboBoxPopup = ({
           {!hideSearch && <CommandInput placeholder="Search..." />}
           <CommandEmpty>No option found.</CommandEmpty>
           <CommandList scroll="extra-thin">
-            {groupedOptions?.map(group => (
+            {groupedOptions?.map((group) => (
               <CommandGroup key={group.title} heading={group.title}>
-                {group.options.map(el => (
+                {group.options.map((el) => (
                   <CommandItem
                     key={el.id}
                     value={el.id}
-                    onSelect={value => {
+                    onSelect={(value) => {
                       setSelected(value === selected ? '' : value)
                       setOpen(false)
                     }}
@@ -85,11 +85,11 @@ const ComboBoxPopup = ({
                 ))}
               </CommandGroup>
             ))}
-            {options?.map(option => (
+            {options?.map((option) => (
               <CommandItem
                 key={option}
                 value={option}
-                onSelect={value => {
+                onSelect={(value) => {
                   setSelected(value === selected ? '' : value)
                   setOpen(false)
                 }}
