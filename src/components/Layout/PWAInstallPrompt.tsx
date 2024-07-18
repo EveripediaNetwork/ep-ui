@@ -89,7 +89,7 @@ const PWAInstallPrompt = () => {
             />
             <Text
               fontWeight={'bold'}
-              fontSize={'sm'}
+              fontSize={'md'}
               color={'careersTextColor'}
             >
               {t('title')}
@@ -98,7 +98,7 @@ const PWAInstallPrompt = () => {
         </DrawerHeader>
 
         <DrawerBody>
-          <Text color={'homeDescriptionColor'} fontSize={'xs'}>
+          <Text color={'homeDescriptionColor'} fontSize={'sm'}>
             {isSafari ? t('safari_description') : t('description')}
           </Text>
         </DrawerBody>
