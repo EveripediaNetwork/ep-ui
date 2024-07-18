@@ -98,7 +98,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
     (option) => option.type === LinkType.SOCIAL,
   )
   const explorerOptions = LINK_OPTIONS.filter(
-    (option) => option.type === LinkType.SOCIAL,
+    (option) => option.type === LinkType.EXPLORER,
   )
   const otherOptions = LINK_OPTIONS.filter(
     (option) =>

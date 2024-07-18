@@ -13,7 +13,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { Button } from '@chakra-ui/react'
+import { Button, Text } from '@chakra-ui/react'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
 import { ComboBoxProps } from '@/types/EditWikiTypes'
@@ -54,7 +54,7 @@ const ComboBoxPopup = ({
       </PopoverTrigger>
 
       <PopoverContent
-        className={cn('w-[210px] px-3 py-2', { 'pt-0': !hideSearch })}
+        className={cn('w-[210px] p-0 pb-1', { 'pt-1': hideSearch })}
         align="start"
       >
         <Command>
