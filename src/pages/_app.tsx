@@ -15,6 +15,7 @@ import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
 import { CSPostHogProvider } from '@/components/Layout/CSPostHogProvider'
+import PWAInstallPrompt from '@/components/Layout/PWAInstallPrompt'
 
 const { ToastContainer } = createStandaloneToast()
 
@@ -49,6 +50,8 @@ const App: React.FC<EpAppProps> = ({
       `}</style>
       <Head>
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black" />
       </Head>
       <NextNProgress color="#FF5CAA" />
       <SEOHeader router={router} />
@@ -56,6 +59,7 @@ const App: React.FC<EpAppProps> = ({
         <ChakraProvider resetCSS theme={chakraTheme}>
           <WagmiWrapper>
             <CSPostHogProvider>
+              <PWAInstallPrompt />
               <Layout noFooter={Component.noFooter}>
                 <Component {...pageProps} />
               </Layout>
