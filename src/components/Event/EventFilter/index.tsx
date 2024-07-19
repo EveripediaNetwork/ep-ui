@@ -22,7 +22,7 @@ const defaultFilters: Filters = {
 
 const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   const today = new Date()
-  let startDate = dateFormater(today)
+  let startDate
   let endDate
 
   switch (filter.date) {
