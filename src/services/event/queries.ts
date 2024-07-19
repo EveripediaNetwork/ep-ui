@@ -49,7 +49,7 @@ export const GET_EVENTS_BY_TAGS = gql`
       startDate: $startDate
       endDate: $endDate
       order: DATE
-      direction: ASC
+      direction: DESC
     ) {
       id
       title
@@ -89,7 +89,7 @@ export const GET_EVENTS_BY_BLOCKCHAIN = gql`
       startDate: $startDate
       endDate: $endDate
       order: DATE
-      direction: ASC
+      direction: DESC
     ) {
       id
       title
@@ -131,7 +131,7 @@ export const GET_EVENTS_BY_LOCATION = gql`
       startDate: $startDate
       endDate: $endDate
       order: DATE
-      direction: ASC
+      direction: DESC
     ) {
       id
       title
@@ -162,7 +162,7 @@ export const GET_EVENTS_BY_LOCATION = gql`
 
 export const GET_POPULAR_EVENTS = gql`
   query GetPopularEvents($startDate: String) {
-    popularEvents(startDate: $startDate, order: DATE, direction: ASC) {
+    popularEvents(startDate: $startDate, order: DATE, direction: DESC) {
       id
       title
       events {
@@ -193,7 +193,7 @@ export const GET_EVENT_BY_TITLE = gql`
       startDate: $startDate
       endDate: $endDate
       order: DATE
-      direction: ASC
+      direction: DESC
     ) {
       id
       title
