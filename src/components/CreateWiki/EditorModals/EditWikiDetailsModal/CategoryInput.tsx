@@ -29,7 +29,7 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
     }
   }
 
-  const defaultSelected = categoryOptions?.find(
+  const defaultSelect = categoryOptions?.find(
     (el) => el.id === wiki.categories[0]?.id,
   )?.title
 
@@ -38,7 +38,7 @@ const CategoryInput = ({ wiki }: { wiki: Wiki }) => {
       <Text fontWeight="semibold">{t('category')}</Text>
       <ComboBoxPopup
         options={categoryOptions?.map((el) => el.title)}
-        defaultSelected={defaultSelected}
+        defaultSelect={defaultSelect}
         onSelect={handleSelect}
         placeholder={t('selectCategory')}
         t={t}

@@ -115,7 +115,6 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
       >
         <ComboBoxPopup
           options={Object.values(LinkedWikiKey)}
-          // defaultSelected={wiki.linkedWikis[0]?.id}
           placeholder={t('selectOption')}
           onSelect={(selected) => setLinkType(selected as LinkedWikiKey)}
           t={t}
