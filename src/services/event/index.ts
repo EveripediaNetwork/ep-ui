@@ -94,10 +94,10 @@ export const eventApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getEvents: builder.query<TEvents[], TEventArg>({
-      query: ({ offset, limit, startDate, direction, order }: TEventArg) => {
+      query: ({ offset, limit, startDate }: TEventArg) => {
         return {
           document: GET_EVENTS,
-          variables: { offset, limit, startDate, direction, order },
+          variables: { offset, limit, startDate },
         }
       },
       transformResponse: (response: TGetEventResponse) => response.events,
