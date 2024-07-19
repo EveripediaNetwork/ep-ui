@@ -13,7 +13,7 @@ const Command = React.forwardRef<
   <CommandPrimitive
     ref={ref}
     className={cn(
-      'flex h-full w-full flex-col overflow-hidden rounded-md bg-white text-[#1A202C] dark:bg-[#1A202C] dark:text-slate-50 px-2',
+      'flex h-full w-full flex-col overflow-hidden rounded-md bg-white text-gray800 dark:bg-gray800 dark:text-white dark:text-opacity-[92] px-2',
       className,
     )}
     {...props}
@@ -27,7 +27,7 @@ const CommandDialog = ({ children, ...props }: CommandDialogProps) => {
   return (
     <Dialog {...props}>
       <DialogContent className="overflow-hidden p-0 shadow-lg">
-        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-slate-500 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5 dark:[&_[cmdk-group-heading]]:text-slate-400">
+        <Command className="[&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-gray500 [&_[cmdk-group]:not([hidden])_~[cmdk-group]]:pt-0 [&_[cmdk-group]]:px-2 [&_[cmdk-input-wrapper]_svg]:h-5 [&_[cmdk-input-wrapper]_svg]:w-5 [&_[cmdk-input]]:h-12 [&_[cmdk-item]]:px-2 [&_[cmdk-item]]:py-3 [&_[cmdk-item]_svg]:h-5 [&_[cmdk-item]_svg]:w-5 dark:[&_[cmdk-group-heading]]:text-white/[0.64]">
           {children}
         </Command>
       </DialogContent>
@@ -40,14 +40,14 @@ const CommandInput = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof CommandPrimitive.Input>
 >(({ className, ...props }, ref) => (
   <div
-    className="flex items-center px-3 m-1 -mx-1 bg-[#F5F9FF] dark:bg-[#FFFFFF0F] rounded-lg"
+    className="flex items-center px-3 m-1 -mx-1 bg-blue0 dark:bg-white/[0.06] rounded-lg"
     cmdk-input-wrapper=""
   >
     <Search className="mr-2 h-4 w-4 shrink-0 opacity-80 !border-0 outline-none" />
     <CommandPrimitive.Input
       ref={ref}
       className={cn(
-        'flex h-8 w-full rounded-md bg-transparent py-3 text-xs md:text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-[#FFFFFFCC]',
+        'flex h-8 w-full rounded-md bg-transparent py-3 text-xs md:text-sm outline-none disabled:cursor-not-allowed disabled:opacity-50 dark:text-white/80',
         className,
       )}
       {...props}
@@ -100,7 +100,7 @@ const CommandGroup = React.forwardRef<
   <CommandPrimitive.Group
     ref={ref}
     className={cn(
-      'overflow-hidden p-1 text-[#1A202C] [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-[#718096] dark:text-[#FFFFFFEB] dark:[&_[cmdk-group-heading]]:text-[#FFFFFFA3]',
+      'overflow-hidden p-1 text-gray800 [&_[cmdk-group-heading]]:px-2 [&_[cmdk-group-heading]]:py-1.5 [&_[cmdk-group-heading]]:text-xs [&_[cmdk-group-heading]]:font-medium [&_[cmdk-group-heading]]:text-gray500 dark:text-white/[0.92] dark:[&_[cmdk-group-heading]]:text-white/[0.64]',
       className,
     )}
     {...props}
@@ -115,7 +115,7 @@ const CommandSeparator = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CommandPrimitive.Separator
     ref={ref}
-    className={cn('-mx-1 h-px bg-slate-200 dark:bg-slate-800', className)}
+    className={cn('-mx-1 h-px bg-white dark:text-gray800', className)}
     {...props}
   />
 ))
@@ -128,7 +128,7 @@ const CommandItem = React.forwardRef<
   <CommandPrimitive.Item
     ref={ref}
     className={cn(
-      'relative flex cursor-pointer items-center rounded-md px-2 py-1.5 text-xs md:text-sm outline-none aria-selected:bg-slate-100 aria-selected:text-slate-900 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:aria-selected:bg-[#FFFFFF0F] dark:aria-selected:text-slate-50',
+      'relative flex cursor-pointer items-center rounded-md px-2 py-1.5 text-xs md:text-sm outline-none aria-selected:bg-blue0 aria-selected:text-gray800 aria-disabled:cursor-not-allowed aria-disabled:opacity-50 dark:aria-selected:bg-white/[0.06] dark:aria-selected:text-white/[0.92]',
       className,
     )}
     {...props}
@@ -144,7 +144,7 @@ const CommandShortcut = ({
   return (
     <span
       className={cn(
-        'ml-auto text-xs tracking-widest text-slate-500 dark:text-slate-400',
+        'ml-auto text-xs tracking-widest text-gray500 dark:text-gray400',
         className,
       )}
       {...props}
