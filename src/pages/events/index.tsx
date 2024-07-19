@@ -109,7 +109,6 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     getEvents.initiate({
       offset: 0,
       limit: EVENT_TEST_ITEM_PER_PAGE,
-      startDate: dateFormater(new Date()),
     }),
   )
 

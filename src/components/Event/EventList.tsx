@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import EventCard from './EventCard'
-import { dateFormater, groupEventsByMonth } from '@/lib/utils'
+import { groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
 import SuggestEventModal from './SuggestEventModal'
 import { TEvents, getEvents } from '@/services/event'
@@ -40,7 +40,6 @@ const EventList = ({
         getEvents.initiate({
           offset: offset,
           limit,
-          startDate: dateFormater(new Date()),
         }),
       )
       .then(({ data }) => {

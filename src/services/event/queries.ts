@@ -7,7 +7,7 @@ export const GET_EVENTS = gql`
       limit: $limit
       startDate: $startDate
       order: DATE
-      direction: ASC
+      direction: DESC
     ) {
       id
       title

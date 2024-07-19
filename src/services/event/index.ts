@@ -41,6 +41,7 @@ type TEventArg = {
   startDate?: string
   direction?: string
   endDate?: string
+  order?: string
 }
 
 type TEventByBlockchainArg = {
@@ -93,10 +94,10 @@ export const eventApi = createApi({
   refetchOnFocus: true,
   endpoints: (builder) => ({
     getEvents: builder.query<TEvents[], TEventArg>({
-      query: ({ offset, limit, startDate }: TEventArg) => {
+      query: ({ offset, limit, startDate, direction, order }: TEventArg) => {
         return {
           document: GET_EVENTS,
-          variables: { offset, limit, startDate },
+          variables: { offset, limit, startDate, direction, order },
         }
       },
       transformResponse: (response: TGetEventResponse) => response.events,
