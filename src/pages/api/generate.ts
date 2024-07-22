@@ -68,8 +68,14 @@ export default async function handler(
       const dataLine = lines[lines.indexOf(line) + 1]
 
       if (dataLine?.startsWith('data: ')) {
-        const data = JSON.parse(dataLine.slice(6))
-
+        let data
+        try {
+          const dataContent = dataLine.slice(6).trim()
+          data = JSON.parse(dataContent)
+        } catch (error) {
+          console.error('Error parsing data:', error)
+          continue
+        }
         if (event === 'FINAL_OUTPUT') {
           finalOutput = data
           break
