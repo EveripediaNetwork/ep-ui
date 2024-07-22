@@ -7,7 +7,6 @@ import {
   HStack,
   Icon,
   Input,
-  Select,
   Stack,
   Text,
   Wrap,
@@ -18,11 +17,13 @@ import { MData, Wiki } from '@everipedia/iq-utils'
 import React, { useState } from 'react'
 import { RiCloseLine } from 'react-icons/ri'
 import { useTranslation } from 'next-i18next'
+import ComboBoxPopup from './ComboBoxPopup'
 
 const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   const [currentLink, setCurrentLink] = useState<string>()
   const [currentLinkValue, setCurrentLinkValue] = useState<string>()
   const [error, setError] = useState<string>('')
+
   const dispatch = useAppDispatch()
   const { t } = useTranslation('wiki')
 
@@ -93,56 +94,38 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentLink])
 
+  const socialOptions = LINK_OPTIONS.filter(
+    (option) => option.type === LinkType.SOCIAL,
+  )
+  const explorerOptions = LINK_OPTIONS.filter(
+    (option) => option.type === LinkType.EXPLORER,
+  )
+  const otherOptions = LINK_OPTIONS.filter(
+    (option) =>
+      option.type !== LinkType.SOCIAL && option.type !== LinkType.EXPLORER,
+  )
+
+  const groupedOptions = [
+    { title: 'Social', options: socialOptions },
+    { title: 'Explorer', options: explorerOptions },
+    { title: 'Other', options: otherOptions },
+  ]
+
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">{t('links')}</Text>
+
       <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
         gap="2"
-        gridTemplateColumns={{ base: '1fr 2fr', md: '1.2fr 2fr 0.8fr' }}
+        gridTemplateColumns={{ base: '1.2fr 2fr', md: '1.3fr 1.9fr 0.8fr' }}
       >
-        <Select
-          h="40px"
-          rounded="md"
-          flex="5.5"
-          value={currentLink}
-          onChange={(event) => {
-            const attr = event.target.value
-            setCurrentLink(attr)
-          }}
+        <ComboBoxPopup
+          groupedOptions={groupedOptions}
           placeholder={t('selectOption')}
-        >
-          <optgroup label="Socials">
-            {LINK_OPTIONS.filter(
-              (option) => option.type === LinkType.SOCIAL,
-            ).map((med) => (
-              <chakra.option key={med.id} value={med.id}>
-                {med.label}
-              </chakra.option>
-            ))}
-          </optgroup>
-          <optgroup label="Explorers">
-            {LINK_OPTIONS.filter(
-              (option) => option.type === LinkType.EXPLORER,
-            ).map((med) => (
-              <chakra.option key={med.id} value={med.id}>
-                {med.label}
-              </chakra.option>
-            ))}
-          </optgroup>
-          <optgroup label="Other">
-            {LINK_OPTIONS.filter(
-              (option) =>
-                option.type !== LinkType.SOCIAL &&
-                option.type !== LinkType.EXPLORER,
-            ).map((med) => (
-              <chakra.option key={med.id} value={med.id}>
-                {med.label}
-              </chakra.option>
-            ))}
-          </optgroup>
-        </Select>
+          onSelect={(selected) => setCurrentLink(selected)}
+        />
         <Input
           disabled={!currentLink}
           h="40px"
@@ -165,6 +148,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           {atttributeExists(currentLink) ? t('update') : t('add')}
         </Button>
       </SimpleGrid>
+
       <chakra.span color="red.300">{error}</chakra.span>
       {linksWithValue.length > 0 && (
         <Wrap gap="1">
