@@ -96,7 +96,7 @@ export const Index = ({
         <CategoriesList />
         <EventOverview />
       </Box>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+      {leaderboards?.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
     </Flex>
   )

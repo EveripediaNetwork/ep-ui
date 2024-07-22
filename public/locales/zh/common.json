@@ -26,6 +26,10 @@
   "privacyPolicy": "隐私政策",
   "relatedTopics": "相关主题",
   "Categories": "类别",
+  "resultsFor": "搜索结果",
+  "showingResults": "显示 {{count}} 个结果",
+  "Accounts": "账户",
+  "Wikis": "维基",
   "Rank": "排名",
   "More": "更多",
   "Language": "语言",
@@ -71,7 +75,7 @@
   "bonds": "债券",
   "aboutUs": "关于我们",
   "careers": "职业生涯",
-  "usCareers": "美国职业生涯",
+  "hiring": "我们正在招聘",
   "resources": "资源",
   "glossary": "词汇表",
   "help": "帮助",
@@ -125,5 +129,8 @@
   "Suggest Wiki": "建议 Wiki",
   "signIn": "登录",
   "loginDescription": "要登录到IQ.wiki，您需要签署一个令牌，该令牌将认证您的账户以获取访问权限。",
-  "signToken": "签名令牌"
+  "signToken": "签名令牌",
+  "title": "安裝 IQ.wiki",
+  "description": "將 IQ.wiki 新增到您的主畫面以便於存取。導航至工具列並選擇“新增至主畫面”或“安裝應用程式。”",
+  "safari_description": "將 IQ.wiki 新增到您的主畫面以便於存取。導航到工具欄，點擊共享圖標，然後選擇“添加到主螢幕”或“安裝應用程式。”選項。”"
 }

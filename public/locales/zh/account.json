@@ -7,5 +7,6 @@
   "editEmptyStateDescription": "你还没有进行任何编辑，一旦你编辑了一个维基，它们会出现在这里。",
   "createWikiBtn": "创建维基",
   "settingBtnText": "设置",
-  "shareBtnText": "分享"
+  "shareBtnText": "分享",
+  "seenItAll": "耶！你已经看到了一切 🥳"
 }

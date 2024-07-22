@@ -26,6 +26,10 @@
   "privacyPolicy": "Privacy Policy",
   "relatedTopics": "Related Topics",
   "Categories": "Categories",
+  "resultsFor": "Results For",
+  "showingResults": "Showing {{ count }} results",
+  "Accounts": "Accounts",
+  "Wikis": "Wikis",
   "Rank": "Rank",
   "More": "More",
   "Language": "Language",
@@ -72,7 +76,7 @@
   "bonds": "Bonds",
   "aboutUs": "About us",
   "careers": "Careers",
-  "usCareers": "US Careers",
+  "hiring": "We're hiring",
   "resources": "Resources",
   "glossary": "Glossary",
   "help": "Help",
@@ -119,5 +123,8 @@
   "SuggestionNote": "The wiki you just searched is not available. You can send us suggestions for wikis",
   "signIn": "Sign In",
   "loginDescription": "To login to IQ.wiki, you need to sign a token that will authenticate your account for access.",
-  "signToken": "Sign Token"
+  "signToken": "Sign Token",
+  "title": "Install IQ.wiki",
+  "description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar and select \"Add to Home Screen\" or \"Install App.\"",
+  "safari_description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar, click on the share icon then select \"Add to Home Screen\" or \"Install App.\" option."
 }
