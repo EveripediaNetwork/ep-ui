@@ -29,7 +29,7 @@ const useCreateWikiSetup = () => {
         revision,
       )
     }
-  }, [setCommitMessage, setIsNewCreateWiki, slug, revision, existingWiki])
+  }, [slug, existingWiki])
 }
 
 export default useCreateWikiSetup

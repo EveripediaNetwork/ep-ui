@@ -18,6 +18,7 @@ import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/i
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import useCreateWikiSetup from '@/hooks/createWiki/useCreateWikiSetup'
+import useDraftNotifications from '@/hooks/createWiki/useDraftNotification'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -33,20 +34,21 @@ const CreateWikiContent = () => {
   const { isLoadingWiki, dispatch, isNewCreateWiki, txError, setTxError } =
     useCreateWikiContext()
 
+  useDraftNotifications()
   useCreateWikiSetup()
 
   const handleOnEditorChanges = (
     val: string | undefined,
     isInitSet?: boolean,
   ) => {
-    if (isInitSet)
+    if (isInitSet) {
       dispatch({
         type: 'wiki/setInitialWikiState',
         payload: {
           content: val ?? ' ',
         },
       })
-    else {
+    } else {
       dispatch({
         type: 'wiki/setContent',
         payload: val ?? ' ',
