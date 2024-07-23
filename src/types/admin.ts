@@ -11,8 +11,10 @@ export type EditorsType = {
 }
 
 export type ContentFeedbackArgs = {
+  userId?: string
   contentId: string
-  rating: number
+  rating?: number
+  message?: string
 }
 
 export type WikisModifiedCount = {
