@@ -11,7 +11,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
   const [snapOpen, setSnapOpen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
-  const twitterLink = url?.replace(/x.com/gi, 'twitter.com')
+  const twitterLink = url.replace(/x.com/gi, 'twitter.com')
 
   useEffect(() => {
     const observer = new IntersectionObserver(
