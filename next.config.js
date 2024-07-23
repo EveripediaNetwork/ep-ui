@@ -1,5 +1,5 @@
 const { i18n } = require('./next-i18next.config')
-
+const cache = require('./pwa-cache')
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 })
@@ -8,9 +8,11 @@ const withPWA = require('next-pwa')({
   dest: 'public',
   register: true,
   skipWaiting: true,
-  cacheOnFrontEndNav: true,
   disable: process.env.NODE_ENV === 'development',
   disableDevLogs: true,
+  runtimeCaching: cache,
+  cacheStartUrl: false,
+  dynamicStartUrl: false,
 })
 
 const moduleExports = {
