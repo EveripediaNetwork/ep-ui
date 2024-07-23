@@ -46,11 +46,12 @@ const CreateWikiContent = () => {
           content: val ?? ' ',
         },
       })
-    else
+    else {
       dispatch({
         type: 'wiki/setContent',
         payload: val ?? ' ',
       })
+    }
   }
 
   return (

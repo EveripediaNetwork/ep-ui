@@ -14,6 +14,7 @@ const useCreateWikiSetup = () => {
     setIsNewCreateWiki,
   } = useCreateWikiContext()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: we don't want calling dispatch to triggger set up again
   useEffect(() => {
     const isNewWiki = !slug && !revision
 
@@ -28,14 +29,7 @@ const useCreateWikiSetup = () => {
         revision,
       )
     }
-  }, [
-    setCommitMessage,
-    setIsNewCreateWiki,
-    slug,
-    revision,
-    existingWiki,
-    dispatch,
-  ])
+  }, [setCommitMessage, setIsNewCreateWiki, slug, revision, existingWiki])
 }
 
 export default useCreateWikiSetup
