@@ -71,7 +71,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
                 noScrollbar
                 tweetLimit={4}
                 borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
-                url={url}
+                url={url.replace('x.com', 'twitter.com')}
               />
             </Box>
           )}
