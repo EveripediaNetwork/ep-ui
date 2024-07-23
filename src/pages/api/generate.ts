@@ -59,7 +59,7 @@ export default async function handler(
       result += chunk
     }
 
-    const lines = result.split('\n')
+    const lines = result.split('\n').slice(1)
     for (const line of lines) {
       const eventMatch = line.match(/^event: (.*)$/)
       if (!eventMatch) continue
