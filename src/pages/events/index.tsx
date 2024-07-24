@@ -32,8 +32,6 @@ const EventPage = ({
   const router = useRouter()
   const { data: countryName } = useGetIpDetailsQuery()
 
-  console.log(countryName)
-
   const clearSearchState = () => {
     setEventData(events)
     setSearchActive(false)
@@ -114,13 +112,13 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   )
 
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate({}),
+    getPopularEvents.initiate({ offset: 0, limit: 4 }),
   )
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['event', 'common'])),
       events: events ?? [],
-      popularEvents: popularEvents?.slice(0, 5) || [],
+      popularEvents: popularEvents || [],
     },
   }
 }

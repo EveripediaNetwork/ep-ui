@@ -6,8 +6,8 @@ import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { EventHeader } from '@/components/SEO/Event'
 import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
-import { dateFormater } from '@/lib/utils'
 import { TEvents, getPopularEvents } from '@/services/event'
+import { useGetIpDetailsQuery } from '@/services/location'
 import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
@@ -21,13 +21,13 @@ const EventDetailsPage = ({
   event,
   slug,
   popularEvents,
-  countryName,
 }: {
   event: Wiki
   slug: string
   popularEvents: TEvents[]
-  countryName: string
 }) => {
+  const { data: countryName } = useGetIpDetailsQuery()
+
   const referencesRaw =
     getWikiMetadataById(event, CommonMetaIds.REFERENCES)?.value ?? '[]'
   let references
@@ -71,7 +71,7 @@ const EventDetailsPage = ({
               )}
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter countryName={countryName} />
+              <NearbyEventFilter countryName={countryName ?? ''} />
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
@@ -94,7 +94,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
     getWiki.initiate(slug),
   )) as { data: Wiki | undefined; error: TGraphQLError }
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate({ startDate: dateFormater(new Date()) }),
+    getPopularEvents.initiate({ offset: 0, limit: 4 }),
   )
 
   if (eventError)
@@ -120,24 +120,11 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       props,
     }
   }
-  let country_name = ''
-  try {
-    const response = await fetch('https://ipapi.co/json/')
-    if (response.ok) {
-      const jsonData = await response.json()
-      country_name = jsonData.country_name
-    } else {
-      console.error('Failed to fetch country name:', response.status)
-    }
-  } catch (error) {
-    console.error('Error fetching the country name:', error)
-  }
 
   return {
     props: {
       event: eventDetails,
-      popularEvents: popularEvents?.slice(0, 5) || [],
-      countryName: country_name,
+      popularEvents: popularEvents || [],
       slug,
       ...props,
     },
