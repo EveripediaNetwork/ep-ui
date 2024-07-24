@@ -4,9 +4,14 @@ import { RiEmotionSadLine } from 'react-icons/ri'
 import EventItem from './EventItem'
 
 const NearbyEventFilter = ({ countryName }: { countryName: string }) => {
-  const { data } = useGetEventByLocationQuery({
-    location: countryName,
-  })
+  const { data } = useGetEventByLocationQuery(
+    {
+      location: countryName,
+    },
+    { skip: countryName === '' },
+  )
+
+  console.log({ data })
 
   return (
     <div className="">
