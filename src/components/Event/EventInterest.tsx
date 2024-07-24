@@ -70,7 +70,7 @@ const EventInterest = ({
 
   return (
     <div className="flex flex-col xl:flex-row justify-between max-w-[1296px] mx-auto mt-6 md:mt-[30px] rounded-xl border dark:border-alpha-300 border-gray200 bg-white dark:bg-gray700 py-3 md:py-5 px-4 xl:px-[32px] xl:gap-32">
-      <div className="xl:max-w-[200px] flex flex-col gap-3 w-full">
+      <div className="xl:max-w-[200px] flex flex-col gap-2 xl:gap-3 w-full">
         <h3 className="text-xl font-semibold text-gray800 dark:text-alpha-900">
           Interests
         </h3>
@@ -78,7 +78,7 @@ const EventInterest = ({
           Get event suggestion based on your interests.
         </span>
       </div>
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 mt-3 xl:mt-0">
         {EventInterestData.map((interest) => {
           return (
             <button
