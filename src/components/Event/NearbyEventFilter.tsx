@@ -11,8 +11,6 @@ const NearbyEventFilter = ({ countryName }: { countryName: string }) => {
     { skip: countryName === '' },
   )
 
-  console.log({ data })
-
   return (
     <div className="">
       <div className="flex flex-col gap-1">
