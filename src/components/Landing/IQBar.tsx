@@ -1,26 +1,18 @@
-import {
-  Box,
-  Flex,
-  Link,
-  Icon,
-  Text,
-  HStack,
-  Spinner,
-  Button,
-  IconButton,
-} from '@chakra-ui/react'
-import OneinchIcon from '../Icons/oneInch'
-import BinanceIcon from '../Icons/binance'
-import UpbitIcon from '../Icons/upbit'
-import FraxIcon from '../Icons/frax'
-import { RiArrowDownLine, RiArrowUpLine, RiGlobalLine } from 'react-icons/ri'
-import { Logo } from '../Elements'
-import IQGraph from './IQGraph'
+import { cn } from '@/lib/utils'
 import { useGetCgTokenDataQuery } from '@/services/cgTokenDetails'
 import { useGetCmcTokenDataQuery } from '@/services/cmcTokenDetails'
+import { Button, Icon, IconButton, Spinner } from '@chakra-ui/react'
 import * as Humanize from 'humanize-plus'
-import { usePostHog } from 'posthog-js/react'
 import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+import { usePostHog } from 'posthog-js/react'
+import { RiArrowDownLine, RiArrowUpLine, RiGlobalLine } from 'react-icons/ri'
+import { Logo } from '../Elements'
+import BinanceIcon from '../Icons/binance'
+import FraxIcon from '../Icons/frax'
+import OneinchIcon from '../Icons/oneInch'
+import UpbitIcon from '../Icons/upbit'
+import IQGraph from './IQGraph'
 
 export const IQBar = () => {
   const { t } = useTranslation('home')
@@ -41,71 +33,39 @@ export const IQBar = () => {
   const iqChange = cmcData?.IQ?.quote?.USD?.percent_change_24h
 
   return (
-    <Flex
-      position="relative"
-      top={{ base: '-140px', md: '-80px', xl: '-60px' }}
-      px={-2}
-      bg="white"
-      textColor="gray.600"
-      maxW={{ base: 'min(90vw, 400px)', md: '670px', xl: '1210px' }}
-      minW={{ base: 'min(90vw, 400px)', md: '650px', xl: '1210px' }}
-      mx="auto"
-      rounded="lg"
-      _dark={{ bg: 'gray.700', textColor: 'rgba(255, 255, 255, 0.92)' }}
-    >
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        mx="auto"
-        flexWrap="wrap"
-        gap={3}
-        py={4}
-      >
-        <HStack
-          minW={{ base: 'min(80vw, 360px)', md: '280px', xl: '255px' }}
-          h="100px"
-          border={'1px'}
-          borderColor="gray.200"
-          rounded="xl"
-          p={3}
-          fontSize="sm"
-          justifyContent="space-between"
-          className="iq-price"
-          _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
-        >
-          <Box>
-            <Text fontSize="xs">{t('iqPrice')}</Text>
-            {cmcLoading ? (
-              <Spinner size="sm" />
-            ) : cmcError ? (
-              <Text fontSize="sm" color="red.500">
-                {t('errorPrice')}
-              </Text>
-            ) : (
-              <Text fontSize="xl" fontWeight="semibold">
-                {`$${price}`}
-              </Text>
-            )}
-            <Flex align="center" mt={1}>
-              <Flex
-                alignItems="center"
-                gap={1}
-                rounded="xl"
-                px={1}
-                color={iqChange && iqChange <= 0 ? 'red.500' : 'green.600'}
-              >
-                <Icon
-                  as={
-                    iqChange && iqChange > 0 ? RiArrowUpLine : RiArrowDownLine
-                  }
-                  boxSize={3}
-                />
-                <Text fontSize="xs">
-                  {Humanize.formatNumber(iqChange ?? 0, 2)}%
-                </Text>
-              </Flex>
-            </Flex>
-          </Box>
+    <section className="top-[-140px] md:top-[-80px] xl:top-[-60px] relative px-4 lg:px-8 2xl:px-0 max-w-[1320px] mx-auto">
+      <div className="p-4 dark:bg-gray-900/40 backdrop-filter backdrop-blur-sm bg-white/30 text-gray-600 rounded-xl dark:text-white flex md:grid lg:grid-cols-5 flex-col md:grid-cols-2 gap-4 flex-wrap border dark:border-gray-700 border-gray-100">
+        <div className="iq-price bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-800 border-gray-200 rounded-xl p-3 flex flex-row text-sm justify-between items-center">
+          <div className="flex flex-col gap-2 text-sm">
+            <h3 className="text-xs">{t('iqPrice')}</h3>
+            <div className="flex flex-col gap-1.5">
+              {cmcLoading ? (
+                <Spinner size="sm" />
+              ) : cmcError ? (
+                <h2 className="text-sm text-red-500">{t('errorPrice')}</h2>
+              ) : (
+                <h1 className="text-xl font-semibold">{`$${price}`}</h1>
+              )}
+              <div className="flex items-center">
+                <div
+                  className={cn(
+                    'flex items-center gap-1 rounded-xl text-sm',
+                    iqChange && iqChange <= 0
+                      ? 'text-red-500'
+                      : 'text-green-600',
+                  )}
+                >
+                  <Icon
+                    as={
+                      iqChange && iqChange > 0 ? RiArrowUpLine : RiArrowDownLine
+                    }
+                    boxSize={3}
+                  />
+                  <h3>{Humanize.formatNumber(iqChange ?? 0, 2)}%</h3>
+                </div>
+              </div>
+            </div>
+          </div>
           <Link
             href="https://iq.braindao.org/dashboard"
             onClick={() => {
@@ -127,39 +87,23 @@ export const IQBar = () => {
               <Logo boxSize="2em" />
             </Button>
           </Link>
-        </HStack>
-        <HStack
-          minW={{ base: 'min(80vw, 360px)', md: '320px', xl: '255px' }}
-          h="100px"
-          border={'1px'}
-          borderColor="gray.200"
-          rounded="xl"
-          p={3}
-          fontSize="sm"
-          justifyContent="space-between"
-          className="iq-market-cap"
-          _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
-        >
-          <Box>
-            <Text fontSize="xs">{t('iqMarketCap')}</Text>
-            {isLoading ? (
-              <Spinner size="sm" />
-            ) : isError ? (
-              <Text fontSize="sm" color="red.500">
-                {t('errorMarketCap')}
-              </Text>
-            ) : (
-              <Text fontSize="xl" fontWeight="semibold">
-                {`$${mcap}`}
-              </Text>
-            )}
-            <Flex align="center" mt={1}>
-              <Flex
-                alignItems="center"
-                gap={1}
-                px={1}
-                rounded="xl"
-                color={iqChange && iqChange <= 0 ? 'red.500' : 'green.600'}
+        </div>
+        <div className="iq-market-cap bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-800 border-gray-200 rounded-xl p-3 flex flex-row justify-between items-center text-sm">
+          <div className="flex flex-col gap-2 justify-between">
+            <h3 className="text-sm">{t('iqMarketCap')}</h3>
+            <div className="flex flex-col gap-1.5">
+              {isLoading ? (
+                <Spinner size="sm" />
+              ) : isError ? (
+                <h2 className="text-xs text-red-500">{t('errorMarketCap')}</h2>
+              ) : (
+                <h1 className="text-xl font-semibold">{`$${mcap}`}</h1>
+              )}
+              <div
+                className={cn(
+                  'flex items-center rounded-xl gap-1 text-sm',
+                  iqChange && iqChange <= 0 ? 'text-red-500' : 'text-green-600',
+                )}
               >
                 <Icon
                   as={
@@ -167,12 +111,10 @@ export const IQBar = () => {
                   }
                   boxSize={3}
                 />
-                <Text fontSize="xs">
-                  {Humanize.formatNumber(iqChange ?? 0, 2)}%
-                </Text>
-              </Flex>
-            </Flex>
-          </Box>
+                <h3>{Humanize.formatNumber(iqChange ?? 0, 2)}%</h3>
+              </div>
+            </div>
+          </div>
           <Link
             href="https://coinmarketcap.com/currencies/iq/"
             target="_blank"
@@ -190,25 +132,12 @@ export const IQBar = () => {
               <RiGlobalLine size="2em" color="#FF5CAA" />
             </Button>
           </Link>
-        </HStack>
-        <Box
-          minW={{ base: 'min(80vw, 360px)', md: '280px', xl: '255px' }}
-          h="100px"
-          border={'1px'}
-          borderColor="gray.200"
-          rounded="xl"
-          display="flex"
-          flexDirection="column"
-          p={3}
-          fontSize="sm"
-          className="iq-get-iq"
-          _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
-        >
-          <Text fontSize="xs">{t('exchanges')}</Text>
-          <Flex alignItems="center" justifyContent="center" mt={2}>
+        </div>
+        <div className="iq-get-iq bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-800 border-gray-200 rounded-xl p-3 flex flex-col gap-4 text-sm">
+          <h1 className="text-xs">{t('exchanges')}</h1>
+          <div className="flex items-center justify-center">
             <Link
               href="https://www.binance.com/en/trade/IQ_USDT?theme=dark&type=spot"
-              isExternal
               target="_blank"
               rel="noopener nofollow"
               data-ph-capture-attribute-exchange-link="binance"
@@ -222,16 +151,9 @@ export const IQBar = () => {
                 aria-label="binance"
               />
             </Link>
-            <Box
-              borderLeft="1px solid"
-              borderColor="gray.200"
-              height="24px"
-              mx={2}
-              _dark={{ borderColor: 'whiteAlpha.400' }}
-            />
+            <div className="border-l border-gray-200 h-[24px] mx-2 dark:border-alpha-400" />
             <Link
               href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
-              isExternal
               target="_blank"
               rel="noopener nofollow"
               data-ph-capture-attribute-exchange-link="1inch"
@@ -245,15 +167,8 @@ export const IQBar = () => {
                 aria-label="One Inch"
               />
             </Link>
-            <Box
-              borderLeft="1px solid"
-              borderColor="gray.200"
-              height="24px"
-              mx={2}
-              _dark={{ borderColor: 'whiteAlpha.400' }}
-            />
+            <div className="border-l border-gray-200 h-[24px] mx-2 dark:border-alpha-400" />
             <Link
-              isExternal
               target="_blank"
               rel="noopener nofollow"
               href="https://upbit.com/exchange?code=CRIX.UPBIT.KRW-IQ"
@@ -268,16 +183,9 @@ export const IQBar = () => {
                 aria-label="Upbit"
               />
             </Link>
-            <Box
-              borderLeft="1px solid"
-              borderColor="gray.200"
-              height="24px"
-              mx={2}
-              _dark={{ borderColor: 'whiteAlpha.400' }}
-            />
+            <div className="border-l border-gray-200 h-[24px] mx-2 dark:border-alpha-400" />
             <Link
               href="https://frax.finance/"
-              isExternal
               target="_blank"
               rel="noopener nofollow"
               data-ph-capture-attribute-exchange-link="frax-finance"
@@ -291,34 +199,20 @@ export const IQBar = () => {
                 aria-label="Frax"
               />
             </Link>
-          </Flex>
-        </Box>
-        <Box
-          minW={{ base: 'min(80vw, 360px)', md: '320px', xl: '390px' }}
-          maxW={{ base: 'min(80vw, 360px)', md: '298px', xl: '390px' }}
-          h="100px"
-          border="1px"
-          borderColor="gray.200"
-          rounded="xl"
-          px={2}
-          pt={3}
-          fontSize="xs"
-          className="iq-historical-graph"
-          _dark={{ bg: 'gray.700', borderColor: 'rgba(255, 255, 255, 0.24)' }}
-        >
-          <HStack justifyContent={'space-between'}>
-            <Text fontSize="xs">{t('iqGraph')}</Text>
-            <Text>{`$${price}`}</Text>
-          </HStack>
+          </div>
+        </div>
+        <div className="iq-historical-graph bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-800 border-gray-200 rounded-xl flex flex-col gap-2 text-sm p-3 lg:col-span-2">
+          <div className="flex justify-between text-xs">
+            <h3>{t('iqGraph')}</h3>
+            <h3>{`$${price}`}</h3>
+          </div>
           {isError ? (
-            <Text fontSize="sm" color="red.500">
-              {t('errorGraphData')}
-            </Text>
+            <h1 className="text-sm text-red-500">{t('errorGraphData')}</h1>
           ) : (
             <IQGraph areaGraphData={areaGraphData} />
           )}
-        </Box>
-      </Flex>
-    </Flex>
+        </div>
+      </div>
+    </section>
   )
 }

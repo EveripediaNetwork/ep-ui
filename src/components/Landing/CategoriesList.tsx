@@ -1,15 +1,18 @@
-import React from 'react'
-import { Text, SimpleGrid, Heading, VStack, Flex, Box } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
-import { CategoryDataType } from '@/types/CategoryDataTypes'
-import { LinkButton } from '../Elements'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
-import CategoryCard from '../Categories/CategoryCard'
+import { CategoryDataType } from '@/types/CategoryDataTypes'
+import { useTranslation } from 'next-i18next'
+// import CategoryCard from '../Categories/CategoryCard'
+import { LinkButton } from '../Elements'
+import { useGetWikisAndCategoriesQuery } from '@/services/wikis'
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
+import { TabsContent } from '@radix-ui/react-tabs'
 
 const NUM_OF_CATEGORIES = 6
 
 const CategoriesList = () => {
   const { t } = useTranslation('common')
+  const { t: tr } = useTranslation('category')
+
   const newCategoryList: CategoryDataType[] = []
 
   while (newCategoryList.length < NUM_OF_CATEGORIES) {
@@ -28,36 +31,38 @@ const CategoriesList = () => {
     }
   }
 
+  const { data } = useGetWikisAndCategoriesQuery({
+    limit: 6,
+  })
+
+  console.log(data)
+
   return (
-    <VStack py={{ base: 16, md: 20, lg: 24 }} spacing={2}>
-      <Heading
-        textAlign="center"
-        fontWeight="600"
-        fontSize={{ base: '3xl', lg: 46 }}
-      >
-        {`${t('browseCategory')}`}
-      </Heading>
-      <Text
-        color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: '20px' }}
-        pb={9}
-        px={4}
-        textAlign="center"
-        maxW="800"
-      >{`${t('browseCategoryDescription')}`}</Text>
-      <SimpleGrid
-        maxW="1290px"
-        w="100%"
-        mx="auto"
-        gridTemplateColumns={{
-          base: 'repeat(1, 1fr)',
-          md: 'repeat(2, 1fr)',
-          lg: 'repeat(3, 1fr)',
-        }}
-        spacingX={6}
-        spacingY={12}
-        px={6}
-      >
+    <div className="flex flex-col gap-10 container mx-auto py-20 relative">
+      <div className="flex flex-col gap-3">
+        <h1 className="text-2xl font-semibold">{t('browseCategory')}</h1>
+        <h2 className="text-alpha-800 font-medium max-w-3xl">
+          {t('browseCategoryDescription')}
+        </h2>
+      </div>
+      <Tabs>
+        <TabsList>
+          <TabsList className="flex flex-row gap-2">
+            {AllCategoriesData.map((category) => (
+              <TabsTrigger
+                value={category.id}
+                className="rounded-full border-b-0 data-[state=active]:bg-brand-500 data-[state=active]:dark:bg-brand-200 bg-alpha-50"
+              >
+                {tr(category.title)}
+              </TabsTrigger>
+            ))}
+            {/* <TabsTrigger value="password">Password</TabsTrigger> */}
+          </TabsList>
+          <TabsContent value="account">Account</TabsContent>
+          <TabsContent value="password">Password</TabsContent>
+        </TabsList>
+      </Tabs>
+      {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {newCategoryList?.map(
           (category) =>
             category.cardImage && (
@@ -71,9 +76,9 @@ const CategoriesList = () => {
               />
             ),
         )}
-      </SimpleGrid>
-      <Box mt="10 !important">
-        <Flex justifyContent="center">
+      </div> */}
+      <div className="">
+        <div className="flex justify-center items-center">
           <LinkButton
             href="/categories"
             h="50px"
@@ -84,9 +89,9 @@ const CategoriesList = () => {
           >
             {t('categoryViewMore')}
           </LinkButton>
-        </Flex>
-      </Box>
-    </VStack>
+        </div>
+      </div>
+    </div>
   )
 }
 

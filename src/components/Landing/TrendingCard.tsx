@@ -1,25 +1,24 @@
-import {
-  Text,
-  Box,
-  AspectRatio,
-  Flex,
-  HStack,
-  Icon,
-  Select,
-} from '@chakra-ui/react'
-import React from 'react'
-import { Wiki } from '@everipedia/iq-utils'
-import router from 'next/router'
-import { IconType } from 'react-icons/lib'
-import { ChevronDownIcon } from '@chakra-ui/icons'
-import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
+import { TrendingData } from '@/types/Home'
 import { shortenText } from '@/utils/textUtils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { TrendingData } from '@/types/Home'
-import { Link } from '../Elements'
+import { Icon } from '@chakra-ui/react'
+import { Wiki } from '@everipedia/iq-utils'
+import router from 'next/router'
+import React from 'react'
+import { IconType } from 'react-icons/lib'
+// import { Link } from '../Elements'
 import { TrendingSkeleton } from './LoadingFeaturedWikiCard'
-import { Image } from '../Elements/Image/Image'
+// import { Image } from '../Elements/Image/Image'
 import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
+import Link from 'next/link'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '../ui/select'
 
 const TrendingCard = ({
   wikis = [],
@@ -38,142 +37,69 @@ const TrendingCard = ({
   const { t } = useTranslation('home')
 
   return (
-    <Flex py="1" maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}>
-      <Box
-        w="full"
-        rounded="lg"
-        border="1px solid"
-        borderColor={'gray.100'}
-        minH="500px"
-        py={5}
-        bg="white"
-        _dark={{ bgColor: 'gray.700', border: 'none' }}
-      >
-        <Flex
-          w="full"
-          alignItems="center"
-          px="4"
-          mb="2"
-          justifyContent="space-between"
+    <div className="bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-700 border-gray-200 rounded-xl h-full w-full">
+      <div className="flex items-center justify-between border-b border-gray-100 dark:border-gray-700 px-4 py-3">
+        <div className="flex items-center gap-2">
+          <Icon
+            cursor="pointer"
+            fontSize="2xl"
+            fontWeight={600}
+            color="brandLinkColor"
+            as={icon}
+          />
+          <div className="font-semibold">{title}</div>
+        </div>
+        <Select
+          onValueChange={(e) => {
+            setWikiData((wikis as TrendingData)[e as keyof TrendingData])
+          }}
         >
-          <Flex alignItems="center">
-            <Icon
-              cursor="pointer"
-              fontSize="2xl"
-              fontWeight={600}
-              color="brandLinkColor"
-              as={icon}
-            />
-            <Text
-              color={'wikiFlagTextColor'}
-              fontSize={{ base: 'md', lg: '18px' }}
-              pl={2}
-              fontWeight="600"
+          <SelectTrigger className="w-36 h-9 border border-gray-100 dark:border-gray-700">
+            <SelectValue placeholder="Today" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="todayTrending">{t('Today')}</SelectItem>
+            <SelectItem value="weekTrending">{t('Last Week')}</SelectItem>
+            <SelectItem value="monthTrending">{t('Last Month')}</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+      {wikis ? (
+        <div className="flex flex-col">
+          {wikiData?.map((wiki) => (
+            <Link
+              href={`/wiki/${wiki.id}`}
+              className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
+              key={wiki.id}
             >
-              {title}
-            </Text>
-          </Flex>
-          {isTrending && (
-            <Select
-              h="30px"
-              fontSize="12px"
-              w="120px"
-              icon={<ChevronDownIcon />}
-              mr="2"
-              borderColor="rankingListBorder"
-              onChange={(e) => {
-                setWikiData(
-                  (wikis as TrendingData)[e.target.value as keyof TrendingData],
-                )
-              }}
-            >
-              <option value="todayTrending">{t('Today')}</option>
-              <option value="weekTrending">{t('Last Week')}</option>
-              <option value="monthTrending">{t('Last Month')}</option>
-            </Select>
-          )}
-        </Flex>
-        {wikis ? (
-          <Flex direction={'column'} w="full" px="2" overflow="hidden">
-            {wikiData?.map((wiki, i) => (
-              <HStack
-                w="full"
-                _hover={{
-                  borderRadius: 'md',
-                  bgColor: 'gray.100',
-                  _dark: {
-                    bgColor: 'whiteAlpha.100',
-                  },
-                }}
-                cursor="pointer"
-                mt={0}
-                key={i}
-                py={2}
-                px={4}
-              >
-                <Link
-                  href={`/wiki/${wiki.id}`}
-                  _hover={{ textDecoration: 'none' }}
-                >
-                  <HStack>
-                    <Box>
-                      <AspectRatio
-                        ratio={WIKI_IMAGE_ASPECT_RATIO}
-                        w={{
-                          base: '50px',
-                          md: '60px',
-                          lg: '70px',
-                        }}
-                      >
-                        <Image
-                          src={getWikiImageUrl(wiki.images)}
-                          alt={wiki.title}
-                          borderRadius="md"
-                          overflow="hidden"
-                          imgW={IMAGE_BOX_SIZE * WIKI_IMAGE_ASPECT_RATIO}
-                          imgH={IMAGE_BOX_SIZE}
-                          quality={40}
-                        />
-                      </AspectRatio>
-                    </Box>
+              <div className="w-[68px] h-[46px] aspect-square rounded-md">
+                <Image
+                  className="w-full h-full object-cover rounded-md"
+                  src={getWikiImageUrl(wiki.images)}
+                  alt={wiki.title}
+                  width={450}
+                  height={450}
+                />
+              </div>
 
-                    <Flex
-                      direction="column"
-                      justifyContent="flex-start"
-                      textAlign="start"
-                    >
-                      <Text
-                        fontWeight="semibold"
-                        color="wikiFlagTextColor"
-                        fontSize="18px"
-                        overflow="hidden"
-                        onClick={() => router.push(`wiki/${wiki.id}`)}
-                      >
-                        {shortenText(wiki.title, 24)}
-                      </Text>
-                      <Text
-                        display={{ base: 'none', md: '-webkit-box' }}
-                        noOfLines={2}
-                        w="97%"
-                        textOverflow="ellipsis"
-                        overflow="hidden"
-                        fontSize="12px"
-                        fontWeight="500"
-                        color="homeDescriptionColor"
-                      >
-                        {wiki.summary}
-                      </Text>
-                    </Flex>
-                  </HStack>
-                </Link>
-              </HStack>
-            ))}
-          </Flex>
-        ) : (
-          <TrendingSkeleton />
-        )}
-      </Box>
-    </Flex>
+              <div className="flex-1 flex flex-col">
+                <div
+                  className="text-lg font-semibold"
+                  onKeyUpCapture={() => router.push(`wiki/${wiki.id}`)}
+                >
+                  {shortenText(wiki.title, 24)}
+                </div>
+                <h3 className="text-xs font-medium line-clamp-2">
+                  {wiki.summary}
+                </h3>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <TrendingSkeleton />
+      )}
+    </div>
   )
 }
 export default TrendingCard

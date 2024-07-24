@@ -5,7 +5,7 @@ import CustomTooltip from './CustomTooltip'
 
 const IQGraph = ({
   areaGraphData,
-  height = 70,
+  height = 55,
 }: { areaGraphData?: Dict<number>[] | undefined; height?: number }) => {
   return (
     <ResponsiveContainer width="100%" height={height}>

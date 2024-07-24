@@ -1,32 +1,17 @@
 import React from 'react'
-import { Heading, VStack, chakra } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 
 export const Hero = () => {
   const { t } = useTranslation('home')
+
   return (
-    <VStack
-      pt={{ base: 6, lg: 12 }}
-      minH="300px"
-      bg="gray.100"
-      _dark={{ bg: 'rgba(255, 255, 255, 0.04)' }}
-    >
-      <Heading
-        w={{
-          base: '90%',
-          md: '80%',
-          xl: '65%',
-        }}
-        minW={{ lg: '980px' }}
-        textAlign="center"
-        px={{ base: '8', md: '0' }}
-        fontSize={{ base: '26', md: '48', xl: '60' }}
-        fontWeight={{ base: 'semibold', md: 'bold', xl: 'semibold' }}
-      >
+    <section className="bg-white dark:bg-alpha-50 dark:text-white py-6 lg:pb-28 lg:pt-16 min-h-[300px] relative overflow-hidden">
+      <div className="absolute top-0 left-0 w-[420px] h-96 bg-gradient-to-r from-brand-800/5 to-brand-800/5 blur-3xl" />
+      <h1 className="2xl:text-6xl text-3xl md:text-5xl lg:text-4xl font-bold text-center text-gray-900 dark:text-white max-w-6xl mx-auto container font-montserrat">
         {t('hero_heading1')}{' '}
-        <chakra.span color="brandLinkColor"> {t('hero_heading2')} </chakra.span>{' '}
+        <span className="text-brand-800">{t('hero_heading2')}</span>
         {t('hero_heading3')}
-      </Heading>
-    </VStack>
+      </h1>
+    </section>
   )
 }

@@ -20,6 +20,7 @@ import {
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
+  GET_WIKIS_AND_CATEGORIES,
 } from '@/services/wikis/queries'
 import { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
@@ -172,6 +173,34 @@ type ActivitiesByCategoryData = {
   }[]
 }
 
+type GetWikisAndCategoriesData = {
+  wikis: WikiCategories[]
+}
+
+type WikisAndCategoriesArg ={
+  limit?: number
+}
+
+type WikiCategories = {
+  categories: Category[];
+}
+
+type Category = {
+  title: string;
+  id: string;
+  description: string;
+  cardImage: string;
+  heroImage: string;
+  wikis: {
+    author: {
+      profile: {
+        avatar: string;
+        username: string;
+      };
+    };
+  }[];
+};
+
 export const wikiApi = createApi({
   reducerPath: 'wikiApi',
   extractRehydrationInfo(action, { reducerPath }) {
@@ -319,6 +348,13 @@ export const wikiApi = createApi({
       transformResponse: (response: ActivitiesByCategoryData) =>
         response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
+   getWikisAndCategories: builder.query<WikiCategories[], WikisAndCategoriesArg>({
+  query: (args) => ({
+    document: GET_WIKIS_AND_CATEGORIES,
+    variables: { limit: args.limit },
+  }),
+  transformResponse: (response: GetWikisAndCategoriesData) => response.wikis,
+}),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => {
         return {
@@ -381,6 +417,7 @@ export const {
   usePostFlagWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
+  useGetWikisAndCategoriesQuery
 } = wikiApi
 
 export const {
@@ -402,4 +439,5 @@ export const {
   getTrendingWikis,
   getTrendingCategoryWikis,
   getWikiActivityByCategory,
+  getWikisAndCategories
 } = wikiApi.endpoints

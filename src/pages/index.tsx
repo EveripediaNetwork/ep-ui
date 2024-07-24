@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import {
   getPromotedWikis,
@@ -64,41 +63,30 @@ interface HomePageProps {
 
 export const Index = ({
   promotedWikis,
-  recentWikis,
+  // recentWikis,
   popularTags,
   leaderboards,
   rankings,
   trending,
 }: HomePageProps) => {
   return (
-    <Flex
-      _dark={{
-        bgColor: '#1A202C',
-      }}
-      direction="column"
-      mx="auto"
-      w="full"
-    >
+    <main>
       <Hero />
       <IQBar />
-      <Box
-        mt={{ base: '-20', md: '-15', xl: '-10' }}
-        px={0}
-        className="container"
-      >
+      <div className="-mt-5 lg:-mt-15 xl:-mt-10">
         <TrendingWikis
           trending={trending}
-          recent={recentWikis?.slice(0, 5)}
+          // recent={recentWikis?.slice(0, 5)}
           featuredWikis={promotedWikis}
         />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
         <CategoriesList />
         <EventOverview />
-      </Box>
+      </div>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
-    </Flex>
+    </main>
   )
 }
 

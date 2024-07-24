@@ -397,6 +397,29 @@ export const GET_WIKI_ACTIVITY_BY_CATEGORIES = gql`
   }
 `
 
+export const GET_WIKIS_AND_CATEGORIES = gql`
+  query GetWikisAndCategories($limit: Int) {
+    wikis(limit: $limit) {
+      categories {
+        title
+        id
+        description
+        cardImage
+        heroImage
+        wikis {
+          author {
+            profile {
+              avatar
+              username
+            }
+          }
+        }
+      }
+    }
+  }
+`
+
+
 export const POST_WIKI = gql`
   mutation postWiki($data: String!) {
     pinJSON(data: $data) {
