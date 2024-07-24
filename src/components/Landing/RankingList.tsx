@@ -4,7 +4,7 @@ import {
   sortByMarketCap,
 } from '@/pages/rank/[[...category]]'
 import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
-import { Flex, Tbody } from '@chakra-ui/react'
+import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
 import { BiImage } from 'react-icons/bi'
@@ -14,7 +14,7 @@ import {
   RiRobotFill,
   RiUserFill,
 } from 'react-icons/ri'
-import { LinkButton } from '../Elements'
+// import { LinkButton } from '../Elements'
 import FounderRankingItem from '../Rank/FounderRankCardItem'
 import {
   FoundersRankTable,
@@ -51,9 +51,9 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
-  const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
-    'cryptocurrencies',
-  )
+  // const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
+  //   'cryptocurrencies',
+  // )
   const { t } = useTranslation(['rank', 'common'])
 
   if (
@@ -267,9 +267,9 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
             </RankTable>
           </TabsContent>
         </Tabs>
-        <Flex justifyContent="center" mt="10">
+        {/* <Flex justifyContent="center" mt="10">
           <LinkButton
-            href={`/rank/${selectedRanking}`}
+            // href={`/rank/${selectedRanking}`}
             h="50px"
             w={{ base: 32, lg: 40 }}
             variant="outline"
@@ -278,7 +278,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           >
             {t('rankingListViewMore')}
           </LinkButton>
-        </Flex>
+        </Flex> */}
       </div>
     </div>
   )

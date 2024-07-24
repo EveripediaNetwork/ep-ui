@@ -177,29 +177,29 @@ type GetWikisAndCategoriesData = {
   wikis: WikiCategories[]
 }
 
-type WikisAndCategoriesArg ={
+type WikisAndCategoriesArg = {
   limit?: number
 }
 
 type WikiCategories = {
-  categories: Category[];
+  categories: Category[]
 }
 
 type Category = {
-  title: string;
-  id: string;
-  description: string;
-  cardImage: string;
-  heroImage: string;
+  title: string
+  id: string
+  description: string
+  cardImage: string
+  heroImage: string
   wikis: {
     author: {
       profile: {
-        avatar: string;
-        username: string;
-      };
-    };
-  }[];
-};
+        avatar: string
+        username: string
+      }
+    }
+  }[]
+}
 
 export const wikiApi = createApi({
   reducerPath: 'wikiApi',
@@ -348,13 +348,17 @@ export const wikiApi = createApi({
       transformResponse: (response: ActivitiesByCategoryData) =>
         response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
-   getWikisAndCategories: builder.query<WikiCategories[], WikisAndCategoriesArg>({
-  query: (args) => ({
-    document: GET_WIKIS_AND_CATEGORIES,
-    variables: { limit: args.limit },
-  }),
-  transformResponse: (response: GetWikisAndCategoriesData) => response.wikis,
-}),
+    getWikisAndCategories: builder.query<
+      WikiCategories[],
+      WikisAndCategoriesArg
+    >({
+      query: (args) => ({
+        document: GET_WIKIS_AND_CATEGORIES,
+        variables: { limit: args.limit },
+      }),
+      transformResponse: (response: GetWikisAndCategoriesData) =>
+        response.wikis,
+    }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => {
         return {
@@ -417,7 +421,7 @@ export const {
   usePostFlagWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
-  useGetWikisAndCategoriesQuery
+  useGetWikisAndCategoriesQuery,
 } = wikiApi
 
 export const {
@@ -439,5 +443,5 @@ export const {
   getTrendingWikis,
   getTrendingCategoryWikis,
   getWikiActivityByCategory,
-  getWikisAndCategories
+  getWikisAndCategories,
 } = wikiApi.endpoints
