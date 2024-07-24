@@ -14,7 +14,6 @@ import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
 import { DateRange } from 'react-day-picker'
-import { dateFormater } from '@/lib/utils'
 import { useRouter } from 'next/router'
 
 const EventPage = ({
@@ -126,9 +125,7 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
   }
 
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate({
-      startDate: dateFormater(new Date()),
-    }),
+    getPopularEvents.initiate({}),
   )
   return {
     props: {
