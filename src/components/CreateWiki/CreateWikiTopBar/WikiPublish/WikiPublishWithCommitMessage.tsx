@@ -45,7 +45,6 @@ export const PublishWithCommitMessage = ({
   submittingWiki: boolean
 }) => {
   const { t } = useTranslation('wiki')
-
   return (
     <PopoverButton
       header={
@@ -66,7 +65,7 @@ export const PublishWithCommitMessage = ({
         },
       }}
       loadingText="Loading"
-      disabled={isPublishDisabled}
+      isDisabled={isPublishDisabled}
     >
       <CommitMessageInput />
     </PopoverButton>
