@@ -1,6 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   LanguagesISOEnum,
+  EventType,
   type Wiki,
   type MData,
   CommonMetaIds,
@@ -8,7 +9,6 @@ import {
   CreateNewWikiSlug,
   type LinkedWikiKey,
   type BaseEvents,
-  type EventType,
 } from '@everipedia/iq-utils'
 
 const getCurrentSlug = () => {
