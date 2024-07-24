@@ -47,7 +47,6 @@ export const ConnectorSignTokenModal = ({
     }
 
     const token = await generateNewToken()
-    console.log('generatedtoken', token)
     window.postMessage({ type: 'iqwiki-token-pass', token }, '*')
     posthog.capture('sign_token_attempt')
     router.push(router.asPath).then(openWalletDrawer)

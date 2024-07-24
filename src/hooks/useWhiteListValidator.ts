@@ -5,8 +5,6 @@ import config from '@/config'
 
 const useIsWhitelistedEditor = () => {
   const { address } = useAccount()
-  console.log('address', address)
-
   const {
     data: isWhitelisted,
     error,
