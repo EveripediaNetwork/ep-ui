@@ -4,27 +4,40 @@ import React from 'react'
 import { RiLogoutBoxRFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'next-i18next'
-import { useAddress } from '@/hooks/useAddress'
 import { deleteCookie } from 'cookies-next'
 import { cookieNames } from '@/types/cookies'
 import { usePostHog } from 'posthog-js/react'
+import { useAccount, useDisconnect } from 'wagmi'
 
 export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
-  const { address: isUserConnected } = useAddress()
+  const { isConnected: isUserConnected } = useAccount()
+  const { disconnect, status } = useDisconnect()
   const dispatch = useDispatch()
   const { t } = useTranslation('common')
   const posthog = usePostHog()
 
-  const handleLogOut = () => {
-    dispatch(setStateToDefault())
-    deleteCookie(cookieNames.Enum['x-auth-token'])
-    for (const key of Object.keys(localStorage)) {
-      if (key.startsWith('wagmi')) {
-        localStorage.removeItem(key)
+  const isLogoutLoading = status === 'loading'
+
+  const handleLogOut = async () => {
+    try {
+      disconnect()
+
+      deleteCookie(cookieNames.Enum['x-auth-token'])
+
+      for (const key of Object.keys(localStorage)) {
+        if (key.startsWith('wagmi')) {
+          localStorage.removeItem(key)
+        }
       }
+
+      dispatch(setStateToDefault())
+
+      posthog.reset()
+
+      window.location.reload()
+    } catch (e) {
+      console.log('Error occurred in handleLogOut:', e)
     }
-    posthog.reset()
-    window.location.reload()
   }
 
   return (
@@ -33,10 +46,15 @@ export const LogOutBtn = ({ isInMobileMenu }: { isInMobileMenu: boolean }) => {
       px={isInMobileMenu ? 0 : 3}
       bgColor="transparent"
       sx={{ '&:hover, &:focus, &:active': { bgColor: 'subMenuHoverBg' } }}
-      onClick={isUserConnected ? handleLogOut : undefined}
+      onClick={() => {
+        if (isUserConnected) {
+          handleLogOut()
+        }
+      }}
       cursor={isUserConnected ? 'pointer' : 'not-allowed'}
       display={isUserConnected ? 'flex' : 'none'}
       w="full"
+      isLoading={isLogoutLoading}
     >
       <Icon
         fontSize="4xl"

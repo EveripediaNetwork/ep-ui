@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Input,
+  Select,
   SimpleGrid,
   Text,
   Textarea,
@@ -15,7 +16,6 @@ import { useTranslation } from 'next-i18next'
 import { DatePickerDemo } from '@/components/ui/DatePicker'
 import { DateRange } from 'react-day-picker'
 import { dateFormater } from '@/lib/utils'
-import ComboBoxPopup from '../ComboBoxPopup'
 
 const validateForm = (
   title: string,
@@ -183,24 +183,6 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     }
   }
 
-  const eventOptions = [
-    {
-      id: EventType.CREATED,
-      label: titleProps().value || 'Created',
-      disabled:
-        !isUpdate &&
-        wiki?.events?.some((event) => event.type === EventType.CREATED),
-    },
-    {
-      id: EventType.DEFAULT,
-      label: 'Milestone',
-    },
-    {
-      id: EventType.MULTIDATE,
-      label: 'Date Range',
-    },
-  ]
-
   return (
     <>
       <Box>
@@ -244,12 +226,26 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 type="text"
                 placeholder={t('title')}
               />
-              <ComboBoxPopup
-                options={eventOptions}
-                onSelect={(value) => setIsMultiDate(value)}
-                placeholder={t('selectCategory')}
-                t={t}
-              />
+              <Select
+                name="type"
+                placeholder={t('eventType')}
+                fontSize={{ base: '12px', md: '14px' }}
+                onChange={(event) => setIsMultiDate(event.target.value)}
+              >
+                <option
+                  value={EventType.CREATED}
+                  disabled={
+                    !isUpdate &&
+                    wiki?.events?.some(
+                      (event) => event.type === EventType.CREATED,
+                    )
+                  }
+                >
+                  {titleProps().value || 'Created'}
+                </option>
+                <option value={EventType.DEFAULT}>Milestone</option>
+                <option value={EventType.MULTIDATE}>Date Range</option>
+              </Select>
             </SimpleGrid>
             <Input
               mt="3"
@@ -276,13 +272,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           </SimpleGrid>
         </form>
       </Box>
-
       {errMsg && (
         <Text color="red.500" fontSize="sm" mt="2">
           {errMsg}
         </Text>
       )}
-
       <EventsList handleFormChange={handleFormChange} />
     </>
   )

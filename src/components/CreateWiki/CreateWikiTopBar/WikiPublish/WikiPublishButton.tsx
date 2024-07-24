@@ -35,7 +35,6 @@ import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiD
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useAccount } from 'wagmi'
-import { getCookie } from 'cookies-next'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
 import { usePostHog } from 'posthog-js/react'
 
@@ -75,16 +74,8 @@ export const WikiPublishButton = () => {
     onClose: onWikiProcessModalClose,
   } = useDisclosure()
 
-  const switchChainCookie = getCookie('SWITCH_CHAIN')
-  const switchChainNotAllowed = switchChainCookie
-    ? (JSON.parse(switchChainCookie as string) as boolean)
-    : false
-
   const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
-  const showModal =
-    connectedChainId !== chainId &&
-    !networkSwitchAttempted &&
-    switchChainNotAllowed
+  const showModal = connectedChainId !== chainId && !networkSwitchAttempted
   const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')
@@ -327,7 +318,7 @@ export const WikiPublishButton = () => {
         ) : (
           <Button
             onClick={() => handleWikiPublish()}
-            disabled={!userCanEdit}
+            isDisabled={isPublishDisabled}
             _disabled={{
               opacity: isPublishDisabled ? 0.5 : undefined,
               _hover: { bgColor: 'grey !important', cursor: 'not-allowed' },
