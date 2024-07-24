@@ -3,6 +3,7 @@ import {
   Box,
   Button,
   Input,
+  Select,
   SimpleGrid,
   Text,
   Textarea,
@@ -15,7 +16,6 @@ import { useTranslation } from 'next-i18next'
 import { DatePickerDemo } from '@/components/ui/DatePicker'
 import { DateRange } from 'react-day-picker'
 import { dateFormater } from '@/lib/utils'
-import ComboBoxPopup from '../ComboBoxPopup'
 
 const validateForm = (
   title: string,
@@ -244,12 +244,22 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 type="text"
                 placeholder={t('title')}
               />
-              <ComboBoxPopup
-                options={eventOptions}
-                onSelect={(value) => setIsMultiDate(value)}
+              <Select
+                name="type"
                 placeholder={t('selectCategory')}
-                t={t}
-              />
+                fontSize={{ base: '12px', md: '14px' }}
+                onChange={(e) => setIsMultiDate(e.target.value)}
+              >
+                {eventOptions.map((option) => (
+                  <option
+                    key={option.id}
+                    value={option.id}
+                    disabled={option?.disabled}
+                  >
+                    {option.label}
+                  </option>
+                ))}
+              </Select>
             </SimpleGrid>
             <Input
               mt="3"
