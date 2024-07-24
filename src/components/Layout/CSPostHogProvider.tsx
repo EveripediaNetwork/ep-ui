@@ -1,9 +1,9 @@
 import { env } from '@/env.mjs'
-import { getMagicSDK } from '@/utils/WalletUtils/getMagicSDK'
+import { magic } from '@/utils/WalletUtils/getMagicSDK'
 import posthog from 'posthog-js'
 import { PostHogProvider } from 'posthog-js/react'
 import { useCallback, useEffect } from 'react'
-import { useAccount } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 
 if (typeof window !== 'undefined') {
   posthog.init(env.NEXT_PUBLIC_POSTHOG_KEY, {
@@ -23,11 +23,12 @@ export const CSPostHogProvider = ({
 }
 
 function PosthogAuthWrapper({ children }: React.PropsWithChildren<{}>) {
-  const { address, chainId, connector } = useAccount()
+  const { address, connector } = useAccount()
+  const { chain } = useNetwork()
+  const chainId = chain?.id
 
   const getMagicUserEmail = useCallback(async () => {
     try {
-      const magic = getMagicSDK()
       if (magic && address) {
         const magicInfo = await magic.user.getInfo()
         if (address.toLowerCase() === magicInfo.publicAddress?.toLowerCase()) {
