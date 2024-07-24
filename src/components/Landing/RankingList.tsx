@@ -49,13 +49,12 @@ type RankingListProps = {
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
-  const {
-    TokensListing,
-    aiTokensListing,
-    NFTsListing,
-    stableCoinsListing,
-    foundersListing,
-  } = rankings
+  const TokensListing = rankings?.TokensListing
+  const aiTokensListing = rankings?.aiTokensListing
+  const NFTsListing = rankings?.NFTsListing
+  const stableCoinsListing = rankings?.stableCoinsListing
+  const foundersListing = rankings?.foundersListing
+
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
