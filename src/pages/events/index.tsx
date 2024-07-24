@@ -9,7 +9,12 @@ import { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import EventList from '@/components/Event/EventList'
-import { TEvents, getEvents, getPopularEvents } from '@/services/event'
+import {
+  TEvents,
+  getEvents,
+  getPopularEvents,
+  useGetPopularEventsQuery,
+} from '@/services/event'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
@@ -31,6 +36,9 @@ const EventPage = ({
   const [searchDate, setSearchDate] = useState<DateRange>()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const router = useRouter()
+
+  const { data } = useGetPopularEventsQuery({ offset: 0, limit: 5 })
+  console.log(data)
 
   const clearSearchState = () => {
     setEventData(events)
