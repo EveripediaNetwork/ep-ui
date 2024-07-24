@@ -54,7 +54,6 @@ const EventInterest = ({
     const { data } = await store.dispatch(
       getEventsByTags.initiate({
         tagIds: filterTags,
-        // startDate: dateFormater(new Date()),
       }),
     )
     return data
