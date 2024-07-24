@@ -1,8 +1,8 @@
 import {
   useAccount,
-  useFeeData,
+  useEstimateFeesPerGas,
   useSignTypedData,
-  useWaitForTransaction,
+  useWaitForTransactionReceipt,
 } from 'wagmi'
 import { submitVerifiableSignature } from '@/utils/WalletUtils/postSignature'
 import { removeDraftFromLocalStorage } from '@/store/slices/wiki.slice'
@@ -63,15 +63,15 @@ export const useGetSignedHash = () => {
     signTypedDataAsync,
   } = useSignTypedData()
 
-  const signing = status === 'loading'
+  const signing = status === 'pending'
 
-  const { refetch } = useWaitForTransaction({
+  const { refetch } = useWaitForTransactionReceipt({
     hash: txHash as `0x${string}`,
     chainId: Number(config.chainId),
     confirmations: config.isProduction ? 2 : 1,
   })
 
-  const { data: feeData } = useFeeData({
+  const { data: feeData } = useEstimateFeesPerGas({
     formatUnits: 'gwei',
   })
 

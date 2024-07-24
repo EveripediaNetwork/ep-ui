@@ -13,6 +13,7 @@ const ConnectorDetails = ({
 }: ConnectorDetailsType) => {
   const [isClicked, setIsClicked] = useState<boolean>(false)
   const posthog = usePostHog()
+
   const handleConnect = (selectedConnector: Connector) => {
     posthog.capture('login_attempt', {
       connector: selectedConnector.name,
@@ -35,7 +36,7 @@ const ConnectorDetails = ({
             ? 'Metamask'
             : connector.name}
         </Text>
-        {connector.id === 'injected' && !isClicked && (
+        {connector.type === 'injected' && !isClicked && (
           <Text fontSize="sm" fontWeight="medium" color="fadedText2">
             popular
           </Text>

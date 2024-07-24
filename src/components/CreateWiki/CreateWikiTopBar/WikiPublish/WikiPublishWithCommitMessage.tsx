@@ -66,7 +66,7 @@ export const PublishWithCommitMessage = ({
         },
       }}
       loadingText="Loading"
-      isDisabled={isPublishDisabled}
+      disabled={isPublishDisabled}
     >
       <CommitMessageInput />
     </PopoverButton>
