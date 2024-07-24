@@ -1,23 +1,17 @@
-import { createConfig, configureChains } from 'wagmi'
-import { polygon } from 'wagmi/chains'
-import { alchemyProvider } from 'wagmi/providers/alchemy'
-import { publicProvider } from 'wagmi/providers/public'
-import { jsonRpcProvider } from '@wagmi/core/providers/jsonRpc'
-import config from '@/config'
-import { magicConnector } from '@/lib/magic/connectors/magicConnector'
-import { InjectedConnector } from '@wagmi/core/connectors/injected'
+import { http, createConfig, fallback } from 'wagmi'
+import { polygon } from 'viem/chains'
+import { injected } from 'wagmi/connectors'
+import { env } from '@/env.mjs'
+import config from '.'
+import { dedicatedWalletConnector } from '@/lib/magic/connectors/dedicatedWalletConnector'
 import { defineChain } from 'viem'
 
 export const iqTestnet = defineChain({
-  id: 313377,
-  name: 'IQ Testnet',
-  network: 'IQ Testnet',
+  id: 313_377,
+  name: 'IQ Chain',
   nativeCurrency: { name: 'IQ Token', symbol: 'IQ', decimals: 18 },
   rpcUrls: {
     default: {
-      http: ['https://rpc-testnet.braindao.org/'],
-    },
-    public: {
       http: ['https://rpc-testnet.braindao.org/'],
     },
   },
@@ -25,38 +19,47 @@ export const iqTestnet = defineChain({
     default: {
       name: 'BrainScan',
       url: 'https://testnet.braindao.org',
+      apiUrl: 'https://testnet.braindao.org/api/v2/',
     },
   },
   testnet: true,
 })
 
-export const { chains, publicClient, webSocketPublicClient } =
-  config.isProduction
-    ? configureChains(
-        [polygon],
-        [alchemyProvider({ apiKey: config.alchemyApiKey }), publicProvider()],
-      )
-    : configureChains(
-        [iqTestnet],
-        [
-          jsonRpcProvider({
-            rpc: (chain) => ({ http: chain.rpcUrls.default.http[0] }),
-          }),
-        ],
-      )
+const chains = config.isProduction
+  ? ([polygon] as const)
+  : ([iqTestnet] as const)
 
-export const wagmiClient = createConfig({
-  autoConnect: true,
+export const wagmiConfig = createConfig({
+  chains,
+  multiInjectedProviderDiscovery: false,
+  ssr: false,
+  transports: {
+    [polygon.id]: fallback([
+      http(`https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`),
+      http(`https://polygon-mainnet.infura.io/v3/${config.infuraId}`),
+    ]),
+    [iqTestnet.id]: http(),
+  },
   connectors: [
-    new InjectedConnector({
+    injected(),
+    dedicatedWalletConnector({
+      //@ts-ignore
       chains,
       options: {
-        name: 'Injected',
-        shimDisconnect: true,
+        apiKey: env.NEXT_PUBLIC_MAGIC_LINK_API_KEY,
+        accentColor: '#ea3b87',
+        oauthOptions: {
+          providers: ['google', 'facebook', 'twitter', 'discord'],
+        },
+        magicSdkConfiguration: {
+          network: {
+            rpcUrl: config.isProduction
+              ? `https://polygon-mainnet.g.alchemy.com/v2/${config.alchemyApiKey}`
+              : iqTestnet.rpcUrls.default.http[0],
+            chainId: Number(config.chainId),
+          },
+        },
       },
     }),
-    magicConnector({ chains }),
   ],
-  publicClient,
-  webSocketPublicClient,
 })
