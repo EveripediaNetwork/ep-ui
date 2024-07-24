@@ -7,9 +7,11 @@ import {
   Center,
   HStack,
   Icon,
+  Select,
   Stack,
   Text,
   Wrap,
+  chakra,
   SimpleGrid,
 } from '@chakra-ui/react'
 import { getWikisByTitle } from '@/services/search'
@@ -24,7 +26,6 @@ import { store } from '@/store/store'
 import { RiArrowRightDownLine, RiCloseLine } from 'react-icons/ri'
 import { useTranslation } from 'next-i18next'
 import { CHAR_SEARCH_LIMIT } from '@/data/Constants'
-import ComboBoxPopup from './ComboBoxPopup'
 
 const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
   const dispatch = useAppDispatch()
@@ -111,14 +112,22 @@ const LinkedWikisInput = ({ wiki }: { wiki: Wiki }) => {
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
         gap="2"
-        gridTemplateColumns={{ base: '1.1fr 2fr', md: '1.3fr 1.9fr 0.8fr' }}
+        gridTemplateColumns={{ base: '1fr 2fr', md: '1.2fr 2fr 0.8fr' }}
       >
-        <ComboBoxPopup
-          options={Object.values(LinkedWikiKey)}
+        <Select
+          value={linkType}
+          onChange={(e) => setLinkType(e.target.value as LinkedWikiKey)}
+          h="40px"
+          rounded="md"
+          flex="5"
           placeholder={t('selectOption')}
-          onSelect={(selected) => setLinkType(selected as LinkedWikiKey)}
-          t={t}
-        />
+        >
+          {Object.values(LinkedWikiKey).map((key) => (
+            <chakra.option key={key} value={key}>
+              {t(key)}
+            </chakra.option>
+          ))}
+        </Select>
         <Box flex="8">
           <AutoComplete
             disableFilter

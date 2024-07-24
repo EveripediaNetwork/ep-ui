@@ -57,7 +57,6 @@ module.exports = {
         gray700: '#2D3748',
         gray800: '#1A202C',
         gray900: '#101828',
-        blue0: '#F5F9FF',
       },
       fontFamily: {
         montserrat: ['var(--font-family-montserrat)'],
