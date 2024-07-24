@@ -98,22 +98,19 @@ const Navbar = () => {
           mr={{ base: 0, xl: '0.1vw' }}
           _hover={{ textDecoration: 'none' }}
         >
-          <chakra.button
-            onClick={() => router.push('/')}
-            display={'flex'}
-            alignItems={'center'}
-            gap={2}
-          >
-            <Logo />
-            <Text
-              fontWeight="bold"
-              fontSize="xl"
-              color="gray.900"
-              _dark={{ color: 'white' }}
-            >
-              IQ.wiki
-            </Text>
-          </chakra.button>
+          <Link prefetch={false} href="/">
+            <HStack width="150px">
+              <Logo />
+              <Text
+                fontWeight="bold"
+                fontSize="xl"
+                color="gray.900"
+                _dark={{ color: 'white' }}
+              >
+                IQ.wiki
+              </Text>
+            </HStack>
+          </Link>
         </Box>
         <HStack
           spacing={4}

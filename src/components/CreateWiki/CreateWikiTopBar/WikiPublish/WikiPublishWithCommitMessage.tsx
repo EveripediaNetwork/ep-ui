@@ -4,7 +4,6 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import { CommitMessageInput } from './CommitMessageInput'
-import { useTranslation } from 'next-i18next'
 
 const CommitMessagePopOverFooter = ({
   handleSubmitWiki,
@@ -44,8 +43,6 @@ export const PublishWithCommitMessage = ({
   isPublishDisabled: boolean
   submittingWiki: boolean
 }) => {
-  const { t } = useTranslation('wiki')
-
   return (
     <PopoverButton
       header={
@@ -56,7 +53,7 @@ export const PublishWithCommitMessage = ({
       footer={
         <CommitMessagePopOverFooter handleSubmitWiki={handleWikiPublish} />
       }
-      buttonContents={t('publish')}
+      buttonContents="Publish"
       isLoading={submittingWiki}
       _disabled={{
         opacity: isPublishDisabled ? 0.5 : undefined,
@@ -66,7 +63,7 @@ export const PublishWithCommitMessage = ({
         },
       }}
       loadingText="Loading"
-      disabled={isPublishDisabled}
+      isDisabled={isPublishDisabled}
     >
       <CommitMessageInput />
     </PopoverButton>
