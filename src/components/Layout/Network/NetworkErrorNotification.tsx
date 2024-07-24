@@ -13,10 +13,10 @@ import {
 import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
 import { ProviderDataType } from '@/types/ProviderDataType'
-import { useAccount, useSwitchChain } from 'wagmi'
+import { useAccount, useSwitchNetwork } from 'wagmi'
 import { useDispatch } from 'react-redux'
 import detectEthereumProvider from '@metamask/detect-provider'
-import { wagmiConfig } from '@/config/wagmi'
+import { wagmiClient } from '@/config/wagmi'
 
 const NetworkErrorNotification = ({
   modalState,
@@ -28,9 +28,16 @@ const NetworkErrorNotification = ({
   setNetworkSwitchAttempted: (state: boolean) => void
 }) => {
   const cancelRef = React.useRef<FocusableElement>(null)
-  const { chains, switchChainAsync } = useSwitchChain()
+  const { chains, switchNetwork } = useSwitchNetwork({
+    onSuccess: () => {
+      toast({
+        title: 'Chain successfully switched 🎊',
+        status: 'success',
+      })
+    },
+  })
   const toast = useToast()
-  const chainame = wagmiConfig.chains[0].name
+  const chainame = wagmiClient.chains?.[0]?.name || ''
 
   const [detectedProvider, setDetectedProvider] =
     useState<ProviderDataType | null>(null)
@@ -54,12 +61,8 @@ const NetworkErrorNotification = ({
     setNetworkSwitchAttempted(true)
 
     try {
-      await switchChainAsync({ chainId: chains[0].id })
+      switchNetwork?.(chains[0]?.id)
       setModalState(false)
-      toast({
-        title: 'Chain successfully switched 🎊',
-        status: 'success',
-      })
       return true
     } catch (error: any) {
       setModalState(false)
