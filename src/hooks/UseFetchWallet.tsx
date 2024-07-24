@@ -2,7 +2,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { WalletBalanceType } from '@/types/WalletBalanceType'
 import { updateWalletDetails } from '@/store/slices/user-slice'
 import { useDispatch } from 'react-redux'
-import { useAccount, useBalance, useContractRead } from 'wagmi'
+import { useAccount, useBalance, useReadContract } from 'wagmi'
 import config from '@/config'
 import IQABI from '@/abi/erc20Abi'
 
@@ -15,7 +15,7 @@ export const useFetchWalletBalance = () => {
   })
 
   const { data: iqData } = config.isProduction
-    ? useContractRead({
+    ? useReadContract({
         address: config.iqAddress as `0x${string}`,
         abi: IQABI,
         functionName: 'balanceOf',

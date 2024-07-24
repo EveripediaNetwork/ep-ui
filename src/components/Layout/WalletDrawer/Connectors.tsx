@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { useConnect, useAccount, Connector } from 'wagmi'
+import { useConnect, useAccount, Connector, useAccountEffect } from 'wagmi'
 import { Box, Divider, Text, Tooltip, useDisclosure } from '@chakra-ui/react'
 import ConnectorDetails from '@/components/Layout/WalletDrawer/ConnectorDetails'
 import { walletsLogos } from '@/data/WalletData'
@@ -20,8 +20,13 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const { isConnected: isUserConnected, isConnecting: isUserConnecting } =
     useAccount()
 
-  useAccount({
-    onConnect: async () => {
+  useAccountEffect({
+    onConnect: async (data) => {
+      if (data.connector.switchChain) {
+        document.cookie = 'SWITCH_CHAIN=true;'
+      } else {
+        document.cookie = 'SWITCH_CHAIN=false'
+      }
       await triggerSignToken()
     },
   })
@@ -40,22 +45,25 @@ const Connectors = ({ openWalletDrawer, handleRedirect }: ConnectorsProps) => {
   const posthog = usePostHog()
 
   const { connect, connectors } = useConnect({
-    onError: (error) => {
-      posthog.capture('login_error', {
-        error: error.message,
-      })
-    },
-    onSuccess: (data) => {
-      posthog.capture('login_success', {
-        address: data.account,
-      })
+    mutation: {
+      onError: (error) => {
+        posthog.capture('login_error', {
+          error: error.message,
+        })
+      },
+      onSuccess: (data) => {
+        posthog.capture('login_success', {
+          address: data.accounts[0],
+        })
+        openSignTokenModal()
+      },
     },
   })
 
   async function triggerSignToken() {
     const storedToken = await fetchStoredToken()
     if (storedToken) {
-      console.warn('Token already exists')
+      console.error('Token already exists')
       closeSignTokenModal()
       handleRedirect()
       return
