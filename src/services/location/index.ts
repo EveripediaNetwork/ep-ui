@@ -18,7 +18,6 @@ export const locationApi = createApi({
     getIpDetails: builder.query<string, void>({
       query: () => '',
       transformResponse: (response: any) => {
-        console.log(response)
         if (response) {
           return response?.country_name
         }
