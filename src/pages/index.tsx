@@ -70,6 +70,14 @@ export const Index = ({
   rankings,
   trending,
 }: HomePageProps) => {
+  console.log({
+    promotedWikis,
+    recentWikis,
+    popularTags,
+    leaderboards,
+    rankings,
+    trending,
+  })
   return (
     <Flex
       _dark={{
