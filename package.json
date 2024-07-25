@@ -9,7 +9,8 @@
     "start": "next start",
     "export": "next export",
     "test": "echo \"Next-app tests\"",
-    "lint": "lint-staged",
+    "lint": "pnpm exec biome lint --changed --no-errors-on-unmatched",
+    "format": "pnpm exec biome format --changed --write --no-errors-on-unmatched",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
@@ -148,7 +149,6 @@
     "autoprefixer": "^10.4.17",
     "cross-env": "^7.0.3",
     "husky": "^8.0.0",
-    "lint-staged": "^15.2.7",
     "postcss": "^8.4.33",
     "prettier": "^2.6.1",
     "tailwindcss": "^3.4.1",
@@ -157,11 +157,5 @@
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
-  },
-  "lint-staged": {
-    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "pnpm exec biome lint --no-errors-on-unmatched",
-      "pnpm exec biome format --write --no-errors-on-unmatched"
-    ]
   }
 }

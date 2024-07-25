@@ -35,11 +35,11 @@ export const useCreateWikiState = (router: NextRouter) => {
     if (data?.linkedWikis) {
       // remove null values from linked wikis
       const newLinkedWikis = {} as LinkedWikis
-      Object.entries(data.linkedWikis).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(data.linkedWikis)) {
         if (value !== null) {
           newLinkedWikis[key as LinkedWikiKey] = value
         }
-      })
+      }
       return {
         ...data,
         linkedWikis: newLinkedWikis,

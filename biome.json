@@ -49,5 +49,10 @@
       "trailingComma": "all",
       "semicolons": "asNeeded"
     }
+  },
+  "vcs": {
+    "enabled": true,
+    "clientKind": "git",
+    "defaultBranch": "main"
   }
 }
