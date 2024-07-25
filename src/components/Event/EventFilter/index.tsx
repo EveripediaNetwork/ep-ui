@@ -22,7 +22,7 @@ const defaultFilters: Filters = {
 
 const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   const today = new Date()
-  let startDate = dateFormater(today)
+  let startDate
   let endDate
 
   switch (filter.date) {
@@ -217,6 +217,17 @@ const EventFilter = ({
     })
   }
 
+  const isFilterActive = Object.keys(filters).some((key) => {
+    const value = filters[key as keyof Filters]
+    if (typeof value === 'string') {
+      return value.trim() !== ''
+    } else if (Array.isArray(value)) {
+      return value.length > 0
+    } else {
+      return false
+    }
+  })
+
   return (
     <div>
       <div className="flex flex-col">
@@ -231,7 +242,10 @@ const EventFilter = ({
           <button
             onClick={clearFilters}
             type="button"
-            className="underline cursor-pointer text-xs"
+            className={`underline cursor-pointer text-xs ${
+              !isFilterActive ? 'opacity-50 cursor-not-allowed' : ''
+            }`}
+            disabled={!isFilterActive}
           >
             clear all
           </button>
