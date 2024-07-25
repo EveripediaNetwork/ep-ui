@@ -41,6 +41,7 @@ type TEventArg = {
   startDate?: string
   direction?: string
   endDate?: string
+  order?: string
 }
 
 type TEventByBlockchainArg = {
@@ -108,10 +109,13 @@ export const eventApi = createApi({
       }),
       transformResponse: (response: TGetEventResponse) => response.events,
     }),
-    getPopularEvents: builder.query<TEvents[], { startDate?: string }>({
-      query: ({ startDate }) => ({
+    getPopularEvents: builder.query<
+      TEvents[],
+      { limit?: number; offset?: number }
+    >({
+      query: ({ limit, offset }) => ({
         document: GET_POPULAR_EVENTS,
-        variables: { startDate },
+        variables: { limit, offset },
       }),
       transformResponse: (response: TGetPopularEventResponse) =>
         response.popularEvents,
