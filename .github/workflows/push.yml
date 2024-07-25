@@ -29,6 +29,6 @@ jobs:
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
       - name: Lint Biome
-        run: pnpm biome ci .
+        run: npx @biomejs/biome ci .
       - name: Tests
         run: pnpm test
