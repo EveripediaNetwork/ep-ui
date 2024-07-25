@@ -74,7 +74,7 @@ const EventCard = ({
               <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
                 {excerpt}
               </p>
-              <div className="flex max-[375px]:text-[10px] text-xs md:text-xs my-2 divide-x items-center">
+              <div className="flex text-xs md:text-xs my-2 divide-x items-center">
                 <span className="pr-2 flex gap-1 items-center">
                   <span className="text-brand-800 ">
                     <RiCalendar2Line />
