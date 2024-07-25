@@ -275,19 +275,8 @@ export const REVALIDATE_URL = gql`
 `
 
 export const CONTENT_FEEDBACK = gql`
-  mutation contentFeedback(
-    $userId: String
-    $contentId: String
-    $rating: Int
-    $message: String
-  ) {
-    contentFeedback(
-      site: IQWIKI
-      userId: $userId
-      contentId: $contentId
-      rating: $rating
-      message: $message
-    )
+  mutation contentFeedback($contentId: String!, $rating: Int!) {
+    contentFeedback(site: IQWIKI, contentId: $contentId, rating: $rating)
   }
 `
 export const AVERAGE_RATING = gql`
