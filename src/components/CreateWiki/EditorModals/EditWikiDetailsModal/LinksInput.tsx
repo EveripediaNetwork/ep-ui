@@ -114,7 +114,6 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   return (
     <Stack rounded="md" _dark={{ borderColor: 'whiteAlpha.300' }} spacing="2">
       <Text fontWeight="semibold">{t('links')}</Text>
-
       <SimpleGrid
         borderColor="gray.200"
         _dark={{ borderColor: 'whiteAlpha.200' }}
@@ -148,7 +147,6 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
           {atttributeExists(currentLink) ? t('update') : t('add')}
         </Button>
       </SimpleGrid>
-
       <chakra.span color="red.300">{error}</chakra.span>
       {linksWithValue.length > 0 && (
         <Wrap gap="1">

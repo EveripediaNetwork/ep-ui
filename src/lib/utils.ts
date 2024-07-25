@@ -86,9 +86,9 @@ export const groupEventsByMonth = (events: TEvents[]) => {
     const monthA = new Date(`${a.split(' ')[0]} 1 2000`).getMonth()
     const monthB = new Date(`${b.split(' ')[0]} 1 2000`).getMonth()
 
-    if (yearA > yearB) return 1
-    if (yearA < yearB) return -1
-    return monthA - monthB
+    if (yearA < yearB) return 1
+    if (yearA > yearB) return -1
+    return monthB - monthA
   })
 
   const sortedEventsByMonth: { [key: string]: TEvents[] } = {}

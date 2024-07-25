@@ -286,13 +286,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           </SimpleGrid>
         </form>
       </Box>
-
       {errMsg && (
         <Text color="red.500" fontSize="sm" mt="2">
           {errMsg}
         </Text>
       )}
-
       <EventsList handleFormChange={handleFormChange} />
     </>
   )

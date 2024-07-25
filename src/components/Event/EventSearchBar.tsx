@@ -134,7 +134,7 @@ const EventSearchBar = ({
           <div className="flex gap-2 w-full items-center max-w-[523px] outline-none py-3 xl:py-4">
             <button
               type="submit"
-              className="cursor-pointer text-gray500 dark:text-alpha-700 text-[12px] md:text-lg xl:text-2xl shrink-0"
+              className="cursor-pointer text-gray500 dark:text-alpha-700 text-base md:text-lg xl:text-2xl shrink-0"
             >
               <RiSearchLine />
             </button>
@@ -143,14 +143,14 @@ const EventSearchBar = ({
               value={searchQuery}
               onChange={handleChange}
               placeholder="Search by events, name, location,  and more"
-              className="w-full bg-transparent text-[10px] md:text-sm outline-none"
+              className="w-full bg-transparent text-xs md:text-sm outline-none"
             />
           </div>
           <DatePickerDemo date={searchDate} onDateSelect={setSearchDate} />
         </div>
         <button
           type="submit"
-          className="px-4 md:px-10 h-auto bg-[#FF5CAA] text-white text-[10px] font-medium md:text-base rounded-r-lg dark:bg-[#FF1A88]"
+          className="px-4 md:px-10 h-auto bg-[#FF5CAA] text-white text-xs font-medium md:text-base rounded-r-lg dark:bg-[#FF1A88]"
         >
           Search
         </button>
