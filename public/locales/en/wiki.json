@@ -84,7 +84,7 @@
   "additionalInfoPrompt": "Generate additional information for the wiki with the title,",
   "queryContentPageSummary": "Content/page summary.",
   "summarizeContentPrompt": "Summarize the wiki with the title,",
-  "eli5Prompt1": "Hi ChatGPT, I've been reading about",
+  "eli5Prompt1": "Hi, I've been reading about",
   "eli5Prompt2": "on the article index as",
   "eli5Prompt3": "but I'm finding it a bit complex to understand all the details. Can you explain",
   "eli5Prompt4": "like I'm 5 years old? I'm not just looking for a quick summary. Instead, I'd love a detailed explanation where each key point is broken down into its simplest form. Think of using simple words, short sentences, and lots of examples or stories that a kid would understand and find interesting. It would be great if you could include comparisons or analogies to everyday things a 5-year-old knows about. Thanks so much!",
