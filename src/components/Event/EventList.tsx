@@ -104,7 +104,7 @@ const EventList = ({
                       {isLoading ? (
                         <LoadingState classNames="w-[285px] h-4" />
                       ) : (
-                        <div className="text-[10px] md:text-xs max-w-[149px] md:max-w-full">
+                        <div className="text-xs flex flex-col md:flex-row md:gap-2 items-end md:max-w-full">
                           <span>know any events not listed?</span>{' '}
                           <SuggestEventModal />
                         </div>
