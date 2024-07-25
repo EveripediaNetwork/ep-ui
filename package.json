@@ -160,8 +160,8 @@
   },
   "lint-staged": {
     "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
-      "npx @biomejs/biome lint --write --no-errors-on-unmatched",
-      "npx @biomejs/biome format --write --no-errors-on-unmatched"
+      "pnpm exec biome lint --no-errors-on-unmatched",
+      "pnpm exec biome format --write --no-errors-on-unmatched"
     ]
   }
 }
