@@ -169,7 +169,7 @@ export const adminApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
-  endpoints: builder => ({
+  endpoints: (builder) => ({
     getEditorsCount: builder.query<
       { amount: number },
       EditorsModifiedCountArgs
