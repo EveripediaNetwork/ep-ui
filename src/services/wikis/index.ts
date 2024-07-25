@@ -16,6 +16,7 @@ import {
   POST_WIKI_VIEW_COUNT,
   GET_WIKI_CREATOR_AND_EDITOR,
   GET_WIKI_PREVIEWS_BY_CATEGORY,
+  POST_FLAG_WIKI,
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
@@ -136,6 +137,16 @@ type WikiCreatorAndEditorResponse = {
   wiki: WikiCreatorAndEditor
 }
 
+type FlagWikiArgs = {
+  report: string
+  wikiId: string
+  userId: string
+}
+
+type PostFlagWikiResponse = {
+  flagWiki: boolean
+}
+
 type TrendingWikisArgs = {
   amount: number
   startDay: string
@@ -173,7 +184,7 @@ export const wikiApi = createApi({
   baseQuery: graphqlRequestBaseQuery({ url: config.graphqlUrl }),
   refetchOnMountOrArgChange: 30,
   refetchOnFocus: true,
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getWikis: builder.query<RecentWikisBuilder[], void>({
       query: () => ({ document: GET_WIKIS }),
       transformResponse: (response: GetRecentWikisResponse) => response.wikis,
@@ -307,7 +318,7 @@ export const wikiApi = createApi({
         variables: { limit, offset, type, category },
       }),
       transformResponse: (response: ActivitiesByCategoryData) =>
-        response.activitiesByCategory.map((activity) => activity.content[0]),
+        response.activitiesByCategory.map(activity => activity.content[0]),
     }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => {
@@ -322,7 +333,7 @@ export const wikiApi = createApi({
         response.pinJSON.IpfsHash,
     }),
     postWikiViewCount: builder.mutation<number, string>({
-      query: (string) => ({
+      query: string => ({
         document: POST_WIKI_VIEW_COUNT,
         variables: {
           id: string,
@@ -330,6 +341,19 @@ export const wikiApi = createApi({
       }),
       transformResponse: (response: PostWikiViewCountResponse) =>
         response.wikiViewCount,
+    }),
+    postFlagWiki: builder.mutation<boolean, FlagWikiArgs>({
+      query: (flagWikiArgs: FlagWikiArgs) => {
+        return {
+          document: POST_FLAG_WIKI,
+          variables: {
+            report: flagWikiArgs.report,
+            wikiId: flagWikiArgs.wikiId,
+            userId: flagWikiArgs.userId,
+          },
+        }
+      },
+      transformResponse: (response: PostFlagWikiResponse) => response.flagWiki,
     }),
     postImage: builder.mutation<string, { file: unknown }>({
       query: ({ file }) => ({
@@ -354,6 +378,7 @@ export const {
   useGetTrendingWikisQuery,
   useGetTrendingCategoryWikisQuery,
   useGetWikiActivityByCategoryQuery,
+  usePostFlagWikiMutation,
   usePostWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
@@ -369,6 +394,7 @@ export const {
   getWikisByCategory,
   getTagWikis,
   postWiki,
+  postFlagWiki,
   postWikiViewCount,
   postImage,
   getUserCreatedWikis,

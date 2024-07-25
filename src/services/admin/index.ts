@@ -169,7 +169,7 @@ export const adminApi = createApi({
     return null
   },
   baseQuery: graphqlRequestBaseQuery({ client: adminApiClient }),
-  endpoints: (builder) => ({
+  endpoints: builder => ({
     getEditorsCount: builder.query<
       { amount: number },
       EditorsModifiedCountArgs
@@ -278,9 +278,9 @@ export const adminApi = createApi({
       },
     }),
     contentFeedback: builder.mutation<number, ContentFeedbackArgs>({
-      query: ({ userId, contentId, rating, message }: ContentFeedbackArgs) => ({
+      query: ({ contentId, rating }: ContentFeedbackArgs) => ({
         document: CONTENT_FEEDBACK,
-        variables: { userId, contentId, rating, message },
+        variables: { contentId, rating },
       }),
       transformResponse: (response: ContentFeedback) => {
         return response.rating
