@@ -188,16 +188,22 @@ type WikiCategories = {
 type Category = {
   title: string
   id: string
-  description: string
-  cardImage: string
-  heroImage: string
   wikis: {
-    author: {
+    id: string
+    title: string
+    summary: string
+    user: {
+      id: string
       profile: {
         avatar: string
         username: string
+        id: string
       }
     }
+    images: {
+      id: string
+      type: string
+    }[]
   }[]
 }
 
@@ -348,16 +354,26 @@ export const wikiApi = createApi({
       transformResponse: (response: ActivitiesByCategoryData) =>
         response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
-    getWikisAndCategories: builder.query<
-      WikiCategories[],
-      WikisAndCategoriesArg
-    >({
-      query: (args) => ({
+    getWikisAndCategories: builder.query<Category[], WikisAndCategoriesArg>({
+      query: ({ limit }) => ({
         document: GET_WIKIS_AND_CATEGORIES,
-        variables: { limit: args.limit },
+        variables: { limit },
       }),
-      transformResponse: (response: GetWikisAndCategoriesData) =>
-        response.wikis,
+      transformResponse: (response: GetWikisAndCategoriesData) => {
+        const allCategories = response.wikis.flatMap((wiki) => wiki.categories)
+
+        const uniqueCategories = allCategories.reduce<Category[]>(
+          (acc, category) => {
+            if (!acc.some((cat) => cat.id === category.id)) {
+              acc.push(category)
+            }
+            return acc
+          },
+          [],
+        )
+
+        return uniqueCategories
+      },
     }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => {

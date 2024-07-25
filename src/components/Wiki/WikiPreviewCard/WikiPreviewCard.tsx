@@ -42,6 +42,8 @@ const WikiPreviewCard = ({
     updated ?? lastUpdated ?? '',
   )
 
+  console.log(wiki.images)
+
   return (
     <LinkBox
       w="100%"

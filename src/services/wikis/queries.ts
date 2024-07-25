@@ -402,15 +402,21 @@ export const GET_WIKIS_AND_CATEGORIES = gql`
       categories {
         title
         id
-        description
-        cardImage
-        heroImage
         wikis {
-          author {
+          id
+          title
+          summary
+          user {
+            id
             profile {
               avatar
               username
+              id
             }
+          }
+          images {
+            id
+            type
           }
         }
       }
