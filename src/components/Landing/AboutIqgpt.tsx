@@ -1,6 +1,5 @@
 import { useTranslation } from 'next-i18next'
 import Link from 'next/link'
-import { LinkButton } from '../Elements'
 import AboutGPTMockup from '../Elements/Image/AboutGPTMockup'
 import { ArrowRightIcon } from 'lucide-react'
 
@@ -33,20 +32,20 @@ const AboutIqgpt = () => {
             {`${t('aboutIQGPTBody')}`}
           </p>
           <div className="flex flex-row gap-5 my-4">
-            <LinkButton
+            <Link
               href={'https://iqgpt.com/'}
               target="_blank"
-              className="dark:bg-brand-800 bg-brand-500 text-white"
+              className="dark:bg-brand-800 bg-brand-500 text-white py-3 px-4 rounded-lg"
             >
               {t('IQGPTBtn1')}
-            </LinkButton>
-            <LinkButton
+            </Link>
+            <Link
               href={'https://iq.wiki/wiki/iq'}
               target="_blank"
-              className="bg-white text-black"
+              className="bg-white text-black py-3 px-4 rounded-lg"
             >
               {t('IQGPTBtn2')}
-            </LinkButton>
+            </Link>
           </div>
           <div className="hidden lg:block -mb-96">
             <AboutGPTMockup
