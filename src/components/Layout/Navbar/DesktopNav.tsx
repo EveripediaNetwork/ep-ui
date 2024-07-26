@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react'
-import { HStack } from '@chakra-ui/react'
 import { NAV_ITEMS } from '@/data/NavItemData'
 import { NavMenu } from '@/components/Layout/Navbar'
 import { useRouter } from 'next/router'
@@ -22,7 +21,10 @@ const DesktopNav = () => {
   const { t } = useTranslation()
 
   return (
-    <HStack onMouseLeave={() => setVisibleMenu(null)}>
+    <div
+      className="flex flex-row gap-2"
+      onMouseLeave={() => setVisibleMenu(null)}
+    >
       {NAV_ITEMS.map((navItem: NavItem) => {
         return (
           <NavMenu
@@ -34,7 +36,7 @@ const DesktopNav = () => {
           />
         )
       })}
-    </HStack>
+    </div>
   )
 }
 

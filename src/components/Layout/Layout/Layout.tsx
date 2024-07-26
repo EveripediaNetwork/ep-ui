@@ -16,7 +16,7 @@ const Layout = ({
   return (
     <main>
       <Navbar />
-      <div>{children}</div>
+      <div className="py-20">{children}</div>
       <Suspense>{!noFooter && <Footer />}</Suspense>
     </main>
   )

@@ -198,13 +198,6 @@ export const getServerSideProps: GetServerSideProps = async ({
     ),
   ])
 
-  console.log({
-    categoryData,
-    wikisByCategory,
-    trendingWikisInCategory,
-    activitiesByCategory,
-  })
-
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['category', 'common'])),
