@@ -9,4 +9,6 @@ export type ComboBoxProps = {
   onSelect?: (selected: string) => void
   placeholder?: string
   t?: TFunction<'wiki', undefined>
+  name?: string
+  resetTriger?: boolean
 }

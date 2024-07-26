@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Input,
-  Select,
   SimpleGrid,
   Text,
   Textarea,
@@ -16,6 +15,7 @@ import { useTranslation } from 'next-i18next'
 import { DatePickerDemo } from '@/components/ui/DatePicker'
 import { DateRange } from 'react-day-picker'
 import { dateFormater } from '@/lib/utils'
+import ComboBoxPopup from '../ComboBoxPopup'
 
 const validateForm = (
   title: string,
@@ -56,6 +56,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [dateRange, setDateRange] = useState<DateRange>()
   const formRef = React.useRef<HTMLFormElement>(null)
   const { t } = useTranslation('wiki')
+  const [resetDropdown, setResetDropdown] = useState(false)
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -98,6 +99,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     })
 
     formRef.current?.reset()
+    setResetDropdown(true)
     setDateRange(undefined)
     setIsMultiDate('')
     setIsUpdate(false)
@@ -244,22 +246,18 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
                 type="text"
                 placeholder={t('title')}
               />
-              <Select
-                name="type"
+              <ComboBoxPopup
+                options={eventOptions}
+                defaultSelect={isMultiDate}
+                onSelect={(value) => {
+                  setIsMultiDate(value)
+                  setResetDropdown(false)
+                }}
                 placeholder={t('selectCategory')}
-                fontSize={{ base: '12px', md: '14px' }}
-                onChange={(e) => setIsMultiDate(e.target.value)}
-              >
-                {eventOptions.map((option) => (
-                  <option
-                    key={option.id}
-                    value={option.id}
-                    disabled={option?.disabled}
-                  >
-                    {option.label}
-                  </option>
-                ))}
-              </Select>
+                resetTriger={resetDropdown}
+                t={t}
+                name="type"
+              />
             </SimpleGrid>
             <Input
               mt="3"
