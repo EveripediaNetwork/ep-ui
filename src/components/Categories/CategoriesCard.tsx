@@ -29,7 +29,7 @@ export default function CategoriesCard({ wiki }: CategoriesCardProps) {
   return (
     <Link
       href={`/wiki/${wiki.id}`}
-      className="flex flex-col gap-2 border dark:border-gray-700 border-gray-200 rounded-xl"
+      className="flex flex-col gap-2 border dark:border-gray-700 border-gray-200 rounded-xl pb-2"
     >
       <div className="h-80">
         <Image

@@ -63,7 +63,6 @@ interface HomePageProps {
 
 export const Index = ({
   promotedWikis,
-  // recentWikis,
   popularTags,
   leaderboards,
   rankings,
@@ -74,11 +73,7 @@ export const Index = ({
       <Hero />
       <IQBar />
       <div className="-mt-5 lg:-mt-15 xl:-mt-10">
-        <TrendingWikis
-          trending={trending}
-          // recent={recentWikis?.slice(0, 5)}
-          featuredWikis={promotedWikis}
-        />
+        <TrendingWikis trending={trending} featuredWikis={promotedWikis} />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
         <CategoriesList />

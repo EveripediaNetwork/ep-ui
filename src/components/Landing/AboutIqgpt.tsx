@@ -1,112 +1,54 @@
-import { ArrowForwardIcon } from '@chakra-ui/icons'
-import { Box, Center, HStack, Text, VStack } from '@chakra-ui/react'
-import React from 'react'
-import { LinkButton } from '../Elements'
 import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+import { LinkButton } from '../Elements'
 import AboutGPTMockup from '../Elements/Image/AboutGPTMockup'
-import { LinkWrapper } from '../Elements/LinkElements/LinkWrapper'
+import { ArrowRightIcon } from 'lucide-react'
 
 const AboutIqgpt = () => {
   const { t } = useTranslation('home')
   return (
-    <Box px={{ base: 6, md: 8 }}>
-      <VStack
-        align={{ base: 'center' }}
-        gap={{ base: 2, lg: 6 }}
-        pt={{ base: 5 }}
-        maxW={'1290px'}
-        rounded={'12px'}
-        bgColor={'aboutIqgptInfoBg'}
-        mb={{ base: 0, md: 255, lg: 375 }}
-        mx={'auto'}
-      >
-        <HStack
-          spacing={2}
-          rounded={'16px'}
-          py={'4px'}
-          pl={'4px'}
-          pr={'10px'}
-          color={'brandLinkColor'}
-          bgColor={'brand.50'}
-          _dark={{ bgColor: 'brand.100' }}
-          // mixBlendMode={'multiply'}
-        >
-          <Center py={'2px'} px={'10px'} bgColor={'white'} rounded={'3xl'}>
-            <Text fontSize={'14px'}>{t('IQGPTHeading1')}</Text>
-          </Center>
-          <HStack spacing={1}>
-            <Text fontSize={{ base: '14px', md: '16px' }}>
-              {t('IQGPTHeading2')}
-            </Text>
-            <LinkWrapper href={'https://iqgpt.com/'}>
-              <Box as="a" target="_blank">
-                <ArrowForwardIcon />
-              </Box>
-            </LinkWrapper>
-          </HStack>
-        </HStack>
-        <VStack
-          pb={{ md: '250' }}
-          textAlign={'center'}
-          align={{ base: 'center' }}
-          position={'relative'}
-        >
-          <HStack px={{ base: 3 }}>
-            <Text
-              fontWeight={'600'}
-              maxW={{ md: '400', lg: '900' }}
-              lineHeight={{ base: '32px', md: '48px' }}
-              textAlign={'center'}
-              fontSize={{ base: '24px', md: '30px', lg: '36px' }}
-              color="rgba(26, 32, 44, 1)"
-              _dark={{ color: 'whiteAlpha.900' }}
-            >
-              {t('IQGPTHeading3')}
-            </Text>
-          </HStack>
-          <Box pb={{ base: '10px', lg: '40px' }} px={{ base: 3 }}>
-            <Text
-              maxW={{ md: '588px', lg: '910px' }}
-              color="rgba(26, 32, 44, 1)"
-              _dark={{ color: 'whiteAlpha.900' }}
-              fontSize={{ base: '14px', md: '16px' }}
-            >
-              {`${t('aboutIQGPTBody')}`}
-            </Text>
-          </Box>
-          <HStack gap={4} pb={'70px'}>
+    <div className="container mx-auto px-6 lg:px-8 2xl:px-0 relative py-20">
+      <div className="flex flex-col gap-2 lg:gap-6 dark:bg-alpha-50 bg-gray-100 justify-center items-center pt-6 rounded-xl mb-96">
+        <div className="flex flex-row gap-2 bg-brand-50 dark:bg-brand-100 rounded-2xl text-brand-500 dark:text-brand-800 p-1">
+          <div className="bg-white py-0.5 px-3 rounded-full">
+            {t('IQGPTHeading1')}
+          </div>
+
+          <Link
+            href={'https://iqgpt.com/'}
+            target="_blank"
+            passHref
+            rel="noreferrer noopener"
+            className="flex items-center gap-1 group"
+          >
+            <h1 className="text-sm md:text-base">{t('IQGPTHeading2')}</h1>
+            <ArrowRightIcon className="w-4 h-4 group-hover:translate-x-0.5 transition-transform duration-300 delay-150 ease-linear" />
+          </Link>
+        </div>
+        <div className="flex flex-col gap-4 text-center items-center">
+          <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold text-gray-900 dark:text-white text-center">
+            {t('IQGPTHeading3')}
+          </h1>
+          <p className="text-sm md:text-base text-center text-alpha-600 dark:text-alpha-600 max-w-5xl mt-2">
+            {`${t('aboutIQGPTBody')}`}
+          </p>
+          <div className="flex flex-row gap-5 my-4">
             <LinkButton
               href={'https://iqgpt.com/'}
               target="_blank"
-              size="lg"
-              variant="solid"
-              px={{ base: 5 }}
-              fontSize={'12px'}
-              fontWeight={'semibold'}
+              className="dark:bg-brand-800 bg-brand-500 text-white"
             >
               {t('IQGPTBtn1')}
             </LinkButton>
             <LinkButton
               href={'https://iq.wiki/wiki/iq'}
               target="_blank"
-              size="lg"
-              px={{ base: 5 }}
-              fontSize={'12px'}
-              bgColor={'white'}
-              color={'gray.700'}
-              _hover={{
-                bgColor: 'gray.200',
-              }}
-              fontWeight={'semibold'}
+              className="bg-white text-black"
             >
               {t('IQGPTBtn2')}
             </LinkButton>
-          </HStack>
-          <Box
-            display={{ base: 'none', lg: 'inherit' }}
-            position={'absolute'}
-            bottom={'-75%'}
-          >
+          </div>
+          <div className="hidden lg:block -mb-96">
             <AboutGPTMockup
               bg={{
                 light: '/images/mockups/mockup-xl.png',
@@ -115,12 +57,8 @@ const AboutIqgpt = () => {
               w={1020}
               h={768}
             />
-          </Box>
-          <Box
-            display={{ base: 'none', md: 'inherit', lg: 'none' }}
-            position={'absolute'}
-            bottom={'-60%'}
-          >
+          </div>
+          <div className="hidden md:block lg:hidden -mb-80">
             <AboutGPTMockup
               bg={{
                 light: '/images/mockups/mockup-md.png',
@@ -129,8 +67,8 @@ const AboutIqgpt = () => {
               w={570}
               h={548}
             />
-          </Box>
-          <Box display={{ md: 'none' }}>
+          </div>
+          <div className="block md:hidden">
             <AboutGPTMockup
               bg={{
                 light: '/images/mockups/mockup-sm.png',
@@ -139,10 +77,10 @@ const AboutIqgpt = () => {
               w={500}
               h={360}
             />
-          </Box>
-        </VStack>
-      </VStack>
-    </Box>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

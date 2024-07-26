@@ -1,20 +1,31 @@
 import React from 'react'
-import { Button, ButtonProps, Link, LinkProps } from '@chakra-ui/react'
-import { LinkProps as NextLinkProps } from 'next/link'
-import { LinkWrapper } from './LinkWrapper'
+import Link, { LinkProps } from 'next/link'
+import { cn } from '@/lib/utils'
 
-type ChakraAndNextLinkProps = LinkProps & NextLinkProps & ButtonProps
+type LinkButtonProps = LinkProps & {
+  href: string
+  prefetch?: boolean
+  children: React.ReactNode
+  className?: string
+  target?: string
+}
+
 const LinkButton = ({
   href,
   prefetch,
   children,
+  target,
   ...props
-}: ChakraAndNextLinkProps) => {
+}: LinkButtonProps) => {
   return (
-    <Link as={LinkWrapper} href={href as string} prefetch={prefetch}>
-      <Button as="a" {...props}>
-        {children}
-      </Button>
+    <Link
+      href={href as string}
+      prefetch={prefetch}
+      {...props}
+      target={target}
+      className={cn('py-4 px-4 lg:px-6 rounded-lg text-xs', props.className)}
+    >
+      {children}
     </Link>
   )
 }
