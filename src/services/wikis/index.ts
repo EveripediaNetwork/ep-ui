@@ -179,6 +179,7 @@ type GetWikisAndCategoriesData = {
 
 type WikisAndCategoriesArg = {
   limit?: number
+  offset?: number
 }
 
 type WikiCategories = {
@@ -355,9 +356,9 @@ export const wikiApi = createApi({
         response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
     getWikisAndCategories: builder.query<Category[], WikisAndCategoriesArg>({
-      query: ({ limit }) => ({
+      query: ({ limit, offset }) => ({
         document: GET_WIKIS_AND_CATEGORIES,
-        variables: { limit },
+        variables: { limit, offset },
       }),
       transformResponse: (response: GetWikisAndCategoriesData) => {
         const allCategories = response.wikis.flatMap((wiki) => wiki.categories)

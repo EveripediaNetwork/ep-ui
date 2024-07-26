@@ -24,6 +24,7 @@ type CategoriesCardProps = {
     }[]
   }
 }
+
 export default function CategoriesCard({ wiki }: CategoriesCardProps) {
   return (
     <Link
@@ -42,7 +43,7 @@ export default function CategoriesCard({ wiki }: CategoriesCardProps) {
       <div className="p-4">
         <h1 className="text-xl font-semibold">{wiki.title}</h1>
         <p className="text-alpha-800 text-sm">
-          {shortenText(wiki.summary, 100)}
+          {shortenText(wiki.summary, 80)}
         </p>
 
         <div className="flex flex-row justify-between mt-6">

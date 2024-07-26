@@ -5,7 +5,6 @@ import { AllCategoriesData } from '@/data/AllCategoriesData'
 import Link from 'next/link'
 import Image from 'next/image'
 import { useTranslation } from 'next-i18next'
-import { Button } from '../ui/button'
 
 export default function WikiCategories() {
   const { t } = useTranslation('category')
@@ -17,13 +16,14 @@ export default function WikiCategories() {
           <RiDatabaseFill className="w-6 h-6 text-brand-800" />
           <div className="font-semibold">Wiki Categories</div>
         </div>
-        <Button
-          type="button"
+        <Link
+          href="/categories"
+          passHref
           className="flex items-center gap-2 border border-gray-100 dark:border-gray-700 rounded-lg px-4 py-2 text-xs group dark:bg-gray800 h-9"
         >
           View all
           <ArrowRightIcon className="w-3 h-3 transition-transform group-hover:translate-x-1 duration-300 ease-in-out delay-150" />
-        </Button>
+        </Link>
       </div>
       <div className="flex flex-col">
         {AllCategoriesData.slice(0, 5).map((category) => {

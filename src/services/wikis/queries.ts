@@ -397,8 +397,8 @@ export const GET_WIKI_ACTIVITY_BY_CATEGORIES = gql`
   }
 `
 export const GET_WIKIS_AND_CATEGORIES = gql`
-  query GetWikisAndCategories($limit: Int) {
-    wikis(limit: $limit) {
+  query GetWikisAndCategories($limit: Int, $offset: Int) {
+    wikis(limit: $limit, offset: $offset) {
       categories {
         title
         id

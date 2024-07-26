@@ -7,11 +7,9 @@ import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { RootState, store } from '@/store/store'
 import {
-  Box,
   Button,
   chakra,
   Collapse,
-  Flex,
   HStack,
   IconButton,
   Menu,
@@ -76,42 +74,21 @@ const Navbar = () => {
   }, [router.events, isOpen, onToggle])
 
   return (
-    <Box
-      boxShadow="sm"
-      // position="fixed"
-      zIndex="banner"
-      w="full"
-      h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
-      bg="subMenuBg"
-      borderBottomWidth={1}
-      borderBottomColor="rankingListBorder"
+    <div
+      className="shadow-sm fixed top-0 left-0 right-0 z-40 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-200 border-gray-200 h-full"
+      style={{
+        height: drawerOperations.isOpen ? '100%' : 'unset',
+      }}
     >
-      <Flex
-        gap={{ base: 8, lg: 40, xl: 8 }}
-        h="70px"
-        alignItems="center"
-        justifyContent="space-between"
-        px={{ base: 4, md: 8 }}
-      >
-        <Box
-          cursor="pointer"
-          mr={{ base: 0, xl: '0.1vw' }}
-          _hover={{ textDecoration: 'none' }}
-        >
-          <Link prefetch={false} href="/">
-            <HStack width="150px">
-              <Logo />
-              <Text
-                fontWeight="bold"
-                fontSize="xl"
-                color="gray.900"
-                _dark={{ color: 'white' }}
-              >
-                IQ.wiki
-              </Text>
-            </HStack>
-          </Link>
-        </Box>
+      <div className="flex gap-8 lg:gap-40 xl:gap-8 h-16 items-center justify-between px-4 lg:px-8">
+        <Link prefetch={false} href="/">
+          <div className="flex flex-row gap-2 items-center">
+            <Logo />
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
+              IQ.wiki
+            </h1>
+          </div>
+        </Link>
         <HStack
           spacing={4}
           display={{
@@ -239,7 +216,7 @@ const Navbar = () => {
             aria-label="Toggle Navigation"
           />
         </HStack>
-      </Flex>
+      </div>
       {drawerOperations.isOpen && (
         <WalletDrawer
           finalFocusRef={loginButtonRef}
@@ -257,7 +234,7 @@ const Navbar = () => {
           drawerOperations={drawerOperations}
         />
       </Collapse>
-    </Box>
+    </div>
   )
 }
 
