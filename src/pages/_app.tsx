@@ -15,7 +15,15 @@ import { appWithTranslation } from 'next-i18next'
 import Head from 'next/head'
 import { WagmiWrapper } from '@/components/Layout/WagmiWrapper'
 import { CSPostHogProvider } from '@/components/Layout/CSPostHogProvider'
-import PWAInstallPrompt from '@/components/Layout/PWAInstallPrompt'
+import dynamic from 'next/dynamic'
+// import PWAInstallPrompt from '@/components/Layout/PWAInstallPrompt'
+const PWAInstallPrompt = dynamic(
+  () => import('@/components/Layout/PWAInstallPrompt'),
+  {
+    ssr: false,
+    loading: () => null,
+  },
+)
 
 const { ToastContainer } = createStandaloneToast()
 
