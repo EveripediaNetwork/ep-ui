@@ -118,14 +118,19 @@ const EventCard = ({
               </div>
               <span className="text-brand-500 dark:text-brand-800 flex gap-1 flex-wrap text-[10px] md:text-xs">
                 {speakers?.map((speaker, index) => (
-                  <Link
-                    href={`/wiki/${speaker.id}`}
+                  <button
+                    type="button"
+                    onClick={(e) => {
+                      e.preventDefault()
+                      e.stopPropagation()
+                      router.push(`/wiki/${speaker.id}`)
+                    }}
                     key={speaker.id}
                     className="hover:underline capitalize"
                   >
                     {speaker.id}
                     {speakers.length !== index + 1 && ','}
-                  </Link>
+                  </button>
                 ))}
               </span>
             </div>
