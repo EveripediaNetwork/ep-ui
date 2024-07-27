@@ -10,6 +10,7 @@ import { parseDateRange } from '@/lib/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { LoadingEventState } from './LoadingState'
 import { CommonMetaIds, Image as ImageType, MData } from '@everipedia/iq-utils'
+import { useRouter } from 'next/router'
 
 type TSpeaker = {
   id: string
@@ -46,6 +47,7 @@ const EventCard = ({
   images,
   isLoading,
 }: TEventDetails) => {
+  const router = useRouter()
   const locationMeta = location?.find((m) => m.id === CommonMetaIds.LOCATION)
   const parsedLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
   const eventLocation = Array.isArray(parsedLocation)
@@ -62,15 +64,15 @@ const EventCard = ({
       {isLoading ? (
         <LoadingEventState />
       ) : (
-        <div className="border border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9">
+        <Link
+          href={`/events/${id}`}
+          className="border border-gray200 group cursor-pointer dark:border-alpha-300 bg-white dark:bg-gray700 rounded-xl px-3 md:px-5 h-fit py-[14px] w-full flex flex-col-reverse md:flex-row gap-2 md:gap-9"
+        >
           <div className="flex flex-col flex-1">
             <div className="flex flex-col">
-              <Link
-                href={`/events/${id}`}
-                className="font-semibold text-sm dark:text-alpha-900 w-fit hover:underline text-gray800"
-              >
+              <h3 className="font-semibold text-sm group-hover:underline dark:text-alpha-900 w-fit hover:underline text-gray800">
                 {title}
-              </Link>
+              </h3>
               <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
                 {excerpt}
               </p>
@@ -129,12 +131,18 @@ const EventCard = ({
             </div>
             <div className="flex flex-wrap items-center gap-1 md:gap-3">
               {tags?.map((tag) => (
-                <div
+                <button
                   key={tag.id}
-                  className="px-[6px] md:px-3 text-xs md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]"
+                  type="button"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    e.stopPropagation()
+                    router.push(`?tags=${tag.id}`)
+                  }}
+                  className="px-[6px] md:px-3 text-xs md:text-xs py-1 hover:bg-gray200 dark:hover:bg-alpha-300 border dark:border-alpha-300 border-gray300 rounded-[100px]"
                 >
                   {tag.id}
-                </div>
+                </button>
               ))}
             </div>
           </div>
@@ -149,7 +157,7 @@ const EventCard = ({
               />
             </div>
           </div>
-        </div>
+        </Link>
       )}
     </div>
   )
