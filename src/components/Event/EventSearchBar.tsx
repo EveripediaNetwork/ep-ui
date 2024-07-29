@@ -129,9 +129,9 @@ const EventSearchBar = ({
 
   return (
     <div className="max-w-[1296px] mx-auto ">
-      <form onSubmit={submitHandler} className="flex max-w-[1100px]">
+      <form onSubmit={submitHandler} className="flex w-full">
         <div className="flex flex-1 divide-x rounded-l-lg divide-gray200 dark:divide-alpha-500 dark:bg-gray700 bg-white border-y border-l border-gray200 dark:border-alpha-300 px-3">
-          <div className="flex gap-2 w-full items-center max-w-[523px] outline-none py-3 xl:py-4">
+          <div className="flex gap-2 w-full items-center outline-none py-3 xl:py-4">
             <button
               type="submit"
               className="cursor-pointer text-gray500 dark:text-alpha-700 text-base md:text-lg xl:text-2xl shrink-0"
