@@ -28,7 +28,7 @@ jobs:
 
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
-      - name: Lint Biome
-        run: pnpm biome ci $(git diff --name-only HEAD | xargs)
+      - name: Check linting and formatting
+        run: pnpm biome check $(git diff --name-only HEAD | xargs)
       - name: Tests
         run: pnpm test
