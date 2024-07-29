@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
-import React from 'react'
+import React, { useState } from 'react'
 import {
   RiArrowRightUpLine,
   RiCalendar2Line,
@@ -49,6 +49,7 @@ const EventCard = ({
 }: TEventDetails) => {
   const router = useRouter()
   const locationMeta = location?.find((m) => m.id === CommonMetaIds.LOCATION)
+  const [selectedTag, setSelectedTag] = useState('')
   const parsedLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
   const eventLocation = Array.isArray(parsedLocation)
     ? parsedLocation.find(
@@ -57,6 +58,24 @@ const EventCard = ({
       )
     : parsedLocation
 
+  const toggleTagFilter = (tagId: string): void => {
+    const currentUrlParams = new URLSearchParams(window.location.search)
+
+    if (currentUrlParams.get('tags') === tagId) {
+      currentUrlParams.delete('tags')
+      setSelectedTag('')
+      router.push({
+        pathname: window.location.pathname,
+      })
+    } else {
+      setSelectedTag(tagId)
+      currentUrlParams.set('tags', tagId)
+      router.push({
+        pathname: window.location.pathname,
+        search: currentUrlParams.toString(),
+      })
+    }
+  }
   return (
     <div className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
@@ -143,11 +162,11 @@ const EventCard = ({
                   onClick={(e) => {
                     e.preventDefault()
                     e.stopPropagation()
-                    router.push(`tags/${tag.id}`)
+                    toggleTagFilter(tag.id)
                   }}
-                  className={
-                    'px-[6px] md:px-3 text-xs md:text-xs py-1 hover:bg-gray200 dark:hover:bg-alpha-300 border dark:border-alpha-300 border-gray300 rounded-[100px]'
-                  }
+                  className={`px-[6px] md:px-3 text-xs md:text-xs py-1 hover:bg-gray200 dark:hover:bg-alpha-300 border dark:border-alpha-300 border-gray300 rounded-[100px] ${
+                    selectedTag === tag.id ? 'bg-gray200 dark:bg-alpha-300' : ''
+                  }`}
                 >
                   {tag.id}
                 </button>
