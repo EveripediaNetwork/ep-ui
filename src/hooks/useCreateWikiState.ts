@@ -3,7 +3,12 @@ import { useGetWikiQuery } from '@/services/wikis'
 import { useAppDispatch } from '@/store/hook'
 import { initialMsg } from '@/utils/CreateWikiUtils/createWikiMessages'
 import { useToast } from '@chakra-ui/toast'
-import { LinkedWikiKey, LinkedWikis, Wiki } from '@everipedia/iq-utils'
+import {
+  LinkedWikiKey,
+  LinkedWikis,
+  Wiki,
+  ActivityCardDetails,
+} from '@everipedia/iq-utils'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { NextRouter } from 'next/router'
 import { useMemo, useState } from 'react'
