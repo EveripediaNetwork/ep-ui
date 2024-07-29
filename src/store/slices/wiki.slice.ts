@@ -245,8 +245,8 @@ const wikiSlice = createSlice({
         ...state.linkedWikis,
         [linkType]: state.linkedWikis
           ? (state.linkedWikis[linkType] || []).filter(
-            (id: string) => id !== wikiId,
-          )
+              (id: string) => id !== wikiId,
+            )
           : [],
       }
 
