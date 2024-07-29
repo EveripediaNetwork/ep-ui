@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Command,
   CommandEmpty,
@@ -25,6 +25,8 @@ const ComboBoxPopup = ({
   onSelect,
   placeholder,
   t,
+  name,
+  resetTriger,
 }: ComboBoxProps) => {
   const [selected, setSelected] = useState(defaultSelect)
   const [open, setOpen] = useState<boolean>(false)
@@ -42,6 +44,12 @@ const ComboBoxPopup = ({
 
   const hideSearch = (allOptions?.length || 0) < 10
 
+  useEffect(() => {
+    if (resetTriger) {
+      setSelected(undefined)
+    }
+  }, [resetTriger])
+
   return (
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
@@ -55,7 +63,9 @@ const ComboBoxPopup = ({
           fontSize={['xs', 'sm']}
           _hover={{ bgColor: 'transparent', opacity: 1 }}
         >
-          {matchedLabel || placeholder}
+          {selected ? matchedLabel : placeholder}
+
+          <input type="hidden" name={name} value={selected} />
           <Box
             bg={colorMode === 'dark' ? 'tetiaryDark' : 'white'}
             position="absolute"
