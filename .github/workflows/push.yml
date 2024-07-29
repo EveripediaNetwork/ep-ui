@@ -28,12 +28,8 @@ jobs:
 
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
-      - name: Get changed files
-        id: changed-files
-        run: |
-          echo "::set-output name=files::$(git diff --name-only ${{ github.event.before }} ${{ github.sha }} | tr '\n' ' ')"
       - name: Lint changed files
         run: |
-            pnpm biome ci $CHANGED_FILES
+            pnpm biome lint $(git diff --name-only main)
       - name: Tests
         run: pnpm test
