@@ -2,20 +2,18 @@ import React from 'react'
 import { LinkButton } from '../Elements'
 import { useTranslation } from 'next-i18next'
 import { useGetEventsQuery } from '@/services/event'
-import { dateFormater } from '@/lib/utils'
 import { TrendingEventsCard } from '../Event/TrendingEvent'
 
 const EventOverview = () => {
-  const { data } = useGetEventsQuery({
+  const { data = [] } = useGetEventsQuery({
     offset: 0,
     limit: 4,
-    startDate: dateFormater(new Date()),
   })
   const { t } = useTranslation('event')
 
   return (
     <>
-      {data && data.length > 4 && (
+      {data && data.length > 2 && (
         <div className="max-w-[1296px] mx-auto py-14 md:py-20 xl:py-24 px-4">
           <h2 className="text-2xl max-w-[350px] mx-auto md:max-w-full md:text-4xl font-semibold text-center">
             {t('homePageHeading')}
@@ -40,7 +38,7 @@ const EventOverview = () => {
               </div>
             </div>
             <div>
-              <TrendingEventsCard events={data || []} />
+              <TrendingEventsCard events={data} />
             </div>
           </div>
         </div>
