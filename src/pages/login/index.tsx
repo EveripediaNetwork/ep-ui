@@ -1,5 +1,4 @@
 import React from 'react'
-import { Box, Container, Heading } from '@chakra-ui/react'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
@@ -31,14 +30,10 @@ const Login = () => {
       <Head>
         <link rel="preconnect" href="https://assets.auth.magic.link" />
       </Head>
-      <Container centerContent mt="8" mb="24">
-        <Box minW="min(90%, 300px)" w="full">
-          <Heading mb={4} fontSize={23}>
-            {t('loginConnectWallet')}
-          </Heading>
-          <Connectors handleRedirect={handleRedirect} />
-        </Box>
-      </Container>
+      <div className="max-w-2xl mx-auto mt-12 mb-32 px-4 lg:px-8 2xl:px-0">
+        <h1 className="text-2xl font-bold mb-4">{t('loginConnectWallet')}</h1>
+        <Connectors handleRedirect={handleRedirect} />
+      </div>
     </>
   )
 }

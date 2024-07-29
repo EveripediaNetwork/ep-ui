@@ -72,7 +72,7 @@ export const Index = ({
     <main>
       <Hero />
       <IQBar />
-      <div className="-mt-5 lg:-mt-15 xl:-mt-10">
+      <div className="relative">
         <TrendingWikis trending={trending} featuredWikis={promotedWikis} />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />

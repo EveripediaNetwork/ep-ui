@@ -14,9 +14,9 @@ const Layout = ({
   noFooter?: boolean
 }) => {
   return (
-    <main>
+    <main className="flex flex-col min-h-screen">
       <Navbar />
-      <div className="py-20">{children}</div>
+      <div>{children}</div>
       <Suspense>{!noFooter && <Footer />}</Suspense>
     </main>
   )

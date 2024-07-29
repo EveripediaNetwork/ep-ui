@@ -37,12 +37,12 @@ export default function CategoriesCard({ wiki }: CategoriesCardProps) {
           alt={wiki.title}
           width={450}
           height={450}
-          className="rounded-t-lg w-full h-full"
+          className="rounded-t-lg w-full h-full object-cover"
         />
       </div>
       <div className="p-4">
-        <h1 className="text-xl font-semibold">{wiki.title}</h1>
-        <p className="text-alpha-800 text-sm">
+        <h1 className="text-xl font-semibold">{shortenText(wiki.title, 30)}</h1>
+        <p className="dark:text-alpha-800 text-gray-600 text-sm">
           {shortenText(wiki.summary, 80)}
         </p>
 

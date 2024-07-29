@@ -199,10 +199,10 @@ const Navbar = () => {
             xl: 'none',
           }}
         >
-          <WalletNavMenu
+          {/* <WalletNavMenu
             drawerOperations={drawerOperations}
             setHamburger={setIsHamburgerOpen}
-          />
+          /> */}
           <IconButton
             onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
             icon={

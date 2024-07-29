@@ -17,7 +17,7 @@ const TrendingWikis = ({
   const { t } = useTranslation('home')
 
   return (
-    <section className="px-4 lg:px-8 2xl:px-0 max-w-[1320px] mx-auto pb-16 md:pb-20 lg:pb-24">
+    <section className="px-4 lg:px-8 2xl:px-0 container mx-auto pb-16 md:pb-20 lg:pb-24 -mt-36 md:-mt-0">
       <div className="lg:grid flex flex-row flex-wrap lg:grid-cols-3 w-full gap-4">
         <TrendingCard
           title={t('trendingWikisTitle')}

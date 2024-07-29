@@ -51,9 +51,6 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
-  // const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
-  //   'cryptocurrencies',
-  // )
   const { t } = useTranslation(['rank', 'common'])
 
   if (
@@ -114,160 +111,161 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
     },
   }
   return (
-    <div className="flex flex-col gap-10 container mx-auto mb-20 relative z-20">
-      <div className="absolute -top-20 lg:-top-48 right-0 lg:right-40 w-[400px] lg:w-[520px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-full bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl -z-20" />
-      <div className="flex flex-col gap-2">
-        <h1 className="text-2xl font-bold">{t('rankingListHeading')}</h1>
-        <p className="text-alpha-800 max-w-4xl font-medium">
-          {t('rankingListDescription')}
-        </p>
-      </div>
-      <div className="overflow-scroll">
-        <Tabs defaultValue={t('rankingListButtonCryptocurrencies')}>
-          <TabsList className="mb-4 space-x-6">
-            <TabsTrigger
-              value={t('rankingListButtonCryptocurrencies')}
-              className="flex flex-row items-center gap-4"
-            >
-              <RiCoinsFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-              <span>{t('rankingListButtonCryptocurrencies')}</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value={t('rankingListButtonStablecoins')}
-              className="flex flex-row items-center gap-2"
-            >
-              <RiCoinFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-              <span>{t('rankingListButtonStablecoins')}</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value={t('rankingListButtonAITokens')}
-              className="flex flex-row items-center gap-2"
-            >
-              <RiRobotFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-              <span>{t('rankingListButtonAITokens')}</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value={t('rankingListButtonFounders')}
-              className="flex flex-row items-center gap-2"
-            >
-              <RiUserFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-              <span>{t('rankingListButtonFounders')}</span>
-            </TabsTrigger>
-            <TabsTrigger
-              value={t('rankingListButtonNfts')}
-              className="flex flex-row items-center gap-2"
-            >
-              <BiImage className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-              <span>{t('rankingListButtonNfts')}</span>
-            </TabsTrigger>
-          </TabsList>
-          <TabsContent value={t('rankingListButtonCryptocurrencies')}>
-            <RankTable hasPagination={false}>
-              <RankTableHead onClickMap={onClickMap} />
-              <Tbody>
-                {tokenItems.map((token, index) =>
-                  token ? (
-                    <RankingItem
-                      listingLimit={listingLimit}
-                      offset={0}
-                      order={sortOrder}
-                      key={index + token.id}
-                      index={index}
-                      item={token}
-                    />
-                  ) : (
-                    <InvalidRankCardItem key={index} index={index} />
-                  ),
-                )}
-              </Tbody>
-            </RankTable>
-          </TabsContent>
-          <TabsContent value={t('rankingListButtonStablecoins')}>
-            <RankTable hasPagination={false}>
-              <RankTableHead onClickMap={onClickMap} />
-              <Tbody>
-                {stableCoinItems.map((token, index) =>
-                  token ? (
-                    <RankingItem
-                      listingLimit={listingLimit}
-                      offset={0}
-                      order={sortOrder}
-                      key={index + token.id}
-                      index={index}
-                      item={token}
-                    />
-                  ) : (
-                    <InvalidRankCardItem key={index} index={index} />
-                  ),
-                )}
-              </Tbody>
-            </RankTable>
-          </TabsContent>
-          <TabsContent value={t('rankingListButtonAITokens')}>
-            <RankTable hasPagination={false}>
-              <RankTableHead onClickMap={onClickMap} />
-              <Tbody>
-                {aiTokenItems.map((token, index) =>
-                  token ? (
-                    <RankingItem
-                      listingLimit={listingLimit}
-                      offset={0}
-                      order={sortOrder}
-                      key={index + token.id}
-                      index={index}
-                      item={token}
-                    />
-                  ) : (
-                    <InvalidRankCardItem key={index} index={index} />
-                  ),
-                )}
-              </Tbody>
-            </RankTable>
-          </TabsContent>
-          <TabsContent value={t('rankingListButtonFounders')}>
-            <FoundersRankTable hasPagination={false}>
-              <FoundersRankTableHead onClickMap={onClickMap} />
-              <Tbody>
-                {founderItems.map((token, index) =>
-                  token ? (
-                    <FounderRankingItem
-                      listingLimit={listingLimit}
-                      offset={0}
-                      order={sortOrder}
-                      key={index + token.id}
-                      index={index}
-                      item={token}
-                    />
-                  ) : (
-                    <InvalidRankCardItem key={index} index={index} />
-                  ),
-                )}
-              </Tbody>
-            </FoundersRankTable>
-          </TabsContent>
-          <TabsContent value={t('rankingListButtonNfts')}>
-            <RankTable hasPagination={false}>
-              <RankTableHead onClickMap={onClickMap} />
-              <Tbody>
-                {nftItems.map((nft, index) =>
-                  nft ? (
-                    <RankingItem
-                      listingLimit={LISTING_LIMIT}
-                      offset={0}
-                      order={sortOrder}
-                      key={index + nft.id}
-                      index={index}
-                      item={nft}
-                    />
-                  ) : (
-                    <InvalidRankCardItem key={index} index={index} />
-                  ),
-                )}
-              </Tbody>
-            </RankTable>
-          </TabsContent>
-        </Tabs>
-        {/* <Flex justifyContent="center" mt="10">
+    <div className="flex flex-col container mx-auto mb-20 relative px-4 lg:px-8 2xl:px-0">
+      <div className="absolute -z-10 -top-20 lg:-top-48 right-0 lg:right-40 w-[400px] lg:w-[520px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-full bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl" />
+      <div className="w-full flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-2xl font-bold">{t('rankingListHeading')}</h1>
+          <p className="dark:text-alpha-800 text-gray-600 max-w-4xl font-medium">
+            {t('rankingListDescription')}
+          </p>
+        </div>
+        <div>
+          <Tabs defaultValue={t('rankingListButtonCryptocurrencies')}>
+            <TabsList className="mb-4 space-x-6">
+              <TabsTrigger
+                value={t('rankingListButtonCryptocurrencies')}
+                className="flex flex-row items-center gap-4"
+              >
+                <RiCoinsFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                <span>{t('rankingListButtonCryptocurrencies')}</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value={t('rankingListButtonStablecoins')}
+                className="flex flex-row items-center gap-2"
+              >
+                <RiCoinFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                <span>{t('rankingListButtonStablecoins')}</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value={t('rankingListButtonAITokens')}
+                className="flex flex-row items-center gap-2"
+              >
+                <RiRobotFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                <span>{t('rankingListButtonAITokens')}</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value={t('rankingListButtonFounders')}
+                className="flex flex-row items-center gap-2"
+              >
+                <RiUserFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                <span>{t('rankingListButtonFounders')}</span>
+              </TabsTrigger>
+              <TabsTrigger
+                value={t('rankingListButtonNfts')}
+                className="flex flex-row items-center gap-2"
+              >
+                <BiImage className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                <span>{t('rankingListButtonNfts')}</span>
+              </TabsTrigger>
+            </TabsList>
+            <TabsContent value={t('rankingListButtonCryptocurrencies')}>
+              <RankTable hasPagination={false}>
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {tokenItems.map((token, index) =>
+                    token ? (
+                      <RankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabsContent>
+            <TabsContent value={t('rankingListButtonStablecoins')}>
+              <RankTable hasPagination={false}>
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {stableCoinItems.map((token, index) =>
+                    token ? (
+                      <RankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabsContent>
+            <TabsContent value={t('rankingListButtonAITokens')}>
+              <RankTable hasPagination={false}>
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {aiTokenItems.map((token, index) =>
+                    token ? (
+                      <RankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabsContent>
+            <TabsContent value={t('rankingListButtonFounders')}>
+              <FoundersRankTable hasPagination={false}>
+                <FoundersRankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {founderItems.map((token, index) =>
+                    token ? (
+                      <FounderRankingItem
+                        listingLimit={listingLimit}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + token.id}
+                        index={index}
+                        item={token}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </FoundersRankTable>
+            </TabsContent>
+            <TabsContent value={t('rankingListButtonNfts')}>
+              <RankTable hasPagination={false}>
+                <RankTableHead onClickMap={onClickMap} />
+                <Tbody>
+                  {nftItems.map((nft, index) =>
+                    nft ? (
+                      <RankingItem
+                        listingLimit={LISTING_LIMIT}
+                        offset={0}
+                        order={sortOrder}
+                        key={index + nft.id}
+                        index={index}
+                        item={nft}
+                      />
+                    ) : (
+                      <InvalidRankCardItem key={index} index={index} />
+                    ),
+                  )}
+                </Tbody>
+              </RankTable>
+            </TabsContent>
+          </Tabs>
+          {/* <Flex justifyContent="center" mt="10">
           <LinkButton
             // href={`/rank/${selectedRanking}`}
             h="50px"
@@ -279,6 +277,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
             {t('rankingListViewMore')}
           </LinkButton>
         </Flex> */}
+        </div>
       </div>
     </div>
   )
