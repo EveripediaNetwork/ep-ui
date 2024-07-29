@@ -8,7 +8,7 @@ import {
   CreateNewWikiSlug,
   type LinkedWikiKey,
   type BaseEvents,
-  type EventType,
+  EventType,
 } from '@everipedia/iq-utils'
 
 const getCurrentSlug = () => {
@@ -245,8 +245,8 @@ const wikiSlice = createSlice({
         ...state.linkedWikis,
         [linkType]: state.linkedWikis
           ? (state.linkedWikis[linkType] || []).filter(
-              (id: string) => id !== wikiId,
-            )
+            (id: string) => id !== wikiId,
+          )
           : [],
       }
 
