@@ -29,6 +29,6 @@ jobs:
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
       - name: Check linting and formatting
-        run: pnpm run lint-staged --diff="${{ github.base_ref }}...${{ github.head_ref }}"
+        run: pnpm lint-staged --diff="${{ github.base_ref }}...${{ github.head_ref }}"
       - name: Tests
         run: pnpm test
