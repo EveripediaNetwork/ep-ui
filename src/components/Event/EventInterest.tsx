@@ -20,10 +20,10 @@ const EventInterest = ({
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
   const toggleTag = (tag: string) => {
-    setSelectedTags(prevSelected => {
+    setSelectedTags((prevSelected) => {
       let updatedTags: string[] = [...prevSelected]
       if (prevSelected.includes(tag)) {
-        updatedTags = prevSelected.filter(t => t !== tag)
+        updatedTags = prevSelected.filter((t) => t !== tag)
       } else {
         updatedTags = [...prevSelected, tag].slice(0, 4)
       }
@@ -33,8 +33,8 @@ const EventInterest = ({
         currentQueryParams.tags = updatedTags
         setIsLoading(true)
         filterEventsByTags(updatedTags)
-          .then(res => setEventData(res))
-          .catch(err => console.log(err))
+          .then((res) => setEventData(res))
+          .catch((err) => console.log(err))
           .finally(() => setIsLoading(false))
       } else {
         delete currentQueryParams.tags
@@ -79,7 +79,7 @@ const EventInterest = ({
         <span className="text-sm">{t('eventsInterestDescription')}</span>
       </div>
       <div className="flex flex-wrap gap-3 mt-3 xl:mt-0">
-        {EventInterestData.map(interest => {
+        {EventInterestData.map((interest) => {
           return (
             <button
               type="button"
