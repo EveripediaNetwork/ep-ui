@@ -49,9 +49,9 @@ const EventSearchBar = ({
     const mergedResults = [...(data || []), ...(locationData || [])]
 
     const uniqueResults = Array.from(
-      new Set(mergedResults.map(event => event.id)),
-    ).map(id => {
-      return mergedResults.find(event => event.id === id)!
+      new Set(mergedResults.map((event) => event.id)),
+    ).map((id) => {
+      return mergedResults.find((event) => event.id === id)!
     })
 
     return uniqueResults
@@ -92,10 +92,10 @@ const EventSearchBar = ({
 
       setIsLoading(true)
       fetchEventSearch({ arg })
-        .then(response => {
+        .then((response) => {
           setEventData(response)
         })
-        .catch(err => console.error(err))
+        .catch((err) => console.error(err))
         .finally(() => setIsLoading(false))
     }
   }, [router.query])
@@ -124,7 +124,7 @@ const EventSearchBar = ({
     )
   }
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = event => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setSearchQuery(event.target.value)
   }
 

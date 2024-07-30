@@ -9,5 +9,6 @@
   "homePageAction": "이벤트 보기",
   "searchBarPlaceholder": "이벤트, 이름, 위치 등으로 검색",
   "searchBarSubmit": "찾다",
-  "searchDatePlaceholder": "날짜 선택"
+  "searchDatePlaceholder": "날짜 선택",
+  "trendingEventsHeading": "트렌딩 이벤트"
 }
