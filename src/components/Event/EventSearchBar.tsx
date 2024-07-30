@@ -10,6 +10,7 @@ import {
   SelectRangeEventHandler,
 } from 'react-day-picker'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 type TQuerySearch = {
   arg: { title: string; startDate?: string; endDate?: string }
@@ -33,6 +34,7 @@ const EventSearchBar = ({
   setSearchQuery: Function
 }) => {
   const router = useRouter()
+  const { t } = useTranslation('event')
 
   const fetchEventSearch = async ({ arg }: TQuerySearch) => {
     const { data } = await store.dispatch(getEventByTitle.initiate(arg))
@@ -47,9 +49,9 @@ const EventSearchBar = ({
     const mergedResults = [...(data || []), ...(locationData || [])]
 
     const uniqueResults = Array.from(
-      new Set(mergedResults.map((event) => event.id)),
-    ).map((id) => {
-      return mergedResults.find((event) => event.id === id)!
+      new Set(mergedResults.map(event => event.id)),
+    ).map(id => {
+      return mergedResults.find(event => event.id === id)!
     })
 
     return uniqueResults
@@ -90,10 +92,10 @@ const EventSearchBar = ({
 
       setIsLoading(true)
       fetchEventSearch({ arg })
-        .then((response) => {
+        .then(response => {
           setEventData(response)
         })
-        .catch((err) => console.error(err))
+        .catch(err => console.error(err))
         .finally(() => setIsLoading(false))
     }
   }, [router.query])
@@ -112,7 +114,6 @@ const EventSearchBar = ({
     if (searchDate?.from) queryParams.startDate = dateFormater(searchDate.from)
     if (searchDate?.to) queryParams.endDate = dateFormater(searchDate.to)
 
-    // Update the URL query parameters.
     router.push(
       {
         pathname: router.pathname,
@@ -123,7 +124,7 @@ const EventSearchBar = ({
     )
   }
 
-  const handleChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
+  const handleChange: React.ChangeEventHandler<HTMLInputElement> = event => {
     setSearchQuery(event.target.value)
   }
 
@@ -142,7 +143,7 @@ const EventSearchBar = ({
               name="search-input"
               value={searchQuery}
               onChange={handleChange}
-              placeholder="Search by events, name, location,  and more"
+              placeholder={t('searchBarPlaceholder')}
               className="w-full bg-transparent text-xs md:text-sm outline-none"
             />
           </div>
@@ -152,7 +153,7 @@ const EventSearchBar = ({
           type="submit"
           className="px-4 md:px-10 h-auto bg-[#FF5CAA] text-white text-xs font-medium md:text-base rounded-r-lg dark:bg-[#FF1A88]"
         >
-          Search
+          {t('searchBarSubmit')}
         </button>
       </form>
     </div>

@@ -6,5 +6,8 @@
   "eventHeading": "世界各地的区块链和加密货币会议",
   "eventDescription": "在全球区块链和加密事件及会议上，向行业专家学习加密趋势，探索投资机会，与潜在合作伙伴建立联系，与志同道合的个人交流，并为未来的合作关系培育关系。",
   "homePageHeading": "区块链和加密货币事件",
-  "homePageAction": "查看活动"
+  "homePageAction": "查看活动",
+  "searchBarPlaceholder": "按事件、名称、地点等搜索",
+  "searchBarSubmit": "搜索",
+  "searchDatePlaceholder": "选择日期"
 }

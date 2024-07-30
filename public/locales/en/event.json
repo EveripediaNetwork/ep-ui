@@ -6,5 +6,8 @@
   "eventHeading": "Blockchain and cryptocurrency conferences around the world",
   "homePageHeading": "Blockchain and Cryptocurrency Events",
   "eventDescription": "Learn from the industry experts on crypto trends, explore investment opportunities, network with potential partners, connect with like-minded individuals, and cultivate relationship for future collaborations at global blockchain and crypto events and conferences.",
-  "homePageAction": "View Events"
+  "homePageAction": "View Events",
+  "searchBarPlaceholder": "Search by events, name, location, and more",
+  "searchBarSubmit": "Search",
+  "searchDatePlaceholder": "Select Date"
 }
