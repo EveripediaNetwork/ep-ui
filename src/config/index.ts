@@ -1,4 +1,6 @@
 import { env } from '@/env.mjs'
+import { EditorABI } from '@/abi/EditorAbi'
+import { publicWhitelistValidatorAbi } from '@/abi/publicWhitelistValidatorAbi'
 
 const config = {
   iqAddress: env.NEXT_PUBLIC_IQ_ADDRESS,
@@ -21,6 +23,9 @@ const config = {
   blogAccount2: env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT2,
   blogAccount3: env.NEXT_PUBLIC_EVERIPEDIA_BLOG_ACCOUNT3,
   walletConnectProjectId: env.NEXT_PUBLIC_WALLET_CONNECT_PROJECT_ID,
+  whitelistAbi: env.NEXT_PUBLIC_IS_PRODUCTION
+    ? EditorABI
+    : publicWhitelistValidatorAbi,
 }
 
 export default config
