@@ -15,8 +15,6 @@ const CategoriesList = () => {
     limit: 30,
   })
 
-  console.log(data)
-
   return (
     <div className="flex flex-col gap-10 container mx-auto py-20 relative px-4 lg:px-8 2xl:px-0">
       <div className="absolute -top-1/2 right-20 rotate-6 w-[700px] h-[1150px] lg:rotate-45 rounded-[100%] bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl -z-20" />
