@@ -5,19 +5,19 @@ import {
   setCurrentMessage,
   setMessages,
 } from '@/store/slices/chatbot-slice'
-import { Box, Flex, Text, chakra } from '@chakra-ui/react'
-import React, { ReactNode, useEffect, useState } from 'react'
+import { Box, Flex, Text } from '@chakra-ui/react'
+import React, { ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import remarkGfm from 'remark-gfm'
 import ChatSources from './ChatSources'
 import styles from '../../../../../styles/markdown.module.css'
-import { RiArrowLeftDoubleFill, RiPlayFill } from 'react-icons/ri'
+import { RiArrowLeftDoubleFill } from 'react-icons/ri'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useAppSelector } from '@/store/hook'
 import { setIsLoading } from '@/store/slices/stream-slice'
 
-type ChartProps = {
+type ChatProps = {
   content: string
   alias: 'AI' | 'HUMAN'
   avatar?: ReactNode
@@ -27,163 +27,11 @@ type ChartProps = {
 const DEFAULT_RESPONSE =
   'I can assist you with any questions about crypto. What would you like to ask?'
 
-const _paginateContent = (text: string, charsPerPage: number) => {
-  const words = text.split(' ')
-  const pages = []
-  let currentPage = ''
-
-  words.forEach((word) => {
-    if ((currentPage + word).length > charsPerPage) {
-      pages.push(currentPage.trim())
-      currentPage = `${word} `
-    } else {
-      currentPage += `${word} `
-    }
-  })
-
-  if (currentPage.trim()) {
-    pages.push(currentPage.trim())
-  }
-
-  return pages
-}
-
-const _usePaginateContent = (content: string) => {
-  const [pages, setPages] = useState<string[]>([])
-
-  useEffect(() => {
-    const contentArray = content.split(' ') // Split content into words
-    let tempPage = ''
-    const tempPages = []
-    let tempHeight = 0
-
-    const tempElement = document.createElement('div')
-    const wrapperElement = document.querySelector('.mkd-wrapper')
-    tempElement.style.position = 'absolute'
-    tempElement.style.width = '319px'
-    tempElement.style.maxHeight = '140px'
-    // tempElement.style.lineHeight = '20'
-    tempElement.style.visibility = 'hidden'
-    document.body.appendChild(tempElement)
-
-    if (!wrapperElement) return
-
-    for (let i = 0; i < contentArray.length; i++) {
-      const word = contentArray[i]
-      const testPage = `${tempPage} ${word} `
-
-      tempElement.innerText = testPage // Temporarily set text to measure
-      const computedStyles = window.getComputedStyle(tempElement)
-      tempHeight = parseInt(computedStyles.height, 10)
-      // console.log(window.getComputedStyle(wrapperElement).height)
-      const wrapperHeight = parseInt(
-        window.getComputedStyle(wrapperElement).height,
-        10,
-      )
-      // console.log(wrapperHeight)
-      if (wrapperHeight >= 110) {
-        // console.log({ tempHeight: wrapperElement })
-        tempPages.push(tempPage.trim())
-        tempPage = `${word} `
-      } else {
-        tempPage = testPage
-      }
-    }
-
-    // Add the last page if there is remaining content
-    if (tempPage.trim()) {
-      tempPages.push(tempPage.trim())
-    }
-
-    setPages(tempPages)
-
-    // Cleanup: remove the temporary element
-    document.body.removeChild(tempElement)
-  }, [content])
-
-  return pages
-}
-
-const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
+const ChatCard = ({ content, alias, answerSources }: ChatProps) => {
+  const dispatch = useDispatch()
   const { isError } = useAppSelector((state) => state.stream)
-  const _markdownTableRegex = /\|.*\|.*\|/
-  const [currentPageIndex, setCurrentPageIndex] = useState(0)
-  const pages = content.split('\n\n')
 
   const [answerSource] = answerSources || []
-
-  const goToNextPage = () => {
-    setCurrentPageIndex(currentPageIndex + 1)
-  }
-
-  const goToPreviousPage = () => {
-    setCurrentPageIndex(currentPageIndex - 1)
-  }
-
-  return (
-    <div className="">
-      <div className="mkd-wrapper">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          children={pages[currentPageIndex]}
-          components={{
-            p(props) {
-              const { children, ...rest } = props
-              return (
-                <Text
-                  {...rest}
-                  style={{
-                    marginBottom: '4px',
-                    wordBreak: 'break-word',
-                  }}
-                >
-                  {children}
-                </Text>
-              )
-            },
-          }}
-        />
-      </div>
-      {alias === 'AI' &&
-        content !== DEFAULT_RESPONSE &&
-        !isError &&
-        currentPageIndex === pages.length - 1 && (
-          <ChatSources answerSource={answerSource} />
-        )}
-      <Box display={'flex'} gap={'8px'} mt={'8px'} justifyContent={'flex-end'}>
-        {currentPageIndex > 0 && (
-          <chakra.button
-            bgColor={'gray.100'}
-            borderRadius={'2px'}
-            _dark={{ bgColor: 'whiteAlpha.200' }}
-            type="button"
-            onClick={goToPreviousPage}
-            disabled={currentPageIndex === 0}
-            transform="scaleX(-1)"
-          >
-            <RiPlayFill size={16} />
-          </chakra.button>
-        )}
-
-        {currentPageIndex < pages.length - 1 && (
-          <chakra.button
-            bgColor={'gray.100'}
-            borderRadius={'2px'}
-            _dark={{ bgColor: 'whiteAlpha.200' }}
-            type="button"
-            onClick={goToNextPage}
-            disabled={currentPageIndex === pages.length - 1}
-          >
-            <RiPlayFill size={16} />
-          </chakra.button>
-        )}
-      </Box>
-    </div>
-  )
-}
-
-const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
-  const dispatch = useDispatch()
 
   return (
     <Flex
@@ -251,18 +99,31 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
             width={'full'}
             style={{ fontSize: '14px' }}
           >
-            {alias === 'HUMAN' ? (
-              <ReactMarkdown remarkPlugins={[remarkGfm]}>
-                {content}
-              </ReactMarkdown>
-            ) : (
-              <ContentPagination
-                content={content}
-                alias={alias}
-                answerSources={answerSources}
-              />
-            )}
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                p(props) {
+                  const { children, ...rest } = props
+                  return (
+                    <Text
+                      {...rest}
+                      style={{
+                        marginBottom: '4px',
+                        wordBreak: 'break-word',
+                      }}
+                    >
+                      {children}
+                    </Text>
+                  )
+                },
+              }}
+            >
+              {content}
+            </ReactMarkdown>
           </Box>
+          {alias === 'AI' && content !== DEFAULT_RESPONSE && !isError && (
+            <ChatSources answerSource={answerSource} />
+          )}
         </Flex>
       </Flex>
     </Flex>
