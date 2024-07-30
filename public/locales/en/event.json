@@ -10,5 +10,25 @@
   "searchBarPlaceholder": "Search by events, name, location, and more",
   "searchBarSubmit": "Search",
   "searchDatePlaceholder": "Select Date",
-  "trendingEventsHeading": "Trending Events"
+  "trendingEventsHeading": "Trending Events",
+  "eventsInterestHeading": "Interests",
+  "eventsInterestDescription": "Get event suggestions based on your interests.",
+  "interests": {
+    "Blockchains": "Blockchains",
+    "BinanceSmartChain": "BinanceSmartChain",
+    "Protocols": "Protocols",
+    "Conference": "Conference",
+    "Cexes": "Cexes",
+    "Ethereum": "Ethereum",
+    "Festival": "Festival",
+    "Forum": "Forum",
+    "Polygon": "Polygon",
+    "Solana": "Solana",
+    "AI": "AI",
+    "Games": "Games",
+    "Hackathon": "Hackathon",
+    "Bitcoin": "Bitcoin",
+    "Dexes": "Dexes",
+    "Online": "Online"
+  }
 }

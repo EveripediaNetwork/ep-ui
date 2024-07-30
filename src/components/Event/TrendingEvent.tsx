@@ -27,7 +27,7 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         }}
       >
         <CarouselContent className="">
-          {events?.map(event => (
+          {events?.map((event) => (
             <CarouselItem
               className=" max-[375px]:h-[300px] h-[350px] xl:h-[300px] overflow-hidden basis-[80%] md:basis-[40%] xl:basis-[309px] rounded-xl relative ml-4"
               key={event.id}

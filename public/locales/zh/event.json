@@ -10,5 +10,25 @@
   "searchBarPlaceholder": "按事件、名称、地点等搜索",
   "searchBarSubmit": "搜索",
   "searchDatePlaceholder": "选择日期",
-  "trendingEventsHeading": "热门活动"
+  "trendingEventsHeading": "热门活动",
+  "eventsInterestHeading": "兴趣",
+  "eventsInterestDescription": "根据您的兴趣获取活动建议。",
+  "interests": {
+    "Blockchains": "区块链",
+    "BinanceSmartChain": "币安智能链",
+    "Protocols": "协议",
+    "Conference": "会议",
+    "Cexes": "切克斯",
+    "Ethereum": "以太坊",
+    "Festival": "节日",
+    "Forum": "论坛",
+    "Polygon": "多边形",
+    "Solana": "索拉纳",
+    "AI": "AI",
+    "Games": "游戏",
+    "Hackathon": "黑客马拉松",
+    "Bitcoin": "比特币",
+    "Dexes": "地精",
+    "Online": "在线的"
+  }
 }
