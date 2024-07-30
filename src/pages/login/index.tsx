@@ -30,7 +30,7 @@ const Login = () => {
       <Head>
         <link rel="preconnect" href="https://assets.auth.magic.link" />
       </Head>
-      <div className="max-w-2xl mx-auto mt-12 mb-32 px-4 lg:px-8 2xl:px-0">
+      <div className="max-w-2xl mx-auto mt-24 mb-32 px-4 lg:px-8 2xl:px-0">
         <h1 className="text-2xl font-bold mb-4">{t('loginConnectWallet')}</h1>
         <Connectors handleRedirect={handleRedirect} />
       </div>

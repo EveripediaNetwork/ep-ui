@@ -19,7 +19,7 @@ const CategoriesList = () => {
 
   return (
     <div className="flex flex-col gap-10 container mx-auto py-20 relative px-4 lg:px-8 2xl:px-0">
-      <div className="absolute -top-1/2 right-20 rotate-6 w-[700px] h-[1500px] lg:rotate-45 rounded-[100%] bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl -z-20" />
+      <div className="absolute -top-1/2 right-20 rotate-6 w-[700px] h-[1150px] lg:rotate-45 rounded-[100%] bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl -z-20" />
       <div className="flex flex-col gap-3">
         <h1 className="text-2xl font-semibold">{t('browseCategory')}</h1>
         <h2 className="dark:text-alpha-800 text-gray-600 font-medium max-w-3xl">
@@ -38,7 +38,7 @@ const CategoriesList = () => {
           ))}
           <Link
             href="/categories"
-            className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm text-gray600 group h-9 border dark:border-gray-700 border-gray-200/20 bg-gray-100 dark:bg-alpha-50"
+            className="flex items-center gap-2 rounded-full px-4 py-2.5 text-sm text-gray600 dark:text-gray-300 group h-9 border dark:border-gray-700 border-gray-200/20 bg-gray-100 dark:bg-alpha-50"
           >
             View all
             <ArrowRightIcon className="w-3 h-3 transition-transform group-hover:translate-x-1 duration-300 ease-in-out delay-150" />

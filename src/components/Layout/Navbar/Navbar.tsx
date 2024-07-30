@@ -6,32 +6,19 @@ import useLanguageChange from '@/hooks/useLanguageChange'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { RootState, store } from '@/store/store'
-import {
-  Button,
-  chakra,
-  Collapse,
-  HStack,
-  IconButton,
-  Menu,
-  MenuButton,
-  MenuItemOption,
-  MenuList,
-  MenuOptionGroup,
-  Text,
-  useDisclosure,
-} from '@chakra-ui/react'
-import { AlignJustify, ChevronDownIcon, X } from 'lucide-react'
+import { Collapse, IconButton, useDisclosure } from '@chakra-ui/react'
+import { AlignJustify, X } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Suspense, useEffect, useRef, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import DesktopNav from './DesktopNav'
+import { LocaleSelect } from './LocaleSelect'
 import MobileNav from './MobileNav'
 import SuggestWikiModal from './SuggestWiki'
-const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
+import { Button } from '@/components/ui/button'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
@@ -46,7 +33,7 @@ const Navbar = () => {
       dispatch(setDrawerOpen(false))
     },
   })
-  const loginButtonRef = useRef<HTMLButtonElement>(null)
+  // const loginButtonRef = useRef<HTMLButtonElement>(null)
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
@@ -89,94 +76,20 @@ const Navbar = () => {
             </h1>
           </div>
         </Link>
-        <HStack
-          spacing={4}
-          display={{
-            base: 'none',
-            xl: 'flex',
-          }}
-        >
-          <DesktopNav />
-        </HStack>
+        <DesktopNav />
         <Suspense>
           <NavSearch setHamburger={setIsHamburgerOpen} />
         </Suspense>
-        <HStack
-          ml={2}
-          spacing={3}
-          display={{
-            base: 'none',
-            xl: 'flex',
-          }}
-        >
-          <Menu placement={'bottom-end'}>
-            <MenuButton
-              as={Button}
-              fontSize="sm"
-              paddingX={0}
-              bg="transparent"
-              sx={{
-                marginRight: 0,
-                fontWeight: 600,
-                fontSize: 'sm',
-                color: 'linkColor',
-                _active: {
-                  bg: 'transparent',
-                },
-                _hover: {
-                  bg: 'transparent',
-                },
-              }}
-              rightIcon={<ChevronDownIcon className="text-alpha-700 w-5 h-5" />}
-              iconSpacing={1}
-              defaultValue={locale}
-            >
-              <chakra.span textTransform={'uppercase'}>{locale}</chakra.span>
-            </MenuButton>
-            <MenuList color="linkColor">
-              <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map((langObj) => (
-                  <MenuItemOption
-                    key={langObj.locale}
-                    fontSize="md"
-                    value={langObj.locale}
-                    isChecked={langObj.locale === lang}
-                  >
-                    <HStack>
-                      <Image
-                        src={langObj.icon}
-                        alt={langObj.name}
-                        width={24}
-                        height={24}
-                      />
-                      <Text>{langObj.name}</Text>
-                    </HStack>
-                  </MenuItemOption>
-                ))}
-              </MenuOptionGroup>
-            </MenuList>
-          </Menu>
+        <div className="hidden lg:flex flex-row gap-2 items-center">
+          <LocaleSelect
+            languageData={languageData}
+            locale={locale}
+            handleLangChange={handleLangChange}
+          />
           <Button
             variant="outline"
-            paddingInline={4}
-            size={'sm'}
-            borderRadius={'6px'}
-            fontSize="14px"
-            fontWeight={600}
-            color="linkColor"
+            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800"
             onClick={userCanEdit && address ? () => {} : onSuggestWikiOpen}
-            _hover={{
-              textDecoration: 'none',
-              bgColor: 'gray.200',
-            }}
-            whiteSpace="nowrap"
-            borderColor={'gray.200'}
-            _dark={{
-              borderColor: 'whiteAlpha.300',
-              _hover: {
-                bgColor: 'whiteAlpha.300',
-              },
-            }}
           >
             {userCanEdit && address ? (
               <Link href="/create-wiki">{t('Create Wiki')}</Link>
@@ -188,21 +101,20 @@ const Navbar = () => {
             isOpen={isSuggestWikiOpen}
             onClose={onSuggestWikiClose}
           />
-          <WalletNavMenu
-            drawerOperations={drawerOperations}
-            setHamburger={setIsHamburgerOpen}
-          />
-        </HStack>
-        <HStack
-          display={{
-            base: 'flex',
-            xl: 'none',
-          }}
-        >
-          {/* <WalletNavMenu
-            drawerOperations={drawerOperations}
-            setHamburger={setIsHamburgerOpen}
-          /> */}
+          {address ? (
+            <WalletDrawer />
+          ) : (
+            <Button
+              size="sm"
+              className="hidden md:block bg-brand-500 dark:bg-brand-800 text-white hover:bg-brand-600 dark:hover:bg-brand-700 font-semibold text-sm px-6"
+              onClick={() => router.push('/login')}
+            >
+              {t('signIn')}
+            </Button>
+          )}
+        </div>
+        <div className="lg:hidden flex flex-row gap-2 items-center">
+          <WalletDrawer />
           <IconButton
             onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
             icon={
@@ -215,15 +127,8 @@ const Navbar = () => {
             variant="ghost"
             aria-label="Toggle Navigation"
           />
-        </HStack>
+        </div>
       </div>
-      {drawerOperations.isOpen && (
-        <WalletDrawer
-          finalFocusRef={loginButtonRef}
-          setHamburger={setIsHamburgerOpen}
-          toggleOperations={drawerOperations}
-        />
-      )}
       <Collapse
         in={isHamburgerOpen}
         animateOpacity

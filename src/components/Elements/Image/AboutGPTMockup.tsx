@@ -11,8 +11,6 @@ export type AboutGPTMockupType = {
 const AboutGPTMockup = ({ bg, w, h }: AboutGPTMockupType) => {
   const mockup = useColorModeValue(bg.light, bg.dark)
 
-  console.log(mockup)
-
   return <Image src={mockup} alt="iqgpt-mockup" width={w} height={h} />
 }
 

@@ -22,7 +22,7 @@ const DesktopNav = () => {
 
   return (
     <div
-      className="flex flex-row gap-2"
+      className="hidden lg:flex flex-row gap-2"
       onMouseLeave={() => setVisibleMenu(null)}
     >
       {NAV_ITEMS.map((navItem: NavItem) => {
