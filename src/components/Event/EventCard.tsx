@@ -74,7 +74,7 @@ const EventCard = ({
               <p className="text-xs text-gray600 dark:text-alpha-800 mt-1">
                 {excerpt}
               </p>
-              <div className="flex text-[10px] md:text-xs my-2 divide-x items-center">
+              <div className="flex text-xs md:text-xs my-2 divide-x items-center">
                 <span className="pr-2 flex gap-1 items-center">
                   <span className="text-brand-800 ">
                     <RiCalendar2Line />
@@ -127,11 +127,11 @@ const EventCard = ({
                 ))}
               </span>
             </div>
-            <div className="flex flex-wrap items-center gap-2 md:gap-3">
+            <div className="flex flex-wrap items-center gap-1 md:gap-3">
               {tags?.map((tag) => (
                 <div
                   key={tag.id}
-                  className="px-2 md:px-3 text-[8px] md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]"
+                  className="px-[6px] md:px-3 text-xs md:text-xs py-1 border dark:border-alpha-300 border-gray300 rounded-[100px]"
                 >
                   {tag.id}
                 </div>
@@ -145,6 +145,7 @@ const EventCard = ({
                 alt=""
                 fill
                 sizes="100%, (min-width: 768px) 140px"
+                className=" object-cover"
               />
             </div>
           </div>
