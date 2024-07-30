@@ -1,6 +1,5 @@
 import { useEffect, useCallback } from 'react'
 import { useAccount, useContractRead } from 'wagmi'
-import { EditorABI } from '@/abi/EditorAbi'
 import config from '@/config'
 
 const useIsWhitelistedEditor = () => {
@@ -11,7 +10,7 @@ const useIsWhitelistedEditor = () => {
     isLoading,
   } = useContractRead({
     address: config.editorAddress as `0x${string}`,
-    abi: EditorABI,
+    abi: config.whitelistAbi as any,
     functionName: 'isEditorWhitelisted',
     args: address ? [address] : undefined,
     enabled: !!address,
