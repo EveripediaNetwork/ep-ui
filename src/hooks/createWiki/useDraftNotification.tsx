@@ -26,7 +26,6 @@ const useDraftNotifications = () => {
     const isDraftDifferent = draft && !isDeepEqual(draft, wikiData)
 
     if (!toast.isActive('draft-loaded') && draft && isDraftDifferent) {
-      console.log('show totast')
       toast({
         id: 'draft-loaded',
         title: (
