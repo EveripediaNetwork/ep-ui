@@ -84,7 +84,8 @@ export const WikiPublishButton = () => {
   const showModal =
     connectedChainId !== chainId &&
     !networkSwitchAttempted &&
-    switchChainNotAllowed
+    !switchChainNotAllowed
+
   const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')
@@ -149,9 +150,8 @@ export const WikiPublishButton = () => {
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', (newlyConnectedChain) =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
