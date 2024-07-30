@@ -9,5 +9,6 @@
   "homePageAction": "View Events",
   "searchBarPlaceholder": "Search by events, name, location, and more",
   "searchBarSubmit": "Search",
-  "searchDatePlaceholder": "Select Date"
+  "searchDatePlaceholder": "Select Date",
+  "trendingEventsHeading": "Trending Events"
 }

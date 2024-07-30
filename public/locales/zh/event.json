@@ -9,5 +9,6 @@
   "homePageAction": "查看活动",
   "searchBarPlaceholder": "按事件、名称、地点等搜索",
   "searchBarSubmit": "搜索",
-  "searchDatePlaceholder": "选择日期"
+  "searchDatePlaceholder": "选择日期",
+  "trendingEventsHeading": "热门活动"
 }

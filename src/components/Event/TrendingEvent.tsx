@@ -14,6 +14,7 @@ import Autoplay from 'embla-carousel-autoplay'
 import { TEvents } from '@/services/event'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { parseDateRange } from '@/lib/utils'
+import { useTranslation } from 'next-i18next'
 
 export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
   return (
@@ -26,7 +27,7 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         }}
       >
         <CarouselContent className="">
-          {events?.map((event) => (
+          {events?.map(event => (
             <CarouselItem
               className=" max-[375px]:h-[300px] h-[350px] xl:h-[300px] overflow-hidden basis-[80%] md:basis-[40%] xl:basis-[309px] rounded-xl relative ml-4"
               key={event.id}
@@ -81,9 +82,12 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
 }
 
 const TrendingEvent = ({ events }: { events: TEvents[] }) => {
+  const { t } = useTranslation('event')
   return (
     <div className="mt-6 md:mt-[30px] max-w-[1296px] mx-auto ">
-      <h4 className="font-semibold text-xl 2xl:ml-4">Trending Events</h4>
+      <h4 className="font-semibold text-xl 2xl:ml-4">
+        {t('trendingEventsHeading')}
+      </h4>
       {events.length > 4 && <TrendingEventsCard events={events} />}
     </div>
   )
