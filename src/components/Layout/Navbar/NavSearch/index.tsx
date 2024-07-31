@@ -335,22 +335,16 @@ const NavSearch = (props: NavSearchProps) => {
           })
         }}
       >
-        <InputGroup
-          size="lg"
-          maxW="600px"
-          display={{ base: 'none', md: 'block' }}
-          {...inputGroupProps}
-        >
+        <InputGroup size="lg" {...inputGroupProps}>
           <InputLeftElement
-            ml={{ base: '15px', xl: 'unset' }}
+            ml={{ base: '8px', xl: 'unset' }}
             pointerEvents="none"
             h="full"
           >
             <Search2Icon color="gray.300" />
           </InputLeftElement>
           <AutoCompleteInput
-            maxW={{ base: 'unset', md: '600px' }}
-            ml={{ base: '15px', xl: 'unset' }}
+            width={{ base: '360px', md: '720px', xl: '800px' }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('SearchWikiPlaceholder')}
@@ -364,10 +358,10 @@ const NavSearch = (props: NavSearchProps) => {
           />
         </InputGroup>
         <AutoCompleteList
-          mx={{ base: '15px', xl: 'unset' }}
           p="0"
           maxH="auto"
           shadow="lg"
+          width={{ base: '360px', md: '720px', lg: '800px' }}
           {...listProps}
         >
           {isLoading ? loadingView : searchList}

@@ -28,7 +28,7 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         <CarouselContent className="">
           {events?.map((event) => (
             <CarouselItem
-              className="h-96 basis-full lg:basis-96 rounded-xl relative ml-4"
+              className="h-96 basis-full md:basis-80 lg:basis-96 rounded-xl relative ml-4"
               key={event.id}
             >
               <Image

@@ -7,7 +7,7 @@ const AboutIqgpt = () => {
   const { t } = useTranslation('home')
   return (
     <div className="container mx-auto px-4 lg:px-8 2xl:px-0 relative py-20">
-      <div className="flex flex-col gap-2 lg:gap-6 dark:bg-alpha-50 bg-slate-100 justify-center items-center pt-6 rounded-xl lg:mb-96">
+      <div className="flex flex-col gap-2 lg:gap-6 dark:bg-alpha-50 bg-slate-100 justify-center items-center pt-6 rounded-xl md:mb-72 lg:mb-96">
         <div className="flex flex-row gap-2 bg-brand-50 dark:bg-brand-100 rounded-2xl text-brand-500 dark:text-brand-800 p-1">
           <div className="bg-white py-0.5 px-3 rounded-full">
             {t('IQGPTHeading1')}
@@ -63,8 +63,8 @@ const AboutIqgpt = () => {
                 light: '/images/mockups/mockup-md.png',
                 dark: '/images/mockups/mockup-md-dark.png',
               }}
-              w={570}
-              h={548}
+              w={620}
+              h={600}
             />
           </div>
           <div className="block md:hidden">

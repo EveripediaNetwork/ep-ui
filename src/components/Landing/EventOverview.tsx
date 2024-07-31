@@ -15,7 +15,7 @@ const EventOverview = () => {
     <>
       {data && data.length > 2 && (
         <div className="container mx-auto py-14 md:py-20 xl:py-24 px-4">
-          <div className="flex flex-col lg:flex-row gap-10 mt-10">
+          <div className="flex flex-col md:flex-row gap-10 mt-10">
             <div className="flex items-center flex-1">
               <div className="flex flex-col gap-10">
                 <h2 className="text-2xl md:text-4xl font-semibold dark:text-alpha-900">

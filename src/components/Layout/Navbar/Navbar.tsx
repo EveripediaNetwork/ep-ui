@@ -66,7 +66,7 @@ const Navbar = () => {
         height: drawerOperations.isOpen ? '100%' : 'unset',
       }}
     >
-      <div className="flex gap-8 lg:gap-40 xl:gap-8 h-16 items-center justify-between px-4 lg:px-8">
+      <div className="flex gap-8 lg:gap-40 xl:gap-8 h-16 items-center justify-between px-4 lg:px-8 border-b lg:border-b-0 dark:border-alpha-200 border-gray-200">
         <Link prefetch={false} href="/">
           <div className="flex flex-row gap-2 items-center">
             <Logo />
@@ -76,9 +76,11 @@ const Navbar = () => {
           </div>
         </Link>
         <DesktopNav />
-        <Suspense>
-          <NavSearch setHamburger={setIsHamburgerOpen} />
-        </Suspense>
+        <div className="hidden lg:block w-full">
+          <Suspense>
+            <NavSearch setHamburger={setIsHamburgerOpen} />
+          </Suspense>
+        </div>
         <div className="hidden lg:flex flex-row gap-4 items-center">
           <LocaleSelect
             languageData={languageData}
@@ -105,7 +107,7 @@ const Navbar = () => {
           ) : (
             <Button
               size="sm"
-              className="hidden md:block bg-brand-500 dark:bg-brand-800 text-white hover:bg-brand-600 dark:hover:bg-brand-700 font-semibold text-sm px-6"
+              className="hidden lg:block bg-brand-500 dark:bg-brand-800 text-white hover:bg-brand-600 dark:hover:bg-brand-700 font-semibold text-sm px-6"
               onClick={() => router.push('/login')}
             >
               {t('signIn')}
@@ -127,6 +129,11 @@ const Navbar = () => {
             aria-label="Toggle Navigation"
           />
         </div>
+      </div>
+      <div className="block lg:hidden w-full py-3 mx-4">
+        <Suspense>
+          <NavSearch setHamburger={setIsHamburgerOpen} />
+        </Suspense>
       </div>
       <Collapse
         in={isHamburgerOpen}
