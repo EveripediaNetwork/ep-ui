@@ -38,13 +38,12 @@ type RankingListProps = {
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
-  const {
-    TokensListing,
-    aiTokensListing,
-    NFTsListing,
-    stableCoinsListing,
-    foundersListing,
-  } = rankings
+  const TokensListing = rankings?.TokensListing
+  const aiTokensListing = rankings?.aiTokensListing
+  const NFTsListing = rankings?.NFTsListing
+  const stableCoinsListing = rankings?.stableCoinsListing
+  const foundersListing = rankings?.foundersListing
+
   const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
   const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
@@ -121,44 +120,49 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           </p>
         </div>
         <div>
-          <Tabs defaultValue={t('rankingListButtonCryptocurrencies')}>
-            <TabsList className="mb-4 space-x-6">
-              <TabsTrigger
-                value={t('rankingListButtonCryptocurrencies')}
-                className="flex flex-row items-center gap-4"
-              >
-                <RiCoinsFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                <span>{t('rankingListButtonCryptocurrencies')}</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value={t('rankingListButtonStablecoins')}
-                className="flex flex-row items-center gap-2"
-              >
-                <RiCoinFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                <span>{t('rankingListButtonStablecoins')}</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value={t('rankingListButtonAITokens')}
-                className="flex flex-row items-center gap-2"
-              >
-                <RiRobotFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                <span>{t('rankingListButtonAITokens')}</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value={t('rankingListButtonFounders')}
-                className="flex flex-row items-center gap-2"
-              >
-                <RiUserFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                <span>{t('rankingListButtonFounders')}</span>
-              </TabsTrigger>
-              <TabsTrigger
-                value={t('rankingListButtonNfts')}
-                className="flex flex-row items-center gap-2"
-              >
-                <BiImage className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                <span>{t('rankingListButtonNfts')}</span>
-              </TabsTrigger>
-            </TabsList>
+          <Tabs
+            defaultValue={t('rankingListButtonCryptocurrencies')}
+            className="overflow-hidden"
+          >
+            <div className="overflow-x-auto">
+              <TabsList className="mb-4 space-x-6">
+                <TabsTrigger
+                  value={t('rankingListButtonCryptocurrencies')}
+                  className="flex flex-row items-center gap-4"
+                >
+                  <RiCoinsFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                  <span>{t('rankingListButtonCryptocurrencies')}</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value={t('rankingListButtonStablecoins')}
+                  className="flex flex-row items-center gap-2"
+                >
+                  <RiCoinFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                  <span>{t('rankingListButtonStablecoins')}</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value={t('rankingListButtonAITokens')}
+                  className="flex flex-row items-center gap-2"
+                >
+                  <RiRobotFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                  <span>{t('rankingListButtonAITokens')}</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value={t('rankingListButtonFounders')}
+                  className="flex flex-row items-center gap-2"
+                >
+                  <RiUserFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                  <span>{t('rankingListButtonFounders')}</span>
+                </TabsTrigger>
+                <TabsTrigger
+                  value={t('rankingListButtonNfts')}
+                  className="flex flex-row items-center gap-2"
+                >
+                  <BiImage className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                  <span>{t('rankingListButtonNfts')}</span>
+                </TabsTrigger>
+              </TabsList>
+            </div>
             <TabsContent value={t('rankingListButtonCryptocurrencies')}>
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />

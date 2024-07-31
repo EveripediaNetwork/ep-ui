@@ -1,5 +1,6 @@
 import Logo from '@/components/Elements/Logo/Logo'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
+import { Button } from '@/components/ui/button'
 import { languageData } from '@/data/LanguageData'
 import { useAddress } from '@/hooks/useAddress'
 import useLanguageChange from '@/hooks/useLanguageChange'
@@ -18,7 +19,6 @@ import DesktopNav from './DesktopNav'
 import { LocaleSelect } from './LocaleSelect'
 import MobileNav from './MobileNav'
 import SuggestWikiModal from './SuggestWiki'
-import { Button } from '@/components/ui/button'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
@@ -33,7 +33,6 @@ const Navbar = () => {
       dispatch(setDrawerOpen(false))
     },
   })
-  // const loginButtonRef = useRef<HTMLButtonElement>(null)
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
@@ -80,7 +79,7 @@ const Navbar = () => {
         <Suspense>
           <NavSearch setHamburger={setIsHamburgerOpen} />
         </Suspense>
-        <div className="hidden lg:flex flex-row gap-2 items-center">
+        <div className="hidden lg:flex flex-row gap-4 items-center">
           <LocaleSelect
             languageData={languageData}
             locale={locale}
@@ -88,7 +87,7 @@ const Navbar = () => {
           />
           <Button
             variant="outline"
-            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800"
+            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800 border-gray-200 dark:border-alpha-400"
             onClick={userCanEdit && address ? () => {} : onSuggestWikiOpen}
           >
             {userCanEdit && address ? (

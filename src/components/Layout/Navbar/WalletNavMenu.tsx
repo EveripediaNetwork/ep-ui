@@ -1,6 +1,5 @@
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useAddress } from '@/hooks/useAddress'
-import { Button } from '@chakra-ui/react'
 import { usePostHog } from 'posthog-js/react'
 
 const WalletNavMenu = () => {
@@ -12,21 +11,15 @@ const WalletNavMenu = () => {
   }
 
   return (
-    <Button
-      variant="unstyled"
-      color="linkColor"
-      cursor="pointer"
-      fontSize="3xl"
+    <div
+      onKeyDown={(e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          handleWalletIconAction()
+        }
+      }}
+      role="button"
+      className="hidden md:block cursor-pointer text-3xl font-semibold"
       onClick={handleWalletIconAction}
-      fontWeight={600}
-      _hover={{
-        textDecoration: 'none',
-        color: 'linkHoverColor',
-      }}
-      display={{
-        base: 'none',
-        md: 'block',
-      }}
     >
       <DisplayAvatar
         key={userAddress}
@@ -34,7 +27,7 @@ const WalletNavMenu = () => {
         size={30}
         alt={userAddress as string}
       />
-    </Button>
+    </div>
   )
 }
 

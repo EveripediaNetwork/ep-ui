@@ -17,7 +17,7 @@ type TabsType = {
 export const Tabs: TabsType[] = [
   {
     id: 'home',
-    href: '/',
+    href: '',
     title: 'Home',
     icon: RiHome5Fill,
   },

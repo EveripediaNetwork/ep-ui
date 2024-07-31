@@ -17,7 +17,7 @@ const Layout = ({
   return (
     <main className="flex flex-col min-h-screen">
       <Navbar />
-      <div>{children}</div>
+      <div className="mt-14 flex-1 overflow-hidden">{children}</div>
       <NavigationTabs />
       <Suspense>{!noFooter && <Footer />}</Suspense>
     </main>

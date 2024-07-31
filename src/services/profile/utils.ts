@@ -9,6 +9,7 @@ import {
   getUserSettings,
   UserEmail,
 } from '.'
+import config from '@/config'
 
 export enum UserProfileFetchOptions {
   WITH_ALL_SETTINGS = 0,
@@ -45,6 +46,7 @@ export const useUserProfileData = <T extends UserProfileFetchOptions>(
           )
           setProfileData(fetchedProfileData as ProfileDataType<T>)
         } else if (options === UserProfileFetchOptions.ONLY_AVATAR) {
+          if (!config.isProduction) return
           const { data: fetchedUserProfileAvatar } = await store.dispatch(
             getUserAvatar.initiate(account),
           )
