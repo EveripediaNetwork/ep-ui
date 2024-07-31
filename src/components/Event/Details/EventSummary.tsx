@@ -2,6 +2,7 @@ import { parseDateRange } from '@/lib/utils'
 import { TReferenceObject } from '@/utils/CreateWikiUtils/isValidWiki'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
+import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -13,6 +14,7 @@ import {
 } from 'react-icons/ri'
 
 const EventSummary = ({ event }: { event: Wiki }) => {
+  const { t } = useTranslation('event')
   const selected_profiles = [
     'facebook_profile',
     'twitter_profile',
@@ -22,26 +24,24 @@ const EventSummary = ({ event }: { event: Wiki }) => {
 
   const metadata = event.metadata
 
-  const social_profiles = metadata.filter((item) =>
+  const social_profiles = metadata.filter(item =>
     selected_profiles.includes(item.id),
   )
 
   const data =
-    metadata.find((element) => element.id === CommonMetaIds.REFERENCES)
-      ?.value || ''
+    metadata.find(element => element.id === CommonMetaIds.REFERENCES)?.value ||
+    ''
   const locationMeta = metadata.find(
-    (element) => element.id === CommonMetaIds.LOCATION,
+    element => element.id === CommonMetaIds.LOCATION,
   )
 
   const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
   const references: TReferenceObject[] = JSON.parse(data)
 
   let url
-  if (
-    references.find((item) => item.description.toLowerCase() === 'event link')
-  )
+  if (references.find(item => item.description.toLowerCase() === 'event link'))
     url = references.find(
-      (item) => item.description.toLowerCase() === 'event link',
+      item => item.description.toLowerCase() === 'event link',
     )?.url
 
   return (
@@ -60,19 +60,19 @@ const EventSummary = ({ event }: { event: Wiki }) => {
           target="_blank"
           className="bg-brand-500 dark:bg-brand-800 font-semibold text-xs rounded-md text-white flex justify-center py-[14px] lg:py-2 xl:py-[10px] w-full"
         >
-          Register/Get Tickets
+          {t('Register')}
         </Link>
       )}
       {eventLocation && (
         <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-          <span className="col-span-1">Location</span>
+          <span className="col-span-1">{t('Location')}</span>
           <span className="max-w-[163px] md:max-w-full lg:max-w-[119px] xl:col-span-2 xl:max-w-full">
             {eventLocation?.country}
           </span>
         </span>
       )}
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-        <span className="col-span-1">Date</span>
+        <span className="col-span-1">{t('Date')}</span>
         <span className="xl:col-span-2">
           {event?.events?.[0].date
             ? parseDateRange(event.events[0].date)
@@ -86,9 +86,9 @@ const EventSummary = ({ event }: { event: Wiki }) => {
       </span>
       {social_profiles.length > 0 && (
         <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-          <span className="col-span-1">Social profiles</span>
+          <span className="col-span-1">{t('Social Profiles')}</span>
           <span className="flex text-2xl xl:col-span-2 md:text-xl xl:text-2xl items-center gap-1">
-            {social_profiles.map((socials) => (
+            {social_profiles.map(socials => (
               <Link key={socials.id} href={`${socials.value}`} target="_blank">
                 {socials.id === 'twitter_profile' ? (
                   <RiTwitterFill className="hover:text-brand-500 dark:hover:text-brand-800 cursor-pointer" />
@@ -105,11 +105,11 @@ const EventSummary = ({ event }: { event: Wiki }) => {
         </span>
       )}
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[8px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-        <span className="col-span-1">Tags</span>
+        <span className="col-span-1">{t('Tags')}</span>
         <span className="flex flex-1 max-w-[209px] md:col-span-2 lg:col-span-1 xl:col-span-2 md:max-w-full lg:max-w-[150px] xl:max-w-[219px] gap-1 xl:gap-2 flex-wrap">
           {event.tags
-            .filter((tag) => tag.id !== 'Events')
-            .map((tag) => (
+            .filter(tag => tag.id !== 'Events')
+            .map(tag => (
               <Link
                 href={`/events?tags=${tag.id}`}
                 key={tag.id}

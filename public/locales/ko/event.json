@@ -79,5 +79,8 @@
   "NoNearbyEvents": "현재 근처에서 이용 가능한 이벤트가 없습니다. 나중에 다시 확인하세요.",
   "PopularEvents": "인기 이벤트",
   "PopularEventsDescription": "전 세계에서 가장 인기 있는 암호화폐 이벤트.",
-  "NoPopularEvents": "현재 인기 있는 이벤트가 없습니다. 나중에 다시 확인하세요."
+  "NoPopularEvents": "현재 인기 있는 이벤트가 없습니다. 나중에 다시 확인하세요.",
+  "Register": "등록/티켓 구매",
+  "Social Profiles": "소셜 프로필",
+  "Tags": "태그"
 }
