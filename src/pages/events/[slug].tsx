@@ -88,6 +88,7 @@ export const getStaticProps: GetStaticProps = async (ctx) => {
       'event',
       'common',
       'wiki',
+      'revision',
     ])),
   }
 
