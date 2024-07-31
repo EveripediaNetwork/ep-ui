@@ -116,20 +116,23 @@ const EventList = ({
                 </div>
                 <div className="grid gap-5 mt-3 md:mt-6 xl:mt-10 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
-                  {events.map((event) => (
-                    <EventCard
-                      isLoading={isLoading}
-                      id={event.id}
-                      key={event.id}
-                      title={event.title}
-                      excerpt={event.summary || ''}
-                      location={event.metadata}
-                      date={event.events[0]}
-                      tags={event.tags.filter((tag) => tag.id !== 'Events')}
-                      speakers={event?.speakerWikis || []}
-                      images={event.images}
-                    />
-                  ))}
+                  {events.map((event) => {
+                    const dateLength = event?.events?.length
+                    return (
+                      <EventCard
+                        isLoading={isLoading}
+                        id={event.id}
+                        key={event.id}
+                        title={event.title}
+                        excerpt={event.summary || ''}
+                        location={event.metadata}
+                        date={event.events[dateLength - 1]}
+                        tags={event.tags.filter((tag) => tag.id !== 'Events')}
+                        speakers={event?.speakerWikis || []}
+                        images={event.images}
+                      />
+                    )
+                  })}
                 </div>
               </div>
             </div>
