@@ -66,8 +66,8 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           display={'flex'}
           justifyContent={'center'}
           alignItems={'center'}
-          h="20px"
-          w={'20px'}
+          h="22px"
+          w={'22px'}
           borderRadius={'4px'}
           style={{
             marginInlineStart: '0px',
@@ -78,7 +78,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           }}
           disabled={isLoading}
         >
-          <RiSendPlaneFill size={'13px'} />
+          <RiSendPlaneFill size={'16px'} />
         </chakra.button>
       </HStack>
     </form>
