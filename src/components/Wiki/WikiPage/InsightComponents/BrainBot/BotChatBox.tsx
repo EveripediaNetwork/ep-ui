@@ -50,10 +50,11 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           fontSize={'14px'}
           placeholder={t('chatBotInputPlaceholder')}
           borderRadius={'0'}
+          my={2}
           paddingInline={'4px'}
           color={'gray.500'}
           _dark={{
-            color: 'whiteAlpha.600',
+            color: 'whiteAlpha.900',
           }}
           onChange={handleChange}
           disabled={isLoading}
