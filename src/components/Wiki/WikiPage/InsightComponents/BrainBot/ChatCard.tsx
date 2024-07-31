@@ -12,7 +12,7 @@ import { useDispatch } from 'react-redux'
 import remarkGfm from 'remark-gfm'
 import ChatSources from './ChatSources'
 import styles from '../../../../../styles/markdown.module.css'
-import { RiArrowLeftDoubleFill } from 'react-icons/ri'
+import { RiArrowLeftSLine } from 'react-icons/ri'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useAppSelector } from '@/store/hook'
 import { setIsLoading } from '@/store/slices/stream-slice'
@@ -58,7 +58,7 @@ const ChatCard = ({ content, alias, answerSources }: ChatProps) => {
           dispatch(setIsLoading(false))
         }}
       >
-        <RiArrowLeftDoubleFill size={'24px'} />
+        <RiArrowLeftSLine size={'24px'} />
       </Box>
       <Flex
         border={'1px'}
