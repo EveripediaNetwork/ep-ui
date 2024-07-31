@@ -147,8 +147,9 @@ export const WikiPublishButton = () => {
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener('chainChanged', (newlyConnectedChain) =>
-          setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener(
+          'chainChanged',
+          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
         )
       }
     }
