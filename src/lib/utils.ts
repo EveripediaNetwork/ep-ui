@@ -62,6 +62,7 @@ export const groupEventsByMonth = (events: TEvents[]) => {
     const date =
       event?.events?.[dateLength - 1]?.date ||
       event?.events?.[dateLength - 1]?.multiDateStart
+
     if (date) {
       const dateParts = date.split('-')
       if (dateParts.length >= 2) {

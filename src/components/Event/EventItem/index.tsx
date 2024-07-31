@@ -13,6 +13,8 @@ type TEventItemProps = {
 
 const EventItem = (props: TEventItemProps) => {
   const { event, eventLocation } = props
+  const dateLength = event.events?.length
+
   return (
     <div key={event.id} className="flex group gap-2">
       <Link
@@ -39,23 +41,31 @@ const EventItem = (props: TEventItemProps) => {
               <RiCalendar2Line />
             </span>
             <span className="text-gray800 dark:text-alpha-900">
-              {event.events?.[0].date
-                ? parseDateRange(event.events?.[0].date)
-                : event.events?.[0].multiDateStart &&
-                  event.events?.[0].multiDateEnd
+              {event.events?.[dateLength - 1].date
+                ? parseDateRange(String(event.events?.[dateLength - 1].date))
+                : event.events?.[dateLength - 1].multiDateStart &&
+                  event.events?.[dateLength - 1].multiDateEnd
                 ? parseDateRange(
-                    `${event.events?.[0].multiDateStart}/${event.events?.[0].multiDateEnd}`,
+                    `${event.events?.[dateLength - 1].multiDateStart}/${
+                      event.events?.[dateLength - 1].multiDateEnd
+                    }`,
                   )
                 : ''}
             </span>
           </span>
-          {eventLocation && (
+          {(eventLocation?.length > 0
+            ? true
+            : Array.isArray(eventLocation)
+            ? false
+            : eventLocation) && (
             <span className="pl-1 xl:pr-2 flex gap-1 items-center">
               <span className="text-brand-800 lg:text-[9px] xl:text-base">
                 <RiMapPinRangeLine />
               </span>
               <span className="text-gray800 dark:text-alpha-900">
-                {eventLocation?.country}
+                {Array.isArray(eventLocation)
+                  ? eventLocation[0]?.country
+                  : eventLocation?.country || ''}
               </span>
             </span>
           )}
