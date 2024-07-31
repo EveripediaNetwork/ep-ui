@@ -16,7 +16,13 @@ import {
   setMessages,
 } from '@/store/slices/chatbot-slice'
 
-const BrainBotMobile = ({ wiki }: { wiki: Wiki }) => {
+const BrainBotMobile = ({
+  wiki,
+  onInteraction,
+}: {
+  wiki: Wiki
+  onInteraction: (action: string, properties?: Record<string, any>) => void
+}) => {
   const [open, setOpen] = useState(false)
   const { t } = useTranslation('wiki')
   const { currentHumanMessage, currentChatId, currentAIMessage } =
@@ -91,7 +97,7 @@ const BrainBotMobile = ({ wiki }: { wiki: Wiki }) => {
           {currentHumanMessage || currentChatId || currentAIMessage ? (
             <BotMessages />
           ) : (
-            <BotSuggestions wiki={wiki} />
+            <BotSuggestions wiki={wiki} onInteraction={onInteraction} />
           )}
         </Box>
         <BotChatBox wiki={wiki} />

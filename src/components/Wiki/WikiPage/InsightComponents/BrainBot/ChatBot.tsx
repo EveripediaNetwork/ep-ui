@@ -15,7 +15,12 @@ import {
   setMessages,
 } from '@/store/slices/chatbot-slice'
 
-const ChatBot = ({ wiki }: { wiki: Wiki }) => {
+interface ChatBotProps {
+  wiki: Wiki
+  onInteraction: (action: string, properties?: Record<string, any>) => void
+}
+
+const ChatBot = ({ wiki, onInteraction }: ChatBotProps) => {
   const { t } = useTranslation('wiki')
   const { currentHumanMessage, currentChatId, currentAIMessage } =
     useAppSelector((state) => state.message)
@@ -76,7 +81,7 @@ const ChatBot = ({ wiki }: { wiki: Wiki }) => {
         {currentHumanMessage || currentChatId || currentAIMessage ? (
           <BotMessages />
         ) : (
-          <BotSuggestions wiki={wiki} />
+          <BotSuggestions wiki={wiki} onInteraction={onInteraction} />
         )}
       </Box>
       <BotChatBox wiki={wiki} />
@@ -89,6 +94,7 @@ const ChatBot = ({ wiki }: { wiki: Wiki }) => {
         paddingBlock={'6px'}
         alignItems={'center'}
         h="full"
+        onClick={() => onInteraction('iqgpt_link_click')}
       >
         <IQGPTIcon width={'14px'} height={'14px'} />
         <Text fontSize={'8px'}>{t('chatBotFooter')}</Text>

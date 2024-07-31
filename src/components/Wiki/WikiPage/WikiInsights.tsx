@@ -20,6 +20,7 @@ import NFTStatistics from './InsightComponents/NFTStatistics'
 import BrainBot from './InsightComponents/BrainBot/BrainBot'
 import BrainBotMobile from './InsightComponents/BrainBot/BrainBotMobile'
 import WikiRating from './InsightComponents/WikiRating'
+import { usePostHog } from 'posthog-js/react'
 
 export interface WikiInsightsProps {
   wiki: Wiki
@@ -28,6 +29,7 @@ export interface WikiInsightsProps {
 }
 
 const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
+  const posthog = usePostHog()
   const stickyRef = useStickyBox({ offsetTop: 50, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
     (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
@@ -51,6 +53,16 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
 
   const [tokenStats, setTokenStats] = useState<TokenStats>()
   const [nftStats, setNftStats] = useState<NFTStats>()
+
+  const trackBrainBotInteraction = (
+    action: string,
+    properties: Record<string, any> = {},
+  ) => {
+    posthog?.capture(`brainbot_${action}`, {
+      wiki_id: wiki.id,
+      ...properties,
+    })
+  }
 
   useEffect(() => {
     if (!wikiIsNFT) {
@@ -106,7 +118,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               }}
               minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
             >
-              <BrainBot wiki={wiki} />
+              <BrainBot wiki={wiki} onInteraction={trackBrainBotInteraction} />
             </Box>
             <Box
               display={{
@@ -115,7 +127,12 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               }}
               minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
             >
-              {<BrainBotMobile wiki={wiki} />}
+              {
+                <BrainBotMobile
+                  wiki={wiki}
+                  onInteraction={trackBrainBotInteraction}
+                />
+              }
             </Box>
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
               <WikiRating contentId={wiki.id} />
