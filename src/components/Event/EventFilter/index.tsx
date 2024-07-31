@@ -12,6 +12,7 @@ import {
 import { dateFormater } from '@/lib/utils'
 import FilterOptions from './FilterOptions'
 import { Filters } from './index.type'
+import { useTranslation } from 'next-i18next'
 
 const defaultFilters: Filters = {
   date: '',
@@ -92,17 +93,18 @@ const EventFilter = ({
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const router = useRouter()
   const [filters, setFilters] = useState<Filters>(defaultFilters)
+  const { t } = useTranslation('event')
 
   const aggregateResults = async (filters: Filters) => {
     const filterKeys = Object.keys(filters) as (keyof Filters)[]
-    const activeFilters = filterKeys.filter((key) =>
+    const activeFilters = filterKeys.filter(key =>
       key === 'eventType' ? filters[key].length > 0 : filters[key],
     )
     if (activeFilters.length > 0) {
       setIsLoading(true)
       try {
         const fetchResults = await Promise.all(
-          activeFilters.map((key) => {
+          activeFilters.map(key => {
             switch (key) {
               case 'eventType':
                 return handleFilter(filters, dateRange)
@@ -120,9 +122,9 @@ const EventFilter = ({
         const [fetch1 = [], fetch2 = [], fetch3 = []] = fetchResults
         const mergedResults = [...fetch1, ...fetch2, ...fetch3]
         const uniqueResults = Array.from(
-          new Set(mergedResults.map((event) => event.id)),
-        ).map((id) => {
-          return mergedResults.find((event) => event.id === id)!
+          new Set(mergedResults.map(event => event.id)),
+        ).map(id => {
+          return mergedResults.find(event => event.id === id)!
         })
         setEventData(uniqueResults)
       } catch (error) {
@@ -139,13 +141,13 @@ const EventFilter = ({
   }
 
   const handleFilterChange = (filterCategory: keyof Filters, value: string) => {
-    setFilters((prevFilters) => {
+    setFilters(prevFilters => {
       const updatedFilters = { ...prevFilters }
 
       if (filterCategory === 'eventType') {
         const isAlreadySelected = prevFilters.eventType.includes(value)
         updatedFilters.eventType = isAlreadySelected
-          ? prevFilters.eventType.filter((f) => f !== value)
+          ? prevFilters.eventType.filter(f => f !== value)
           : [...prevFilters.eventType, value]
       } else {
         const isRemovingFilter = prevFilters[filterCategory] === value
@@ -187,7 +189,7 @@ const EventFilter = ({
     const updatedFilters: Filters = { ...defaultFilters }
 
     // Iterate over each filter key and update the state if a corresponding query parameter exists
-    Object.keys(defaultFilters).forEach((key) => {
+    Object.keys(defaultFilters).forEach(key => {
       const queryParam = router.query[key]
       if (queryParam) {
         if (key === 'eventType') {
@@ -209,7 +211,7 @@ const EventFilter = ({
     setDateRange(undefined)
     setEventData(fetchedData)
     const newQuery = { ...router.query }
-    Object.keys(defaultFilters).forEach((key) => {
+    Object.keys(defaultFilters).forEach(key => {
       delete newQuery[key]
     })
     router.push({ pathname: router.pathname, query: newQuery }, undefined, {
@@ -217,7 +219,7 @@ const EventFilter = ({
     })
   }
 
-  const isFilterActive = Object.keys(filters).some((key) => {
+  const isFilterActive = Object.keys(filters).some(key => {
     const value = filters[key as keyof Filters]
     if (typeof value === 'string') {
       return value.trim() !== ''
@@ -235,10 +237,10 @@ const EventFilter = ({
           <span className="text-xl">
             <RiFilter3Line />
           </span>
-          <h2 className="font-semibold text-xl">Filters</h2>
+          <h2 className="font-semibold text-xl">{t('filtersTitle')}</h2>
         </span>
         <div className="flex justify-between">
-          <span className="text-xs">Filter according to preference</span>
+          <span className="text-xs">{t('filtersDescription')}</span>
           <button
             onClick={clearFilters}
             type="button"
@@ -247,13 +249,13 @@ const EventFilter = ({
             }`}
             disabled={!isFilterActive}
           >
-            clear all
+            {t('clearAll')}
           </button>
         </div>
       </div>
       <div className="border flex flex-col border-gray200 dark:border-alpha-300 bg-white dark:bg-gray700 px-3 md:px-6 xl:px-3 py-6 xl:pt-5 xl:pb-20 mt-3 md:mt-6 rounded-xl">
         <div className="flex md:justify-between flex-wrap xl:flex-col gap-x-8 gap-y-6 md:gap-8">
-          {eventFilterData.map((eventFilter) => (
+          {eventFilterData.map(eventFilter => (
             <div key={eventFilter.title}>
               <button
                 type="button"
@@ -265,7 +267,9 @@ const EventFilter = ({
               >
                 <div className="flex items-center gap-1">
                   <span className="text-xl">{eventFilter.icon}</span>
-                  <h3 className="text-sm font-semibold">{eventFilter.title}</h3>
+                  <h3 className="text-sm font-semibold">
+                    {t(`${eventFilter.title}`)}
+                  </h3>
                 </div>
                 <span
                   className={`text-2xl xl:hidden transition-all ${
@@ -294,8 +298,8 @@ const EventFilter = ({
         </div>
         <div className="xl:hidden">
           {eventFilterData
-            .filter((item) => item.title === selectedFilter)
-            .map((eventFilter) => (
+            .filter(item => item.title === selectedFilter)
+            .map(eventFilter => (
               <FilterOptions
                 key={eventFilter.title}
                 eventFilter={eventFilter}
