@@ -1,6 +1,15 @@
 import React, { useMemo } from 'react'
 import dynamic from 'next/dynamic'
-import { Flex, Center, Skeleton, Box } from '@chakra-ui/react'
+import {
+  Flex,
+  Button,
+  Center,
+  Skeleton,
+  Box,
+  HStack,
+  Text,
+  useToast,
+} from '@chakra-ui/react'
 import { getWiki, wikiApi } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
@@ -30,6 +39,7 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector((state) => state.wiki)
+  const toast = useToast()
 
   const { isLoadingWiki, dispatch, isNewCreateWiki, txError, setTxError } =
     useCreateWikiContext()

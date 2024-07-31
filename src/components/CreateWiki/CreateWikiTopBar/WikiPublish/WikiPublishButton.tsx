@@ -18,7 +18,13 @@ import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
 import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
+import {
+  Button,
+  Tooltip,
+  useBoolean,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react'
 import {
   CreateNewWikiSlug,
   EditSpecificMetaIds,
@@ -37,7 +43,6 @@ import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useAccount } from 'wagmi'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
 import { usePostHog } from 'posthog-js/react'
-import { useToast } from '@chakra-ui/react'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -142,9 +147,8 @@ export const WikiPublishButton = () => {
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', (newlyConnectedChain) =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -320,7 +324,7 @@ export const WikiPublishButton = () => {
         ) : (
           <Button
             onClick={() => handleWikiPublish()}
-            disabled={!userCanEdit}
+            isDisabled={isPublishDisabled}
             _disabled={{
               opacity: isPublishDisabled ? 0.5 : undefined,
               _hover: { bgColor: 'grey !important', cursor: 'not-allowed' },

@@ -89,7 +89,7 @@ const SuggestEventModal = ({ showBtn }: { showBtn?: boolean }) => {
               <DialogTitle className="text-base dark:text-alpha-800">
                 Suggest Event
               </DialogTitle>
-              <DialogDescription className="text-xs dark:text-alpha-800">
+              <DialogDescription className="text-sm dark:text-alpha-800">
                 Didn’t find your event of interest? Suggest an event you would
                 be excited to attend and we’ll provide you with the rest of the
                 details.

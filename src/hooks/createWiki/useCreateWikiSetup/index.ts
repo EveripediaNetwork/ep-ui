@@ -25,7 +25,7 @@ const useCreateWikiSetup = () => {
         setIsNewCreateWiki,
         setCommitMessage,
         existingWiki as Wiki,
-        revision,
+        revision ?? '',
       )
     }
   }, [slug, existingWiki])

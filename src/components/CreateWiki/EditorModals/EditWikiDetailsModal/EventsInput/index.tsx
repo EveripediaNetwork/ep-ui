@@ -56,6 +56,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [dateRange, setDateRange] = useState<DateRange>()
   const formRef = React.useRef<HTMLFormElement>(null)
   const { t } = useTranslation('wiki')
+  const [resetDropdown, setResetDropdown] = useState(false)
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -98,6 +99,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     })
 
     formRef.current?.reset()
+    setResetDropdown(true)
     setDateRange(undefined)
     setIsMultiDate('')
     setIsUpdate(false)
@@ -246,9 +248,15 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               />
               <ComboBoxPopup
                 options={eventOptions}
-                onSelect={(value) => setIsMultiDate(value)}
+                defaultSelect={isMultiDate}
+                onSelect={(value) => {
+                  setIsMultiDate(value)
+                  setResetDropdown(false)
+                }}
                 placeholder={t('selectCategory')}
+                resetTriger={resetDropdown}
                 t={t}
+                name="type"
               />
             </SimpleGrid>
             <Input
@@ -276,13 +284,11 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
           </SimpleGrid>
         </form>
       </Box>
-
       {errMsg && (
         <Text color="red.500" fontSize="sm" mt="2">
           {errMsg}
         </Text>
       )}
-
       <EventsList handleFormChange={handleFormChange} />
     </>
   )

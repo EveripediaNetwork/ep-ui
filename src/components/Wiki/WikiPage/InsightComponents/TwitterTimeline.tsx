@@ -11,6 +11,8 @@ const TwitterTimeline = ({ url }: { url: string }) => {
   const [snapOpen, setSnapOpen] = useState(false)
   const [isLoaded, setIsLoaded] = useState(false)
 
+  const twitterLink = url.replace(/x.com/gi, 'twitter.com')
+
   useEffect(() => {
     const observer = new IntersectionObserver(
       ([entry]) => {
@@ -71,7 +73,7 @@ const TwitterTimeline = ({ url }: { url: string }) => {
                 noScrollbar
                 tweetLimit={4}
                 borderColor={colorMode === 'dark' ? '#4a5568' : '#ddd'}
-                url={url}
+                url={twitterLink}
               />
             </Box>
           )}

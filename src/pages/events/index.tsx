@@ -14,17 +14,15 @@ import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
 import { DateRange } from 'react-day-picker'
-import { dateFormater } from '@/lib/utils'
 import { useRouter } from 'next/router'
+import { useGetIpDetailsQuery } from '@/services/location'
 
 const EventPage = ({
   events,
   popularEvents,
-  countryName,
 }: {
   events: TEvents[]
   popularEvents: TEvents[]
-  countryName: string
 }) => {
   const [eventData, setEventData] = useState<TEvents[]>(events)
   const [searchActive, setSearchActive] = useState(false)
@@ -32,6 +30,7 @@ const EventPage = ({
   const [searchDate, setSearchDate] = useState<DateRange>()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const router = useRouter()
+  const { data: countryName } = useGetIpDetailsQuery()
 
   const clearSearchState = () => {
     setEventData(events)
@@ -92,7 +91,7 @@ const EventPage = ({
               />
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter countryName={countryName} />
+              <NearbyEventFilter countryName={countryName ?? ''} />
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
@@ -109,34 +108,17 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     getEvents.initiate({
       offset: 0,
       limit: EVENT_TEST_ITEM_PER_PAGE,
-      startDate: dateFormater(new Date()),
     }),
   )
 
-  let country_name = ''
-  try {
-    const response = await fetch('https://ipapi.co/json/')
-    if (response.ok) {
-      const jsonData = await response.json()
-      country_name = jsonData.country_name
-    } else {
-      console.error('Failed to fetch country name:', response.status)
-    }
-  } catch (error) {
-    console.error('Error fetching the country name:', error)
-  }
-
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate({
-      startDate: dateFormater(new Date()),
-    }),
+    getPopularEvents.initiate({ offset: 0, limit: 4 }),
   )
   return {
     props: {
       ...(await serverSideTranslations(locale ?? 'en', ['event', 'common'])),
       events: events ?? [],
-      popularEvents: popularEvents?.slice(0, 5) || [],
-      countryName: country_name,
+      popularEvents: popularEvents || [],
     },
   }
 }
