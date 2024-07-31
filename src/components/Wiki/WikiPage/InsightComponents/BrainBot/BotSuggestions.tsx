@@ -14,11 +14,13 @@ export const BrainBotSuggestion = ({
   icon,
   wiki,
   setOpen,
+  onInteraction,
 }: {
   question: string
   icon: ReactNode
   wiki: Wiki
   setOpen?: (state: boolean) => void
+  onInteraction: (action: string, properties?: Record<string, any>) => void
 }) => {
   const { askQuestion } = useStream()
   const translatedQuery = useQueryTranslation(question, wiki)
@@ -35,6 +37,7 @@ export const BrainBotSuggestion = ({
         if (setOpen) {
           setOpen(true)
         }
+        onInteraction('suggestion_clicked', { wiki_id: wiki.id, question })
         askQuestion({ question, query: translatedQuery })
       }}
       _hover={{
@@ -54,7 +57,12 @@ export const BrainBotSuggestion = ({
   )
 }
 
-const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
+interface BotSuggestionsProps {
+  wiki: Wiki
+  onInteraction: (action: string, properties?: Record<string, any>) => void
+}
+
+const BotSuggestions = ({ wiki, onInteraction }: BotSuggestionsProps) => {
   const { t } = useTranslation('wiki')
   return (
     <Box paddingBlock={'14px'}>
@@ -71,6 +79,7 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
           question={t(QueryType.AdditionalInfo)}
           icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
           wiki={wiki}
+          onInteraction={onInteraction}
         />
         <BrainBotSuggestion
           question={t(QueryType.ContentPageSummary)}
@@ -84,6 +93,7 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
             />
           }
           wiki={wiki}
+          onInteraction={onInteraction}
         />
         <HStack gap={'8px'}>
           <BrainBotSuggestion
@@ -97,6 +107,7 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
                 style={{ marginInlineStart: '0px' }}
               />
             }
+            onInteraction={onInteraction}
             wiki={wiki}
           />
           <BrainBotSuggestion
@@ -110,6 +121,7 @@ const BotSuggestions = ({ wiki }: { wiki: Wiki }) => {
                 style={{ marginInlineStart: '0px' }}
               />
             }
+            onInteraction={onInteraction}
             wiki={wiki}
           />
         </HStack>
