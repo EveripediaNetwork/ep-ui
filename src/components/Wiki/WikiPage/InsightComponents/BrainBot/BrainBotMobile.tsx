@@ -106,7 +106,7 @@ const BrainBotMobile = ({ wiki }: { wiki: Wiki }) => {
           h="full"
         >
           <IQGPTIcon width={'14px'} height={'14px'} />
-          <Text fontSize={'8px'}>{t('chatBotFooter')}</Text>
+          <Text fontSize={'12px'}>{t('chatBotFooter')}</Text>
         </Link>
       </Box>
     </Box>
