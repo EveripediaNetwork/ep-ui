@@ -79,5 +79,8 @@
   "NoNearbyEvents": "No nearby events available at the moment. Check back at a later time",
   "PopularEvents": "Popular Events",
   "PopularEventsDescription": "The most popular crypto events around the world.",
-  "NoPopularEvents": "No popular events available at the moment. Check back at a later time"
+  "NoPopularEvents": "No popular events available at the moment. Check back at a later time",
+  "Register": "Register/Get Tickets",
+  "Social Profiles": "Social Profiles",
+  "Tags": "Tags"
 }
