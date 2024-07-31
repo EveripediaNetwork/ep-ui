@@ -8,6 +8,7 @@ import {
   Box,
   HStack,
   Text,
+  useToast,
 } from '@chakra-ui/react'
 import { getWiki, wikiApi } from '@/services/wikis'
 import { useRouter } from 'next/router'
@@ -50,13 +51,13 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector((state) => state.wiki)
+  const toast = useToast()
 
   const {
     isLoadingWiki,
     wikiData,
     setCommitMessage,
     dispatch,
-    toast,
     revision,
     isNewCreateWiki,
     txError,
