@@ -37,7 +37,7 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
     const { t } = useTranslation('event')
     return (
       <div className={cn('xl:flex gap-2 mt-3 flex-wrap hidden', className)}>
-        {eventFilter.filter.map(filter => {
+        {eventFilter.filter.map((filter) => {
           if (filter === 'Custom Range') {
             return (
               <div key={filter} className="grid grid-2">

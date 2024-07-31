@@ -57,5 +57,21 @@
   "Polygon": "Polygon",
   "Solana": "Solana",
   "Cardano": "Cardano",
-  "Binance-coin": "Binance-coin"
+  "Binance-coin": "Binance-coin",
+  "SearchResult": "Search Results",
+  "GoBack": "Go Back",
+  "NoMoreData": "No More Data",
+  "ViewMore": "View more",
+  "KnowAnyEvents": "know any events not listed?",
+  "LoadMore": "Loading more...",
+  "modal": {
+    "title": "Suggest Event",
+    "modalTrigger": "Suggest events",
+    "description": "Didn’t find your event of interest? Suggest an event you would be excited to attend and we’ll provide you with the rest of the details.",
+    "textAreaPlaceholder": "Write your event suggestions here...",
+    "submit": "Submit",
+    "submitting": "Submitting...",
+    "success": "Event suggestion successfully submitted.",
+    "thankYou": "Thank you for your event suggestion! Your contribution is appreciated and will be reviewed promptly."
+  }
 }
