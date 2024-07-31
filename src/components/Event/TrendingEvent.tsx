@@ -28,7 +28,7 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         <CarouselContent className="">
           {events?.map((event) => (
             <CarouselItem
-              className=" max-[375px]:h-[300px] h-[350px] xl:h-[300px] overflow-hidden basis-[80%] md:basis-[40%] xl:basis-[309px] rounded-xl relative ml-4"
+              className="h-96 basis-full lg:basis-96 rounded-xl relative ml-4"
               key={event.id}
             >
               <Image
@@ -36,8 +36,7 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
                 alt="blockchain-expo"
                 fill
                 priority
-                sizes="80%, (min-width: 768px) 50%, 309px"
-                className=" object-cover"
+                className="rounded-xl object-cover min-w-full lg:min-w-40"
               />
               <Link
                 href={`/events/${event.title.toLowerCase().replace(/ /g, '-')}`}

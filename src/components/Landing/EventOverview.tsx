@@ -14,13 +14,13 @@ const EventOverview = () => {
   return (
     <>
       {data && data.length > 2 && (
-        <div className="max-w-[1296px] mx-auto py-14 md:py-20 xl:py-24 px-4">
-          <h2 className="text-2xl max-w-[350px] mx-auto md:max-w-full md:text-4xl font-semibold text-center">
-            {t('homePageHeading')}
-          </h2>
-          <div className="grid md:grid-cols-2 gap-14 mt-10">
-            <div className="flex items-center">
+        <div className="container mx-auto py-14 md:py-20 xl:py-24 px-4">
+          <div className="flex flex-col lg:flex-row gap-10 mt-10">
+            <div className="flex items-center flex-1">
               <div className="flex flex-col gap-10">
+                <h2 className="text-2xl md:text-4xl font-semibold dark:text-alpha-900">
+                  {t('homePageHeading')}
+                </h2>
                 <p className="text-center md:text-start text-sm md:text-base">
                   {t('eventDescription')}
                 </p>
@@ -37,7 +37,7 @@ const EventOverview = () => {
                 </LinkButton>
               </div>
             </div>
-            <div>
+            <div className="flex-1">
               <TrendingEventsCard events={data} />
             </div>
           </div>
