@@ -57,5 +57,21 @@
   "Polygon": "多边形",
   "Solana": "索拉纳",
   "Cardano": "卡尔达诺",
-  "Binance-coin": "币安币"
+  "Binance-coin": "币安币",
+  "SearchResult": "搜索结果",
+  "GoBack": "回去",
+  "NoMoreData": "没有更多数据",
+  "ViewMore": "查看更多",
+  "KnowAnyEvents": "知道任何未列出的事件吗？",
+  "LoadMore": "正在加载更多...",
+  "modal": {
+    "title": "建议活动",
+    "modalTrigger": "推荐活动",
+    "description": "没有找到您感兴趣的活动？推荐一个您很想参加的活动，我们会为您提供其余详细信息。",
+    "textAreaPlaceholder": "在这里写下您的活动建议...",
+    "submit": "提交",
+    "submitting": "正在提交...",
+    "success": "活动建议已成功提交。",
+    "thankYou": "感谢您对活动的建议！我们非常感谢您的贡献，并将及时审核。"
+  }
 }

@@ -57,5 +57,21 @@
   "Polygon": "다각형",
   "Solana": "솔라나",
   "Cardano": "카르다노",
-  "Binance-coin": "바이낸스 코인"
+  "Binance-coin": "바이낸스 코인",
+  "SearchResult": "검색 결과",
+  "GoBack": "뒤로가기",
+  "NoMoreData": "더 이상 데이터가 없습니다",
+  "ViewMore": "더보기",
+  "KnowAnyEvents": "나열되지 않은 이벤트를 알고 있나요?",
+  "LoadMore": "더 많은 내용을 로딩 중입니다...",
+  "modal": {
+    "title": "이벤트 제안",
+    "modalTrigger": "이벤트 제안하기",
+    "description": "관심 있는 이벤트를 찾지 못하셨나요? 참석하고 싶은 이벤트를 제안해 주시면 나머지 세부 정보를 제공해 드리겠습니다.",
+    "textAreaPlaceholder": "여기에 이벤트 제안을 적어주세요...",
+    "submit": "제출하다",
+    "submitting": "제출 중...",
+    "success": "이벤트 제안이 성공적으로 제출되었습니다.",
+    "thankYou": "이벤트 제안에 감사드립니다! 귀하의 기여는 감사하며 즉시 검토될 것입니다."
+  }
 }
