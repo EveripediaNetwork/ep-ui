@@ -147,9 +147,8 @@ export const WikiPublishButton = () => {
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', (newlyConnectedChain) =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
@@ -357,7 +356,7 @@ export const WikiPublishButton = () => {
         onClose={handlePopupClose}
       />
       <ReactCanvasConfetti {...confettiProps} />
-      {wikiId && showModal && (
+      {showModal && (
         <NetworkErrorNotification
           modalState={showNetworkModal}
           setModalState={(state: boolean) => setShowNetworkModal(state)}
