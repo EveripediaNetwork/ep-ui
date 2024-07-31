@@ -24,24 +24,26 @@ const EventSummary = ({ event }: { event: Wiki }) => {
 
   const metadata = event.metadata
 
-  const social_profiles = metadata.filter(item =>
+  const social_profiles = metadata.filter((item) =>
     selected_profiles.includes(item.id),
   )
 
   const data =
-    metadata.find(element => element.id === CommonMetaIds.REFERENCES)?.value ||
-    ''
+    metadata.find((element) => element.id === CommonMetaIds.REFERENCES)
+      ?.value || ''
   const locationMeta = metadata.find(
-    element => element.id === CommonMetaIds.LOCATION,
+    (element) => element.id === CommonMetaIds.LOCATION,
   )
 
   const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
   const references: TReferenceObject[] = JSON.parse(data)
 
   let url
-  if (references.find(item => item.description.toLowerCase() === 'event link'))
+  if (
+    references.find((item) => item.description.toLowerCase() === 'event link')
+  )
     url = references.find(
-      item => item.description.toLowerCase() === 'event link',
+      (item) => item.description.toLowerCase() === 'event link',
     )?.url
 
   return (
@@ -88,7 +90,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
         <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
           <span className="col-span-1">{t('Social Profiles')}</span>
           <span className="flex text-2xl xl:col-span-2 md:text-xl xl:text-2xl items-center gap-1">
-            {social_profiles.map(socials => (
+            {social_profiles.map((socials) => (
               <Link key={socials.id} href={`${socials.value}`} target="_blank">
                 {socials.id === 'twitter_profile' ? (
                   <RiTwitterFill className="hover:text-brand-500 dark:hover:text-brand-800 cursor-pointer" />
@@ -108,8 +110,8 @@ const EventSummary = ({ event }: { event: Wiki }) => {
         <span className="col-span-1">{t('Tags')}</span>
         <span className="flex flex-1 max-w-[209px] md:col-span-2 lg:col-span-1 xl:col-span-2 md:max-w-full lg:max-w-[150px] xl:max-w-[219px] gap-1 xl:gap-2 flex-wrap">
           {event.tags
-            .filter(tag => tag.id !== 'Events')
-            .map(tag => (
+            .filter((tag) => tag.id !== 'Events')
+            .map((tag) => (
               <Link
                 href={`/events?tags=${tag.id}`}
                 key={tag.id}
