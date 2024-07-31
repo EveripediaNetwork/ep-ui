@@ -42,7 +42,7 @@ export const BrainBotSuggestion = ({
       }}
       _dark={{
         _hover: {
-          bgColor: 'gray.700',
+          bgColor: 'brand.300',
         },
       }}
     >
