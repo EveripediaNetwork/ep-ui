@@ -37,6 +37,7 @@ import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import { useAccount } from 'wagmi'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
 import { usePostHog } from 'posthog-js/react'
+import { useToast } from '@chakra-ui/react'
 
 const NetworkErrorNotification = dynamic(
   () => import('@/components/Layout/Network/NetworkErrorNotification'),
@@ -49,6 +50,7 @@ export type TGraphQLError = {
 export const WikiPublishButton = () => {
   const wiki = useAppSelector((state) => state.wiki)
   const { data } = useGetWikiQuery(wiki?.id || '')
+  const toast = useToast()
 
   const [submittingWiki, setSubmittingWiki] = useBoolean()
   const { address: userAddress, isConnected: isUserConnected } = useAccount()
@@ -83,7 +85,6 @@ export const WikiPublishButton = () => {
 
   const {
     dispatch,
-    toast,
     wikiHash,
     revision,
     isNewCreateWiki,
@@ -141,9 +142,8 @@ export const WikiPublishButton = () => {
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', (newlyConnectedChain) =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
