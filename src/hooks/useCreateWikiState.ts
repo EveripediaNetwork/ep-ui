@@ -60,7 +60,6 @@ export const useCreateWikiState = (router: NextRouter) => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
-  const toast = useToast()
   const [openOverrideExistingWikiDialog, setOpenOverrideExistingWikiDialog] =
     useState<boolean>(false)
   const [existingWikiData, setExistingWikiData] = useState<Wiki>()
@@ -85,7 +84,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     dispatch,
     slug,
     revision,
-    toast,
     isWritingCommitMsg,
     setIsWritingCommitMsg,
     txHash,
