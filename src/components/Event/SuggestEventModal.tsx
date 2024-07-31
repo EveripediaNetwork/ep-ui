@@ -38,13 +38,13 @@ const SuggestEventModal = ({ showBtn }: { showBtn?: boolean }) => {
         contact: email,
       }),
     })
-      .then(res => {
+      .then((res) => {
         if (res.ok) {
           setIsSubmitted(true)
           setLoading(false)
         }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err)
         toast({
           status: 'error',
@@ -103,14 +103,14 @@ const SuggestEventModal = ({ showBtn }: { showBtn?: boolean }) => {
                 name="email"
                 type="email"
                 value={email}
-                onChange={e => setEmail(e.currentTarget.value)}
+                onChange={(e) => setEmail(e.currentTarget.value)}
                 placeholder="vitalik@ethereum.org"
                 className="dark:placeholder:text-alpha-500 placeholder:text-gray400"
               />
             </div>
             <Textarea
               value={suggestion}
-              onChange={e => setSuggestion(e.currentTarget.value)}
+              onChange={(e) => setSuggestion(e.currentTarget.value)}
               placeholder={t('modal.textAreaPlaceholder')}
               name="suggestions"
               className="resize-none mt-4 border border-gray300 placeholder:text-gray400 dark:border-alpha-300 dark:placeholder:text-alpha-500"

@@ -73,5 +73,11 @@
     "submitting": "Submitting...",
     "success": "Event suggestion successfully submitted.",
     "thankYou": "Thank you for your event suggestion! Your contribution is appreciated and will be reviewed promptly."
-  }
+  },
+  "NearbyEvents": "Nearby Events",
+  "NearbyEventsDescription": "Noteworthy events that are coming up soon near you.",
+  "NoNearbyEvents": "No nearby events available at the moment. Check back at a later time",
+  "PopularEvents": "Popular Events",
+  "PopularEventsDescription": "The most popular crypto events around the world.",
+  "NoPopularEvents": "No popular events available at the moment. Check back at a later time"
 }
