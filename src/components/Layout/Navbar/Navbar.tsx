@@ -94,7 +94,7 @@ const Navbar = () => {
           />
           <Button
             variant="outline"
-            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800 border-gray-200 dark:border-alpha-400"
+            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800 border-gray-200 dark:border-alpha-400 px-6 py-2 text-xs"
             onClick={userCanEdit && address ? () => {} : onSuggestWikiOpen}
           >
             {userCanEdit && address ? (

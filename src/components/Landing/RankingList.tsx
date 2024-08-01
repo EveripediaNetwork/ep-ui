@@ -108,8 +108,10 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       {/* <div className="absolute -z-10 -top-20 lg:-top-48 right-0 lg:right-40 w-[400px] lg:w-[520px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-full bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl" /> */}
       <div className="w-full flex flex-col gap-8">
         <div className="flex flex-col gap-2">
-          <h1 className="text-2xl font-bold">{t('rankingListHeading')}</h1>
-          <p className="dark:text-alpha-800 text-gray-600 max-w-4xl font-medium">
+          <h1 className="text-sm lg:text-2xl font-bold">
+            {t('rankingListHeading')}
+          </h1>
+          <p className="dark:text-alpha-800 text-gray-600 max-w-4xl font-medium text-xs lg:text-base">
             {t('rankingListDescription')}
           </p>
         </div>

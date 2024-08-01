@@ -6,10 +6,9 @@ import { MoreDrawer } from './MoreDrawer'
 
 export default function NavigationTabs() {
   const path = usePathname()
-  console.log(path)
 
   return (
-    <div className="md:hidden fixed bottom-0 bg-white dark:bg-gray800 w-full border-t border-gray-200 dark:border-alpha-200 h-[72px] px-4 flex items-center justify-between z-40">
+    <div className="md:hidden fixed bottom-0 bg-white dark:bg-gray800 w-full border-t border-gray-200 dark:border-alpha-200 h-[72px] px-4 flex items-center justify-between z-[9999px]">
       {Tabs.map((tab) => (
         <Link
           key={tab.id}

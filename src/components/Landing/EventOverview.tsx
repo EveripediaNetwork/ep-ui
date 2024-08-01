@@ -15,13 +15,13 @@ const EventOverview = () => {
     <>
       {data && data.length > 2 && (
         <div className="container mx-auto py-14 md:py-20 xl:py-24 px-4 lg:px-8 xl:px-0">
-          <div className="flex flex-col md:flex-row gap-10 mt-10">
-            <div className="flex items-center flex-1">
-              <div className="flex flex-col gap-10">
-                <h2 className="text-2xl md:text-4xl font-semibold dark:text-alpha-900">
+          <div className="flex flex-col md:flex-row gap-10 lg:gap-24 mt-10">
+            <div className="flex items-center flex-1 max-w-lg">
+              <div className="flex flex-col gap-6">
+                <h2 className="text-sm lg:text-2xl font-semibold dark:text-alpha-900">
                   {t('homePageHeading')}
                 </h2>
-                <p className="text-sm md:text-base">{t('eventDescription')}</p>
+                <p className="text-xs md:text-base">{t('eventDescription')}</p>
                 <LinkButton
                   href="/events"
                   h="50px"
