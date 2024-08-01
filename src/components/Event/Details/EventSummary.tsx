@@ -66,19 +66,19 @@ const EventSummary = ({ event }: { event: Wiki }) => {
           target="_blank"
           className="bg-brand-500 dark:bg-brand-800 font-semibold text-xs rounded-md text-white flex justify-center py-[14px] lg:py-2 xl:py-[10px] w-full"
         >
-          {t('Register')}
+          {t('register')}
         </Link>
       )}
       {isEventLocation(eventLocation) && (
         <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-          <span className="col-span-1">{t('Location')}</span>
+          <span className="col-span-1">{t('location')}</span>
           <span className="max-w-[163px] md:max-w-full lg:max-w-[119px] xl:col-span-2 xl:max-w-full">
             {getCountry(eventLocation)}
           </span>
         </span>
       )}
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-        <span className="col-span-1">{t('Date')}</span>
+        <span className="col-span-1">{t('date')}</span>
         <span className="xl:col-span-2">
           {event?.events?.[dateLength - 1].date
             ? parseDateRange(event.events[dateLength - 1].date)
@@ -94,7 +94,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
       </span>
       {social_profiles.length > 0 && (
         <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-          <span className="col-span-1">{t('Social Profiles')}</span>
+          <span className="col-span-1">{t('socialProfiles')}</span>
           <span className="flex text-2xl xl:col-span-2 md:text-xl xl:text-2xl items-center gap-1">
             {social_profiles.map((socials) => (
               <Link key={socials.id} href={`${socials.value}`} target="_blank">
@@ -113,7 +113,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
         </span>
       )}
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[8px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
-        <span className="col-span-1">{t('Tags')}</span>
+        <span className="col-span-1">{t('tags')}</span>
         <span className="flex flex-1 max-w-[209px] md:col-span-2 lg:col-span-1 xl:col-span-2 md:max-w-full lg:max-w-[150px] xl:max-w-[219px] gap-1 xl:gap-2 flex-wrap">
           {event.tags
             .filter((tag) => tag.id !== 'Events')

@@ -67,7 +67,7 @@ const EventList = ({
     <div className="flex flex-col flex-1 gap-5">
       {searchActive && (
         <span className="flex flex-col items-start">
-          <h1 className="font-semibold">{t('SearchResult')}</h1>
+          <h1 className="font-semibold">{t('searchResult')}</h1>
           <button
             type="button"
             onClick={() => {
@@ -80,7 +80,7 @@ const EventList = ({
             <span>
               <RiArrowLeftLine />
             </span>
-            {t('GoBack')}
+            {t('goBack')}
           </button>
         </span>
       )}
@@ -107,7 +107,7 @@ const EventList = ({
                         <LoadingState classNames="w-[285px] h-4" />
                       ) : (
                         <div className="text-xs flex flex-col md:flex-row md:gap-2 items-end md:max-w-full">
-                          <span>{t('KnowAnyEvents')}</span>{' '}
+                          <span>{t('knowAnyEvents')}</span>{' '}
                           <SuggestEventModal />
                         </div>
                       )}
@@ -151,10 +151,10 @@ const EventList = ({
             disabled={isFetching}
             className="px-10 py-2 w-fit mx-auto rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400 disabled:cursor-not-allowed"
           >
-            {isFetching ? t('LoadMore') : t('ViewMore')}
+            {isFetching ? t('loadMore') : t('viewMore')}
           </button>
         ) : (
-          <span className="text-center">{t('NoMoreData')}</span>
+          <span className="text-center">{t('noMoreData')}</span>
         ))}
     </div>
   )
