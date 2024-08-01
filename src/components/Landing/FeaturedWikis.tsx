@@ -13,7 +13,7 @@ export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   const { t } = useTranslation('home')
 
   return (
-    <section className="w-full lg:h-full dark:text-white text-center justify-center bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-700 border-gray-100 rounded-xl pb-4 lg:pb-0">
+    <section className="w-full lg:h-full dark:text-white text-center justify-center bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-700 border-gray-200 rounded-xl pb-4 xl:pb-0">
       <div className="w-full flex items-center gap-2 p-4">
         <Icon
           cursor="pointer"

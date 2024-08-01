@@ -28,19 +28,20 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         <CarouselContent className="">
           {events?.map((event) => (
             <CarouselItem
-              className="h-96 basis-full md:basis-80 lg:basis-96 rounded-xl relative ml-4"
+              className="h-96 basis-full md:basis-80 lg:basis-[419px] rounded-xl relative ml-4"
               key={event.id}
             >
               <Image
                 src={getWikiImageUrl(event.images)}
                 alt="blockchain-expo"
                 fill
+                sizes="(max-width: 768px) 100vw, 768px"
                 priority
                 className="rounded-xl object-cover min-w-full lg:min-w-40"
               />
               <Link
                 href={`/events/${event.title.toLowerCase().replace(/ /g, '-')}`}
-                className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5"
+                className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5 rounded-xl"
               >
                 <div className="text-alpha-900">
                   {event.location && (

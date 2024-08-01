@@ -3,7 +3,6 @@ import {
   RiDatabaseFill,
   RiHashtag,
   RiHome5Fill,
-  RiMoreFill,
   RiSortAsc,
 } from 'react-icons/ri'
 
@@ -17,32 +16,26 @@ type TabsType = {
 export const Tabs: TabsType[] = [
   {
     id: 'home',
-    href: '',
+    href: '/',
     title: 'Home',
     icon: RiHome5Fill,
   },
   {
     id: 'categories',
-    href: 'categories',
+    href: '/categories/',
     title: 'Categories',
     icon: RiDatabaseFill,
   },
   {
     id: 'rank',
-    href: 'rank',
+    href: '/rank/',
     title: 'Rank',
     icon: RiHashtag,
   },
   {
     id: 'glossary',
-    href: 'glossary',
+    href: '/glossary/',
     title: 'Glossary',
     icon: RiSortAsc,
-  },
-  {
-    id: 'more',
-    href: 'more',
-    title: 'More',
-    icon: RiMoreFill,
   },
 ]

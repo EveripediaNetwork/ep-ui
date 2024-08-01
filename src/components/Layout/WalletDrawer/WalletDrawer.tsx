@@ -1,5 +1,4 @@
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import { Button } from '@/components/ui/button'
 import {
   Sheet,
   SheetContent,
@@ -28,7 +27,10 @@ import { shortenAccount } from '@/utils/textUtils'
 import CopyIcon from '@/components/Icons/CopyIcon'
 const WalletNavMenu = dynamic(() => import('../Navbar/WalletNavMenu'))
 
-const WalletDrawer = () => {
+const WalletDrawer = ({
+  isOpen,
+  handleDrawerOpen,
+}: { isOpen: boolean; handleDrawerOpen: () => void }) => {
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const [, username] = useENSData(userAddress)
   useHiIQBalance(userAddress)
@@ -64,11 +66,19 @@ const WalletDrawer = () => {
   }
 
   return (
-    <Sheet>
+    <Sheet open={isOpen} onOpenChange={handleDrawerOpen}>
       <SheetTrigger asChild>
-        <Button className="p-0 border-none bg-none w-0 mx-4">
+        <div
+          onKeyUp={(event: React.KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              handleDrawerOpen()
+            }
+          }}
+          onClick={handleDrawerOpen}
+          className="border"
+        >
           <WalletNavMenu />
-        </Button>
+        </div>
       </SheetTrigger>
       <SheetContent className="bg-white dark:bg-gray-800 p-0">
         <SheetHeader className="border-b border-gray-200 dark:border-gray-700">
@@ -84,7 +94,7 @@ const WalletDrawer = () => {
               <div className="flex flex-col">
                 <Popover>
                   <PopoverTrigger asChild>
-                    <div className="text-base font-semibold text-gray-100 flex flex-row items-center gap-2 cursor-pointer">
+                    <div className="text-base font-semibold text-gray-600 dark:text-alpha-500 flex flex-row items-center gap-2 cursor-pointer">
                       {t('myWallet')}{' '}
                       {isUserConnected && (
                         <ChevronDownIcon className="w-4 h-4" />

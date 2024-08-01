@@ -7,13 +7,6 @@ import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-import { BiImage } from 'react-icons/bi'
-import {
-  RiCoinFill,
-  RiCoinsFill,
-  RiRobotFill,
-  RiUserFill,
-} from 'react-icons/ri'
 // import { LinkButton } from '../Elements'
 import FounderRankingItem from '../Rank/FounderRankCardItem'
 import {
@@ -24,6 +17,7 @@ import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 
+import { tabsData } from '@/data/RanksTabsData'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 
 type RankingListProps = {
@@ -124,43 +118,18 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
             defaultValue={t('rankingListButtonCryptocurrencies')}
             className="overflow-hidden"
           >
-            <div className="overflow-x-auto">
+            <div className="overflow-x-auto scrollbar-hide">
               <TabsList className="mb-4 space-x-6">
-                <TabsTrigger
-                  value={t('rankingListButtonCryptocurrencies')}
-                  className="flex flex-row items-center gap-4"
-                >
-                  <RiCoinsFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                  <span>{t('rankingListButtonCryptocurrencies')}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value={t('rankingListButtonStablecoins')}
-                  className="flex flex-row items-center gap-2"
-                >
-                  <RiCoinFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                  <span>{t('rankingListButtonStablecoins')}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value={t('rankingListButtonAITokens')}
-                  className="flex flex-row items-center gap-2"
-                >
-                  <RiRobotFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                  <span>{t('rankingListButtonAITokens')}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value={t('rankingListButtonFounders')}
-                  className="flex flex-row items-center gap-2"
-                >
-                  <RiUserFill className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                  <span>{t('rankingListButtonFounders')}</span>
-                </TabsTrigger>
-                <TabsTrigger
-                  value={t('rankingListButtonNfts')}
-                  className="flex flex-row items-center gap-2"
-                >
-                  <BiImage className="text-brand-500 dark:text-brand-800 w-6 h-6" />
-                  <span>{t('rankingListButtonNfts')}</span>
-                </TabsTrigger>
+                {tabsData.map((tab) => (
+                  <TabsTrigger
+                    key={tab.value}
+                    value={t(tab.value)}
+                    className="flex flex-row items-center gap-2"
+                  >
+                    <tab.icon className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                    <span>{t(tab.label)}</span>
+                  </TabsTrigger>
+                ))}
               </TabsList>
             </div>
             <TabsContent value={t('rankingListButtonCryptocurrencies')}>
@@ -270,17 +239,17 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
             </TabsContent>
           </Tabs>
           {/* <Flex justifyContent="center" mt="10">
-          <LinkButton
-            // href={`/rank/${selectedRanking}`}
-            h="50px"
-            w={{ base: 32, lg: 40 }}
-            variant="outline"
-            bgColor="btnBgColor"
-            prefetch={false}
-          >
-            {t('rankingListViewMore')}
-          </LinkButton>
-        </Flex> */}
+            <Link
+              href={`/rank/${selectedRanking}`}
+              h="50px"
+              w={{ base: 32, lg: 40 }}
+              variant="outline"
+              bgColor="btnBgColor"
+              prefetch={false}
+            >
+              {t('rankingListViewMore')}
+            </Link>
+          </Flex> */}
         </div>
       </div>
     </div>

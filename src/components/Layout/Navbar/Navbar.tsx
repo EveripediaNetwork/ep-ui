@@ -34,6 +34,7 @@ const Navbar = () => {
     },
   })
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
@@ -59,6 +60,10 @@ const Navbar = () => {
     }
   }, [router.events, isOpen, onToggle])
 
+  const handleDrawerOpen = () => {
+    setIsDrawerOpen(!isDrawerOpen)
+  }
+
   return (
     <div
       className="shadow-sm fixed top-0 left-0 right-0 z-40 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200"
@@ -81,7 +86,7 @@ const Navbar = () => {
             <NavSearch setHamburger={setIsHamburgerOpen} />
           </Suspense>
         </div>
-        <div className="hidden lg:flex flex-row gap-4 items-center">
+        <div className="hidden xl:flex flex-row gap-4 items-center">
           <LocaleSelect
             languageData={languageData}
             locale={locale}
@@ -103,7 +108,10 @@ const Navbar = () => {
             onClose={onSuggestWikiClose}
           />
           {address ? (
-            <WalletDrawer />
+            <WalletDrawer
+              isOpen={isDrawerOpen}
+              handleDrawerOpen={handleDrawerOpen}
+            />
           ) : (
             <Button
               size="sm"
@@ -114,8 +122,11 @@ const Navbar = () => {
             </Button>
           )}
         </div>
-        <div className="lg:hidden flex flex-row gap-2 items-center">
-          <WalletDrawer />
+        <div className="xl:hidden flex flex-row items-center gap-2">
+          <WalletDrawer
+            isOpen={isDrawerOpen}
+            handleDrawerOpen={handleDrawerOpen}
+          />
           <IconButton
             onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
             icon={

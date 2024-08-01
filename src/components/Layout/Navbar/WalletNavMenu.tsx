@@ -14,7 +14,7 @@ const WalletNavMenu = () => {
   }
 
   return (
-    <div className="md:mr-16 lg:mr-0">
+    <>
       {userAddress ? (
         <div
           onKeyDown={(e) => {
@@ -41,7 +41,7 @@ const WalletNavMenu = () => {
           {t('signIn')}
         </Link>
       )}
-    </div>
+    </>
   )
 }
 
