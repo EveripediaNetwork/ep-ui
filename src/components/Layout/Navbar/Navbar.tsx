@@ -7,7 +7,7 @@ import useLanguageChange from '@/hooks/useLanguageChange'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { RootState, store } from '@/store/store'
-import { Collapse, IconButton, useDisclosure } from '@chakra-ui/react'
+import { Box, Collapse, IconButton, useDisclosure } from '@chakra-ui/react'
 import { AlignJustify, X } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
@@ -19,6 +19,7 @@ import DesktopNav from './DesktopNav'
 import { LocaleSelect } from './LocaleSelect'
 import MobileNav from './MobileNav'
 import SuggestWikiModal from './SuggestWiki'
+import { RiSearchLine } from 'react-icons/ri'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
@@ -35,6 +36,7 @@ const Navbar = () => {
   })
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false)
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const router = useRouter()
   const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
@@ -64,12 +66,20 @@ const Navbar = () => {
     setIsDrawerOpen(!isDrawerOpen)
   }
 
+  const handleSearchOpen = () => {
+    setIsSearchOpen(!isSearchOpen)
+  }
+
   return (
-    <div
-      className="shadow-sm fixed top-0 left-0 right-0 z-40 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200"
-      style={{
-        height: drawerOperations.isOpen ? '100%' : 'unset',
-      }}
+    <Box
+      boxShadow="sm"
+      position="fixed"
+      zIndex="banner"
+      w="full"
+      h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
+      bg="subMenuBg"
+      borderBottomWidth={1}
+      borderBottomColor="rankingListBorder"
     >
       <div className="flex gap-8 lg:gap-40 xl:gap-8 h-16 items-center justify-between px-4 lg:px-8 border-b lg:border-b-0 dark:border-alpha-200 border-gray-200">
         <Link prefetch={false} href="/">
@@ -123,6 +133,10 @@ const Navbar = () => {
           )}
         </div>
         <div className="xl:hidden flex flex-row items-center gap-2">
+          <RiSearchLine
+            onClick={handleSearchOpen}
+            className="w-6 h-6 text-gray-500 dark:text-alpha-800"
+          />
           <WalletDrawer
             isOpen={isDrawerOpen}
             handleDrawerOpen={handleDrawerOpen}
@@ -141,11 +155,14 @@ const Navbar = () => {
           />
         </div>
       </div>
-      <div className="block lg:hidden w-full py-3 mx-4">
-        <Suspense>
-          <NavSearch setHamburger={setIsHamburgerOpen} />
-        </Suspense>
-      </div>
+      {isSearchOpen && (
+        <div className="block lg:hidden w-full py-3 mx-4">
+          <Suspense>
+            <NavSearch setHamburger={setIsHamburgerOpen} />
+          </Suspense>
+        </div>
+      )}
+
       <Collapse
         in={isHamburgerOpen}
         animateOpacity
@@ -156,7 +173,7 @@ const Navbar = () => {
           drawerOperations={drawerOperations}
         />
       </Collapse>
-    </div>
+    </Box>
   )
 }
 
