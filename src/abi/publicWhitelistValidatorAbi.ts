@@ -1,6 +1,11 @@
 export const publicWhitelistValidatorAbi = [
     {
       "inputs": [],
+      "stateMutability": "nonpayable",
+      "type": "constructor"
+    },
+    {
+      "inputs": [],
       "name": "EditorNotWhitelisted",
       "type": "error"
     },
@@ -8,44 +13,6 @@ export const publicWhitelistValidatorAbi = [
       "inputs": [],
       "name": "WrongIPFSLength",
       "type": "error"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "editor",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "removedBy",
-          "type": "address"
-        }
-      ],
-      "name": "EditorUnwhitelisted",
-      "type": "event"
-    },
-    {
-      "anonymous": false,
-      "inputs": [
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "editor",
-          "type": "address"
-        },
-        {
-          "indexed": true,
-          "internalType": "address",
-          "name": "addedBy",
-          "type": "address"
-        }
-      ],
-      "name": "EditorWhitelisted",
-      "type": "event"
     },
     {
       "inputs": [
@@ -67,6 +34,32 @@ export const publicWhitelistValidatorAbi = [
       "type": "function"
     },
     {
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "internalType": "address",
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
+      "inputs": [
+        {
+          "internalType": "address",
+          "name": "newOwner",
+          "type": "address"
+        }
+      ],
+      "name": "setOwner",
+      "outputs": [],
+      "stateMutability": "nonpayable",
+      "type": "function"
+    },
+    {
       "inputs": [
         {
           "internalType": "address",
@@ -83,12 +76,12 @@ export const publicWhitelistValidatorAbi = [
       "inputs": [
         {
           "internalType": "address",
-          "name": "user",
+          "name": "_user",
           "type": "address"
         },
         {
           "internalType": "string",
-          "name": "ipfs",
+          "name": "_ipfs",
           "type": "string"
         }
       ],
@@ -100,7 +93,7 @@ export const publicWhitelistValidatorAbi = [
           "type": "bool"
         }
       ],
-      "stateMutability": "view",
+      "stateMutability": "nonpayable",
       "type": "function"
     },
     {
@@ -115,24 +108,5 @@ export const publicWhitelistValidatorAbi = [
       "outputs": [],
       "stateMutability": "nonpayable",
       "type": "function"
-    },
-    {
-      "inputs": [
-        {
-          "internalType": "address",
-          "name": "",
-          "type": "address"
-        }
-      ],
-      "name": "whitelistedAddresses",
-      "outputs": [
-        {
-          "internalType": "bool",
-          "name": "",
-          "type": "bool"
-        }
-      ],
-      "stateMutability": "view",
-      "type": "function"
     }
-  ]
+  ] as const
