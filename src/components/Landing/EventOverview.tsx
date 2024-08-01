@@ -21,9 +21,7 @@ const EventOverview = () => {
                 <h2 className="text-2xl md:text-4xl font-semibold dark:text-alpha-900">
                   {t('homePageHeading')}
                 </h2>
-                <p className="text-center md:text-start text-sm md:text-base">
-                  {t('eventDescription')}
-                </p>
+                <p className="text-sm md:text-base">{t('eventDescription')}</p>
                 <LinkButton
                   href="/events"
                   h="50px"

@@ -2,7 +2,7 @@ import { Tabs } from '@/data/NavigationTabs'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { RiMoreFill } from 'react-icons/ri'
+import { MoreDrawer } from './MoreDrawer'
 
 export default function NavigationTabs() {
   const path = usePathname()
@@ -18,17 +18,14 @@ export default function NavigationTabs() {
             'flex flex-col gap-2 items-center',
             path === tab.href
               ? 'text-brand-500 dark:text-brand-800'
-              : ' text-gray-500 dark:text-alpha-600',
+              : 'text-gray-500 dark:text-alpha-600',
           )}
         >
           <tab.icon className="w-6 h-6" />
           <span className="text-xs">{tab.title}</span>
         </Link>
       ))}
-      <div className="flex flex-col gap-2 items-center text-xs text-gray-500 dark:text-alpha-600">
-        <RiMoreFill className="w-6 h-6" />
-        More
-      </div>
+      <MoreDrawer />
     </div>
   )
 }
