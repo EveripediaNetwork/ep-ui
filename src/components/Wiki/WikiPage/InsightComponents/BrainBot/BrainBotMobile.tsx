@@ -61,37 +61,38 @@ const BrainBotMobile = ({
           <IconButton
             color="linkColor"
             variant="link"
-            minW={3}
+            minW={6}
+            h={6}
             aria-label={'toggle brainBot'}
-            icon={<RiArrowDownSLine />}
+            icon={<RiArrowDownSLine size={'24px'} />}
           />
           <Box
             bgColor={'brainBotAIBorder'}
             borderRadius={'4px'}
-            w={'20px'}
-            h={'20px'}
+            w={'24px'}
+            h={'24px'}
             display={'flex'}
             justifyContent={'center'}
             alignItems={'center'}
             flexShrink={0}
           >
-            <IQGPTIcon width={'14px'} height={'14px'} />
+            <IQGPTIcon width={'18px'} height={'18px'} />
           </Box>
-          <Text fontSize={'sm'} color="linkColor" p={3}>
+          <Text fontSize={'md'} color="linkColor" py={3}>
             {open
-              ? 'IQ GPT Chat'
+              ? 'IQ GPT Chatbot'
               : 'Get more insights on the article content with IQ GPT chat bot'}
           </Text>
         </Box>
       </Box>
       <Box display={open ? 'block' : 'none'}>
         <Box
-          h={'250px'}
+          h={'400px'}
           overflowY={'auto'}
           alignItems={'center'}
           flexDirection={'column'}
-          paddingBlock={'12px'}
-          paddingInline={'8px'}
+          paddingBlock={'16px'}
+          paddingInline={'12px'}
           display={'flex'}
         >
           {currentHumanMessage || currentChatId || currentAIMessage ? (
@@ -106,13 +107,13 @@ const BrainBotMobile = ({
           href="https://www.iqgpt.com/"
           display={'flex'}
           justifyContent={'center'}
-          gap={'4px'}
-          paddingBlock={'6px'}
+          gap={'8px'}
+          paddingBlock={'10px'}
           alignItems={'center'}
           h="full"
         >
-          <IQGPTIcon width={'14px'} height={'14px'} />
-          <Text fontSize={'12px'}>{t('chatBotFooter')}</Text>
+          <IQGPTIcon width={'18px'} height={'18px'} />
+          <Text fontSize={'14px'}>{t('chatBotFooter')}</Text>
         </Link>
       </Box>
     </Box>

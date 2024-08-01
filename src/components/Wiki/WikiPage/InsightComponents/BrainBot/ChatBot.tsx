@@ -97,7 +97,7 @@ const ChatBot = ({ wiki, onInteraction }: ChatBotProps) => {
         onClick={() => onInteraction('iqgpt_link_click')}
       >
         <IQGPTIcon width={'14px'} height={'14px'} />
-        <Text fontSize={'8px'}>{t('chatBotFooter')}</Text>
+        <Text fontSize={'12px'}>{t('chatBotFooter')}</Text>
       </Link>
     </Box>
   )

@@ -68,13 +68,13 @@ const BotSuggestions = ({ wiki, onInteraction }: BotSuggestionsProps) => {
     <Box paddingBlock={'14px'}>
       <Text
         color={'fadedText'}
-        maxW={'350px'}
+        maxW={'300px'}
         fontSize={'14px'}
         textAlign={'center'}
       >
         {t('chatBotIntroMessage')}
       </Text>
-      <VStack marginTop={'12px'} gap={'14px'}>
+      <VStack marginTop={'18px'} gap={'24px'}>
         <BrainBotSuggestion
           question={t(QueryType.AdditionalInfo)}
           icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
@@ -95,7 +95,7 @@ const BotSuggestions = ({ wiki, onInteraction }: BotSuggestionsProps) => {
           wiki={wiki}
           onInteraction={onInteraction}
         />
-        <HStack gap={'8px'}>
+        <HStack gap={'16px'}>
           <BrainBotSuggestion
             question={t('chatBotSuggestion1')}
             icon={
