@@ -18,17 +18,41 @@ const useCreateWikiSetup = () => {
     const isNewWiki = !slug && !revision
 
     if (isNewWiki) {
-      setUpNewWiki(setIsNewCreateWiki, dispatch)
+      setIsNewCreateWiki(true)
+      setUpNewWiki(dispatch)
     } else {
+      setIsNewCreateWiki(false)
       setUpExistingWiki(
         dispatch,
-        setIsNewCreateWiki,
         setCommitMessage,
         existingWiki as Wiki,
         revision ?? '',
       )
     }
   }, [slug, existingWiki])
+
+  const handleOnEditorChanges = (
+    val: string | undefined,
+    isInitSet?: boolean,
+  ) => {
+    if (isInitSet) {
+      dispatch({
+        type: 'wiki/setInitialWikiState',
+        payload: {
+          content: val ?? ' ',
+        },
+      })
+    } else {
+      dispatch({
+        type: 'wiki/setContent',
+        payload: val ?? ' ',
+      })
+    }
+  }
+
+  return {
+    handleOnEditorChanges,
+  }
 }
 
 export default useCreateWikiSetup

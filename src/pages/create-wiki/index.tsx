@@ -31,30 +31,12 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 const CreateWikiContent = () => {
   const wiki = useAppSelector((state) => state.wiki)
 
-  const { isLoadingWiki, dispatch, isNewCreateWiki, txError, setTxError } =
+  const { isLoadingWiki, isNewCreateWiki, txError, setTxError } =
     useCreateWikiContext()
 
-  useDraftNotifications()
-  useCreateWikiSetup()
+  const { handleOnEditorChanges } = useCreateWikiSetup()
 
-  const handleOnEditorChanges = (
-    val: string | undefined,
-    isInitSet?: boolean,
-  ) => {
-    if (isInitSet) {
-      dispatch({
-        type: 'wiki/setInitialWikiState',
-        payload: {
-          content: val ?? ' ',
-        },
-      })
-    } else {
-      dispatch({
-        type: 'wiki/setContent',
-        payload: val ?? ' ',
-      })
-    }
-  }
+  useDraftNotifications()
 
   return (
     <>

@@ -9,13 +9,10 @@ import { EditorContentOverride } from '@everipedia/iq-utils'
 
 const setUpExistingWiki = (
   dispatch: AppDispatch,
-  setIsNewCreateWiki: Dispatch<SetStateAction<boolean>>,
   setCommitMessage: Dispatch<SetStateAction<string>>,
   existingWiki: Wiki,
   revision: string | string[],
 ) => {
-  setIsNewCreateWiki(false)
-
   const draftWiki = getDraftFromLocalStorage()
   let wikiData = draftWiki ?? existingWiki
 

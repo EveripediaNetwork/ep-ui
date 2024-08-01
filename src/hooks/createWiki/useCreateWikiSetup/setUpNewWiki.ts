@@ -1,15 +1,9 @@
-import type { Dispatch, SetStateAction } from 'react'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import { initialEditorValue } from '@/utils/CreateWikiUtils/createWikiMessages'
 import { EditorContentOverride } from '@everipedia/iq-utils'
 import type { AppDispatch } from '@/store/store'
 
-const setUpNewWiki = (
-  setIsNewCreateWiki: Dispatch<SetStateAction<boolean>>,
-  dispatch: AppDispatch,
-) => {
-  setIsNewCreateWiki(true)
-
+const setUpNewWiki = (dispatch: AppDispatch) => {
   //initialize editor wih saved draft if available
   const draftWiki = getDraftFromLocalStorage()
   if (draftWiki) {
