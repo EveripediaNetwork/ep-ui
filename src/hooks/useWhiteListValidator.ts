@@ -10,7 +10,7 @@ const useIsWhitelistedEditor = () => {
     isLoading,
   } = useContractRead({
     address: config.editorAddress as `0x${string}`,
-    abi: config.whitelistAbi as any,
+    abi: config.whitelistAbi,
     functionName: 'isEditorWhitelisted',
     args: address ? [address] : undefined,
     enabled: !!address,
