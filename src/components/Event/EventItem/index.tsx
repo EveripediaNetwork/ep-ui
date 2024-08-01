@@ -1,5 +1,6 @@
 import { parseDateRange } from '@/lib/utils'
 import { TEvents } from '@/services/event'
+import { getCountry, isEventLocation } from '@/utils/event.utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -53,19 +54,13 @@ const EventItem = (props: TEventItemProps) => {
                 : ''}
             </span>
           </span>
-          {(eventLocation?.length > 0
-            ? true
-            : Array.isArray(eventLocation)
-            ? false
-            : eventLocation) && (
+          {isEventLocation(eventLocation) && (
             <span className="pl-1 xl:pr-2 flex gap-1 items-center">
               <span className="text-brand-800 lg:text-[9px] xl:text-base">
                 <RiMapPinRangeLine />
               </span>
               <span className="text-gray800 dark:text-alpha-900">
-                {Array.isArray(eventLocation)
-                  ? eventLocation[0]?.country
-                  : eventLocation?.country || ''}
+                {getCountry(eventLocation)}
               </span>
             </span>
           )}
