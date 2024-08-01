@@ -1,5 +1,6 @@
 import { parseDateRange } from '@/lib/utils'
 import { TReferenceObject } from '@/utils/CreateWikiUtils/isValidWiki'
+import { getCountry, isEventLocation } from '@/utils/event.utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
 import { useTranslation } from 'next-i18next'
@@ -36,6 +37,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
   )
 
   const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
+
   const references: TReferenceObject[] = JSON.parse(data)
 
   let url
@@ -45,6 +47,8 @@ const EventSummary = ({ event }: { event: Wiki }) => {
     url = references.find(
       (item) => item.description.toLowerCase() === 'event link',
     )?.url
+
+  const dateLength = Number(event.events?.length)
 
   return (
     <div className="flex flex-col gap-4 border text-gray600 dark:text-alpha-900 border-gray200 dark:border-alpha-300 rounded-lg py-4 px-[14px] md:px-5 md:py-9 lg:py-[9px] lg:px-[7px] xl:py-4 xl:px-3">
@@ -65,23 +69,25 @@ const EventSummary = ({ event }: { event: Wiki }) => {
           {t('Register')}
         </Link>
       )}
-      {eventLocation && (
+      {isEventLocation(eventLocation) && (
         <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
           <span className="col-span-1">{t('Location')}</span>
           <span className="max-w-[163px] md:max-w-full lg:max-w-[119px] xl:col-span-2 xl:max-w-full">
-            {eventLocation?.country}
+            {getCountry(eventLocation)}
           </span>
         </span>
       )}
       <span className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3 text-xs lg:text-[10px] xl:text-xs font-medium rounded-lg bg-gray100 dark:bg-gray700 items-center px-4 lg:px-2 xl:px-4 py-3">
         <span className="col-span-1">{t('Date')}</span>
         <span className="xl:col-span-2">
-          {event?.events?.[0].date
-            ? parseDateRange(event.events[0].date)
-            : event?.events?.[0].multiDateStart &&
-              event.events?.[0]?.multiDateEnd
+          {event?.events?.[dateLength - 1].date
+            ? parseDateRange(event.events[dateLength - 1].date)
+            : event?.events?.[dateLength - 1].multiDateStart &&
+              event.events?.[dateLength - 1]?.multiDateEnd
             ? parseDateRange(
-                `${event.events[0].multiDateStart}/${event.events[0].multiDateEnd}`,
+                `${event.events[dateLength - 1].multiDateStart}/${
+                  event.events[dateLength - 1].multiDateEnd
+                }`,
               )
             : ''}
         </span>
