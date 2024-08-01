@@ -12,6 +12,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/popover'
 import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
+import { useTranslation } from 'next-i18next'
 
 export function DatePickerDemo({
   date,
@@ -24,6 +25,7 @@ export function DatePickerDemo({
   containerClassName?: string
   hideIcon?: boolean
 }) {
+  const { t } = useTranslation('event')
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -51,7 +53,7 @@ export function DatePickerDemo({
                 format(date.from, 'LLL dd, y')
               )
             ) : (
-              'Select Date'
+              t('searchDatePlaceholder')
             )}
           </span>
         </Button>
