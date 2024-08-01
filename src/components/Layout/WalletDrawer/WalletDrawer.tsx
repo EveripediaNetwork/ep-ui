@@ -81,7 +81,7 @@ const WalletDrawer = ({
       </SheetTrigger>
       <SheetContent
         aria-describedby={undefined}
-        className="bg-white dark:bg-gray-800 p-0"
+        className="bg-white dark:bg-gray-800 p-0 z-[9999]"
       >
         <SheetHeader className="border-b border-gray-200 dark:border-gray-700">
           <div className="flex flex-row items-center justify-between mt-6 p-6">

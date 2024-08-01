@@ -7,19 +7,19 @@ import useLanguageChange from '@/hooks/useLanguageChange'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { setDrawerOpen } from '@/store/slices/app-slice'
 import { RootState, store } from '@/store/store'
-import { Box, Collapse, IconButton, useDisclosure } from '@chakra-ui/react'
+import { Collapse, IconButton, useDisclosure } from '@chakra-ui/react'
 import { AlignJustify, X } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { Suspense, useEffect, useState } from 'react'
+import { RiSearchLine } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import DesktopNav from './DesktopNav'
 import { LocaleSelect } from './LocaleSelect'
 import MobileNav from './MobileNav'
 import SuggestWikiModal from './SuggestWiki'
-import { RiSearchLine } from 'react-icons/ri'
 const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
@@ -71,15 +71,11 @@ const Navbar = () => {
   }
 
   return (
-    <Box
-      boxShadow="sm"
-      position="fixed"
-      zIndex="banner"
-      w="full"
-      h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
-      bg="subMenuBg"
-      borderBottomWidth={1}
-      borderBottomColor="rankingListBorder"
+    <div
+      className="shadow-sm fixed top-0 left-0 right-0 z-[9990] w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200"
+      style={{
+        height: drawerOperations.isOpen ? '100%' : 'unset',
+      }}
     >
       <div className="flex gap-8 lg:gap-40 xl:gap-8 h-16 items-center justify-between px-4 lg:px-8 border-b lg:border-b-0 dark:border-alpha-200 border-gray-200">
         <Link prefetch={false} href="/">
@@ -173,7 +169,7 @@ const Navbar = () => {
           drawerOperations={drawerOperations}
         />
       </Collapse>
-    </Box>
+    </div>
   )
 }
 

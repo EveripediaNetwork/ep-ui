@@ -19,6 +19,7 @@ import { RankTable, RankTableHead } from '../Rank/RankTable'
 
 import { tabsData } from '@/data/RanksTabsData'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
+import Link from 'next/link'
 
 type RankingListProps = {
   rankings: {
@@ -240,18 +241,15 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
               </RankTable>
             </TabsContent>
           </Tabs>
-          {/* <Flex justifyContent="center" mt="10">
+          <div className="flex items-center justify-center mt-10">
             <Link
-              href={`/rank/${selectedRanking}`}
-              h="50px"
-              w={{ base: 32, lg: 40 }}
-              variant="outline"
-              bgColor="btnBgColor"
+              className="w-32 lg:w-40 border border-gray-300 dark:border-alpha-900 h-[50px] rounded-md flex items-center justify-center text-xs hover:bg-gray-50 hover:dark:bg-alpha-100 transition-colors duration-300 ease-in-out delay-150"
+              href="/rank/"
               prefetch={false}
             >
               {t('rankingListViewMore')}
             </Link>
-          </Flex> */}
+          </div>
         </div>
       </div>
     </div>

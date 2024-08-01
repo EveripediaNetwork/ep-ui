@@ -75,7 +75,7 @@ export function MoreDrawer() {
       <SheetTrigger asChild>
         <Button
           variant="outline"
-          className="bg-white dark:bg-gray800 border-none w-0 hover:dark:bg-gray800"
+          className="bg-white dark:bg-gray800 border-none w-0 hover:bg-white hover:dark:bg-gray800"
         >
           <div className="flex flex-col gap-2 items-center text-xs text-gray-500 dark:text-alpha-600">
             <RiMoreFill className="w-6 h-6" />
@@ -83,7 +83,7 @@ export function MoreDrawer() {
           </div>
         </Button>
       </SheetTrigger>
-      <SheetContent className="w-full bg-white dark:bg-gray-800 p-0">
+      <SheetContent className="w-full bg-white dark:bg-gray-800 p-0 z-[9999]">
         <SheetHeader className="flex items-start p-6 border-b dark:border-alpha-400">
           <SheetTitle>
             <div className="flex flex-row gap-2 items-center">
