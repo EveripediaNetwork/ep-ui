@@ -2,7 +2,6 @@ import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { useGetWikiQuery } from '@/services/wikis'
 import { useAppDispatch } from '@/store/hook'
 import { initialMsg } from '@/utils/CreateWikiUtils/createWikiMessages'
-import { useToast } from '@chakra-ui/toast'
 import { LinkedWikiKey, LinkedWikis, Wiki } from '@everipedia/iq-utils'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
 import { NextRouter } from 'next/router'
@@ -55,7 +54,6 @@ export const useCreateWikiState = (router: NextRouter) => {
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
   const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
-  const toast = useToast()
   const [openOverrideExistingWikiDialog, setOpenOverrideExistingWikiDialog] =
     useState<boolean>(false)
   const [existingWikiData, setExistingWikiData] = useState<Wiki>()
@@ -80,7 +78,6 @@ export const useCreateWikiState = (router: NextRouter) => {
     dispatch,
     slug,
     revision,
-    toast,
     isWritingCommitMsg,
     setIsWritingCommitMsg,
     txHash,

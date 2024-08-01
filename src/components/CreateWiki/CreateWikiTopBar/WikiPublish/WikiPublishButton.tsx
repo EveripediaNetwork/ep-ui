@@ -18,7 +18,13 @@ import { isValidWiki } from '@/utils/CreateWikiUtils/isValidWiki'
 import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
 import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
-import { Button, Tooltip, useBoolean, useDisclosure } from '@chakra-ui/react'
+import {
+  Button,
+  Tooltip,
+  useBoolean,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react'
 import {
   CreateNewWikiSlug,
   EditSpecificMetaIds,
@@ -79,10 +85,10 @@ export const WikiPublishButton = () => {
   const [showNetworkModal, setShowNetworkModal] = useState(showModal)
 
   const { t } = useTranslation('wiki')
+  const toast = useToast()
 
   const {
     dispatch,
-    toast,
     wikiHash,
     revision,
     isNewCreateWiki,
