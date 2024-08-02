@@ -7,7 +7,7 @@ import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { postWiki, useGetWikiQuery } from '@/services/wikis'
 import { useAppSelector } from '@/store/hook'
 import { store } from '@/store/store'
-import { ProviderDataType } from '@/types/ProviderDataType'
+import type { ProviderDataType } from '@/types/ProviderDataType'
 import {
   ValidationErrorMessage,
   defaultErrorMessage,
@@ -28,11 +28,11 @@ import {
 import {
   CreateNewWikiSlug,
   EditSpecificMetaIds,
-  Wiki,
+  type Wiki,
 } from '@everipedia/iq-utils'
 import detectEthereumProvider from '@metamask/detect-provider'
-import { SerializedError } from '@reduxjs/toolkit'
-import { ClientError } from 'graphql-request'
+import type { SerializedError } from '@reduxjs/toolkit'
+import type { ClientError } from 'graphql-request'
 import { useTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
 import { useEffect, useRef, useState } from 'react'
@@ -146,14 +146,14 @@ export const WikiPublishButton = () => {
 
     return () => {
       if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
+        detectedProvider.removeListener('chainChanged', (newlyConnectedChain) =>
+          setConnectedChainId(newlyConnectedChain),
         )
       }
     }
-  }, [detectedProvider, userAddress])
+  }, [detectedProvider])
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const handleAsync = async () => {
       if (activeStep === 3) {
@@ -171,7 +171,7 @@ export const WikiPublishButton = () => {
       }
     }
     handleAsync()
-  }, [activeStep, fireConfetti])
+  }, [activeStep, fireConfetti, posthog])
 
   useEffect(() => {
     async function verifyTransactionHash() {

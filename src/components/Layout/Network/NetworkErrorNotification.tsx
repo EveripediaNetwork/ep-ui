@@ -10,9 +10,9 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react'
-import { FocusableElement } from '@chakra-ui/utils'
+import type { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
-import { ProviderDataType } from '@/types/ProviderDataType'
+import type { ProviderDataType } from '@/types/ProviderDataType'
 import { useAccount, useSwitchNetwork } from 'wagmi'
 import { useDispatch } from 'react-redux'
 import detectEthereumProvider from '@metamask/detect-provider'
@@ -44,6 +44,7 @@ const NetworkErrorNotification = ({
   const { isConnected: isUserConnected } = useAccount()
   const dispatch = useDispatch()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const getDetectedProvider = async () => {
       const provider = (await detectEthereumProvider({

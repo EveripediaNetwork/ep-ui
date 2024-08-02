@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react'
+import React, { useCallback, useEffect } from 'react'
 import { Box, Container, Heading } from '@chakra-ui/react'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import Head from 'next/head'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
+import type { RootState } from '@/store/store'
 
 const Login = () => {
   const { t } = useTranslation('common')
@@ -17,19 +17,19 @@ const Login = () => {
   const router = useRouter()
   const { token } = useSelector((state: RootState) => state.user)
 
-  const handleRedirect = () => {
+  const handleRedirect = useCallback(() => {
     if (router.query.from) {
       router.push(`${router.query.from}`)
     } else {
       router.push('/')
     }
-  }
+  }, [router])
 
   useEffect(() => {
     if (userAddress && token) {
       handleRedirect()
     }
-  }, [userAddress, token])
+  }, [userAddress, token, handleRedirect])
 
   return (
     <>
