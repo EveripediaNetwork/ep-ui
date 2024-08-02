@@ -41,7 +41,7 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
                 className=" object-cover"
               />
               <Link
-                href={`/events/${event.title.toLowerCase().replace(/ /g, '-')}`}
+                href={`/events/${event.id}`}
                 className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5"
               >
                 <div className="text-alpha-900">
