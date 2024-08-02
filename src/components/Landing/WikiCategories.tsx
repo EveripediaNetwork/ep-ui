@@ -31,7 +31,7 @@ export default function WikiCategories() {
             <Link
               href={`/categories/${category.id}`}
               key={category.id}
-              className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
+              className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
             >
               <div className="w-[68px] h-[46px] aspect-square rounded-md">
                 <Image

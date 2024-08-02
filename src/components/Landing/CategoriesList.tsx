@@ -64,7 +64,7 @@ const CategoriesList = () => {
       <Link
         href="/categories"
         prefetch={false}
-        className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center mt-6 dark:text-alpha-800 text-gray-600"
+        className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center mt-6 dark:text-alpha-800 text-gray-600 text-xs lg:text-sm"
       >
         {t('categoryViewMore')}
       </Link>

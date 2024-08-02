@@ -72,7 +72,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="shadow-sm fixed top-0 left-0 right-0 z-[9990] w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200"
+      className="shadow-sm fixed top-0 left-0 right-0 z-[9999] md:z-50 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200"
       style={{
         height: drawerOperations.isOpen ? '100%' : 'unset',
       }}

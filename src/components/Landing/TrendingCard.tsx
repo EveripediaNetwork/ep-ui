@@ -67,7 +67,7 @@ const TrendingCard = ({
           {wikiData?.map((wiki) => (
             <Link
               href={`/wiki/${wiki.id}`}
-              className="border-b border-gray-100 dark:border-gray-700 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
+              className="border-b dark:border-gray-700 border-gray-200 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
               key={wiki.id}
             >
               <div className="w-[68px] h-[46px] aspect-square rounded-md">
