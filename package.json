@@ -21,7 +21,6 @@
     "env:dev": "vercel env pull --environment=Development"
   },
   "dependencies": {
-    "@biomejs/biome": "^1.8.3",
     "@chakra-ui/color-mode": "^2.0.0",
     "@chakra-ui/icons": "^2.0.0",
     "@chakra-ui/react": "^2.3.7",
@@ -134,6 +133,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
+    "@biomejs/biome": "^1.8.3",
     "@chakra-ui/cli": "^2.1.8",
     "@magic-sdk/types": "^24.0.5",
     "@next/bundle-analyzer": "^12.2.2",

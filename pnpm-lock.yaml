@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      '@biomejs/biome':
-        specifier: ^1.8.3
-        version: 1.8.3
       '@chakra-ui/color-mode':
         specifier: ^2.0.0
         version: 2.2.0(react@18.3.1)
@@ -342,6 +339,9 @@ importers:
       '@babel/core':
         specifier: ^7.17.8
         version: 7.24.9
+      '@biomejs/biome':
+        specifier: ^1.8.3
+        version: 1.8.3
       '@chakra-ui/cli':
         specifier: ^2.1.8
         version: 2.4.1
