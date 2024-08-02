@@ -29,6 +29,6 @@ jobs:
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
       - name: Check linting and formatting
-        run: pnpm biome lint $(git diff --name-only $(git merge-base main ${{ github.ref }})..${{github.ref}})
+        run: pnpm biome ci $(git diff --name-only $(git merge-base main HEAD) HEAD)
       - name: Tests
         run: pnpm test
