@@ -1,7 +1,5 @@
-name: CI
-
+name: Push checks
 on: [push]
-
 jobs:
   Checkout:
     runs-on: ubuntu-latest
@@ -9,21 +7,17 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Ensure a full clone
-
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 9.*
-
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-
       - name: Get pnpm store directory
         shell: bash
         run: |
           echo "STORE_PATH=$(pnpm store path --silent)" >> $GITHUB_ENV
-
       - uses: actions/cache@v4
         name: Setup pnpm cache
         with:
@@ -34,22 +28,7 @@ jobs:
 
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
-
-      - name: Debug Git
-        run: |
-          git fetch --all  # Ensure all branches are fetched
-          git branch -a  # List all branches for debugging
-          git log --oneline  # Show commit history for debugging
-          MAIN_BRANCH=main
-          if ! git show-ref --quiet refs/heads/$MAIN_BRANCH; then
-            MAIN_BRANCH=master  # Fallback to master if main doesn't exist
-          fi
-          echo "Using main branch: $MAIN_BRANCH"
-          echo "DIFF_FILES=$(git diff --name-only $(git merge-base $MAIN_BRANCH HEAD) HEAD)" >> $GITHUB_ENV
-
       - name: Check linting and formatting
-        run: pnpm biome ci ${{ env.DIFF_FILES }}
-
+        run: pnpm biome lint $(git diff --name-only $(git merge-base main HEAD) HEAD)
       - name: Tests
         run: pnpm test
-
