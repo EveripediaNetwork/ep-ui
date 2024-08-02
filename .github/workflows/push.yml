@@ -5,14 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
-      - name: checks out current branch
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
-      - name: checks out main branch
-      - uses: actions/checkout@v4
-        with:
-          ref: main
           fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
