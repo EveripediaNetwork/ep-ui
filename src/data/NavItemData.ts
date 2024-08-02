@@ -23,6 +23,7 @@ import {
   RiStarSFill,
   RiLightbulbFlashFill,
   RiCodeBoxFill,
+  RiCalendarEventFill,
 } from 'react-icons/ri'
 import { NavItem } from '@/types/NavItemType'
 
@@ -113,7 +114,7 @@ export const NAV_ITEMS: NavItem[] = [
     id: 5,
     label: 'Events',
     href: '/events',
-    icon: RiHashtag,
+    icon: RiCalendarEventFill,
   },
   {
     id: 6,

@@ -1,5 +1,6 @@
 import { parseDateRange } from '@/lib/utils'
 import { TEvents } from '@/services/event'
+import { getCountry, isEventLocation } from '@/utils/event.utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -13,6 +14,8 @@ type TEventItemProps = {
 
 const EventItem = (props: TEventItemProps) => {
   const { event, eventLocation } = props
+  const dateLength = event.events?.length
+
   return (
     <div key={event.id} className="flex group gap-2">
       <Link
@@ -38,22 +41,26 @@ const EventItem = (props: TEventItemProps) => {
             <span className="text-brand-800 lg:text-[9px] xl:text-base">
               <RiCalendar2Line />
             </span>
-            {event.events?.[0].date
-              ? parseDateRange(event.events?.[0].date)
-              : event.events?.[0].multiDateStart &&
-                event.events?.[0].multiDateEnd
-              ? parseDateRange(
-                  `${event.events?.[0].multiDateStart}/${event.events?.[0].multiDateEnd}`,
-                )
-              : ''}
+            <span className="text-gray800 dark:text-alpha-900">
+              {event.events?.[dateLength - 1].date
+                ? parseDateRange(String(event.events?.[dateLength - 1].date))
+                : event.events?.[dateLength - 1].multiDateStart &&
+                  event.events?.[dateLength - 1].multiDateEnd
+                ? parseDateRange(
+                    `${event.events?.[dateLength - 1].multiDateStart}/${
+                      event.events?.[dateLength - 1].multiDateEnd
+                    }`,
+                  )
+                : ''}
+            </span>
           </span>
-          {eventLocation && (
+          {isEventLocation(eventLocation) && (
             <span className="pl-1 xl:pr-2 flex gap-1 items-center">
               <span className="text-brand-800 lg:text-[9px] xl:text-base">
                 <RiMapPinRangeLine />
               </span>
               <span className="text-gray800 dark:text-alpha-900">
-                {eventLocation?.country}
+                {getCountry(eventLocation)}
               </span>
             </span>
           )}
