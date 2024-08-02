@@ -1,3 +1,16 @@
+import React, { useEffect, useState, useRef } from 'react'
+import { useNetwork, useAccount } from 'wagmi'
+import {
+  Button,
+  Tooltip,
+  useBoolean,
+  useDisclosure,
+  useToast,
+} from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import ReactCanvasConfetti from 'react-canvas-confetti'
+import { usePostHog } from 'posthog-js/react'
+
 import config from '@/config'
 import networkMap from '@/data/NetworkMap'
 import useConfetti from '@/hooks/useConfetti'
@@ -7,7 +20,6 @@ import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { postWiki, useGetWikiQuery } from '@/services/wikis'
 import { useAppSelector } from '@/store/hook'
 import { store } from '@/store/store'
-import { ProviderDataType } from '@/types/ProviderDataType'
 import {
   ValidationErrorMessage,
   defaultErrorMessage,
@@ -19,34 +31,18 @@ import { isWikiExists } from '@/utils/CreateWikiUtils/isWikiExist'
 import { sanitizeContentToPublish } from '@/utils/CreateWikiUtils/sanitizeContentToPublish'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import {
-  Button,
-  Tooltip,
-  useBoolean,
-  useDisclosure,
-  useToast,
-} from '@chakra-ui/react'
-import {
   CreateNewWikiSlug,
   EditSpecificMetaIds,
   Wiki,
 } from '@everipedia/iq-utils'
-import detectEthereumProvider from '@metamask/detect-provider'
-import { SerializedError } from '@reduxjs/toolkit'
-import { ClientError } from 'graphql-request'
-import { useTranslation } from 'next-i18next'
-import dynamic from 'next/dynamic'
-import { useEffect, useRef, useState } from 'react'
-import ReactCanvasConfetti from 'react-canvas-confetti'
+import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
-import { useAccount } from 'wagmi'
-import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
-import { usePostHog } from 'posthog-js/react'
-
-const NetworkErrorNotification = dynamic(
-  () => import('@/components/Layout/Network/NetworkErrorNotification'),
-)
+import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
+import { SerializedError } from '@reduxjs/toolkit'
+import { ClientError } from 'graphql-request'
+import { toHex } from 'viem'
 
 export type TGraphQLError = {
   error?: SerializedError | Pick<ClientError, 'name' | 'message' | 'stack'>
@@ -58,18 +54,16 @@ export const WikiPublishButton = () => {
   const toast = useToast()
 
   const [submittingWiki, setSubmittingWiki] = useBoolean()
-  const { address: userAddress, isConnected: isUserConnected } = useAccount()
   const posthog = usePostHog()
 
   const { userCanEdit } = useWhiteListValidator()
-  const [connectedChainId, setConnectedChainId] = useState<string>()
+  const { chain } = useNetwork()
+  const { address: userAddress, isConnected } = useAccount()
 
-  const { chainId } = config.isProduction
+  const { chainId: targetChainId } = config.isProduction
     ? networkMap.POLYGON_MAINNET
     : networkMap.IQ_TESTNET
 
-  const [detectedProvider, setDetectedProvider] =
-    useState<ProviderDataType | null>(null)
   const {
     isOpen: isOverrideModalOpen,
     onOpen: onOverrideModalOpen,
@@ -82,9 +76,7 @@ export const WikiPublishButton = () => {
   } = useDisclosure()
 
   const [networkSwitchAttempted, setNetworkSwitchAttempted] = useState(false)
-  const showModal = connectedChainId !== chainId && !networkSwitchAttempted
-
-  const [showNetworkModal, setShowNetworkModal] = useState(showModal)
+  const [showNetworkModal, setShowNetworkModal] = useState(false)
 
   const { t } = useTranslation('wiki')
 
@@ -121,39 +113,13 @@ export const WikiPublishButton = () => {
   const { fireConfetti, confettiProps } = useConfetti()
 
   useEffect(() => {
-    const getConnectedChain = async (provider: ProviderDataType) => {
-      const connectedChainId = await provider.request({
-        method: 'eth_chainId',
-      })
-      setConnectedChainId(connectedChainId)
-    }
-
-    const getDetectedProvider = async () => {
-      const provider = (await detectEthereumProvider({
-        silent: true,
-      })) as ProviderDataType
-      setDetectedProvider(provider)
-      if (provider) getConnectedChain(provider)
-    }
-
-    if (!detectedProvider) {
-      getDetectedProvider()
+    if (isConnected && chain) {
+      const isCorrectNetwork = toHex(chain.id) === targetChainId
+      setShowNetworkModal(!isCorrectNetwork && !networkSwitchAttempted)
     } else {
-      getConnectedChain(detectedProvider)
-      detectedProvider.on('chainChanged', (newlyConnectedChain) =>
-        setConnectedChainId(newlyConnectedChain),
-      )
+      setShowNetworkModal(false)
     }
-
-    return () => {
-      if (detectedProvider) {
-        detectedProvider.removeListener(
-          'chainChanged',
-          (newlyConnectedChain) => setConnectedChainId(newlyConnectedChain),
-        )
-      }
-    }
-  }, [detectedProvider, userAddress])
+  }, [isConnected, chain, targetChainId, networkSwitchAttempted])
 
   useEffect(() => {
     const handleAsync = async () => {
@@ -172,14 +138,13 @@ export const WikiPublishButton = () => {
       }
     }
     handleAsync()
-  }, [activeStep, fireConfetti])
+  }, [activeStep, fireConfetti, isNewCreateWiki, posthog, wiki])
 
   useEffect(() => {
     async function verifyTransactionHash() {
       if (txHash) verifyTrxHash()
     }
     verifyTransactionHash()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [txHash, verifyTrxHash])
 
   const processWikiPublishError = async (wikiResult: TGraphQLError) => {
@@ -191,7 +156,6 @@ export const WikiPublishButton = () => {
       if (rawErrMsg?.startsWith(prefix)) {
         const errObjString = rawErrMsg.substring(prefix.length)
         const errObj = JSON.parse(errObjString)
-        // eslint-disable-next-line no-console
         console.error({ ...errObj })
         const wikiError =
           errObj.response.errors[0].extensions.exception.response
@@ -301,7 +265,7 @@ export const WikiPublishButton = () => {
   return (
     <>
       <Tooltip
-        isDisabled={(userCanEdit as boolean) && isUserConnected}
+        isDisabled={(userCanEdit as boolean) && isConnected}
         p={2}
         rounded="md"
         placement="bottom-start"
@@ -310,8 +274,8 @@ export const WikiPublishButton = () => {
         bg="toolTipBg"
         hasArrow
         label={
-          !isUserConnected
-            ? 'Your Metamask is locked'
+          !isConnected
+            ? 'Your wallet is not connected'
             : 'Your address is not yet whitelisted'
         }
         mt="3"
@@ -357,11 +321,12 @@ export const WikiPublishButton = () => {
         onClose={handlePopupClose}
       />
       <ReactCanvasConfetti {...confettiProps} />
-      {showModal && (
+      {showNetworkModal && (
         <NetworkErrorNotification
           modalState={showNetworkModal}
-          setModalState={(state: boolean) => setShowNetworkModal(state)}
+          setModalState={setShowNetworkModal}
           setNetworkSwitchAttempted={setNetworkSwitchAttempted}
+          targetChainId={targetChainId}
         />
       )}
     </>
