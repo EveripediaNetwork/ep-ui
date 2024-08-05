@@ -78,6 +78,7 @@ const ChatBot = ({ wiki, onInteraction }: ChatBotProps) => {
         flexDirection={'column'}
         paddingBlock={'12px'}
         paddingInline={'8px'}
+        justifyContent={'center'}
       >
         {currentHumanMessage || currentChatId || currentAIMessage ? (
           <BotMessages />

@@ -95,6 +95,7 @@ const BrainBotMobile = ({
           paddingBlock={'16px'}
           paddingInline={'12px'}
           display={'flex'}
+          justifyContent={'center'}
         >
           {currentHumanMessage || currentChatId || currentAIMessage ? (
             <BotMessages />
