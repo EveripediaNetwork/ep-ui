@@ -74,7 +74,7 @@ const BotSuggestions = ({ wiki, onInteraction }: BotSuggestionsProps) => {
       >
         {t('chatBotIntroMessage')}
       </Text>
-      <VStack marginTop={'18px'} gap={'24px'}>
+      <VStack marginTop={'18px'} gap={'18px'}>
         <BrainBotSuggestion
           question={t(QueryType.AdditionalInfo)}
           icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
