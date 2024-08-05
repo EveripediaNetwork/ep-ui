@@ -29,6 +29,6 @@ jobs:
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
       - name: Biome Lint Changed Files
-        run: pnpm biome ci $(git diff --name-only $(git merge-base origin/main ${{ github.ref_name}} ) ${{ github.ref_name }})
+        run: pnpm biome ci $(git diff --diff-filter=MA --name-only $(git merge-base origin/main ${{ github.ref_name}} ) ${{ github.ref_name }})
       - name: Tests
         run: pnpm test
