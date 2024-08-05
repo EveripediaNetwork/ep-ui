@@ -1,5 +1,6 @@
 import { IconType } from 'react-icons'
 import {
+  RiCalendarEventFill,
   RiDatabaseFill,
   RiHashtag,
   RiHome5Fill,
@@ -31,6 +32,12 @@ export const Tabs: TabsType[] = [
     href: '/rank/',
     title: 'Rank',
     icon: RiHashtag,
+  },
+  {
+    id: 'events',
+    href: '/events/',
+    title: 'Events',
+    icon: RiCalendarEventFill,
   },
   {
     id: 'glossary',

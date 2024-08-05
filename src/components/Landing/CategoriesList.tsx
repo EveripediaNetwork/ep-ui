@@ -19,8 +19,10 @@ const CategoriesList = () => {
     <div className="flex flex-col gap-10 container mx-auto py-0 lg:py-20 relative px-4 lg:px-8 2xl:px-0">
       <div className="absolute -top-1/2 right-20 rotate-6 w-[700px] h-[1150px] lg:rotate-45 rounded-[100%] bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl -z-20" />
       <div className="flex flex-col gap-3">
-        <h1 className="text-2xl font-semibold">{t('browseCategory')}</h1>
-        <h2 className="dark:text-alpha-800 text-gray-600 font-medium max-w-3xl">
+        <h1 className="text-base lg:text-2xl font-semibold">
+          {t('browseCategory')}
+        </h1>
+        <h2 className="dark:text-alpha-800 text-gray-600 font-medium max-w-3xl text-sm lg:text-base">
           {t('browseCategoryDescription')}
         </h2>
       </div>
@@ -30,7 +32,7 @@ const CategoriesList = () => {
             {AllCategoriesData.map((category) => (
               <TabsTrigger
                 value={category.id}
-                className="rounded-full border-b-0 py-2.5 data-[state=active]:bg-brand-50 data-[state=active]:dark:bg-brand-200 bg-gray-100 dark:bg-alpha-50 dark:border-gray-700 border-gray-200/20"
+                className="rounded-full border-b-0 py-2.5 data-[state=active]:bg-brand-50 text-sm lg:text-base data-[state=active]:dark:bg-brand-200 bg-gray-100 dark:bg-alpha-50 dark:border-gray-700 border-gray-200/20"
               >
                 {tr(category.title)}
               </TabsTrigger>
@@ -64,7 +66,7 @@ const CategoriesList = () => {
       <Link
         href="/categories"
         prefetch={false}
-        className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center mt-6 dark:text-alpha-800 text-gray-600 text-xs lg:text-sm"
+        className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center dark:text-alpha-800 text-gray-600 text-xs lg:text-sm"
       >
         {t('categoryViewMore')}
       </Link>

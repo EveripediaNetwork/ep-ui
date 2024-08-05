@@ -253,7 +253,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           </Tabs>
           <div className="flex items-center justify-center mt-10">
             <Link
-              className="w-32 lg:w-40 border border-gray-300 dark:border-alpha-900 h-[50px] rounded-md flex items-center justify-center text-xs hover:bg-gray-50 hover:dark:bg-alpha-100 transition-colors duration-300 ease-in-out delay-150"
+              className="w-32 lg:w-40 border dark:border-gray-700 border-gray-300 h-[50px] rounded-md flex items-center justify-center text-xs hover:bg-gray-50 hover:dark:bg-alpha-100 transition-colors duration-300 ease-in-out delay-150"
               href={`/rank/${selectedTab}`}
               prefetch={false}
             >

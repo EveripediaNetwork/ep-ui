@@ -344,7 +344,7 @@ const NavSearch = (props: NavSearchProps) => {
             <Search2Icon color="gray.300" />
           </InputLeftElement>
           <AutoCompleteInput
-            width={{ base: '360px', md: '720px', lg: '450px', '2xl': '800px' }}
+            width={{ base: '360px', md: '720px', lg: '100%', '2xl': '100%' }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('SearchWikiPlaceholder')}

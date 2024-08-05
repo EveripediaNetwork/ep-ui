@@ -35,14 +35,14 @@ const AboutIqgpt = () => {
             <Link
               href={'https://iqgpt.com/'}
               target="_blank"
-              className="dark:bg-brand-800 bg-brand-500 text-white py-3 px-3 rounded-lg"
+              className="dark:bg-brand-800 bg-brand-500 text-white py-3 px-3 rounded-lg text-sm"
             >
               {t('IQGPTBtn1')}
             </Link>
             <Link
               href={'https://iq.wiki/wiki/iq'}
               target="_blank"
-              className="bg-white text-black py-3 px-4 rounded-lg"
+              className="bg-white text-black py-3 px-4 rounded-lg text-sm"
             >
               {t('IQGPTBtn2')}
             </Link>
