@@ -21,7 +21,7 @@ import ComboBoxPopup from './ComboBoxPopup'
 
 const LinksInput = ({ wiki }: { wiki: Wiki }) => {
   const [currentLink, setCurrentLink] = useState<string>()
-  const [currentLinkValue, setCurrentLinkValue] = useState<string>()
+  const [currentLinkValue, setCurrentLinkValue] = useState<string>('')
   const [error, setError] = useState<string>('')
 
   const dispatch = useAppDispatch()
@@ -88,7 +88,7 @@ const LinksInput = ({ wiki }: { wiki: Wiki }) => {
 
   React.useEffect(() => {
     if (currentLink && atttributeExists(currentLink))
-      setCurrentLinkValue(getWikiAttribute(currentLink).value)
+      setCurrentLinkValue(String(getWikiAttribute(currentLink).value))
     else setCurrentLinkValue('')
     setError('')
     // eslint-disable-next-line react-hooks/exhaustive-deps
