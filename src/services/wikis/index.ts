@@ -163,16 +163,12 @@ type ActivitiesByCategoryData = {
   }[]
 }
 
-type GetWikisAndCategoriesData = {
-  wikis: WikiCategories[]
-}
-
 type WikisAndCategoriesArg = {
   limit?: number
   offset?: number
 }
 
-type WikiCategories = {
+type GetWikisAndCategoriesData = {
   categories: Category[]
 }
 
@@ -346,25 +342,12 @@ export const wikiApi = createApi({
         response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
     getWikisAndCategories: builder.query<Category[], WikisAndCategoriesArg>({
-      query: ({ limit, offset }) => ({
+      query: ({ limit, offset }: WikisAndCategoriesArg) => ({
         document: GET_WIKIS_AND_CATEGORIES,
         variables: { limit, offset },
       }),
-      transformResponse: (response: GetWikisAndCategoriesData) => {
-        const allCategories = response.wikis.flatMap((wiki) => wiki.categories)
-
-        const uniqueCategories = allCategories.reduce<Category[]>(
-          (acc, category) => {
-            if (!acc.some((cat) => cat.id === category.id)) {
-              acc.push(category)
-            }
-            return acc
-          },
-          [],
-        )
-
-        return uniqueCategories
-      },
+      transformResponse: (response: GetWikisAndCategoriesData) =>
+        response.categories,
     }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => {

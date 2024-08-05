@@ -8,8 +8,7 @@ import Link from 'next/link'
 import { ArrowRightIcon } from 'lucide-react'
 
 const CategoriesList = () => {
-  const { t } = useTranslation('common')
-  const { t: tr } = useTranslation('category')
+  const { t } = useTranslation(['common', 'category'])
 
   const { data } = useGetWikisAndCategoriesQuery({
     limit: 30,
@@ -34,7 +33,7 @@ const CategoriesList = () => {
                 value={category.id}
                 className="rounded-full border-b-0 py-2.5 data-[state=active]:bg-brand-50 text-sm lg:text-base data-[state=active]:dark:bg-brand-200 bg-gray-100 dark:bg-alpha-50 dark:border-gray-700 border-gray-200/20"
               >
-                {tr(category.title)}
+                {t(category.title)}
               </TabsTrigger>
             ))}
             <Link

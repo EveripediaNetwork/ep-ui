@@ -398,26 +398,24 @@ export const GET_WIKI_ACTIVITY_BY_CATEGORIES = gql`
 `
 export const GET_WIKIS_AND_CATEGORIES = gql`
   query GetWikisAndCategories($limit: Int, $offset: Int) {
-    wikis(limit: $limit, offset: $offset) {
-      categories {
-        title
+    categories(limit: $limit, offset: $offset) {
+      title
+      id
+      wikis {
         id
-        wikis {
+        title
+        summary
+        user {
           id
-          title
-          summary
-          user {
+          profile {
+            avatar
+            username
             id
-            profile {
-              avatar
-              username
-              id
-            }
           }
-          images {
-            id
-            type
-          }
+        }
+        images {
+          id
+          type
         }
       }
     }
