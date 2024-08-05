@@ -7,7 +7,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 1
+          fetch-depth: 0
       - uses: pnpm/action-setup@v4
         with:
           version: 9.*
@@ -28,7 +28,7 @@ jobs:
 
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
-      - name: Lint Biome
-        run: pnpm biome ci .
+      - name: Biome Lint Changed Files
+        run: pnpm biome ci $(git diff --diff-filter=MA --name-only $(git merge-base origin/main ${{ github.ref_name}} ) ${{ github.ref_name }})
       - name: Tests
         run: pnpm test
