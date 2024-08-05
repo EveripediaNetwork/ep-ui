@@ -45,7 +45,7 @@ export const BrainBotSuggestion = ({
       }}
       _dark={{
         _hover: {
-          bgColor: 'brand.300',
+          bgColor: 'brand.500',
         },
       }}
     >
