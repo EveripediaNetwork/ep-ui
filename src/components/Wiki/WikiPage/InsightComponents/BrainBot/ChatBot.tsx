@@ -71,7 +71,7 @@ const ChatBot = ({ wiki, onInteraction }: ChatBotProps) => {
         </Box>
       </Box>
       <Box
-        h={'250px'}
+        h={'375px'}
         overflowY={'auto'}
         display={'flex'}
         alignItems={'center'}
