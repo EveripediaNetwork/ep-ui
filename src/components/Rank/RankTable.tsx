@@ -28,9 +28,6 @@ export const RankTable = ({
     <TableContainer
       w="full"
       boxShadow="3xl"
-      borderRadius="8px"
-      // bg="rankingListTableBg"
-      border="1px solid"
       borderColor="rankingListBorder"
       _dark={{ boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)' }}
       borderBottom="none"
@@ -58,7 +55,7 @@ export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
   const { t } = useTranslation(['rank', 'common'])
 
   return (
-    <Thead h="45px" bg="rankingListTableHead">
+    <Thead h="45px">
       <Tr>
         {RankingListHead.map((item, i) => {
           const onClick = onClickMap?.[item.id]

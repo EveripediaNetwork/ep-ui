@@ -7,7 +7,6 @@ import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
-// import { LinkButton } from '../Elements'
 import FounderRankingItem from '../Rank/FounderRankCardItem'
 import {
   FoundersRankTable,
@@ -33,6 +32,7 @@ type RankingListProps = {
 }
 
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
+  const [selectedTab, setSelectedTab] = useState<string>('cryptocurrencies')
   const TokensListing = rankings?.TokensListing
   const aiTokensListing = rankings?.aiTokensListing
   const NFTsListing = rankings?.NFTsListing
@@ -104,9 +104,14 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       }
     },
   }
+
+  const handleSelectedTab = (tab: string) => {
+    setSelectedTab(tab)
+  }
+
   return (
     <div className="flex flex-col container mx-auto mb-20 relative px-4 lg:px-8 2xl:px-0">
-      <div className="absolute -z-10 -top-20 lg:-top-48 right-0 lg:right-40 w-[400px] lg:w-[520px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-full bg-gradient-to-b from-brand-600/5 to-white/5 blur-3xl" />
+      <div className="absolute -z-10 -top-20 lg:-top-48 right-0 lg:right-40 w-[400px] lg:w-[720px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-[100%] bg-gradient-to-b from-brand-800/5 to-indigo-200/10 blur-3xl" />
       <div className="w-full flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <h1 className="text-sm lg:text-2xl font-bold">
@@ -127,6 +132,11 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                   <TabsTrigger
                     key={tab.value}
                     value={t(tab.value)}
+                    onClick={() =>
+                      handleSelectedTab(
+                        t(tab.value).replaceAll(' ', '').toLowerCase(),
+                      )
+                    }
                     className="flex flex-row items-center gap-2"
                   >
                     <tab.icon className="text-brand-500 dark:text-brand-800 w-6 h-6" />
@@ -244,7 +254,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           <div className="flex items-center justify-center mt-10">
             <Link
               className="w-32 lg:w-40 border border-gray-300 dark:border-alpha-900 h-[50px] rounded-md flex items-center justify-center text-xs hover:bg-gray-50 hover:dark:bg-alpha-100 transition-colors duration-300 ease-in-out delay-150"
-              href="/rank/"
+              href={`/rank/${selectedTab}`}
               prefetch={false}
             >
               {t('rankingListViewMore')}

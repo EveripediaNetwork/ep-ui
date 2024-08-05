@@ -18,10 +18,10 @@ const EventOverview = () => {
           <div className="flex flex-col md:flex-row gap-10 lg:gap-24 mt-10">
             <div className="flex items-center flex-1 max-w-lg">
               <div className="flex flex-col gap-6">
-                <h2 className="text-sm lg:text-2xl font-semibold dark:text-alpha-900">
+                <h2 className="text-base lg:text-2xl font-semibold dark:text-alpha-900">
                   {t('homePageHeading')}
                 </h2>
-                <p className="text-xs md:text-base">{t('eventDescription')}</p>
+                <p className="text-sm md:text-base">{t('eventDescription')}</p>
                 <LinkButton
                   href="/events"
                   h="50px"
