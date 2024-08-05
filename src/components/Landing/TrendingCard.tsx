@@ -3,7 +3,6 @@ import { shortenText } from '@/utils/textUtils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { Icon } from '@chakra-ui/react'
 import { Wiki } from '@everipedia/iq-utils'
-import router from 'next/router'
 import React from 'react'
 import { IconType } from 'react-icons/lib'
 import { TrendingSkeleton } from './LoadingFeaturedWikiCard'
@@ -80,13 +79,10 @@ const TrendingCard = ({
                 />
               </div>
 
-              <div className="flex-1 flex flex-col">
-                <div
-                  className="text-lg font-semibold"
-                  onKeyUpCapture={() => router.push(`wiki/${wiki.id}`)}
-                >
+              <div className="flex-1 flex flex-col gap-1.5">
+                <h1 className="text-sm font-semibold">
                   {shortenText(wiki.title, 24)}
-                </div>
+                </h1>
                 <h3 className="text-xs font-medium line-clamp-2">
                   {wiki.summary}
                 </h3>

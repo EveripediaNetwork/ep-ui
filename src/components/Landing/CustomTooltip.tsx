@@ -1,7 +1,12 @@
 import React from 'react'
 import { useTranslation } from 'next-i18next'
 
-const CustomTooltip = ({ active, payload }: any) => {
+interface CustomTooltipProps {
+  active?: boolean
+  payload?: { value: number }[]
+}
+
+const CustomTooltip = ({ active, payload }: CustomTooltipProps) => {
   const { t } = useTranslation('home')
   if (active && payload && payload.length) {
     return (

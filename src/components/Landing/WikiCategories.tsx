@@ -43,8 +43,8 @@ export default function WikiCategories() {
                 />
               </div>
 
-              <div className="flex-1 flex flex-col">
-                <div className="text-lg font-semibold">{t(category.title)}</div>
+              <div className="flex-1 flex flex-col gap-1.5">
+                <div className="text-sm font-semibold">{t(category.title)}</div>
                 <h3 className="text-xs font-medium line-clamp-2">
                   {t(category.description)}
                 </h3>

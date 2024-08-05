@@ -111,7 +111,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
 
   return (
     <div className="flex flex-col container mx-auto mb-20 relative px-4 lg:px-8 2xl:px-0">
-      <div className="absolute -z-10 -top-20 lg:-top-48 right-0 lg:right-40 w-[400px] lg:w-[720px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-[100%] bg-gradient-to-b from-brand-800/5 to-indigo-200/10 blur-3xl" />
+      <div className="absolute -z-10 -top-20 lg:-top-60 right-0 lg:right-40 w-[400px] lg:w-[720px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-[100%] bg-gradient-to-b from-pink-500/10 to-indigo-500/10 blur-3xl" />
       <div className="w-full flex flex-col gap-8">
         <div className="flex flex-col gap-2">
           <h1 className="text-sm lg:text-2xl font-bold">

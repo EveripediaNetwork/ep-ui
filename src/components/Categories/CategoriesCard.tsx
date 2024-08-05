@@ -5,7 +5,7 @@ import React from 'react'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 
-type CategoriesCardProps = {
+interface CategoriesCardProps {
   wiki: {
     id: string
     title: string
@@ -41,8 +41,10 @@ export default function CategoriesCard({ wiki }: CategoriesCardProps) {
         />
       </div>
       <div className="p-4">
-        <h1 className="text-xl font-semibold">{shortenText(wiki.title, 30)}</h1>
-        <p className="dark:text-alpha-800 text-gray-600 text-sm">
+        <h1 className="text-sm lg:text-xl font-semibold mb-2">
+          {shortenText(wiki.title, 30)}
+        </h1>
+        <p className="dark:text-alpha-800 text-gray-600 text-xs lg:text-sm">
           {shortenText(wiki.summary, 80)}
         </p>
 

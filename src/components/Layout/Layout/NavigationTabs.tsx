@@ -20,8 +20,8 @@ export default function NavigationTabs() {
               : 'text-gray-500 dark:text-alpha-600',
           )}
         >
-          <tab.icon className="w-6 h-6" />
-          <span className="text-xs">{tab.title}</span>
+          <tab.icon className="w-5 h-5" />
+          <span className="text-[10px]">{tab.title}</span>
         </Link>
       ))}
       <MoreDrawer />
