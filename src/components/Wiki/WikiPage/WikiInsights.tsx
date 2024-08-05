@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, VStack } from '@chakra-ui/react'
-import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@everipedia/iq-utils'
-import { TokenStats } from '@/services/token-stats'
-import { NFTStats } from '@/services/nft-stats'
+import {
+  CommonMetaIds,
+  EditSpecificMetaIds,
+  type Wiki,
+} from '@everipedia/iq-utils'
+import type { TokenStats } from '@/services/token-stats'
+import type { NFTStats } from '@/services/nft-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
 import { fetchNFTStats } from '@/services/nft-stats/utils'
 import { useStickyBox } from 'react-sticky-box'
@@ -64,6 +68,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
     })
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!wikiIsNFT) {
       const fetchTokenData = async () => {

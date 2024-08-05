@@ -4,7 +4,7 @@ import { RiArrowDownSLine } from 'react-icons/ri'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
 import BotSuggestions from './BotSuggestions'
-import { Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useTranslation } from 'next-i18next'
@@ -30,6 +30,7 @@ const BrainBotMobile = ({
 
   const dispatch = useDispatch()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     dispatch(setCurrentMessage(''))
     dispatch(setCurrentAIMessage(''))

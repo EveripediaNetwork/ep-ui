@@ -1,4 +1,4 @@
-import { AnswerSources } from '@/hooks/useStream/schema'
+import type { AnswerSources } from '@/hooks/useStream/schema'
 import {
   setCurrentAIMessage,
   setCurrentChatId,
@@ -6,7 +6,7 @@ import {
   setMessages,
 } from '@/store/slices/chatbot-slice'
 import { Box, Flex, Text } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import remarkGfm from 'remark-gfm'

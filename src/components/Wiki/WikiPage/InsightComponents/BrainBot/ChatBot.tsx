@@ -3,7 +3,7 @@ import React, { useEffect } from 'react'
 import BotChatBox from './BotChatBox'
 import BotMessages from './BotMessages'
 import BotSuggestions from './BotSuggestions'
-import { type Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import { useAppSelector } from '@/store/hook'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useTranslation } from 'next-i18next'
@@ -27,6 +27,7 @@ const ChatBot = ({ wiki, onInteraction }: ChatBotProps) => {
 
   const dispatch = useDispatch()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     dispatch(setCurrentMessage(''))
     dispatch(setCurrentAIMessage(''))
