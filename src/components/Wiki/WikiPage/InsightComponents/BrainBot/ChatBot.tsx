@@ -74,11 +74,18 @@ const ChatBot = ({ wiki, onInteraction }: ChatBotProps) => {
         h={'375px'}
         overflowY={'auto'}
         display={'flex'}
-        alignItems={'center'}
         flexDirection={'column'}
         paddingBlock={'12px'}
         paddingInline={'8px'}
-        justifyContent={'center'}
+        {...(currentHumanMessage || currentChatId || currentAIMessage
+          ? {
+              alignItems: 'flex-start',
+              justifyContent: 'flex-start',
+            }
+          : {
+              alignItems: 'center',
+              justifyContent: 'center',
+            })}
       >
         {currentHumanMessage || currentChatId || currentAIMessage ? (
           <BotMessages />

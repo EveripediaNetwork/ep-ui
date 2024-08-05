@@ -90,12 +90,19 @@ const BrainBotMobile = ({
         <Box
           h={'400px'}
           overflowY={'auto'}
-          alignItems={'center'}
           flexDirection={'column'}
           paddingBlock={'16px'}
           paddingInline={'12px'}
           display={'flex'}
-          justifyContent={'center'}
+          {...(currentHumanMessage || currentChatId || currentAIMessage
+            ? {
+                alignItems: 'flex-start',
+                justifyContent: 'flex-start',
+              }
+            : {
+                alignItems: 'center',
+                justifyContent: 'center',
+              })}
         >
           {currentHumanMessage || currentChatId || currentAIMessage ? (
             <BotMessages />
