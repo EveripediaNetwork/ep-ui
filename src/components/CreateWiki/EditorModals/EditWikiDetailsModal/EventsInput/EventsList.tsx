@@ -36,6 +36,23 @@ export const EventsList = ({
     })
   }
 
+  const removeMultiDateEventHandler = (
+    multiDateStart: string,
+    multiDateEnd: string,
+  ) => {
+    setFeedbackMessage('')
+
+    dispatch({
+      type: 'wiki/removeEvent',
+      payload: {
+        type: EventType.MULTIDATE,
+        date: null,
+        multiDateStart,
+        multiDateEnd,
+      },
+    })
+  }
+
   useEffect(() => {
     if (feedbackMessage) {
       textFeedbackRef.current?.scrollIntoView({
@@ -134,7 +151,12 @@ export const EventsList = ({
                 rounded="full"
                 onClick={(e) => {
                   e.stopPropagation()
-                  removeEventHandler(wikiEvent.date)
+                  if (wikiEvent.type === EventType.MULTIDATE) {
+                    removeMultiDateEventHandler(
+                      String(wikiEvent.multiDateStart),
+                      String(wikiEvent.multiDateEnd),
+                    )
+                  } else removeEventHandler(wikiEvent.date)
                 }}
               >
                 <Icon as={RiCloseLine} />

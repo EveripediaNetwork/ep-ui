@@ -269,9 +269,19 @@ const wikiSlice = createSlice({
         multiDateEnd,
       } = action.payload as BaseEvents
 
-      const index = state.events
-        ? state.events?.findIndex((e) => e.date === date)
-        : -1
+      let index = -1
+
+      if (action.payload.type === EventType.MULTIDATE) {
+        index = Number(
+          state.events?.findIndex(
+            (e) =>
+              e.multiDateStart === multiDateStart &&
+              e.multiDateEnd === multiDateEnd,
+          ),
+        )
+      } else {
+        index = Number(state.events?.findIndex((e) => e.date === date))
+      }
 
       if (index !== -1) {
         const updatedEvent = {
@@ -317,9 +327,18 @@ const wikiSlice = createSlice({
     removeEvent(state, action) {
       if (state.events) {
         if (state.events.length === 1) {
-          const updatedEvents = state.events.filter(
-            (event) => event.date !== action.payload.date,
-          )
+          let updatedEvents = []
+          if (action.payload.type === EventType.MULTIDATE) {
+            updatedEvents = state.events.filter(
+              (event) =>
+                event.multiDateStart !== action.payload.multiDateStart ||
+                event.multiDateEnd !== action.payload.multiDateEnd,
+            )
+          } else {
+            updatedEvents = state.events.filter(
+              (event) => event.date !== action.payload.date,
+            )
+          }
 
           const newState = {
             ...state,
@@ -340,9 +359,20 @@ const wikiSlice = createSlice({
           return state
         }
 
-        const updatedEvents = state.events.filter(
-          (event) => event.date !== action.payload.date,
-        )
+        let updatedEvents = []
+
+        if (action.payload.type === EventType.MULTIDATE) {
+          updatedEvents = state.events.filter((event) => {
+            return (
+              event.multiDateStart !== action.payload.multiDateStart ||
+              event.multiDateEnd !== action.payload.multiDateEnd
+            )
+          })
+        } else {
+          updatedEvents = state.events.filter(
+            (event) => event.date !== action.payload.date,
+          )
+        }
 
         const newState = {
           ...state,
