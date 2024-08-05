@@ -13,7 +13,7 @@ import {
   successMessage,
   editedMessage,
 } from '@/utils/CreateWikiUtils/createWikiMessages'
-import { Dict } from '@chakra-ui/utils'
+import type { Dict } from '@chakra-ui/utils'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import { domain, types } from '@/utils/CreateWikiUtils/domainType'
 import { useCreateWikiContext } from './useCreateWikiState'
@@ -42,7 +42,7 @@ export const useGetSignedHash = () => {
   const {
     setWikiHash,
     wikiHash,
-    isNewCreateWiki,
+    isNewWiki,
     setMsg,
     setIsLoading,
     setTxHash,
@@ -133,7 +133,7 @@ export const useGetSignedHash = () => {
             if (trx?.data && trx.status === 'success') {
               setIsLoading(undefined)
               setActiveStep(3)
-              setMsg(isNewCreateWiki ? successMessage : editedMessage)
+              setMsg(isNewWiki ? successMessage : editedMessage)
               // clear all edit based metadata from redux state
               Object.values(EditSpecificMetaIds).forEach((id) => {
                 dispatch({

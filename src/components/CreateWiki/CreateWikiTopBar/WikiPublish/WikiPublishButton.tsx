@@ -84,7 +84,7 @@ export const WikiPublishButton = () => {
     dispatch,
     wikiHash,
     revision,
-    isNewCreateWiki,
+    isNewWiki,
     existingWikiData,
     setExistingWikiData,
     activeStep,
@@ -130,7 +130,7 @@ export const WikiPublishButton = () => {
         if (currentDate !== lastUpdatedDate) {
           posthog.capture('submit_wiki', {
             wiki_slug: await getWikiSlug(wiki),
-            isEdit: !isNewCreateWiki,
+            isEdit: !isNewWiki,
           })
         }
         prevEditedWiki.current.isPublished = true
@@ -138,7 +138,7 @@ export const WikiPublishButton = () => {
       }
     }
     handleAsync()
-  }, [activeStep, fireConfetti, isNewCreateWiki, posthog, wiki])
+  }, [activeStep, fireConfetti, isNewWiki, posthog, wiki])
 
   useEffect(() => {
     async function verifyTransactionHash() {
@@ -177,7 +177,7 @@ export const WikiPublishButton = () => {
       EditSpecificMetaIds.COMMIT_MESSAGE,
     )?.value
 
-    if (isNewCreateWiki) {
+    if (isNewWiki) {
       if (override) {
         wikiCommitMessage = 'Wiki Overridden 🔄'
       } else if (revision) {
@@ -212,7 +212,7 @@ export const WikiPublishButton = () => {
 
     if (userAddress) {
       const ifWikiExists =
-        isNewCreateWiki &&
+        isNewWiki &&
         !override &&
         (await isWikiExists(await getWikiSlug(wiki), setExistingWikiData))
 
@@ -280,7 +280,7 @@ export const WikiPublishButton = () => {
         }
         mt="3"
       >
-        {!isNewCreateWiki ? (
+        {!isNewWiki ? (
           <PublishWithCommitMessage
             handleWikiPublish={() => handleWikiPublish()}
             isPublishDisabled={isPublishDisabled}
@@ -315,7 +315,7 @@ export const WikiPublishButton = () => {
         txHash={txHash}
         wikiHash={wikiHash}
         activeStep={activeStep}
-        isNewWiki={isNewCreateWiki}
+        isNewWiki={isNewWiki}
         state={loadingState}
         isOpen={isWikiProcessModalOpen}
         onClose={handlePopupClose}

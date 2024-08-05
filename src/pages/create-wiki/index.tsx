@@ -31,7 +31,7 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 const CreateWikiContent = () => {
   const wiki = useAppSelector((state) => state.wiki)
 
-  const { isLoadingWiki, isNewCreateWiki, txError, setTxError } =
+  const { isLoadingWiki, isNewWiki, txError, setTxError } =
     useCreateWikiContext()
 
   const { handleOnEditorChanges } = useCreateWikiSetup()
@@ -63,7 +63,7 @@ const CreateWikiContent = () => {
               <Center>
                 <WikiDetailsSidebar
                   initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
-                  isToResetImage={isNewCreateWiki}
+                  isToResetImage={isNewWiki}
                 />
               </Center>
             </Skeleton>

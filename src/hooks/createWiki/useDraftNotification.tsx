@@ -11,14 +11,14 @@ import { CreateNewWikiSlug } from '@everipedia/iq-utils'
 import { useToast } from '@chakra-ui/react'
 
 const useDraftNotifications = () => {
-  const { isNewCreateWiki, wikiData } = useCreateWikiContext()
+  const { isNewWiki, wikiData } = useCreateWikiContext()
   const toast = useToast()
 
   useEffect(() => {
     let draft: Wiki | undefined
 
     // Load the draft from local storage if creating a new wiki or if wiki data exists
-    if (isNewCreateWiki || wikiData) {
+    if (isNewWiki || wikiData) {
       draft = getDraftFromLocalStorage()
     }
 
@@ -54,7 +54,7 @@ const useDraftNotifications = () => {
         duration: 5000,
       })
     }
-  }, [isNewCreateWiki, toast, wikiData])
+  }, [isNewWiki, toast, wikiData])
 }
 
 export default useDraftNotifications
