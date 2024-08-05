@@ -1,4 +1,4 @@
-import { AnswerSources } from '@/hooks/useStream/schema'
+import type { AnswerSources } from '@/hooks/useStream/schema'
 import {
   setCurrentAIMessage,
   setCurrentChatId,
@@ -6,13 +6,17 @@ import {
   setMessages,
 } from '@/store/slices/chatbot-slice'
 import { Box, Flex, Text, chakra } from '@chakra-ui/react'
-import React, { ReactNode, useEffect, useState } from 'react'
+import React, { type ReactNode, useEffect, useState } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useDispatch } from 'react-redux'
 import remarkGfm from 'remark-gfm'
 import ChatSources from './ChatSources'
 import styles from '../../../../../styles/markdown.module.css'
-import { RiArrowLeftDoubleFill, RiPlayFill } from 'react-icons/ri'
+import {
+  RiArrowLeftDoubleFill,
+  RiArrowLeftSLine,
+  RiPlayFill,
+} from 'react-icons/ri'
 import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useAppSelector } from '@/store/hook'
 import { setIsLoading } from '@/store/slices/stream-slice'
@@ -32,6 +36,7 @@ const _paginateContent = (text: string, charsPerPage: number) => {
   const pages = []
   let currentPage = ''
 
+  // biome-ignore lint/complexity/noForEach: <explanation>
   words.forEach((word) => {
     if ((currentPage + word).length > charsPerPage) {
       pages.push(currentPage.trim())
@@ -55,6 +60,7 @@ const _usePaginateContent = (content: string) => {
     const contentArray = content.split(' ') // Split content into words
     let tempPage = ''
     const tempPages = []
+    // biome-ignore lint/correctness/noUnusedVariables: <explanation>
     let tempHeight = 0
 
     const tempElement = document.createElement('div')
@@ -74,9 +80,9 @@ const _usePaginateContent = (content: string) => {
 
       tempElement.innerText = testPage // Temporarily set text to measure
       const computedStyles = window.getComputedStyle(tempElement)
-      tempHeight = parseInt(computedStyles.height, 10)
+      tempHeight = Number.parseInt(computedStyles.height, 10)
       // console.log(window.getComputedStyle(wrapperElement).height)
-      const wrapperHeight = parseInt(
+      const wrapperHeight = Number.parseInt(
         window.getComputedStyle(wrapperElement).height,
         10,
       )
@@ -125,6 +131,7 @@ const ContentPagination = ({ content, alias, answerSources }: ChartProps) => {
       <div className="mkd-wrapper">
         <ReactMarkdown
           remarkPlugins={[remarkGfm]}
+          // biome-ignore lint/correctness/noChildrenProp: <explanation>
           children={pages[currentPageIndex]}
           components={{
             p(props) {
@@ -210,7 +217,7 @@ const ChatCard = ({ content, alias, answerSources }: ChartProps) => {
           dispatch(setIsLoading(false))
         }}
       >
-        <RiArrowLeftDoubleFill size={'24px'} />
+        <RiArrowLeftSLine size={'24px'} />
       </Box>
       <Flex
         border={'1px'}
