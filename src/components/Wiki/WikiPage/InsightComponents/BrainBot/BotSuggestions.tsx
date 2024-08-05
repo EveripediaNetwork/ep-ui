@@ -1,8 +1,8 @@
 import { Box, HStack, Text, VStack } from '@chakra-ui/react'
-import React, { ReactNode } from 'react'
+import React, { type ReactNode } from 'react'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
 import Image from 'next/image'
-import { Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import useStream from '@/hooks/useStream'
 import { useTranslation } from 'next-i18next'
 import useQueryTranslation, {

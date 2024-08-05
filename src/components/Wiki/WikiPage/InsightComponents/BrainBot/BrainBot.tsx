@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import { type Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import ChatBot from './ChatBot'
 import { BrainBotSuggestion } from './BotSuggestions'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
