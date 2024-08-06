@@ -4,6 +4,7 @@ import { useTranslation } from 'next-i18next'
 
 export const Hero = () => {
   const { t } = useTranslation('home')
+  const locale = useTranslation().i18n.language
   return (
     <VStack
       pt={{ base: 6, lg: 12 }}
@@ -15,7 +16,7 @@ export const Hero = () => {
         w={{
           base: '90%',
           md: '80%',
-          xl: '65%',
+          xl: locale === 'en' ? '65%' : '30%',
         }}
         minW={{ lg: '980px' }}
         textAlign="center"

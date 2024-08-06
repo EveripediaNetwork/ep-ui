@@ -1,4 +1,4 @@
-import { TEvents } from '@/services/event'
+import type { TEvents } from '@/services/event'
 import axios from 'axios'
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
@@ -14,10 +14,10 @@ export function formatDate(date: Date) {
     day % 10 === 1 && day !== 11
       ? 1
       : day % 10 === 2 && day !== 12
-      ? 2
-      : day % 10 === 3 && day !== 13
-      ? 3
-      : 0
+        ? 2
+        : day % 10 === 3 && day !== 13
+          ? 3
+          : 0
   return day + suffix[suffixIndex]
 }
 
@@ -36,12 +36,10 @@ export function parseDateRange(isoString: string) {
     const endYear = end.getFullYear()
     if (month === endMonth) {
       return `${startFormatted}-${endFormatted}, ${month} ${year}`
-    } else {
-      return `${startFormatted}, ${month} ${year} - ${endFormatted}, ${endMonth} ${endYear}`
     }
-  } else {
-    return `${startFormatted}, ${month} ${year}`
+    return `${startFormatted}, ${month} ${year} - ${endFormatted}, ${endMonth} ${endYear}`
   }
+  return `${startFormatted}, ${month} ${year}`
 }
 
 export const dateFormater = (date: Date) => {
@@ -56,12 +54,17 @@ export const groupEventsByMonth = (events: TEvents[]) => {
   const eventsByMonth: { [key: string]: TEvents[] } = {}
 
   // Group events by month and year
-  events.forEach((event) => {
-    const date = event?.events?.[0]?.date || event?.events?.[0]?.multiDateStart
+  for (const event of events) {
+    const dateLength = event?.events?.length
+
+    const date =
+      event?.events?.[dateLength - 1]?.date ||
+      event?.events?.[dateLength - 1]?.multiDateStart
+
     if (date) {
       const dateParts = date.split('-')
       if (dateParts.length >= 2) {
-        const monthNumeric = parseInt(dateParts[1], 10)
+        const monthNumeric = Number.parseInt(dateParts[1], 10)
         const monthWord = new Date(2000, monthNumeric - 1, 1).toLocaleString(
           'en-us',
           {
@@ -77,12 +80,12 @@ export const groupEventsByMonth = (events: TEvents[]) => {
         eventsByMonth[key].push(event)
       }
     }
-  })
+  }
 
   // Sort the keys (Month Year) in ascending order and create a sorted object
   const sortedKeys = Object.keys(eventsByMonth).sort((a, b) => {
-    const yearA = parseInt(a.split(' ')[1], 10)
-    const yearB = parseInt(b.split(' ')[1], 10)
+    const yearA = Number.parseInt(a.split(' ')[1], 10)
+    const yearB = Number.parseInt(b.split(' ')[1], 10)
     const monthA = new Date(`${a.split(' ')[0]} 1 2000`).getMonth()
     const monthB = new Date(`${b.split(' ')[0]} 1 2000`).getMonth()
 
@@ -92,9 +95,9 @@ export const groupEventsByMonth = (events: TEvents[]) => {
   })
 
   const sortedEventsByMonth: { [key: string]: TEvents[] } = {}
-  sortedKeys.forEach((key) => {
+  for (const key of sortedKeys) {
     sortedEventsByMonth[key] = eventsByMonth[key]
-  })
+  }
 
   return sortedEventsByMonth
 }

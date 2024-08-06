@@ -1,4 +1,4 @@
-import { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
+import type { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
 import EventDetailsContent from '@/components/Event/Details/EventDetailsContent'
 import EventSummary from '@/components/Event/Details/EventSummary'
 import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
@@ -6,16 +6,17 @@ import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import { EventHeader } from '@/components/SEO/Event'
 import RelatedMediaGrid from '@/components/Wiki/WikiPage/InsightComponents/RelatedMedia'
 import WikiReferences from '@/components/Wiki/WikiPage/WikiReferences'
-import { TEvents, getPopularEvents } from '@/services/event'
+import { type TEvents, getPopularEvents } from '@/services/event'
 import { useGetIpDetailsQuery } from '@/services/location'
 import { getWiki } from '@/services/wikis'
 import { store } from '@/store/store'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { CommonMetaIds, type Wiki } from '@everipedia/iq-utils'
+import type { GetStaticPaths, GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import React from 'react'
+import type { CiteReference } from '@everipedia/iq-utils'
 
 const EventDetailsPage = ({
   event,
@@ -30,7 +31,7 @@ const EventDetailsPage = ({
 
   const referencesRaw =
     getWikiMetadataById(event, CommonMetaIds.REFERENCES)?.value ?? '[]'
-  let references
+  let references: CiteReference[]
 
   try {
     references = JSON.parse(referencesRaw)
@@ -84,7 +85,12 @@ const EventDetailsPage = ({
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const props = {
-    ...(await serverSideTranslations(ctx.locale ?? 'en', ['event', 'common'])),
+    ...(await serverSideTranslations(ctx.locale ?? 'en', [
+      'event',
+      'common',
+      'wiki',
+      'revision',
+    ])),
   }
 
   const slug = ctx.params?.slug

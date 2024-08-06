@@ -1,7 +1,7 @@
 import { AspectRatio, SimpleGrid, VStack } from '@chakra-ui/react'
 import React from 'react'
 import MediaPreview from '@/components/Elements/MediaPreview/MediaPreview'
-import { Media } from '@everipedia/iq-utils'
+import type { Media } from '@everipedia/iq-utils'
 import { constructMediaUrl } from '@/utils/DataTransform/mediaUtils'
 import { Image } from '@/components/Elements/Image/Image'
 import WikiAccordion from '../../WikiAccordion'
@@ -14,7 +14,7 @@ const RelatedMediaGrid = ({ media }: { media?: Media[] }) => {
   if (!media || media.length === 0) return null
   return (
     <VStack w="100%" spacing={4} borderRadius={2}>
-      <WikiAccordion title={t('Media')}>
+      <WikiAccordion title={t('media')}>
         <SimpleGrid
           columns={{ base: 3, xl: 3, sm: 4, md: 6, '2xl': 4 }}
           spacing={3}

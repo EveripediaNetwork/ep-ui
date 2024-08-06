@@ -24,14 +24,14 @@ import {
   WIKIS_PER_VISIT,
 } from '@/services/admin/queries'
 import config from '@/config'
-import {
+import type {
   WikisModifiedCount,
   CreatedWikisCount,
   Editors,
   ContentFeedbackArgs,
   ToggleUser,
 } from '@/types/admin'
-import { Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import { GET_WIKIS_BY_TITLE } from '@/services/search/queries'
 import { GraphQLClient } from 'graphql-request'
 
@@ -278,9 +278,9 @@ export const adminApi = createApi({
       },
     }),
     contentFeedback: builder.mutation<number, ContentFeedbackArgs>({
-      query: ({ userId, contentId, rating, message }: ContentFeedbackArgs) => ({
+      query: ({ contentId, rating }: ContentFeedbackArgs) => ({
         document: CONTENT_FEEDBACK,
-        variables: { userId, contentId, rating, message },
+        variables: { contentId, rating },
       }),
       transformResponse: (response: ContentFeedback) => {
         return response.rating

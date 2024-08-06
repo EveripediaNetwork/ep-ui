@@ -16,14 +16,15 @@ import {
   POST_WIKI_VIEW_COUNT,
   GET_WIKI_CREATOR_AND_EDITOR,
   GET_WIKI_PREVIEWS_BY_CATEGORY,
+  POST_FLAG_WIKI,
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
 } from '@/services/wikis/queries'
-import { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
+import type { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
-import { ActivityBuilder } from '@/types/ActivityDataType'
-import { CommonUser } from '@/types/wiki'
+import type { ActivityBuilder } from '@/types/ActivityDataType'
+import type { CommonUser } from '@/types/wiki'
 
 export type RecentWikisBuilder = WikiBuilder<
   {
@@ -134,6 +135,16 @@ type WikiCreatorAndEditor = {
 }
 type WikiCreatorAndEditorResponse = {
   wiki: WikiCreatorAndEditor
+}
+
+type FlagWikiArgs = {
+  report: string
+  wikiId: string
+  userId: string
+}
+
+type PostFlagWikiResponse = {
+  flagWiki: boolean
 }
 
 type TrendingWikisArgs = {
@@ -331,6 +342,19 @@ export const wikiApi = createApi({
       transformResponse: (response: PostWikiViewCountResponse) =>
         response.wikiViewCount,
     }),
+    postFlagWiki: builder.mutation<boolean, FlagWikiArgs>({
+      query: (flagWikiArgs: FlagWikiArgs) => {
+        return {
+          document: POST_FLAG_WIKI,
+          variables: {
+            report: flagWikiArgs.report,
+            wikiId: flagWikiArgs.wikiId,
+            userId: flagWikiArgs.userId,
+          },
+        }
+      },
+      transformResponse: (response: PostFlagWikiResponse) => response.flagWiki,
+    }),
     postImage: builder.mutation<string, { file: unknown }>({
       query: ({ file }) => ({
         document: POST_IMG,
@@ -354,6 +378,7 @@ export const {
   useGetTrendingWikisQuery,
   useGetTrendingCategoryWikisQuery,
   useGetWikiActivityByCategoryQuery,
+  usePostFlagWikiMutation,
   usePostWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
@@ -369,6 +394,7 @@ export const {
   getWikisByCategory,
   getTagWikis,
   postWiki,
+  postFlagWiki,
   postWikiViewCount,
   postImage,
   getUserCreatedWikis,

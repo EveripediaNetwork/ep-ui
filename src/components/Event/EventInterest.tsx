@@ -1,8 +1,14 @@
 import { EventInterestData } from '@/components/Event/event.data'
-import { TEvents, getEventsByTags } from '@/services/event'
+import { type TEvents, getEventsByTags } from '@/services/event'
 import { store } from '@/store/store'
+import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, {
+  useEffect,
+  useState,
+  type Dispatch,
+  type SetStateAction,
+} from 'react'
 
 const EventInterest = ({
   eventData,
@@ -10,10 +16,11 @@ const EventInterest = ({
   setIsLoading,
 }: {
   eventData: TEvents[]
-  setEventData: Function
-  setIsLoading: Function
+  setEventData: Dispatch<SetStateAction<TEvents[]>>
+  setIsLoading: Dispatch<SetStateAction<boolean>>
 }) => {
   const router = useRouter()
+  const { t } = useTranslation('event')
   const { query, pathname } = router
   const [selectedTags, setSelectedTags] = useState<string[]>([])
 
@@ -72,11 +79,9 @@ const EventInterest = ({
     <div className="flex flex-col xl:flex-row justify-between max-w-[1296px] mx-auto mt-6 md:mt-[30px] rounded-xl border dark:border-alpha-300 border-gray200 bg-white dark:bg-gray700 py-3 md:py-5 px-4 xl:px-[32px] xl:gap-32">
       <div className="xl:max-w-[200px] flex flex-col gap-2 xl:gap-3 w-full">
         <h3 className="text-xl font-semibold text-gray800 dark:text-alpha-900">
-          Interests
+          {t('eventsInterestHeading')}
         </h3>
-        <span className="text-sm">
-          Get event suggestion based on your interests.
-        </span>
+        <span className="text-sm">{t('eventsInterestDescription')}</span>
       </div>
       <div className="flex flex-wrap gap-3 mt-3 xl:mt-0">
         {EventInterestData.map((interest) => {
@@ -91,7 +96,7 @@ const EventInterest = ({
               }`}
               key={interest}
             >
-              {interest}
+              {t(`interests.${interest}`)}
             </button>
           )
         })}

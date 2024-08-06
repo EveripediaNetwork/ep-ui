@@ -9,8 +9,13 @@ import {
 import { parseDateRange } from '@/lib/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { LoadingEventState } from './LoadingState'
-import { CommonMetaIds, Image as ImageType, MData } from '@everipedia/iq-utils'
+import {
+  CommonMetaIds,
+  type Image as ImageType,
+  type MData,
+} from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
+import { getCountry, isEventLocation } from '@/utils/event.utils'
 
 type TSpeaker = {
   id: string
@@ -50,13 +55,7 @@ const EventCard = ({
   const router = useRouter()
   const locationMeta = location?.find((m) => m.id === CommonMetaIds.LOCATION)
   const [selectedTag, setSelectedTag] = useState('')
-  const parsedLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
-  const eventLocation = Array.isArray(parsedLocation)
-    ? parsedLocation.find(
-        (item) =>
-          new Date(item?.year).getFullYear() === new Date().getFullYear(),
-      )
-    : parsedLocation
+  const eventLocation = locationMeta ? JSON.parse(locationMeta.value) : ''
 
   const toggleTagFilter = (tagId: string): void => {
     const currentUrlParams = new URLSearchParams(window.location.search)
@@ -76,6 +75,7 @@ const EventCard = ({
       })
     }
   }
+
   return (
     <div className="flex gap-2 md:gap-6">
       <span className="rounded-full z-10 w-6 h-6 text-white bg-brand-500 dark:bg-brand-800 flex justify-center items-center">
@@ -105,18 +105,18 @@ const EventCard = ({
                     {date.date
                       ? parseDateRange(date.date)
                       : date.multiDateStart && date.multiDateEnd
-                      ? parseDateRange(
-                          `${date.multiDateStart}/${date.multiDateEnd}`,
-                        )
-                      : ''}
+                        ? parseDateRange(
+                            `${date.multiDateStart}/${date.multiDateEnd}`,
+                          )
+                        : ''}
                   </span>
                 </span>
-                {eventLocation && (
+                {isEventLocation(eventLocation) && (
                   <span className="pl-2 flex gap-1 items-center">
                     <span className="text-brand-800 ">
                       <RiMapPinRangeLine />
                     </span>
-                    <span>{eventLocation?.country}</span>
+                    <span>{getCountry(eventLocation)}</span>
                   </span>
                 )}
               </div>

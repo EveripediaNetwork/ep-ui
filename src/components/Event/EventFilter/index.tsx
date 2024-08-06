@@ -1,9 +1,14 @@
 import { useRouter } from 'next/router'
-import React, { useEffect, useState } from 'react'
+import React, {
+  type Dispatch,
+  type SetStateAction,
+  useEffect,
+  useState,
+} from 'react'
 import { RiArrowLeftSLine, RiFilter3Line } from 'react-icons/ri'
 import { eventFilterData } from '../event.data'
-import { DateRange } from 'react-day-picker'
-import { TEvents } from '@/services/event'
+import type { DateRange } from 'react-day-picker'
+import type { TEvents } from '@/services/event'
 import {
   fetchEventByBlockchain,
   fetchEventByLocation,
@@ -11,7 +16,8 @@ import {
 } from '@/services/search/utils'
 import { dateFormater } from '@/lib/utils'
 import FilterOptions from './FilterOptions'
-import { Filters } from './index.type'
+import type { Filters } from './index.type'
+import { useTranslation } from 'next-i18next'
 
 const defaultFilters: Filters = {
   date: '',
@@ -22,8 +28,8 @@ const defaultFilters: Filters = {
 
 const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   const today = new Date()
-  let startDate
-  let endDate
+  let startDate: string | undefined
+  let endDate: string | undefined
 
   switch (filter.date) {
     case 'Next Week':
@@ -70,13 +76,17 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
 
   if (filter.eventType.length > 0) {
     return fetchFilteredEventList(filter.eventType, startDate, endDate)
-  } else if (filter.blockchain) {
-    return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
-  } else if (filter.location) {
-    return fetchEventByLocation(filter.location, startDate, endDate)
-  } else {
-    return fetchFilteredEventList([], startDate, endDate)
   }
+
+  if (filter.blockchain) {
+    return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
+  }
+
+  if (filter.location) {
+    return fetchEventByLocation(filter.location, startDate, endDate)
+  }
+
+  return fetchFilteredEventList([], startDate, endDate)
 }
 
 const EventFilter = ({
@@ -85,13 +95,14 @@ const EventFilter = ({
   setIsLoading,
 }: {
   fetchedData: TEvents[]
-  setEventData: Function
-  setIsLoading: Function
+  setEventData: Dispatch<SetStateAction<TEvents[]>>
+  setIsLoading: Dispatch<SetStateAction<boolean>>
 }) => {
   const [selectedFilter, setSelectedFilter] = useState('Date')
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const router = useRouter()
   const [filters, setFilters] = useState<Filters>(defaultFilters)
+  const { t } = useTranslation('event')
 
   const aggregateResults = async (filters: Filters) => {
     const filterKeys = Object.keys(filters) as (keyof Filters)[]
@@ -179,6 +190,7 @@ const EventFilter = ({
     })
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     aggregateResults(filters)
   }, [filters, dateRange])
@@ -187,7 +199,7 @@ const EventFilter = ({
     const updatedFilters: Filters = { ...defaultFilters }
 
     // Iterate over each filter key and update the state if a corresponding query parameter exists
-    Object.keys(defaultFilters).forEach((key) => {
+    for (const key of Object.keys(defaultFilters)) {
       const queryParam = router.query[key]
       if (queryParam) {
         if (key === 'eventType') {
@@ -199,7 +211,7 @@ const EventFilter = ({
           }
         }
       }
-    })
+    }
 
     setFilters(updatedFilters)
   }, [router.query])
@@ -209,9 +221,9 @@ const EventFilter = ({
     setDateRange(undefined)
     setEventData(fetchedData)
     const newQuery = { ...router.query }
-    Object.keys(defaultFilters).forEach((key) => {
+    for (const key of Object.keys(defaultFilters)) {
       delete newQuery[key]
-    })
+    }
     router.push({ pathname: router.pathname, query: newQuery }, undefined, {
       shallow: true,
     })
@@ -221,11 +233,11 @@ const EventFilter = ({
     const value = filters[key as keyof Filters]
     if (typeof value === 'string') {
       return value.trim() !== ''
-    } else if (Array.isArray(value)) {
-      return value.length > 0
-    } else {
-      return false
     }
+    if (Array.isArray(value)) {
+      return value.length > 0
+    }
+    return false
   })
 
   return (
@@ -235,10 +247,10 @@ const EventFilter = ({
           <span className="text-xl">
             <RiFilter3Line />
           </span>
-          <h2 className="font-semibold text-xl">Filters</h2>
+          <h2 className="font-semibold text-xl">{t('filtersTitle')}</h2>
         </span>
         <div className="flex justify-between">
-          <span className="text-xs">Filter according to preference</span>
+          <span className="text-xs">{t('filtersDescription')}</span>
           <button
             onClick={clearFilters}
             type="button"
@@ -247,7 +259,7 @@ const EventFilter = ({
             }`}
             disabled={!isFilterActive}
           >
-            clear all
+            {t('clearAll')}
           </button>
         </div>
       </div>
@@ -265,7 +277,9 @@ const EventFilter = ({
               >
                 <div className="flex items-center gap-1">
                   <span className="text-xl">{eventFilter.icon}</span>
-                  <h3 className="text-sm font-semibold">{eventFilter.title}</h3>
+                  <h3 className="text-sm font-semibold">
+                    {t(`${eventFilter.title}`)}
+                  </h3>
                 </div>
                 <span
                   className={`text-2xl xl:hidden transition-all ${

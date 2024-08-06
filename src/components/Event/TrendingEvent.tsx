@@ -11,9 +11,10 @@ import Image from 'next/image'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Link from 'next/link'
 import Autoplay from 'embla-carousel-autoplay'
-import { TEvents } from '@/services/event'
+import type { TEvents } from '@/services/event'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { parseDateRange } from '@/lib/utils'
+import { useTranslation } from 'next-i18next'
 
 export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
   return (
@@ -55,11 +56,11 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
                     {event?.events?.[0].date
                       ? parseDateRange(event?.events?.[0].date)
                       : event?.events?.[0].multiDateStart &&
-                        event?.events?.[0].multiDateEnd
-                      ? parseDateRange(
-                          `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
-                        )
-                      : ''}
+                          event?.events?.[0].multiDateEnd
+                        ? parseDateRange(
+                            `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
+                          )
+                        : ''}
                   </h5>
                 </div>
                 <button
@@ -81,9 +82,12 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
 }
 
 const TrendingEvent = ({ events }: { events: TEvents[] }) => {
+  const { t } = useTranslation('event')
   return (
     <div className="mt-6 md:mt-[30px] max-w-[1296px] mx-auto ">
-      <h4 className="font-semibold text-xl 2xl:ml-4">Trending Events</h4>
+      <h4 className="font-semibold text-xl 2xl:ml-4">
+        {t('trendingEventsHeading')}
+      </h4>
       {events.length > 4 && <TrendingEventsCard events={events} />}
     </div>
   )

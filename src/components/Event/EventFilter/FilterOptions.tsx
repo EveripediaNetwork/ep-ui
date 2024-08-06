@@ -6,9 +6,10 @@ import {
   PopoverContent,
 } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
-import { DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { cn } from '@lib/utils'
-import { Filters } from './index.type'
+import type { Filters } from './index.type'
+import { useTranslation } from 'next-i18next'
 
 interface FilterOptionProps {
   eventFilter: {
@@ -33,6 +34,7 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
     setDateRange,
     className,
   }) => {
+    const { t } = useTranslation('event')
     return (
       <div className={cn('xl:flex gap-2 mt-3 flex-wrap hidden', className)}>
         {eventFilter.filter.map((filter) => {
@@ -50,7 +52,7 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
                           : ''
                       }`}
                     >
-                      <span>{filter}</span>
+                      <span>{t(`${filter}`)}</span>
                       <RiArrowUpDownLine />
                     </button>
                   </PopoverTrigger>
@@ -79,7 +81,7 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
                   : 'bg-gray50 dark:bg-alpha-50'
               }`}
             >
-              {filter}
+              {t(`${filter}`)}
             </button>
           )
         })}

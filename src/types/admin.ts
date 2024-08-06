@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import type { ChangeEvent } from 'react'
 
 export type EditorsType = {
   id: string
@@ -11,10 +11,8 @@ export type EditorsType = {
 }
 
 export type ContentFeedbackArgs = {
-  userId?: string
-  contentId?: string
-  rating?: number
-  message?: string
+  contentId: string
+  rating: number
 }
 
 export type WikisModifiedCount = {

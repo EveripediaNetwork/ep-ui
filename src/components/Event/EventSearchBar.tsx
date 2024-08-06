@@ -1,15 +1,21 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
-import { getEventByLocation, getEventByTitle } from '@/services/event'
+import {
+  getEventByLocation,
+  getEventByTitle,
+  type TEvents,
+} from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
-import {
+import type {
   ActiveModifiers,
   DateRange,
   SelectRangeEventHandler,
 } from 'react-day-picker'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
+import type { SetState } from '@/types/Utils'
 
 type TQuerySearch = {
   arg: { title: string; startDate?: string; endDate?: string }
@@ -24,15 +30,16 @@ const EventSearchBar = ({
   searchQuery,
   setSearchQuery,
 }: {
-  setEventData: Function
-  setSearchActive: Function
-  setIsLoading: Function
+  setEventData: SetState<TEvents[]>
+  setSearchActive: SetState<boolean>
+  setIsLoading: SetState<boolean>
   searchDate: DateRange | undefined
   setSearchDate: SelectRangeEventHandler
   searchQuery: string
-  setSearchQuery: Function
+  setSearchQuery: SetState<string>
 }) => {
   const router = useRouter()
+  const { t } = useTranslation('event')
 
   const fetchEventSearch = async ({ arg }: TQuerySearch) => {
     const { data } = await store.dispatch(getEventByTitle.initiate(arg))
@@ -55,6 +62,7 @@ const EventSearchBar = ({
     return uniqueResults
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const query = router.query
     if (query.title || query.startDate || query.endDate) {
@@ -67,7 +75,7 @@ const EventSearchBar = ({
 
       const activeModifiers: ActiveModifiers = {} // assuming this is the correct type
       const mouseEvent = {} as React.MouseEvent<Element, MouseEvent> //
-      if (query.title) setSearchQuery(query.title)
+      if (query.title) setSearchQuery(query.title as string)
       if (query.startDate) {
         const startDate = new Date(query.startDate as string)
         setSearchDate(
@@ -112,7 +120,6 @@ const EventSearchBar = ({
     if (searchDate?.from) queryParams.startDate = dateFormater(searchDate.from)
     if (searchDate?.to) queryParams.endDate = dateFormater(searchDate.to)
 
-    // Update the URL query parameters.
     router.push(
       {
         pathname: router.pathname,
@@ -142,7 +149,7 @@ const EventSearchBar = ({
               name="search-input"
               value={searchQuery}
               onChange={handleChange}
-              placeholder="Search by events, name, location,  and more"
+              placeholder={t('searchBarPlaceholder')}
               className="w-full bg-transparent text-xs md:text-sm outline-none"
             />
           </div>
@@ -152,7 +159,7 @@ const EventSearchBar = ({
           type="submit"
           className="px-4 md:px-10 h-auto bg-[#FF5CAA] text-white text-xs font-medium md:text-base rounded-r-lg dark:bg-[#FF1A88]"
         >
-          Search
+          {t('searchBarSubmit')}
         </button>
       </form>
     </div>
