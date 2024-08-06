@@ -15,7 +15,7 @@ const DiscoverMore = ({ tagsData }: DiscoverMoreProps) => {
         <div className="flex flex-wrap mt-8 gap-4">
           {tagsData?.map((tag) => (
             <Link
-              className="rounded-full text-xs lg:text-xl border-2 border-gray-300 px-4 py-1 text-gray-600 dark:border-gray-700 dark:text-alpha-900"
+              className="rounded-full text-xs lg:text-xl border-2 border-gray-300 px-4 py-1 text-gray-600 dark:border-gray-700 dark:text-alpha-900 hover:bg-gray-200 dark:hover:bg-alpha-50 transition-colors duration-300 delay-150 ease-in-out"
               key={tag.id}
               href={`/tags/${tag.id}`}
             >

@@ -128,10 +128,10 @@ const Navbar = () => {
             </Button>
           )}
         </div>
-        <div className="xl:hidden flex flex-row items-center gap-2">
+        <div className="xl:hidden flex flex-row items-center gap-2 justify-center">
           <RiSearchLine
             onClick={handleSearchOpen}
-            className="w-6 h-6 text-gray-500 dark:text-alpha-800"
+            className="w-6 h-6 md:w-7 md:h-7 text-gray-500 dark:text-alpha-800 mr-1"
           />
           <WalletDrawer
             isOpen={isDrawerOpen}

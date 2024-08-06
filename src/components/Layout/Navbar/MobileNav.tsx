@@ -1,8 +1,8 @@
 import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
 import { MOBILE_NAV_ITEMS, mobileWalletDetails } from '@/data/NavItemData'
 import { useAddress } from '@/hooks/useAddress'
-import { RootState } from '@/store/store'
-import { NavItem } from '@/types/NavItemType'
+import type { RootState } from '@/store/store'
+import type { NavItem } from '@/types/NavItemType'
 import {
   Box,
   Button,
@@ -12,13 +12,13 @@ import {
   LinkBox,
   Menu,
   Text,
-  UseDisclosureReturn,
+  type UseDisclosureReturn,
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
-import React, { useState } from 'react'
+import { useState } from 'react'
 import {
   RiArrowRightSLine,
   RiFacebookFill,

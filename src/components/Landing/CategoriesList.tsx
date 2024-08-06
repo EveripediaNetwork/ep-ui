@@ -60,8 +60,8 @@ const CategoriesList = ({ categories, isLoading }: CategoriesListProps) => {
               </TabsTrigger>
             ))}
             <Link
-              href={`/categories/${selectedTab}`}
-              className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center dark:text-alpha-800 text-gray-600 text-xs lg:text-sm hover:bg-gray-200 dark:hover:bg-alpha-50 transition-colors duration-300 delay-150 ease-in-out"
+              href="/categories"
+              className="flex items-center gap-2 rounded-full w-24 xl:w-full px-4 py-2.5 text-sm font-medium text-gray600 dark:text-gray-300 group h-9 border dark:border-gray-700 border-gray-200/20 bg-gray-100 dark:bg-alpha-50"
             >
               View all
               <ArrowRightIcon className="w-3 h-3 transition-transform group-hover:translate-x-1 duration-300 ease-in-out delay-150 hidden xl:block" />
@@ -94,9 +94,9 @@ const CategoriesList = ({ categories, isLoading }: CategoriesListProps) => {
         ))}
       </Tabs>
       <Link
-        href="/categories"
+        href={`/categories/${selectedTab}`}
         prefetch={false}
-        className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center dark:text-alpha-800 text-gray-600 text-xs lg:text-sm"
+        className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center dark:text-alpha-800 text-gray-600 text-xs lg:text-sm hover:bg-gray-200 dark:hover:bg-alpha-50 transition-colors duration-300 delay-150 ease-in-out"
       >
         {t('categoryViewMore')}
       </Link>
