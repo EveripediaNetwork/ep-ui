@@ -1,11 +1,19 @@
 import React from 'react'
-import { RankCardType } from '@/types/RankDataTypes'
-import { Box, Flex, Text, Td, Tr, chakra } from '@chakra-ui/react'
-import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
+import type { RankCardType, SortOrder } from '@/types/RankDataTypes'
+import {
+  Box,
+  Flex,
+  Text,
+  Td,
+  Tr,
+  chakra,
+  Tag,
+  Skeleton,
+} from '@chakra-ui/react'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
-import { SortOrder } from '@/types/RankDataTypes'
 import { Image } from '../Elements/Image/Image'
+import { useGetWikiTitleByIdQuery } from '@/services/wikis'
 
 type CryptoFormatResult =
   | string
@@ -50,6 +58,33 @@ function cryptoFormatter(num: number): CryptoFormatResult {
     }
   }
   return priceFormatter(num)
+}
+
+export const WikiLinkTag = ({ wikiId }: { wikiId: string }) => {
+  const { data, isLoading } = useGetWikiTitleByIdQuery(wikiId)
+
+  if (isLoading) {
+    return <Skeleton w="100px" h="20px" />
+  }
+
+  if (!data) {
+    return (
+      <Text as="span" color="brandLinkColor">
+        N/A
+      </Text>
+    )
+  }
+
+  return (
+    <Link
+      href={`/wiki/${wikiId}`}
+      color="brandLinkColor"
+      fontWeight={500}
+      fontSize="14px"
+    >
+      {data.charAt(0).toUpperCase() + data.slice(1).replace('-', '')}
+    </Link>
+  )
 }
 
 const RankingItem = ({
@@ -238,31 +273,25 @@ const RankingItem = ({
         maxW="350px"
         minW="250px"
       >
-        {item.linkedWikis?.founders ? (
-          <Flex flexWrap="wrap">
-            {formatFoundersArray(item.linkedWikis?.founders)
-              ?.slice(0, MAX_LINKED_WIKIS)
-              ?.map((founderName, i, arr) => {
-                const founder = item.linkedWikis?.founders[i]
-                return (
-                  <Link
-                    href={`/wiki/${founder}`}
-                    key={`founder${i}`}
-                    color="brandLinkColor"
-                  >
-                    {founderName}
-                    {i !== arr.length - 1 && arr.length > 1 && ','} &nbsp;
-                  </Link>
-                )
-              })}
-            {item.linkedWikis.founders.length > 3 && (
+        {item.linkedWikis?.founders && item.linkedWikis.founders.length > 0 ? (
+          <Flex flexWrap="wrap" gap="1">
+            {item.linkedWikis.founders
+              .slice(0, MAX_LINKED_WIKIS)
+              .map((founder, i) => (
+                <React.Fragment key={`founder${i}`}>
+                  {i > 0 && <Box as="span">,&nbsp;</Box>}
+                  <WikiLinkTag wikiId={founder} />
+                </React.Fragment>
+              ))}
+            {item.linkedWikis.founders.length > MAX_LINKED_WIKIS && (
               <Text color="brandLinkColor">...</Text>
             )}
           </Flex>
         ) : (
-          <Text>NA</Text>
+          <Text>N/A</Text>
         )}
       </Td>
+
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}
@@ -270,30 +299,26 @@ const RankingItem = ({
         px={{ base: 2, md: 6 }}
         minW="150px"
       >
-        {item.linkedWikis?.blockchains ? (
-          <Flex flexWrap="wrap">
+        {item.linkedWikis?.blockchains &&
+        item.linkedWikis.blockchains.length > 0 ? (
+          <Flex flexWrap="wrap" gap="1">
             {item.linkedWikis.blockchains
               .slice(0, MAX_LINKED_WIKIS)
-              .map((blockchain, i) => {
-                return (
-                  <React.Fragment key={`blockchain${i}`}>
-                    {i > 0 && (
-                      <Box as="span" color="brandLinkColor">
-                        , &nbsp;
-                      </Box>
-                    )}
-                    <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
-                      {blockchain.charAt(0).toUpperCase() +
-                        blockchain.slice(1).replace('-', '')}
-                    </Link>
-                  </React.Fragment>
-                )
-              })}
+              .map((blockchain, i) => (
+                <React.Fragment key={`blockchain${i}`}>
+                  {i > 0 && <Box as="span">,&nbsp;</Box>}
+                  <WikiLinkTag wikiId={blockchain} />
+                </React.Fragment>
+              ))}
+            {item.linkedWikis.blockchains.length > MAX_LINKED_WIKIS && (
+              <Text color="brandLinkColor">...</Text>
+            )}
           </Flex>
         ) : (
-          <Text>NA</Text>
+          <Text>N/A</Text>
         )}
       </Td>
+
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}
