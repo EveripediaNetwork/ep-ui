@@ -79,7 +79,11 @@ export const EventsList = ({
       >
         {wiki.events?.map((wikiEvent) => (
           <Flex
-            key={wikiEvent.date}
+            key={
+              wikiEvent.date
+                ? wikiEvent.date
+                : `${wikiEvent.multiDateStart}-${wikiEvent.multiDateEnd}`
+            }
             gap="2"
             alignItems="center"
             borderRadius="md"
