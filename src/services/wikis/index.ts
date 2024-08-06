@@ -20,6 +20,7 @@ import {
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
+  GET_WIKI_TITLE_BY_ID,
 } from '@/services/wikis/queries'
 import { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
@@ -193,6 +194,12 @@ export const wikiApi = createApi({
       query: () => ({ document: GET_PROMOTED_WIKIS }),
       transformResponse: (response: GetPromotedWikisResponse) =>
         response.promotedWikis,
+    }),
+    getWikiTitleById: builder.query<string, string>({
+      query: (id: string) => ({
+        document: GET_WIKI_TITLE_BY_ID,
+        variables: { id },
+      }),
     }),
     getWikiPreview: builder.query<WikiPreview, string>({
       query: (id: string) => ({
@@ -368,6 +375,7 @@ export const {
   useGetWikisQuery,
   useGetPromotedWikisQuery,
   useGetWikiQuery,
+  useGetWikiTitleByIdQuery,
   useGetWikiPreviewQuery,
   useGetWikisByCategoryQuery,
   useGetWikiPreviewsByCategoryQuery,
@@ -389,6 +397,7 @@ export const {
   getPromotedWikis,
   getWiki,
   getWikiCreatorAndEditor,
+  getWikiTitleById,
   getWikiPreview,
   getWikiPreviewsByCategory,
   getWikisByCategory,
