@@ -1,4 +1,3 @@
-import type { Dispatch, SetStateAction } from 'react'
 import { getDraftFromLocalStorage } from '@/store/slices/wiki.slice'
 import type { Wiki } from '@everipedia/iq-utils'
 import { CommonMetaIds } from '@everipedia/iq-utils'
@@ -6,10 +5,11 @@ import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { EditSpecificMetaIds } from '@everipedia/iq-utils'
 import type { AppDispatch } from '@/store/store'
 import { EditorContentOverride } from '@everipedia/iq-utils'
+import type { SetState } from '@/types/Utils'
 
 const setUpExistingWiki = (
   dispatch: AppDispatch,
-  setCommitMessage: Dispatch<SetStateAction<string>>,
+  setCommitMessage: SetState<string>,
   existingWiki: Wiki,
   revision: string | string[],
 ) => {

@@ -1,3 +1,4 @@
+import type { SetState } from '@/types/Utils'
 import {
   Center,
   Heading,
@@ -14,12 +15,12 @@ import {
   ModalCloseButton,
   ModalBody,
 } from '@chakra-ui/react'
-import React, { Dispatch, SetStateAction, useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { RiErrorWarningFill, RiSettings4Line } from 'react-icons/ri'
 
 interface SignTokenMessageProps {
   error?: string
-  reopenSigningDialog: Dispatch<SetStateAction<boolean>>
+  reopenSigningDialog: SetState<boolean>
   message?: string
 }
 

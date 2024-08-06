@@ -1,10 +1,5 @@
 import { useRouter } from 'next/router'
-import React, {
-  type Dispatch,
-  type SetStateAction,
-  useEffect,
-  useState,
-} from 'react'
+import React, { useEffect, useState } from 'react'
 import { RiArrowLeftSLine, RiFilter3Line } from 'react-icons/ri'
 import { eventFilterData } from '../event.data'
 import type { DateRange } from 'react-day-picker'
@@ -18,6 +13,7 @@ import { dateFormater } from '@/lib/utils'
 import FilterOptions from './FilterOptions'
 import type { Filters } from './index.type'
 import { useTranslation } from 'next-i18next'
+import type { SetState } from '@/types/Utils'
 
 const defaultFilters: Filters = {
   date: '',
@@ -95,8 +91,8 @@ const EventFilter = ({
   setIsLoading,
 }: {
   fetchedData: TEvents[]
-  setEventData: Dispatch<SetStateAction<TEvents[]>>
-  setIsLoading: Dispatch<SetStateAction<boolean>>
+  setEventData: SetState<TEvents[]>
+  setIsLoading: SetState<boolean>
 }) => {
   const [selectedFilter, setSelectedFilter] = useState('Date')
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()

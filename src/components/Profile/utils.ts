@@ -1,16 +1,10 @@
-import {
-  Dispatch,
-  MutableRefObject,
-  SetStateAction,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
+import { type MutableRefObject, useEffect, useRef, useState } from 'react'
 import { createContext } from '@chakra-ui/react-utils'
-import {
+import type {
   COLLECTIONS_DISPLAY_SIZES,
   FILTER_SIDEBAR_SIZE,
 } from '@/components/Profile/SidebarFilter/constants'
+import type { SetState } from '@/types/Utils'
 
 export type TypeValue<T> = T[keyof T]
 
@@ -33,7 +27,7 @@ export type ProfileContext = {
   filterSidebarSwitch: BooleanSwitch
   filterSidebarSize: FilterSidebarSize
   displaySize: CollectionDisplaySize
-  setDisplaySize: Dispatch<SetStateAction<CollectionDisplaySize>>
+  setDisplaySize: SetState<CollectionDisplaySize>
 }
 
 export const useStickyElement = () => {
@@ -41,6 +35,7 @@ export const useStickyElement = () => {
 
   const stickyRef = useRef<HTMLDivElement | null>(null)
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const onScroll = () => {
       if (!stickyRef?.current) return
