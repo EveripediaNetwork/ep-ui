@@ -52,7 +52,7 @@ const NetworkErrorNotification: React.FC<NetworkErrorNotificationProps> = ({
   const targetChainName = targetChain?.name || 'the correct network'
 
   const handleSwitchNetwork = () => {
-    switchNetwork?.(parseInt(targetChainId, 16))
+    switchNetwork?.(Number.parseInt(targetChainId, 16))
   }
 
   return (

@@ -33,15 +33,15 @@ import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import {
   CreateNewWikiSlug,
   EditSpecificMetaIds,
-  Wiki,
+  type Wiki,
 } from '@everipedia/iq-utils'
 import isWikiEdited from '@/utils/CreateWikiUtils/isWikiEdited'
 import OverrideExistingWikiDialog from '../../EditorModals/OverrideExistingWikiDialog'
 import WikiProcessModal from '../../EditorModals/WikiProcessModal'
 import { PublishWithCommitMessage } from './WikiPublishWithCommitMessage'
 import NetworkErrorNotification from '@/components/Layout/Network/NetworkErrorNotification'
-import { SerializedError } from '@reduxjs/toolkit'
-import { ClientError } from 'graphql-request'
+import type { SerializedError } from '@reduxjs/toolkit'
+import type { ClientError } from 'graphql-request'
 import { toHex } from 'viem'
 
 export type TGraphQLError = {
