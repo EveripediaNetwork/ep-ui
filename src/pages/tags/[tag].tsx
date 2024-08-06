@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { NextPage, GetServerSideProps } from 'next'
+import type { NextPage, GetServerSideProps } from 'next'
 import { NextSeo } from 'next-seo'
 import {
   Divider,
@@ -16,7 +16,7 @@ import { store } from '@/store/store'
 import WikiPreviewCard from '@/components/Wiki/WikiPreviewCard/WikiPreviewCard'
 import { getTagWikis, wikiApi } from '@/services/wikis'
 import Link from '@/components/Elements/LinkElements/Link'
-import { Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { ITEM_PER_PAGE } from '@/data/Constants'
 import { useTranslation } from 'next-i18next'
@@ -71,6 +71,7 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     )
   }
 
+  console.log(tag)
   const { t } = useTranslation('tag')
   return (
     <>
@@ -97,7 +98,9 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
           </Text>
           <Box fontSize={20} width="min(90%, 1200px)" mx="auto" mt={6}>
             <Link
-              href={`/rank/${getRankCatByTag(tagId)}`}
+              href={
+                tag === 'Events' ? '/events' : `/rank/${getRankCatByTag(tagId)}`
+              }
               as={HStack}
               border="solid 1px"
               borderColor="gray.300"
@@ -123,7 +126,11 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
               }}
             >
               <RiOrganizationChart />
-              <Text fontSize="sm">View on Rank Table</Text>
+              <Text fontSize="sm">
+                {tag === 'Events'
+                  ? 'Check Out Latest Events'
+                  : 'View on Rank Table'}
+              </Text>
             </Link>
           </Box>
 
@@ -135,8 +142,8 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
             mb={12}
             gap={8}
           >
-            {wikisByTag.map((wiki, i) => (
-              <Box key={i} w="100%">
+            {wikisByTag.map((wiki) => (
+              <Box key={wiki.id} w="100%">
                 <WikiPreviewCard wiki={wiki} />
               </Box>
             ))}
