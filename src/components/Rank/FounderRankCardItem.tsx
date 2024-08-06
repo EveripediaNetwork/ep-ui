@@ -1,12 +1,12 @@
 import React from 'react'
-import { RankCardType } from '@/types/RankDataTypes'
 import { Box, Flex, Text, Td, Tr, Stat, StatArrow } from '@chakra-ui/react'
 import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
-import { SortOrder } from '@/types/RankDataTypes'
+import type { SortOrder, RankCardType } from '@/types/RankDataTypes'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import Image from 'next/image'
+import { WikiLinkTag } from './RankCardItem'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -222,30 +222,32 @@ const FounderRankingItem = ({
         fontSize="14px"
         minW="150px"
       >
-        {item.linkedWikis?.blockchains ? (
+        {item.linkedWikis?.blockchains &&
+        item.linkedWikis.blockchains.length > 0 ? (
           <Flex flexWrap="wrap">
             {item.linkedWikis.blockchains
               .slice(0, MAX_LINKED_WIKIS)
-              .map((blockchain, i) => {
-                return (
-                  <React.Fragment key={`blockchain${i}`}>
-                    {i > 0 && (
-                      <Box as="span" color="brandLinkColor">
-                        , &nbsp;
-                      </Box>
-                    )}
-                    <Link href={`/wiki/${blockchain}`} color="brandLinkColor">
-                      {blockchain.charAt(0).toUpperCase() +
-                        blockchain.slice(1).replace('-', '')}
-                    </Link>
-                  </React.Fragment>
-                )
-              })}
+              .map((blockchain, i) => (
+                <React.Fragment key={`blockchain${i}`}>
+                  {i > 0 && (
+                    <Box as="span" color="brandLinkColor">
+                      , &nbsp;
+                    </Box>
+                  )}
+                  <WikiLinkTag wikiId={blockchain} />
+                </React.Fragment>
+              ))}
+            {item.linkedWikis.blockchains.length > MAX_LINKED_WIKIS && (
+              <Text as="span" color="brandLinkColor">
+                &nbsp;...
+              </Text>
+            )}
           </Flex>
         ) : (
-          <Text>NA</Text>
+          <Text>N/A</Text>
         )}
       </Td>
+
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}

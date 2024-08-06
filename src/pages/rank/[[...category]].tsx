@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react'
-import { GetServerSideProps } from 'next'
+import type { GetServerSideProps } from 'next'
 import {
   Text,
   Box,
@@ -38,11 +38,11 @@ import { InvalidRankCardItem } from '@/components/Rank/InvalidRankCardItem'
 import { store } from '@/store/store'
 import { LoadingRankCardSkeleton } from '@/components/Rank/LoadingRankCardSkeleton'
 import RankingItem from '@/components/Rank/RankCardItem'
-import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { useRouter } from 'next/router'
 import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
 import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
-import { CategoryKeyType } from '@/types/RankDataTypes'
+import type { CategoryKeyType } from '@/types/RankDataTypes'
 import FounderRankingItem from '@/components/Rank/FounderRankCardItem'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -61,9 +61,8 @@ export const sortByMarketCap = (order: SortOrder, items: RankCardType[]) => {
         b?.nftMarketData?.market_cap_usd ?? b?.tokenMarketData?.market_cap ?? 0
       if (order === 'ascending') {
         return MarketCapA - MarketCapB
-      } else {
-        return MarketCapB - MarketCapA
       }
+      return MarketCapB - MarketCapA
     })
   } catch (e) {
     console.log(e)
@@ -88,9 +87,8 @@ export const sortBy24hChange = (order: SortOrder, items: RankCardType[]) => {
         0
       if (order === 'ascending') {
         return MarketCapChangeA - MarketCapChangeB
-      } else {
-        return MarketCapChangeB - MarketCapChangeA
       }
+      return MarketCapChangeB - MarketCapChangeA
     })
   } catch (e) {
     console.log(e)
@@ -241,7 +239,7 @@ const Rank = ({
   }, [tokenData, aiTokenData, stableCoinData, nftData, foundersData])
 
   const onClickMap: OnClickMap = {
-    'Market Cap': function () {
+    'Market Cap': () => {
       if (
         tokenData &&
         nftData &&
@@ -259,7 +257,7 @@ const Rank = ({
         setFounderItems(sortByMarketCap(newSortOrder, foundersData))
       }
     },
-    '24h Change': function () {
+    '24h Change': () => {
       if (
         tokenData &&
         nftData &&
