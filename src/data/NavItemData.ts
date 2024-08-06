@@ -18,7 +18,6 @@ import {
   RiGroup2Fill,
   RiCopperDiamondLine,
   RiOrganizationChart,
-  RiCalendarEventFill,
   RiSearchEyeFill,
   RiStarSFill,
   RiLightbulbFlashFill,
