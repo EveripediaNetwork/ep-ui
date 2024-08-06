@@ -31,12 +31,12 @@ jobs:
       - name: Biome Lint Changed Files
         run: |
           CHANGED_FILES=$(git diff --diff-filter=MA --name-only $(git merge-base origin/main ${{ github.ref_name }}) ${{ github.ref_name }})
-            if [ "${{ github.ref_name }}" = "main" ]; then
-              echo "On main branch, skipping linting."
-            elif [ -n "$CHANGED_FILES" ]; then
-              pnpm biome ci $CHANGED_FILES
-            else
-              echo "No changed files to lint."
-            fi
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "On main branch, skipping linting."
+          elif [ -n "$CHANGED_FILES" ]; then
+            pnpm biome ci $CHANGED_FILES
+          else
+            echo "No changed files to lint."
+          fi
       - name: Tests
         run: pnpm test
