@@ -11,17 +11,18 @@ const useCreateWikiSetup = () => {
     dispatch,
     slug,
     revision,
-    setIsNewCreateWiki,
+    setIsNewWiki,
   } = useCreateWikiContext()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const isNewWiki = !slug && !revision
 
     if (isNewWiki) {
-      setIsNewCreateWiki(true)
+      setIsNewWiki(true)
       setUpNewWiki(dispatch)
     } else {
-      setIsNewCreateWiki(false)
+      setIsNewWiki(false)
       setUpExistingWiki(
         dispatch,
         setCommitMessage,
