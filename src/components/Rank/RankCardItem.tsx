@@ -68,11 +68,7 @@ export const WikiLinkTag = ({ wikiId }: { wikiId: string }) => {
   }
 
   if (!data) {
-    return (
-      <Text as="span" color="brandLinkColor">
-        N/A
-      </Text>
-    )
+    return <Text as="span">N/A</Text>
   }
 
   return (
@@ -82,7 +78,7 @@ export const WikiLinkTag = ({ wikiId }: { wikiId: string }) => {
       fontWeight={500}
       fontSize="14px"
     >
-      {data.charAt(0).toUpperCase() + data.slice(1).replace('-', '')}
+      {data}
     </Link>
   )
 }
