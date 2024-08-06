@@ -1,6 +1,6 @@
 import React from 'react'
 import {
-  ModalProps,
+  type ModalProps,
   Modal,
   ModalOverlay,
   ModalContent,
