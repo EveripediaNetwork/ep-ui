@@ -1,4 +1,4 @@
-import { Dict } from '@chakra-ui/utils'
+import type { Dict } from '@chakra-ui/utils'
 import React from 'react'
 import { Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts'
 import CustomTooltip from './CustomTooltip'

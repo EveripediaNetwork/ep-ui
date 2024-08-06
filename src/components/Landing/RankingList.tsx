@@ -3,7 +3,7 @@ import {
   sortBy24hChange,
   sortByMarketCap,
 } from '@/pages/rank/[[...category]]'
-import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import { useState } from 'react'
@@ -31,8 +31,18 @@ type RankingListProps = {
   listingLimit: number
 }
 
+enum RankingListTabs {
+  Cryptocurrencies = 'cryptocurrencies',
+  Stablecoins = 'stableCCoins',
+  AITokens = 'aitokens',
+  Founders = 'founders',
+  NFTs = 'nfts',
+}
+
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
-  const [selectedTab, setSelectedTab] = useState<string>('cryptocurrencies')
+  const [selectedTab, setSelectedTab] = useState<RankingListTabs>(
+    RankingListTabs.Cryptocurrencies,
+  )
   const TokensListing = rankings?.TokensListing
   const aiTokensListing = rankings?.aiTokensListing
   const NFTsListing = rankings?.NFTsListing
@@ -67,7 +77,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const onClickMap: OnClickMap = {
-    'Market Cap': function () {
+    'Market Cap': () => {
       if (
         tokenItems &&
         nftItems &&
@@ -85,7 +95,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setFounderItems(sortByMarketCap(newSortOrder, foundersListing))
       }
     },
-    '24h Change': function () {
+    '24h Change': () => {
       if (
         tokenItems &&
         nftItems &&
@@ -106,7 +116,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const handleSelectedTab = (tab: string) => {
-    setSelectedTab(tab)
+    setSelectedTab(tab as RankingListTabs)
   }
 
   return (

@@ -1,6 +1,6 @@
 import { Icon } from '@chakra-ui/react'
-import { Wiki } from '@everipedia/iq-utils'
-import { EmblaOptionsType } from 'embla-carousel'
+import type { Wiki } from '@everipedia/iq-utils'
+import type { EmblaOptionsType } from 'embla-carousel'
 import Autoplay from 'embla-carousel-autoplay'
 import { useTranslation } from 'next-i18next'
 import { RiStarFill } from 'react-icons/ri'

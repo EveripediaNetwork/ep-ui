@@ -34,8 +34,8 @@ export const IQBar = () => {
 
   return (
     <section className="-top-52 md:top-[-80px] xl:top-[-60px] relative px-4 lg:px-8 2xl:px-0 container mx-auto">
-      <div className="p-4 dark:bg-gray-900/40 backdrop-filter backdrop-blur-sm bg-white/30 text-gray-600 rounded-xl dark:text-white flex md:grid xl:grid-cols-5 flex-col md:grid-cols-2 gap-4 flex-wrap border dark:border-alpha-300 border-gray-100">
-        <div className="iq-price bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-100 rounded-xl p-3 flex flex-row text-sm justify-between items-center w-full">
+      <div className="p-4 dark:bg-gray-900/40 backdrop-filter backdrop-blur-sm bg-white/30 text-gray-600 rounded-xl dark:text-white flex md:grid xl:grid-cols-5 flex-col md:grid-cols-2 gap-4 flex-wrap border dark:border-alpha-300 border-gray-200">
+        <div className="iq-price bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-200 rounded-xl p-3 flex flex-row text-sm justify-between items-center w-full">
           <div className="flex flex-col gap-2 text-sm">
             <h3 className="text-xs">{t('iqPrice')}</h3>
             <div className="flex flex-col gap-1.5">
@@ -88,7 +88,7 @@ export const IQBar = () => {
             </Button>
           </Link>
         </div>
-        <div className="iq-market-cap bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-100 rounded-xl p-3 flex flex-row justify-between items-center text-sm w-full">
+        <div className="iq-market-cap bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-200 rounded-xl p-3 flex flex-row justify-between items-center text-sm w-full">
           <div className="flex flex-col gap-2 justify-between">
             <h3 className="text-sm">{t('iqMarketCap')}</h3>
             <div className="flex flex-col gap-1.5">
@@ -133,7 +133,7 @@ export const IQBar = () => {
             </Button>
           </Link>
         </div>
-        <div className="iq-get-iq bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-100 rounded-xl p-3 flex flex-col gap-4 text-sm w-full">
+        <div className="iq-get-iq bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-200 rounded-xl p-3 flex flex-col gap-4 text-sm w-full">
           <h1 className="text-xs">{t('exchanges')}</h1>
           <div className="flex items-center justify-between">
             <Link
@@ -151,7 +151,7 @@ export const IQBar = () => {
                 aria-label="binance"
               />
             </Link>
-            <div className="border-l border-gray-100 h-[24px] mx-2 dark:border-alpha-400" />
+            <div className="border-l border-gray-200 h-[24px] mx-2 dark:border-alpha-400" />
             <Link
               href="https://app.1inch.io/#/1/simple/swap/USDT/IQ"
               target="_blank"
@@ -167,7 +167,7 @@ export const IQBar = () => {
                 aria-label="One Inch"
               />
             </Link>
-            <div className="border-l border-gray-100 h-[24px] mx-2 dark:border-alpha-400" />
+            <div className="border-l border-gray-200 h-[24px] mx-2 dark:border-alpha-400" />
             <Link
               target="_blank"
               rel="noopener nofollow"
@@ -183,7 +183,7 @@ export const IQBar = () => {
                 aria-label="Upbit"
               />
             </Link>
-            <div className="border-l border-gray-100 h-[24px] mx-2 dark:border-alpha-400" />
+            <div className="border-l border-gray-200 h-[24px] mx-2 dark:border-alpha-400" />
             <Link
               href="https://frax.finance/"
               target="_blank"
@@ -201,7 +201,7 @@ export const IQBar = () => {
             </Link>
           </div>
         </div>
-        <div className="iq-historical-graph bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-100 rounded-xl flex flex-col gap-2 text-sm p-3 col-span-1 xl:col-span-2 w-full">
+        <div className="iq-historical-graph bg-transparent backdrop-filter backdrop-blur-sm border dark:border-alpha-300 border-gray-200 rounded-xl flex flex-col gap-2 text-sm p-3 col-span-1 xl:col-span-2 w-full">
           <div className="flex justify-between text-xs">
             <h3>{t('iqGraph')}</h3>
             <h3>{`$${price}`}</h3>

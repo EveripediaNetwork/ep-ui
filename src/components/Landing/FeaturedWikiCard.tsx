@@ -5,10 +5,10 @@ import {
   WikiSummarySize,
   getWikiSummary,
 } from '@/utils/WikiUtils/getWikiSummary'
-import { Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import DisplayAvatar from '../Elements/Avatar/DisplayAvatar'
 import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
-import { RootState } from '@/store/store'
+import type { RootState } from '@/store/store'
 import { shortenText } from '@/utils/textUtils'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'

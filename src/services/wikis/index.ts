@@ -21,10 +21,10 @@ import {
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
   GET_WIKIS_AND_CATEGORIES,
 } from '@/services/wikis/queries'
-import { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
+import type { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
-import { ActivityBuilder } from '@/types/ActivityDataType'
-import { CommonUser } from '@/types/wiki'
+import type { ActivityBuilder } from '@/types/ActivityDataType'
+import type { CommonUser } from '@/types/wiki'
 
 export type RecentWikisBuilder = WikiBuilder<
   {

@@ -4,12 +4,13 @@ import {
   getPromotedWikis,
   getTrendingWikis,
   getWikis,
+  getWikisAndCategories,
   wikiApi,
-  PromotedWikisBuilder,
-  RecentWikisBuilder,
+  type PromotedWikisBuilder,
+  type RecentWikisBuilder,
 } from '@/services/wikis'
 import { store } from '@/store/store'
-import { BaseTag, Wiki } from '@everipedia/iq-utils'
+import type { BaseTag, Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 const CategoriesList = dynamic(
   () => import('@/components/Landing/CategoriesList'),
@@ -20,9 +21,13 @@ const CategoriesList = dynamic(
 import { getTags, tagsApi } from '@/services/tags'
 const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
 const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
-import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
+import {
+  editorApi,
+  getLeaderboard,
+  type LeaderBoardType,
+} from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
-import { RankCardType } from '@/types/RankDataTypes'
+import type { RankCardType } from '@/types/RankDataTypes'
 const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
 import { nftLisitngAPI } from '@/services/nftlisting'
 import {
@@ -35,13 +40,14 @@ import {
 } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
-import { TrendingData } from '@/types/Home'
+import type { TrendingData } from '@/types/Home'
 const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
-import { GetServerSideProps } from 'next'
+import type { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import EventOverview from '@/components/Landing/EventOverview'
 import { IQBar } from '@/components/Landing/IQBar'
-import { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
+import type { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
+import type { CategoryAndWikiDataProps } from '@/types/CategoryDataTypes'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -51,6 +57,7 @@ interface HomePageProps {
   recentWikis: Wiki[]
   popularTags: { id: string }[]
   leaderboards: LeaderBoardType[]
+  categories: CategoryAndWikiDataProps[]
   rankings: {
     NFTsListing: RankCardType[]
     aiTokensListing: RankCardType[]
@@ -59,6 +66,7 @@ interface HomePageProps {
     foundersListing: RankCardType[]
   }
   trending: TrendingData
+  isLoading: boolean
 }
 
 export const Index = ({
@@ -67,21 +75,23 @@ export const Index = ({
   leaderboards,
   rankings,
   trending,
+  isLoading,
+  categories,
 }: HomePageProps) => {
   return (
-    <main>
+    <section>
       <Hero />
       <IQBar />
       <div className="relative">
         <TrendingWikis trending={trending} featuredWikis={promotedWikis} />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
-        <CategoriesList />
+        <CategoriesList categories={categories} isLoading={isLoading} />
         <EventOverview />
       </div>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
-    </main>
+    </section>
   )
 }
 
@@ -178,6 +188,12 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
+  const { data: categories, isLoading } = await store.dispatch(
+    getWikisAndCategories.initiate({
+      limit: 30,
+    }),
+  )
+
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(tagsApi.util.getRunningQueriesThunk()),
@@ -229,6 +245,8 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       leaderboards: sortedleaderboards ?? [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
+      isLoading: isLoading,
+      categories: categories,
     },
   }
 }

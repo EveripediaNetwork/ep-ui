@@ -6,7 +6,7 @@ import { useAddress } from '@/hooks/useAddress'
 import useLanguageChange from '@/hooks/useLanguageChange'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
 import { setDrawerOpen } from '@/store/slices/app-slice'
-import { RootState, store } from '@/store/store'
+import { type RootState, store } from '@/store/store'
 import { Collapse, IconButton, useDisclosure } from '@chakra-ui/react'
 import { AlignJustify, X } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
@@ -52,7 +52,7 @@ const Navbar = () => {
 
   useEffect(() => {
     if (locale && lang !== locale) handleLangChange(locale)
-  }, [router.locale])
+  }, [locale, lang, handleLangChange])
 
   useEffect(() => {
     const handleRouteChange = () => isOpen && onToggle()

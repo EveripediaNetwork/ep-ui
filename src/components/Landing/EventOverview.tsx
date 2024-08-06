@@ -25,9 +25,9 @@ const EventOverview = () => {
                 </h2>
                 <p className="text-sm md:text-base">{t('eventDescription')}</p>
                 <Link
-                  href="/categories"
+                  href="/events"
                   prefetch={false}
-                  className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-start dark:text-alpha-800 text-gray-600 text-xs lg:text-sm hidden md:block mt-6"
+                  className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-start dark:text-alpha-800 text-gray-600 text-xs lg:text-sm hidden md:block mt-2 hover:bg-gray-200 dark:hover:bg-alpha-50 transition-colors duration-300 delay-150 ease-in-out"
                 >
                   {t('homePageAction')}
                 </Link>
@@ -38,9 +38,9 @@ const EventOverview = () => {
             </div>
           </div>
           <Link
-            href="/categories"
+            href="/events"
             prefetch={false}
-            className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center dark:text-alpha-800 text-gray-600 text-xs lg:text-sm block md:hidden"
+            className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center dark:text-alpha-800 text-gray-600 text-xs lg:text-sm block md:hidden hover:bg-gray-200 dark:hover:bg-alpha-50 transition-colors duration-300 delay-150 ease-in-out"
           >
             {t('homePageAction')}
           </Link>
