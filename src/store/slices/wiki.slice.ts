@@ -1,15 +1,16 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   LanguagesISOEnum,
-  Wiki,
-  MData,
+  type Wiki,
+  type MData,
   CommonMetaIds,
   EditSpecificMetaIds,
   CreateNewWikiSlug,
-  LinkedWikiKey,
-  BaseEvents,
+  type LinkedWikiKey,
+  type BaseEvents,
   EventType,
 } from '@everipedia/iq-utils'
+import { sortEvents } from '@/utils/event.utils'
 
 const getCurrentSlug = () => {
   let slug = window.location.search.split('=')[1]
@@ -37,7 +38,7 @@ export const getDraftFromLocalStorage = () => {
   const wikiData = draftData.slice(0, separatorIndex)
   const timestamp = draftData.slice(separatorIndex + 1, draftData.length)
   const wiki = JSON.parse(wikiData)
-  const draftTimestamp = parseInt(timestamp, 10)
+  const draftTimestamp = Number.parseInt(timestamp, 10)
   const currentTimestamp = new Date().getTime()
   // check if draft is older than 75 hour
   const cacheLimit = 75 * 60 * 60 * 1000
@@ -295,12 +296,8 @@ const wikiSlice = createSlice({
         }
         const events = state.events ? [...state.events] : []
         events[index] = updatedEvent
-        events.sort((a, b) => {
-          const dateA = a.date ? new Date(a.date) : null
-          const dateB = b.date ? new Date(b.date) : null
-          return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0)
-        })
-        const newState = { ...state, events }
+        const sortedEvents = sortEvents(events)
+        const newState = { ...state, events: sortedEvents }
         saveDraftInLocalStorage(newState)
         return newState
       }
@@ -315,12 +312,8 @@ const wikiSlice = createSlice({
         multiDateEnd,
       }
       const events = state.events ? [...state.events, newEvent] : [newEvent]
-      events.sort((a, b) => {
-        const dateA = a.date ? new Date(a.date) : null
-        const dateB = b.date ? new Date(b.date) : null
-        return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0)
-      })
-      const newState = { ...state, events }
+      const sortedEvents = sortEvents(events)
+      const newState = { ...state, events: sortedEvents }
       saveDraftInLocalStorage(newState)
       return newState
     },
