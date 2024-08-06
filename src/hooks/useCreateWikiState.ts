@@ -2,9 +2,9 @@ import { useGetWikiByActivityIdQuery } from '@/services/activities'
 import { useGetWikiQuery } from '@/services/wikis'
 import { useAppDispatch } from '@/store/hook'
 import { initialMsg } from '@/utils/CreateWikiUtils/createWikiMessages'
-import { LinkedWikiKey, LinkedWikis, Wiki } from '@everipedia/iq-utils'
+import type { LinkedWikiKey, LinkedWikis, Wiki } from '@everipedia/iq-utils'
 import { skipToken } from '@reduxjs/toolkit/dist/query'
-import { NextRouter } from 'next/router'
+import type { NextRouter } from 'next/router'
 import { useMemo, useState } from 'react'
 import { createContext } from '@chakra-ui/react-utils'
 
@@ -34,11 +34,11 @@ export const useCreateWikiState = (router: NextRouter) => {
     if (data?.linkedWikis) {
       // remove null values from linked wikis
       const newLinkedWikis = {} as LinkedWikis
-      Object.entries(data.linkedWikis).forEach(([key, value]) => {
+      for (const [key, value] of Object.entries(data.linkedWikis)) {
         if (value !== null) {
           newLinkedWikis[key as LinkedWikiKey] = value
         }
-      })
+      }
       return {
         ...data,
         linkedWikis: newLinkedWikis,
