@@ -34,7 +34,7 @@ jobs:
           if [ "${{ github.ref_name }}" = "main" ]; then
             echo "On main branch, skipping linting."
           elif [ -n "$CHANGED_FILES" ]; then
-            pnpm biome ci $CHANGED_FILES
+            pnpm biome ci $CHANGED_FILES --no-errors-on-unmatched
           else
             echo "No changed files to lint."
           fi
