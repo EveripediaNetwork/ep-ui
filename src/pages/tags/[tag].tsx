@@ -71,7 +71,6 @@ const TagPage: NextPage<TagPageProps> = ({ tagId, wikis }: TagPageProps) => {
     )
   }
 
-  console.log(tag)
   const { t } = useTranslation('tag')
   return (
     <>
