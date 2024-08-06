@@ -29,6 +29,14 @@ jobs:
       - name: Installing dependencies
         run: pnpm install --frozen-lockfile
       - name: Biome Lint Changed Files
-        run: pnpm biome ci $(git diff --diff-filter=MA --name-only $(git merge-base origin/main ${{ github.ref_name}} ) ${{ github.ref_name }})
+        run: |
+          CHANGED_FILES=$(git diff --diff-filter=MA --name-only $(git merge-base origin/main ${{ github.ref_name }}) ${{ github.ref_name }})
+          if [ "${{ github.ref_name }}" = "main" ]; then
+            echo "On main branch, skipping linting."
+          elif [ -n "$CHANGED_FILES" ]; then
+            pnpm biome ci $CHANGED_FILES --no-errors-on-unmatched
+          else
+            echo "No changed files to lint."
+          fi
       - name: Tests
         run: pnpm test
