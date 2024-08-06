@@ -3,7 +3,7 @@ import { Button, Center, Flex, Icon, Text } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { FiCalendar } from 'react-icons/fi'
 import { RiCloseLine } from 'react-icons/ri'
-import { BaseEvents, EventType } from '@everipedia/iq-utils'
+import { type BaseEvents, EventType } from '@everipedia/iq-utils'
 
 export const EventsList = ({
   handleFormChange,

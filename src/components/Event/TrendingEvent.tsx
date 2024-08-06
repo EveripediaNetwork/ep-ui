@@ -11,7 +11,7 @@ import Image from 'next/image'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Link from 'next/link'
 import Autoplay from 'embla-carousel-autoplay'
-import { TEvents } from '@/services/event'
+import type { TEvents } from '@/services/event'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { parseDateRange } from '@/lib/utils'
 import { useTranslation } from 'next-i18next'
@@ -56,11 +56,11 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
                     {event?.events?.[0].date
                       ? parseDateRange(event?.events?.[0].date)
                       : event?.events?.[0].multiDateStart &&
-                        event?.events?.[0].multiDateEnd
-                      ? parseDateRange(
-                          `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
-                        )
-                      : ''}
+                          event?.events?.[0].multiDateEnd
+                        ? parseDateRange(
+                            `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
+                          )
+                        : ''}
                   </h5>
                 </div>
                 <button

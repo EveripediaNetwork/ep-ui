@@ -13,7 +13,7 @@ import {
   chakra,
   SimpleGrid,
 } from '@chakra-ui/react'
-import { MData, Wiki } from '@everipedia/iq-utils'
+import type { MData, Wiki } from '@everipedia/iq-utils'
 import React, { useState } from 'react'
 import { RiCloseLine } from 'react-icons/ri'
 import { useTranslation } from 'next-i18next'
