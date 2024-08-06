@@ -44,7 +44,7 @@ const useDraftNotifications = () => {
                 },
               }}
             >
-              {draft?.id === CreateNewWikiSlug
+              {draft.id === CreateNewWikiSlug
                 ? 'Reset State'
                 : 'Reset to current wiki content'}
             </Button>

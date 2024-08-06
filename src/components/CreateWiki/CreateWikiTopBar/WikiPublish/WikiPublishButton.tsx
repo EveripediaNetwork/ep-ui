@@ -265,7 +265,7 @@ export const WikiPublishButton = () => {
   return (
     <>
       <Tooltip
-        isDisabled={(userCanEdit as boolean) && isConnected}
+        isDisabled={userCanEdit && isConnected}
         p={2}
         rounded="md"
         placement="bottom-start"
