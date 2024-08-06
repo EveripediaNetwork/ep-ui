@@ -1,5 +1,13 @@
 import { gql } from 'graphql-request'
 
+export const GET_WIKI_TITLE_BY_ID = gql`
+  query GetWikiTitleById($id: String!) {
+    wiki(id: $id) {
+      title
+    }
+  }
+`
+
 export const GET_PREVIEW_WIKI_BY_ID = gql`
   query GetPreviewWikiById($id: String!) {
     wiki(id: $id) {
