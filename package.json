@@ -8,9 +8,8 @@
     "build": "next build",
     "start": "next start",
     "export": "next export",
+    "lint": "lint-staged",
     "test": "echo \"Next-app tests\"",
-    "format": "biome format . --write",
-    "lint": "biome check . --apply",
     "preinstall": "npx only-allow pnpm",
     "prepare": "husky install",
     "gen:theme-typings": "chakra-cli tokens ./src/theme/index.ts",
@@ -138,7 +137,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.17.8",
-    "@biomejs/biome": "1.1.2",
+    "@biomejs/biome": "^1.8.3",
     "@chakra-ui/cli": "^2.1.8",
     "@magic-sdk/types": "^24.0.5",
     "@next/bundle-analyzer": "^12.2.2",
@@ -153,6 +152,7 @@
     "autoprefixer": "^10.4.17",
     "cross-env": "^7.0.3",
     "husky": "^8.0.0",
+    "lint-staged": "^15.2.7",
     "postcss": "^8.4.33",
     "prettier": "^2.6.1",
     "tailwindcss": "^3.4.1",
@@ -161,5 +161,10 @@
   "engines": {
     "node": ">=20",
     "pnpm": ">=9"
+  },
+  "lint-staged": {
+    "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}": [
+      "biome check --write --no-errors-on-unmatched"
+    ]
   }
 }

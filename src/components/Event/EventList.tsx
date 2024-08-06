@@ -9,6 +9,7 @@ import { LoadingState } from './LoadingState'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import { useRouter } from 'next/router'
+import { useTranslation } from 'next-i18next'
 
 const EventList = ({
   fetchedData,
@@ -26,6 +27,7 @@ const EventList = ({
   clearState: Function
 }) => {
   const router = useRouter()
+  const { t } = useTranslation('event')
   const hasQueryParams = Object.keys(router.query).length > 0
   const limit = EVENT_TEST_ITEM_PER_PAGE
   const [offset, setOffset] = useState(eventData?.length || 0)
@@ -65,7 +67,7 @@ const EventList = ({
     <div className="flex flex-col flex-1 gap-5">
       {searchActive && (
         <span className="flex flex-col items-start">
-          <h1 className="font-semibold">Search Results</h1>
+          <h1 className="font-semibold">{t('searchResult')}</h1>
           <button
             type="button"
             onClick={() => {
@@ -78,7 +80,7 @@ const EventList = ({
             <span>
               <RiArrowLeftLine />
             </span>
-            Go Back
+            {t('goBack')}
           </button>
         </span>
       )}
@@ -105,7 +107,7 @@ const EventList = ({
                         <LoadingState classNames="w-[285px] h-4" />
                       ) : (
                         <div className="text-xs flex flex-col md:flex-row md:gap-2 items-end md:max-w-full">
-                          <span>know any events not listed?</span>{' '}
+                          <span>{t('knowAnyEvents')}</span>{' '}
                           <SuggestEventModal />
                         </div>
                       )}
@@ -114,20 +116,23 @@ const EventList = ({
                 </div>
                 <div className="grid gap-5 mt-3 md:mt-6 xl:mt-10 h-fit relative">
                   <div className="w-[2px] top-2 left-[10px] absolute h-full bg-brand-500 dark:bg-brand-800" />
-                  {events.map((event) => (
-                    <EventCard
-                      isLoading={isLoading}
-                      id={event.id}
-                      key={event.id}
-                      title={event.title}
-                      excerpt={event.summary || ''}
-                      location={event.metadata}
-                      date={event.events[0]}
-                      tags={event.tags.filter((tag) => tag.id !== 'Events')}
-                      speakers={event?.speakerWikis || []}
-                      images={event.images}
-                    />
-                  ))}
+                  {events.map((event) => {
+                    const dateLength = event?.events?.length
+                    return (
+                      <EventCard
+                        isLoading={isLoading}
+                        id={event.id}
+                        key={event.id}
+                        title={event.title}
+                        excerpt={event.summary || ''}
+                        location={event.metadata}
+                        date={event.events[dateLength - 1]}
+                        tags={event.tags.filter((tag) => tag.id !== 'Events')}
+                        speakers={event?.speakerWikis || []}
+                        images={event.images}
+                      />
+                    )
+                  })}
                 </div>
               </div>
             </div>
@@ -146,10 +151,10 @@ const EventList = ({
             disabled={isFetching}
             className="px-10 py-2 w-fit mx-auto rounded-md border hover:bg-gray100 dark:hover:bg-alpha-50 cursor-pointer border-gray200 dark:border-alpha-400 disabled:cursor-not-allowed"
           >
-            {isFetching ? 'Loading more...' : 'View more'}
+            {isFetching ? t('loadMore') : t('viewMore')}
           </button>
         ) : (
-          <span className="text-center">No More Data</span>
+          <span className="text-center">{t('noMoreData')}</span>
         ))}
     </div>
   )

@@ -17,8 +17,8 @@ import {
   useToast,
 } from '@chakra-ui/react'
 import { RiFlagFill } from 'react-icons/ri'
+import { usePostFlagWikiMutation } from '@/services/wikis'
 import { useAddress } from '@/hooks/useAddress'
-import { useContentFeedbackMutation } from '@/services/admin'
 
 interface WikiFlaggingSystemProps {
   id: string
@@ -37,7 +37,7 @@ const FlaggingSystemModal = ({
 }: WikiFlaggingModalProps) => {
   const toast = useToast()
   const [flagContent, setFlagContent] = useState('')
-  const [contentFeedback] = useContentFeedbackMutation()
+  const [postFlagWiki] = usePostFlagWikiMutation()
   const { address } = useAddress()
 
   const postFlagHandler = async (e: FormEvent<HTMLFormElement>) => {
@@ -53,13 +53,13 @@ const FlaggingSystemModal = ({
       return
     }
 
-    const postContentFeedback = await contentFeedback({
-      message: flagContent,
-      contentId: id,
+    const postFlagWikiData = await postFlagWiki({
+      report: flagContent,
+      wikiId: id,
       userId: address,
     })
 
-    if (!Object.keys(postContentFeedback).includes('error')) {
+    if (!Object.keys(postFlagWikiData).includes('error')) {
       toast({
         title: 'Your report has been successfully submitted!',
         status: 'success',

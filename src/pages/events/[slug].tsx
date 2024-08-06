@@ -84,7 +84,12 @@ const EventDetailsPage = ({
 
 export const getStaticProps: GetStaticProps = async (ctx) => {
   const props = {
-    ...(await serverSideTranslations(ctx.locale ?? 'en', ['event', 'common'])),
+    ...(await serverSideTranslations(ctx.locale ?? 'en', [
+      'event',
+      'common',
+      'wiki',
+      'revision',
+    ])),
   }
 
   const slug = ctx.params?.slug

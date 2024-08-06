@@ -37,6 +37,7 @@ const MobileNavItem = ({ navItem, handleClick }: MobileNavItemProps) => {
           as={navItem.icon}
           pr={3}
         />
+
         {navItem.href === '#' ? (
           <Text fontWeight="semibold" color="linkColor" cursor="pointer">
             {t(navItem.label)}

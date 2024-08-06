@@ -16,10 +16,12 @@ import {
   POST_WIKI_VIEW_COUNT,
   GET_WIKI_CREATOR_AND_EDITOR,
   GET_WIKI_PREVIEWS_BY_CATEGORY,
+  POST_FLAG_WIKI,
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
   GET_WIKIS_AND_CATEGORIES,
+  GET_WIKI_TITLE_BY_ID,
 } from '@/services/wikis/queries'
 import type { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
 import config from '@/config'
@@ -137,6 +139,16 @@ type WikiCreatorAndEditorResponse = {
   wiki: WikiCreatorAndEditor
 }
 
+type FlagWikiArgs = {
+  report: string
+  wikiId: string
+  userId: string
+}
+
+type PostFlagWikiResponse = {
+  flagWiki: boolean
+}
+
 type TrendingWikisArgs = {
   amount: number
   startDay: string
@@ -215,6 +227,19 @@ export const wikiApi = createApi({
       transformResponse: (response: GetPromotedWikisResponse) =>
         response.promotedWikis,
     }),
+    getWikiTitleById: builder.query<string, string>({
+      query: (id: string) => ({
+        document: GET_WIKI_TITLE_BY_ID,
+        variables: { id },
+      }),
+      transformResponse: (response: string | { wiki: { title: string } }) => {
+        if (typeof response === 'string') {
+          return response
+        }
+        return response.wiki.title
+      },
+    }),
+
     getWikiPreview: builder.query<WikiPreview, string>({
       query: (id: string) => ({
         document: GET_PREVIEW_WIKI_BY_ID,
@@ -371,6 +396,19 @@ export const wikiApi = createApi({
       transformResponse: (response: PostWikiViewCountResponse) =>
         response.wikiViewCount,
     }),
+    postFlagWiki: builder.mutation<boolean, FlagWikiArgs>({
+      query: (flagWikiArgs: FlagWikiArgs) => {
+        return {
+          document: POST_FLAG_WIKI,
+          variables: {
+            report: flagWikiArgs.report,
+            wikiId: flagWikiArgs.wikiId,
+            userId: flagWikiArgs.userId,
+          },
+        }
+      },
+      transformResponse: (response: PostFlagWikiResponse) => response.flagWiki,
+    }),
     postImage: builder.mutation<string, { file: unknown }>({
       query: ({ file }) => ({
         document: POST_IMG,
@@ -384,6 +422,7 @@ export const {
   useGetWikisQuery,
   useGetPromotedWikisQuery,
   useGetWikiQuery,
+  useGetWikiTitleByIdQuery,
   useGetWikiPreviewQuery,
   useGetWikisByCategoryQuery,
   useGetWikiPreviewsByCategoryQuery,
@@ -394,6 +433,7 @@ export const {
   useGetTrendingWikisQuery,
   useGetTrendingCategoryWikisQuery,
   useGetWikiActivityByCategoryQuery,
+  usePostFlagWikiMutation,
   usePostWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
@@ -405,11 +445,13 @@ export const {
   getPromotedWikis,
   getWiki,
   getWikiCreatorAndEditor,
+  getWikiTitleById,
   getWikiPreview,
   getWikiPreviewsByCategory,
   getWikisByCategory,
   getTagWikis,
   postWiki,
+  postFlagWiki,
   postWikiViewCount,
   postImage,
   getUserCreatedWikis,

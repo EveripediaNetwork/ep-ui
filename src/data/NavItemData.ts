@@ -23,6 +23,7 @@ import {
   RiStarSFill,
   RiLightbulbFlashFill,
   RiCodeBoxFill,
+  RiCalendarEventFill,
 } from 'react-icons/ri'
 import type { NavItem } from '@/types/NavItemType'
 
