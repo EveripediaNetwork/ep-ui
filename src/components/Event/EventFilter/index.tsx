@@ -12,6 +12,7 @@ import {
 import { dateFormater } from '@/lib/utils'
 import FilterOptions from './FilterOptions'
 import { Filters } from './index.type'
+import { useTranslation } from 'next-i18next'
 
 const defaultFilters: Filters = {
   date: '',
@@ -92,6 +93,7 @@ const EventFilter = ({
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
   const router = useRouter()
   const [filters, setFilters] = useState<Filters>(defaultFilters)
+  const { t } = useTranslation('event')
 
   const aggregateResults = async (filters: Filters) => {
     const filterKeys = Object.keys(filters) as (keyof Filters)[]
@@ -235,10 +237,10 @@ const EventFilter = ({
           <span className="text-xl">
             <RiFilter3Line />
           </span>
-          <h2 className="font-semibold text-xl">Filters</h2>
+          <h2 className="font-semibold text-xl">{t('filtersTitle')}</h2>
         </span>
         <div className="flex justify-between">
-          <span className="text-xs">Filter according to preference</span>
+          <span className="text-xs">{t('filtersDescription')}</span>
           <button
             onClick={clearFilters}
             type="button"
@@ -247,7 +249,7 @@ const EventFilter = ({
             }`}
             disabled={!isFilterActive}
           >
-            clear all
+            {t('clearAll')}
           </button>
         </div>
       </div>
@@ -265,7 +267,9 @@ const EventFilter = ({
               >
                 <div className="flex items-center gap-1">
                   <span className="text-xl">{eventFilter.icon}</span>
-                  <h3 className="text-sm font-semibold">{eventFilter.title}</h3>
+                  <h3 className="text-sm font-semibold">
+                    {t(`${eventFilter.title}`)}
+                  </h3>
                 </div>
                 <span
                   className={`text-2xl xl:hidden transition-all ${

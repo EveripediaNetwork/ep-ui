@@ -60,12 +60,12 @@ export const eventDetailsData = [
 export const eventFilterData = [
   {
     icon: <RiCalendarEventFill />,
-    title: 'Date',
+    title: 'date',
     filter: ['Next Week', 'Next Month', 'Custom Range'],
   },
   {
     icon: <RiMapPinRangeFill />,
-    title: 'Location',
+    title: 'location',
     filter: [
       'Asia',
       'Africa',
@@ -77,7 +77,7 @@ export const eventFilterData = [
   },
   {
     icon: <RiScan2Fill />,
-    title: 'Event Type',
+    title: 'eventType',
     filter: ['Conference', 'Hackathon', 'Forum', 'Festival', 'Online'],
   },
   {

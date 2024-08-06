@@ -1,5 +1,13 @@
 import { gql } from 'graphql-request'
 
+export const GET_WIKI_TITLE_BY_ID = gql`
+  query GetWikiTitleById($id: String!) {
+    wiki(id: $id) {
+      title
+    }
+  }
+`
+
 export const GET_PREVIEW_WIKI_BY_ID = gql`
   query GetPreviewWikiById($id: String!) {
     wiki(id: $id) {
@@ -432,6 +440,12 @@ export const POST_WIKI = gql`
 export const POST_WIKI_VIEW_COUNT = gql`
   mutation wikiViewCount($id: String!) {
     wikiViewCount(id: $id)
+  }
+`
+
+export const POST_FLAG_WIKI = gql`
+  mutation flagWiki($report: String!, $wikiId: String!, $userId: String!) {
+    flagWiki(report: $report, wikiId: $wikiId, userId: $userId)
   }
 `
 

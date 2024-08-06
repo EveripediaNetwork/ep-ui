@@ -7,6 +7,7 @@ import {
   Icon,
   IconButton,
   Link,
+  Skeleton,
   Tag,
   Text,
   VStack,
@@ -17,8 +18,8 @@ import { FiExternalLink } from 'react-icons/fi'
 import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
-import { getFounderName } from '@/utils/DataTransform/getFounderName'
 import { useTranslation } from 'next-i18next'
+import { useGetWikiTitleByIdQuery } from '@/services/wikis'
 
 const MAX_FOUNDERS_LIST = 3
 
@@ -202,16 +203,7 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             >
               <Flex alignItems="start" flexWrap="wrap" gap="1">
                 {wiki.linkedWikis?.founders.map((founder, i) => (
-                  <Link
-                    w="max-content"
-                    key={i}
-                    href={`/wiki/${founder}`}
-                    rel="noopener nofollow"
-                  >
-                    <Tag fontSize="10px" py="1">
-                      {getFounderName(founder)}
-                    </Tag>
-                  </Link>
+                  <LinkedWikiTag key={i} wikiId={founder} />
                 ))}
               </Flex>
             </ProfileListItem>
@@ -224,15 +216,27 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             >
               <Flex alignItems="start" flexWrap="wrap" gap="1">
                 {wiki.linkedWikis?.blockchains.map((item, i) => (
-                  <Link w="max-content" key={i} href={`/wiki/${item}`}>
-                    <Tag py="1">{item}</Tag>
-                  </Link>
+                  <LinkedWikiTag key={i} wikiId={item} />
                 ))}
               </Flex>
             </ProfileListItem>
           )}
       </WikiAccordion>
     </VStack>
+  )
+}
+
+const LinkedWikiTag = ({ wikiId }: { wikiId: string }) => {
+  const { data, isLoading } = useGetWikiTitleByIdQuery(wikiId)
+
+  if (isLoading) return <Skeleton w="100px" h="20px" />
+
+  if (!data) return null
+
+  return (
+    <Link w="max-content" href={`/wiki/${wikiId}`}>
+      <Tag py="1">{data}</Tag>
+    </Link>
   )
 }
 
