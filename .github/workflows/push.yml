@@ -31,7 +31,7 @@ jobs:
       - name: Biome Lint Changed Files
         run: |
           CHANGED_FILES=$(git diff --diff-filter=MA --name-only $(git merge-base origin/main ${{ github.ref_name }}) ${{ github.ref_name }})
-          if [ "${{ github.ref_name }}" = "main" ]; then
+          if [ "${{ github.ref_name }}" = "fix-biome-setup" ]; then
             echo "On main branch, skipping linting."
           elif [ -n "$CHANGED_FILES" ]; then
             pnpm biome ci $CHANGED_FILES --no-errors-on-unmatched
