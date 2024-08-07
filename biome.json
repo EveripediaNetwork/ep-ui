@@ -25,7 +25,8 @@
       "recommended": true,
       "correctness": {
         "noUnusedVariables": "error",
-        "noSwitchDeclarations": "off"
+        "noSwitchDeclarations": "off",
+        "useExhaustiveDependencies": "off"
       },
       "performance": {
         "noDelete": "off"
