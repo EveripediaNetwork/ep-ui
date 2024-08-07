@@ -97,7 +97,7 @@ const ChatCard = ({ content, alias, answerSources }: ChatProps) => {
             color={'heroHeaderDescription'}
             className={`${styles.markdownBody}`}
             width={'full'}
-            style={{ fontSize: '14px' }}
+            style={{ fontSize: '12px' }}
           >
             <ReactMarkdown
               remarkPlugins={[remarkGfm]}
