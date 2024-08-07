@@ -1,6 +1,6 @@
 import { ArrowRightIcon } from 'lucide-react'
 import { RiDatabaseFill } from 'react-icons/ri'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -9,15 +9,6 @@ import type { CategoryDataType } from '@/types/CategoryDataTypes'
 
 const NUMBER_OF_ITEMS_TO_SHOW = 5
 
-const shuffleArray = (array: CategoryDataType[]) => {
-  const shuffledArray = array.slice()
-  for (let i = shuffledArray.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1))
-    ;[shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]]
-  }
-  return shuffledArray
-}
-
 export default function WikiCategories() {
   const { t } = useTranslation('category')
 
@@ -25,6 +16,19 @@ export default function WikiCategories() {
     [],
   )
 
+  const shuffleArray = (array: CategoryDataType[]) => {
+    const shuffledArray = array.slice()
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ]
+    }
+    return shuffledArray
+  }
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (AllCategoriesData && AllCategoriesData.length > 0) {
       const shuffledCategories = shuffleArray(AllCategoriesData)
@@ -37,14 +41,14 @@ export default function WikiCategories() {
       <div className="flex items-center justify-between border-b border-gray-200 dark:border-alpha-300 px-4 py-3">
         <div className="flex items-center gap-2">
           <RiDatabaseFill className="w-6 h-6 text-brand-800" />
-          <div className="font-semibold">Wiki Categories</div>
+          <div className="font-semibold">{t('categoryWikisTitle')}</div>
         </div>
         <Link
           href="/categories"
           passHref
           className="flex items-center gap-2 border border-gray-200 dark:border-alpha-300 rounded-lg px-4 py-2 text-xs group dark:bg-gray800 h-9"
         >
-          View all
+          {t('categoryWikisButton')}
           <ArrowRightIcon className="w-3 h-3 transition-transform group-hover:translate-x-1 duration-300 ease-in-out delay-150" />
         </Link>
       </div>

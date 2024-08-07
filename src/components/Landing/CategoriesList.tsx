@@ -11,7 +11,6 @@ import { useState } from 'react'
 
 interface CategoriesListProps {
   categories: CategoryAndWikiDataProps[]
-  isLoading: boolean
 }
 
 enum CategoriesTabs {
@@ -25,7 +24,7 @@ enum CategoriesTabs {
   DeFi = 'defi',
 }
 
-const CategoriesList = ({ categories, isLoading }: CategoriesListProps) => {
+const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation('common')
   const [selectedTab, setSelectedTab] = useState<CategoriesTabs>(
     CategoriesTabs.NFTs,
@@ -71,7 +70,7 @@ const CategoriesList = ({ categories, isLoading }: CategoriesListProps) => {
         {AllCategoriesData.map((allCategory) => (
           <TabsContent key={allCategory.id} value={allCategory?.id}>
             <div>
-              {isLoading && !categories ? (
+              {!categories ? (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
                   {Array.from({ length: 6 }).map((_, index) => (
                     <CategorySkeletonCard key={index} />

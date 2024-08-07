@@ -75,7 +75,6 @@ export const Index = ({
   leaderboards,
   rankings,
   trending,
-  isLoading,
   categories,
 }: HomePageProps) => {
   return (
@@ -86,7 +85,7 @@ export const Index = ({
         <TrendingWikis trending={trending} featuredWikis={promotedWikis} />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
-        <CategoriesList categories={categories} isLoading={isLoading} />
+        <CategoriesList categories={categories} />
         <EventOverview />
       </div>
       {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
@@ -188,9 +187,9 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
-  const { data: categories, isLoading } = await store.dispatch(
+  const { data: categories } = await store.dispatch(
     getWikisAndCategories.initiate({
-      limit: 30,
+      limit: 8,
     }),
   )
 
@@ -245,7 +244,6 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       leaderboards: sortedleaderboards ?? [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
-      isLoading: isLoading,
       categories: categories,
     },
   }

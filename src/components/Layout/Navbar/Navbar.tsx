@@ -13,7 +13,7 @@ import { useTranslation } from 'next-i18next'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { Suspense, useEffect, useState } from 'react'
+import React, { Suspense, useEffect, useState } from 'react'
 import { RiSearchLine } from 'react-icons/ri'
 import { useDispatch, useSelector } from 'react-redux'
 import DesktopNav from './DesktopNav'
@@ -38,7 +38,6 @@ const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const router = useRouter()
-  // const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
   const locale = router.locale
@@ -50,17 +49,10 @@ const Navbar = () => {
     onClose: onSuggestWikiClose,
   } = useDisclosure()
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (locale && lang !== locale) handleLangChange(locale)
-  }, [locale, lang, handleLangChange])
-
-  // useEffect(() => {
-  //   const handleRouteChange = () => isOpen && onToggle()
-  //   router.events.on('routeChangeComplete', handleRouteChange)
-  //   return () => {
-  //     router.events.off('routeChangeComplete', handleRouteChange)
-  //   }
-  // }, [router.events, isOpen, onToggle])
+  }, [router.locale])
 
   const handleDrawerOpen = () => {
     setIsDrawerOpen(!isDrawerOpen)

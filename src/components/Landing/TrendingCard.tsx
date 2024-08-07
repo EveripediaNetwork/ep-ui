@@ -51,13 +51,19 @@ const TrendingCard = ({
             setWikiData((wikis as TrendingData)[e as keyof TrendingData])
           }}
         >
-          <SelectTrigger className="w-36 h-9 border border-gray-200 dark:border-alpha-300 text-sm">
+          <SelectTrigger className="w-36 h-9 border border-gray-200 dark:border-alpha-300 text-xs">
             <SelectValue placeholder="Today" />
           </SelectTrigger>
-          <SelectContent className="text-sm">
-            <SelectItem value="todayTrending">{t('Today')}</SelectItem>
-            <SelectItem value="weekTrending">{t('Last Week')}</SelectItem>
-            <SelectItem value="monthTrending">{t('Last Month')}</SelectItem>
+          <SelectContent className="text-xs">
+            <SelectItem value="todayTrending" className="text-xs">
+              {t('Today')}
+            </SelectItem>
+            <SelectItem value="weekTrending" className="text-xs">
+              {t('Last Week')}
+            </SelectItem>
+            <SelectItem value="monthTrending" className="text-xs">
+              {t('Last Month')}
+            </SelectItem>
           </SelectContent>
         </Select>
       </div>
