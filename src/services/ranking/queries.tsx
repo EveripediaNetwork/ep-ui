@@ -14,9 +14,13 @@ export const GET_NFT_RANKINGS = gql`
         images {
           id
         }
-        linkedWikis {
-          founders
-          blockchains
+        founderWikis {
+          id
+          title
+        }
+        blockchainWikis {
+          id
+          title
         }
         events {
           date
@@ -53,9 +57,13 @@ export const GET_TOKEN_RANKINGS = gql`
         images {
           id
         }
-        linkedWikis {
-          founders
-          blockchains
+        founderWikis {
+          id
+          title
+        }
+        blockchainWikis {
+          id
+          title
         }
         events {
           date
@@ -77,7 +85,12 @@ export const GET_TOKEN_RANKINGS = gql`
   }
 `
 export const GET_AI_TOKEN_RANKINGS = gql`
-  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int, $category: TokenCategory ) {
+  query getTokenRanking(
+    $kind: RankType
+    $limit: Int
+    $offset: Int
+    $category: TokenCategory
+  ) {
     rankList(kind: $kind, limit: $limit, offset: $offset, category: $category) {
       ... on TokenRankListData {
         id
@@ -93,9 +106,13 @@ export const GET_AI_TOKEN_RANKINGS = gql`
         images {
           id
         }
-        linkedWikis {
-          founders
-          blockchains
+        founderWikis {
+          id
+          title
+        }
+        blockchainWikis {
+          id
+          title
         }
         events {
           date
@@ -117,7 +134,12 @@ export const GET_AI_TOKEN_RANKINGS = gql`
   }
 `
 export const GET_STABLECOIN_RANKINGS = gql`
-  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int, $category: TokenCategory ) {
+  query getTokenRanking(
+    $kind: RankType
+    $limit: Int
+    $offset: Int
+    $category: TokenCategory
+  ) {
     rankList(kind: $kind, limit: $limit, offset: $offset, category: $category) {
       ... on TokenRankListData {
         id
@@ -133,9 +155,13 @@ export const GET_STABLECOIN_RANKINGS = gql`
         images {
           id
         }
-        linkedWikis {
-          founders
-          blockchains
+        founderWikis {
+          id
+          title
+        }
+        blockchainWikis {
+          id
+          title
         }
         events {
           date
@@ -157,7 +183,12 @@ export const GET_STABLECOIN_RANKINGS = gql`
   }
 `
 export const GET_FOUNDERS_RANKINGS = gql`
-  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int, $founders: Boolean) {
+  query getTokenRanking(
+    $kind: RankType
+    $limit: Int
+    $offset: Int
+    $founders: Boolean
+  ) {
     rankList(kind: $kind, limit: $limit, offset: $offset, founders: $founders) {
       ... on TokenRankListData {
         id
@@ -173,9 +204,13 @@ export const GET_FOUNDERS_RANKINGS = gql`
         images {
           id
         }
-        linkedWikis {
-          founders
-          blockchains
+        founderWikis {
+          id
+          title
+        }
+        blockchainWikis {
+          id
+          title
         }
         events {
           date
@@ -193,13 +228,13 @@ export const GET_FOUNDERS_RANKINGS = gql`
           market_cap_change_24h
         }
         founderWikis {
-        id
-        title
-        images {
           id
-          type
+          title
+          images {
+            id
+            type
+          }
         }
-      }
       }
     }
   }

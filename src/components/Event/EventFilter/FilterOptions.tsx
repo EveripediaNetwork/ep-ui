@@ -10,12 +10,14 @@ import type { DateRange } from 'react-day-picker'
 import { cn } from '@lib/utils'
 import type { Filters } from './index.type'
 import { useTranslation } from 'next-i18next'
-import { useGetWikiTitleByIdQuery } from '@/services/wikis'
 
 interface FilterOptionProps {
   eventFilter: {
     title: string
-    filter: string[]
+    filter: {
+      id: string
+      title: string
+    }[]
   }
   category: keyof Filters
   filters: Filters
@@ -23,37 +25,6 @@ interface FilterOptionProps {
   dateRange?: DateRange
   setDateRange: React.Dispatch<React.SetStateAction<DateRange | undefined>>
   className?: string
-}
-
-const BlockchainFilter = ({
-  filter,
-  category,
-  filters,
-  handleFilterChange,
-}: {
-  filter: string
-  category: keyof Filters
-  filters: Filters
-  handleFilterChange: (category: keyof Filters, filter: string) => void
-}) => {
-  const { data: blockChainName } = useGetWikiTitleByIdQuery(
-    filter.toLowerCase(),
-  )
-
-  return (
-    <button
-      key={filter}
-      type="button"
-      onClick={() => handleFilterChange(category, filter)}
-      className={`px-3 text-xs border border-gray200 dark:border-alpha-300 hover:text-alpha-900 xl:hover:bg-brand-500 xl:dark:hover:bg-brand-800 xl:active:bg-brand-500 cursor-pointer py-1 rounded-full ${
-        filters[category]?.includes(filter)
-          ? 'bg-brand-500 dark:bg-brand-800'
-          : 'bg-gray50 dark:bg-alpha-50'
-      }`}
-    >
-      {blockChainName}
-    </button>
-  )
 }
 
 const FilterOptions: React.FC<FilterOptionProps> = React.memo(
@@ -71,21 +42,21 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
     return (
       <div className={cn('xl:flex gap-2 mt-3 flex-wrap hidden', className)}>
         {eventFilter.filter.map((filter) => {
-          if (filter === 'Custom Range') {
+          if (filter.id === 'custom range') {
             return (
-              <div key={filter} className="grid grid-2">
+              <div key={filter.id} className="grid grid-2">
                 <Popover>
                   <PopoverTrigger asChild>
                     <button
                       type="button"
-                      onClick={() => handleFilterChange(category, filter)}
+                      onClick={() => handleFilterChange(category, filter.id)}
                       className={`px-3 flex gap-2 items-center text-xs border bg-gray50 dark:bg-alpha-50 border-gray200 dark:border-alpha-300 hover:text-alpha-900 hover:bg-brand-500 dark:hover:bg-brand-800 active:bg-brand-500 cursor-pointer py-1 rounded-full ${
-                        filters[category]?.includes(filter)
+                        filters[category]?.includes(filter.id)
                           ? 'bg-brand-500 dark:bg-brand-800'
                           : ''
                       }`}
                     >
-                      <span>{t(`${filter}`)}</span>
+                      <span>{t(`${filter.title}`)}</span>
                       <RiArrowUpDownLine />
                     </button>
                   </PopoverTrigger>
@@ -103,29 +74,19 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
               </div>
             )
           }
-          if (eventFilter.title === 'Blockchain') {
-            return (
-              <BlockchainFilter
-                key={filter}
-                filter={filter}
-                category={category}
-                filters={filters}
-                handleFilterChange={handleFilterChange}
-              />
-            )
-          }
+
           return (
             <button
-              key={filter}
+              key={filter.id}
               type="button"
-              onClick={() => handleFilterChange(category, filter)}
+              onClick={() => handleFilterChange(category, filter.id)}
               className={`px-3 text-xs border border-gray200 dark:border-alpha-300 hover:text-alpha-900 xl:hover:bg-brand-500 xl:dark:hover:bg-brand-800 xl:active:bg-brand-500 cursor-pointer py-1 rounded-full ${
-                filters[category]?.includes(filter)
+                filters[category]?.includes(filter.id)
                   ? 'bg-brand-500 dark:bg-brand-800'
                   : 'bg-gray50 dark:bg-alpha-50'
               }`}
             >
-              {t(`${filter}`)}
+              {t(`${filter.title}`)}
             </button>
           )
         })}

@@ -9,7 +9,7 @@ import {
   GET_FOUNDERS_RANKINGS,
 } from '@/services/ranking/queries'
 import config from '@/config'
-import { RankCardType } from '@/types/RankDataTypes'
+import type { RankCardType } from '@/types/RankDataTypes'
 
 type RankListResponse = {
   rankList: RankCardType[]

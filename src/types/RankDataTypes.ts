@@ -1,9 +1,9 @@
-import { BoxProps } from '@chakra-ui/react'
-import { BaseEvents } from '@everipedia/iq-utils'
-import { IconType } from 'react-icons/lib'
+import type { BoxProps } from '@chakra-ui/react'
+import type { BaseEvents } from '@everipedia/iq-utils'
+import type { IconType } from 'react-icons/lib'
 import { z } from 'zod'
-import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
-import { Image as ipfsImage } from '@everipedia/iq-utils'
+import type { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
+import type { Image as ipfsImage } from '@everipedia/iq-utils'
 
 export interface RankCardType {
   hasWiki: any
@@ -15,10 +15,7 @@ export interface RankCardType {
   images: Image[]
   nftMarketData: NftMarketData
   tokenMarketData: TokenMarketData
-  linkedWikis: {
-    founders: string[]
-    blockchains: string[]
-  }
+  blockchainWikis: { title: string; id: string }[]
   founderWikis: founderWikiData[]
   events: BaseEvents[]
 }
