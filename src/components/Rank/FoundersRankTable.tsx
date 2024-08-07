@@ -6,11 +6,11 @@ import {
   Thead,
   Tr,
   Flex,
-  TableContainerProps,
+  type TableContainerProps,
 } from '@chakra-ui/react'
 import { FoundersRankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
-import { RankTableProps, OnClickMap } from '@/types/RankDataTypes'
+import type { RankTableProps, OnClickMap } from '@/types/RankDataTypes'
 import { useTranslation } from 'next-i18next'
 
 export const FoundersRankTable = ({

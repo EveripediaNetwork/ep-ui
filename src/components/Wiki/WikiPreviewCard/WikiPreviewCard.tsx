@@ -9,7 +9,7 @@ import {
   Box,
   AspectRatio,
 } from '@chakra-ui/react'
-import { Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
 import { useENSData } from '@/hooks/useENSData'
 import { shortenText } from '@/utils/textUtils'
@@ -21,7 +21,7 @@ import { IMAGE_BOX_SIZE, WIKI_IMAGE_ASPECT_RATIO } from '@/data/Constants'
 import { Image } from '@/components/Elements/Image/Image'
 import { blurDataURL } from '@/data/blurPlaceholder'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
+import type { RootState } from '@/store/store'
 import { useTranslatedTimestamps } from '@/hooks/useTranslatedTimestamps'
 
 const WikiPreviewCard = ({

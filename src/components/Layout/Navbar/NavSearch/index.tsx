@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'
+import type React from 'react'
+import { useRef } from 'react'
 import {
   Button,
   Center,
@@ -7,7 +8,7 @@ import {
   InputLeftElement,
   Spinner,
   chakra,
-  HTMLChakraProps,
+  type HTMLChakraProps,
   Text,
   useEventListener,
   Wrap,
@@ -22,11 +23,11 @@ import {
   AutoCompleteInput,
   AutoCompleteItem,
   AutoCompleteList,
-  AutoCompleteListProps,
+  type AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
 import {
   fillType,
-  SearchItem,
+  type SearchItem,
   SEARCH_TYPES,
   useNavSearch,
 } from '@/services/search/utils'

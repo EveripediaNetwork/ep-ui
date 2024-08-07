@@ -2,13 +2,13 @@ import React, { useEffect } from 'react'
 import Connectors from '@/components/Layout/WalletDrawer/Connectors'
 import { useRouter } from 'next/router'
 import dynamic from 'next/dynamic'
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
 import { useAddress } from '@/hooks/useAddress'
 import Head from 'next/head'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
+import type { RootState } from '@/store/store'
 
 const Login = () => {
   const { t } = useTranslation('common')
@@ -24,6 +24,7 @@ const Login = () => {
     }
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (userAddress && token) {
       handleRedirect()

@@ -1,6 +1,11 @@
 import React from 'react'
-import { Button, ButtonProps, Link, LinkProps } from '@chakra-ui/react'
-import { LinkProps as NextLinkProps } from 'next/link'
+import {
+  Button,
+  type ButtonProps,
+  Link,
+  type LinkProps,
+} from '@chakra-ui/react'
+import type { LinkProps as NextLinkProps } from 'next/link'
 import { LinkWrapper } from './LinkWrapper'
 
 type ChakraAndNextLinkProps = LinkProps & NextLinkProps & ButtonProps

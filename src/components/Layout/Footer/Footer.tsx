@@ -26,7 +26,7 @@ import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import { getCookie } from 'cookies-next'
 import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
+import type { RootState } from '@/store/store'
 import { setLanguage } from '@/store/slices/app-slice'
 import { useDispatch } from 'react-redux'
 import useLanguageChange from '@/hooks/useLanguageChange'
@@ -50,7 +50,7 @@ const Footer = () => {
 
   React.useEffect(() => {
     if (locale) dispatch(setLanguage(lang))
-  }, [])
+  }, [locale, dispatch, lang])
 
   return (
     <Box bg="brandBackground" color="default" pos="relative">
