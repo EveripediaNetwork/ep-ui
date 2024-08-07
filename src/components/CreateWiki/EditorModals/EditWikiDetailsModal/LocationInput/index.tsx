@@ -1,15 +1,6 @@
-import { env } from '@/env.mjs'
 import { useAppDispatch } from '@/store/hook'
 import { Box, Button, Flex, Input, Select, Stack, Text } from '@chakra-ui/react'
-import {
-  AutoComplete,
-  AutoCompleteInput,
-  AutoCompleteItem,
-  AutoCompleteList,
-} from '@choc-ui/chakra-autocomplete'
-import Script from 'next/script'
 import React, { useState } from 'react'
-import usePlacesAutocomplete from 'use-places-autocomplete'
 import Location from './Location'
 import { store } from '@/store/store'
 import { CommonMetaIds } from '@everipedia/iq-utils'
@@ -19,20 +10,13 @@ const LocationInput = () => {
   const dispatch = useAppDispatch()
   const [selectRegion, setSelectedRegion] = useState('')
   const [selectMonth, setSelectMonth] = useState('')
-  const {
-    init,
-    ready,
-    value,
-    setValue,
-    suggestions: { status, data },
-  } = usePlacesAutocomplete({ initOnMount: false })
+  const [value, setValue] = useState('')
 
   const metadataValue =
     getWikiMetadataById(store.getState().wiki, CommonMetaIds.LOCATION)?.value ||
     '[]'
   const parsedMetadata = JSON.parse(metadataValue)
 
-  // Check if parsedMetadata is an array, if not, wrap it in an array.
   const fetchedLocation = Array.isArray(parsedMetadata)
     ? parsedMetadata
     : [parsedMetadata]
@@ -63,38 +47,13 @@ const LocationInput = () => {
     <Stack spacing={'2'}>
       <Text fontWeight="semibold">Location</Text>
       <Flex gap={'10px'}>
-        <Script
-          src={`https://maps.googleapis.com/maps/api/js?key=${env.NEXT_PUBLIC_GOOGLE_MAPS_API_KEY}&libraries=places&callback=initMap`}
-          onReady={init}
-        />
         <Box flex={3}>
-          <AutoComplete
-            onSelectOption={(option) => {
-              setValue(option.item.originalValue)
-            }}
-            rollNavigation
-          >
-            <AutoCompleteInput
-              value={value}
-              onChange={(e) => setValue(e.target.value)}
-              type="text"
-              h="40px"
-              placeholder="Enter event location"
-              disabled={!ready}
-            />
-            <div className="relative">
-              <AutoCompleteList>
-                {status === 'OK' &&
-                  data.map(({ place_id, description }) => {
-                    return (
-                      <AutoCompleteItem key={place_id} value={description}>
-                        {description}
-                      </AutoCompleteItem>
-                    )
-                  })}
-              </AutoCompleteList>
-            </div>
-          </AutoComplete>
+          <Input
+            type="text"
+            placeholder="place, country"
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+          />
         </Box>
         <Select
           rounded="md"
