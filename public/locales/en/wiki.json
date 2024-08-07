@@ -78,7 +78,7 @@
   "update": "Update",
   "chatBotTitle": "IQ GPT Chat",
   "chatBotFooter": "Powered by IQGPT.com",
-  "chatBotIntroMessage": "Hi There! Here are some cool stuff i can do for you.",
+  "chatBotIntroMessage": "Hi There! I am IQ GPT Chatbot. Here is some cool stuff I can do for you.",
   "chatBotSuggestion1": "Ask me about crypto",
   "queryAdditionalInfo": "Generate additional info for this page",
   "additionalInfoPrompt": "Generate additional information for the wiki with the title,",
