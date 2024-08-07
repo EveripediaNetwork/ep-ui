@@ -88,7 +88,7 @@ export const eventFilterData = [
       'Ethereum',
       'Polygon',
       'Solana',
-      'Cardano',
+      'Cardano-ada',
       'Binance-coin',
     ],
   },

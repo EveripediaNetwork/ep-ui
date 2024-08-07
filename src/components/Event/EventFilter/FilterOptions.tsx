@@ -6,10 +6,11 @@ import {
   PopoverContent,
 } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
-import { DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { cn } from '@lib/utils'
-import { Filters } from './index.type'
+import type { Filters } from './index.type'
 import { useTranslation } from 'next-i18next'
+import { useGetWikiTitleByIdQuery } from '@/services/wikis'
 
 interface FilterOptionProps {
   eventFilter: {
@@ -24,6 +25,37 @@ interface FilterOptionProps {
   className?: string
 }
 
+const BlockchainFilter = ({
+  filter,
+  category,
+  filters,
+  handleFilterChange,
+}: {
+  filter: string
+  category: keyof Filters
+  filters: Filters
+  handleFilterChange: (category: keyof Filters, filter: string) => void
+}) => {
+  const { data: blockChainName } = useGetWikiTitleByIdQuery(
+    filter.toLowerCase(),
+  )
+
+  return (
+    <button
+      key={filter}
+      type="button"
+      onClick={() => handleFilterChange(category, filter)}
+      className={`px-3 text-xs border border-gray200 dark:border-alpha-300 hover:text-alpha-900 xl:hover:bg-brand-500 xl:dark:hover:bg-brand-800 xl:active:bg-brand-500 cursor-pointer py-1 rounded-full ${
+        filters[category]?.includes(filter)
+          ? 'bg-brand-500 dark:bg-brand-800'
+          : 'bg-gray50 dark:bg-alpha-50'
+      }`}
+    >
+      {blockChainName}
+    </button>
+  )
+}
+
 const FilterOptions: React.FC<FilterOptionProps> = React.memo(
   ({
     eventFilter,
@@ -35,6 +67,7 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
     className,
   }) => {
     const { t } = useTranslation('event')
+
     return (
       <div className={cn('xl:flex gap-2 mt-3 flex-wrap hidden', className)}>
         {eventFilter.filter.map((filter) => {
@@ -68,6 +101,17 @@ const FilterOptions: React.FC<FilterOptionProps> = React.memo(
                   </PopoverContent>
                 </Popover>
               </div>
+            )
+          }
+          if (eventFilter.title === 'Blockchain') {
+            return (
+              <BlockchainFilter
+                key={filter}
+                filter={filter}
+                category={category}
+                filters={filters}
+                handleFilterChange={handleFilterChange}
+              />
             )
           }
           return (
