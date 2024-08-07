@@ -3,7 +3,7 @@ import { useAppDispatch } from '@/store/hook'
 import { useGetCategoriesLinksQuery } from '@/services/categories'
 import { Flex, Text } from '@chakra-ui/react'
 import { slugifyText } from '@/utils/textUtils'
-import { Wiki } from '@everipedia/iq-utils'
+import type { Wiki } from '@everipedia/iq-utils'
 import { useTranslation } from 'next-i18next'
 import ComboBoxPopup from './ComboBoxPopup'
 
