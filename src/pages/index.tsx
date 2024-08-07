@@ -6,11 +6,11 @@ import {
   getTrendingWikis,
   getWikis,
   wikiApi,
-  PromotedWikisBuilder,
-  RecentWikisBuilder,
+  type PromotedWikisBuilder,
+  type RecentWikisBuilder,
 } from '@/services/wikis'
 import { store } from '@/store/store'
-import { BaseTag, Wiki } from '@everipedia/iq-utils'
+import type { BaseTag, Wiki } from '@everipedia/iq-utils'
 import TrendingWikis from '@/components/Landing/TrendingWikis'
 const CategoriesList = dynamic(
   () => import('@/components/Landing/CategoriesList'),
@@ -21,9 +21,13 @@ const CategoriesList = dynamic(
 import { getTags, tagsApi } from '@/services/tags'
 const DiscoverMore = dynamic(() => import('@/components/Landing/DiscoverMore'))
 const LeaderBoard = dynamic(() => import('@/components/Landing/Leaderboard'))
-import { editorApi, getLeaderboard, LeaderBoardType } from '@/services/editor'
+import {
+  editorApi,
+  getLeaderboard,
+  type LeaderBoardType,
+} from '@/services/editor'
 import { sortLeaderboards } from '@/utils/DataTransform/leaderboard.utils'
-import { RankCardType } from '@/types/RankDataTypes'
+import type { RankCardType } from '@/types/RankDataTypes'
 const RankingList = dynamic(() => import('@/components/Landing/RankingList'))
 import { nftLisitngAPI } from '@/services/nftlisting'
 import {
@@ -36,13 +40,13 @@ import {
 } from '@/services/ranking'
 import { Hero } from '@/components/Landing/Hero'
 import { DayRangeType, getDateRange } from '@/utils/HomepageUtils/getDate'
-import { TrendingData } from '@/types/Home'
+import type { TrendingData } from '@/types/Home'
 const AboutIqgpt = dynamic(() => import('@/components/Landing/AboutIqgpt'))
-import { GetServerSideProps } from 'next'
+import type { GetServerSideProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import EventOverview from '@/components/Landing/EventOverview'
 import { IQBar } from '@/components/Landing/IQBar'
-import { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
+import type { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
