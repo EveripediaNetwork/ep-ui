@@ -51,7 +51,7 @@ const TrendingCard = ({
             setWikiData((wikis as TrendingData)[e as keyof TrendingData])
           }}
         >
-          <SelectTrigger className="w-36 h-9 border border-gray-200 dark:border-gray-300">
+          <SelectTrigger className="w-36 h-9 border border-gray-200 dark:border-alpha-300">
             <SelectValue placeholder="Today" />
           </SelectTrigger>
           <SelectContent>
@@ -66,7 +66,7 @@ const TrendingCard = ({
           {wikiData?.map((wiki) => (
             <Link
               href={`/wiki/${wiki.id}`}
-              className="border-b dark:border-gray-300 border-gray-200 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
+              className="border-b dark:border-alpha-300 border-gray-200 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
               key={wiki.id}
             >
               <div className="w-[68px] h-[46px] aspect-square rounded-md">
