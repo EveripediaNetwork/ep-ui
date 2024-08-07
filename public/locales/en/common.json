@@ -127,5 +127,13 @@
   "signToken": "Sign Token",
   "title": "Install IQ.wiki",
   "description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar and select \"Add to Home Screen\" or \"Install App.\"",
-  "safari_description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar, click on the share icon then select \"Add to Home Screen\" or \"Install App.\" option."
+  "safari_description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar, click on the share icon then select \"Add to Home Screen\" or \"Install App.\" option.",
+  "categorynftsTitle": "NFTs",
+  "categorydefiTitle": "Decentralized Finance",
+  "categoryexchangesTitle": "Exchanges",
+  "categorycryptocurrenciesTitle": "Cryptocurrencies",
+  "categorydaosTitle": "DAOs",
+  "categorypeopleTitle": "People in Crypto",
+  "categorydappsTitle": "Decentralized Applications",
+  "categoryorganizationsTitle": "Organizations"
 }

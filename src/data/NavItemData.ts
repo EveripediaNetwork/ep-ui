@@ -191,17 +191,11 @@ export const MOBILE_ITEMS: NavItem[] = [
     href: '/about',
     icon: RiInformationFill,
   },
-  {
-    id: 3,
-    label: 'Events',
-    href: '/events',
-    icon: RiCalendarEventFill,
-  },
 ]
 
 export const NAV_ICON = {
   label: 'Accounts',
-  id: 4,
+  id: 3,
   href: '#',
   subItem: [
     {
@@ -217,7 +211,7 @@ export const NAV_ICON = {
 export const mobileWalletDetails: NavItem = {
   label: 'Wallet',
   href: '#',
-  id: 5,
+  id: 4,
   icon: RiWalletFill,
 }
 
@@ -232,14 +226,14 @@ export const MOBILE_NAV_ITEMS = ({
 
   if (address) {
     filteredNavItems.push({
-      id: 6,
+      id: 5,
       label: 'Create Wiki',
       href: '/create-wiki',
       icon: RiAddBoxFill,
     })
   } else {
     filteredNavItems.push({
-      id: 7,
+      id: 6,
       label: 'Suggest Wiki',
       href: '#',
       icon: RiLightbulbFlashFill,

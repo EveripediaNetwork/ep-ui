@@ -138,5 +138,13 @@
   "signToken": "토큰 서명",
   "title": "IQ.wiki 설치",
   "description": "쉽게 액세스할 수 있도록 홈 화면에 IQ.wiki를 추가하세요. 툴바로 이동하여 \"홈 화면에 추가\" 또는 \"앱 설치\"를 선택하세요.",
-  "safari_description": "쉽게 액세스할 수 있도록 홈 화면에 IQ.wiki를 추가하세요. 도구 모음으로 이동하여 공유 아이콘을 클릭한 다음 \"홈 화면에 추가\" 또는 \"앱 설치\" 옵션을 선택하세요."
+  "safari_description": "쉽게 액세스할 수 있도록 홈 화면에 IQ.wiki를 추가하세요. 도구 모음으로 이동하여 공유 아이콘을 클릭한 다음 \"홈 화면에 추가\" 또는 \"앱 설치\" 옵션을 선택하세요.",
+  "categorynftsTitle": "NFTs",
+  "categorydefiTitle": "디파이",
+  "categoryexchangesTitle": "거래소",
+  "categorycryptocurrenciesTitle": "암호화폐",
+  "categorydaosTitle": "DAO (탈중앙화된 자율조직)",
+  "categorydappsTitle": "디앱(dApp)",
+  "categorypeopleTitle": "암호화폐 인물",
+  "categoryorganizationsTitle": "기관"
 }

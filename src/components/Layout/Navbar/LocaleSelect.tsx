@@ -43,7 +43,7 @@ export function LocaleSelect({
               onKeyDown={() => {}}
               onClick={() => handleLangChange(langObj.locale)}
               key={langObj.locale}
-              className="flex flex-row items-center relative hover:bg-gray-600 py-2 cursor-pointer transition-colors duration-300 delay-100 ease-in-out"
+              className="flex flex-row items-center relative hover:dark:bg-gray-600 hover:bg-gray-200 py-2 cursor-pointer transition-colors duration-300 delay-100 ease-in-out"
             >
               <div>
                 {langObj.locale === locale ? (
