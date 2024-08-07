@@ -22,7 +22,6 @@ const WalletNavMenu = () => {
               handleWalletIconAction()
             }
           }}
-          role="button"
           className="hidden md:block cursor-pointer text-3xl font-semibold"
           onClick={handleWalletIconAction}
         >

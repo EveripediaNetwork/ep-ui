@@ -38,7 +38,7 @@ const Navbar = () => {
   const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
   const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const router = useRouter()
-  const { isOpen, onToggle } = drawerOperations
+  // const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
   const locale = router.locale
@@ -54,13 +54,13 @@ const Navbar = () => {
     if (locale && lang !== locale) handleLangChange(locale)
   }, [locale, lang, handleLangChange])
 
-  useEffect(() => {
-    const handleRouteChange = () => isOpen && onToggle()
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events, isOpen, onToggle])
+  // useEffect(() => {
+  //   const handleRouteChange = () => isOpen && onToggle()
+  //   router.events.on('routeChangeComplete', handleRouteChange)
+  //   return () => {
+  //     router.events.off('routeChangeComplete', handleRouteChange)
+  //   }
+  // }, [router.events, isOpen, onToggle])
 
   const handleDrawerOpen = () => {
     setIsDrawerOpen(!isDrawerOpen)

@@ -81,7 +81,10 @@ const CategoriesList = ({ categories, isLoading }: CategoriesListProps) => {
                 categories?.map(
                   (category) =>
                     category?.id === allCategory.id && (
-                      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                      <div
+                        key={category.id}
+                        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+                      >
                         {category.wikis.slice(0, 6).map((wiki) => (
                           <CategoriesCard key={wiki.id} wiki={wiki} />
                         ))}

@@ -40,7 +40,11 @@ export function LocaleSelect({
         <div className="">
           {languageData.map((langObj) => (
             <div
-              onKeyDown={() => {}}
+              onKeyDown={(event: React.KeyboardEvent<HTMLDivElement>) => {
+                if (event.key === 'Enter' || event.key === ' ') {
+                  handleLangChange(langObj.locale)
+                }
+              }}
               onClick={() => handleLangChange(langObj.locale)}
               key={langObj.locale}
               className="flex flex-row items-center relative hover:dark:bg-gray-600 hover:bg-gray-200 py-2 cursor-pointer transition-colors duration-300 delay-100 ease-in-out"
