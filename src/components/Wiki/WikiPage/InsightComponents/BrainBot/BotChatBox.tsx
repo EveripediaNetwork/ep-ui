@@ -2,8 +2,9 @@ import useStream from '@/hooks/useStream'
 import { useAppSelector } from '@/store/hook'
 import { setCurrentMessage } from '@/store/slices/chatbot-slice'
 import { chakra, HStack, Input } from '@chakra-ui/react'
-import { Wiki } from '@everipedia/iq-utils'
-import React, { ChangeEvent, useState } from 'react'
+import type { Wiki } from '@everipedia/iq-utils'
+import type React from 'react'
+import { type ChangeEvent, useState } from 'react'
 import { RiSendPlaneFill } from 'react-icons/ri'
 import { useDispatch } from 'react-redux'
 import { useTranslation } from 'next-i18next'
@@ -50,10 +51,11 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           fontSize={'14px'}
           placeholder={t('chatBotInputPlaceholder')}
           borderRadius={'0'}
+          my={2}
           paddingInline={'4px'}
           color={'gray.500'}
           _dark={{
-            color: 'whiteAlpha.600',
+            color: 'whiteAlpha.900',
           }}
           onChange={handleChange}
           disabled={isLoading}
@@ -65,8 +67,8 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           display={'flex'}
           justifyContent={'center'}
           alignItems={'center'}
-          h="20px"
-          w={'20px'}
+          h="22px"
+          w={'22px'}
           borderRadius={'4px'}
           style={{
             marginInlineStart: '0px',
@@ -77,7 +79,7 @@ const BotChatBox = ({ wiki }: { wiki: Wiki }) => {
           }}
           disabled={isLoading}
         >
-          <RiSendPlaneFill size={'13px'} />
+          <RiSendPlaneFill size={'16px'} />
         </chakra.button>
       </HStack>
     </form>
