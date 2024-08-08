@@ -24,7 +24,6 @@ const Login = () => {
     }
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (userAddress && token) {
       handleRedirect()

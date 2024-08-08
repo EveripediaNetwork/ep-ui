@@ -49,7 +49,6 @@ const Navbar = () => {
     onClose: onSuggestWikiClose,
   } = useDisclosure()
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (locale && lang !== locale) handleLangChange(locale)
   }, [router.locale])

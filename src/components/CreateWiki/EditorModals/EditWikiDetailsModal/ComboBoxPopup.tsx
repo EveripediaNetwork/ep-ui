@@ -15,7 +15,7 @@ import {
 import { Box, Button } from '@chakra-ui/react'
 import { Check, ChevronDown } from 'lucide-react'
 import { cn } from '@/lib/utils'
-import { ComboBoxProps } from '@/types/EditWikiTypes'
+import type { ComboBoxProps } from '@/types/EditWikiTypes'
 import { useColorMode } from '@chakra-ui/react'
 
 const ComboBoxPopup = ({
@@ -49,6 +49,12 @@ const ComboBoxPopup = ({
       setSelected(undefined)
     }
   }, [resetTriger])
+
+  useEffect(() => {
+    if (defaultSelect) {
+      setSelected(defaultSelect)
+    }
+  }, [defaultSelect])
 
   return (
     <Popover open={open} onOpenChange={setOpen}>
