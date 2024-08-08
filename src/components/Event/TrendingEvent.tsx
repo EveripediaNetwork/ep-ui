@@ -27,51 +27,56 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         }}
       >
         <CarouselContent className="">
-          {events?.map((event) => (
-            <CarouselItem
-              className="h-96 basis-full md:basis-80 lg:basis-[419px] rounded-xl relative ml-4"
-              key={event.id}
-            >
-              <Image
-                src={getWikiImageUrl(event.images)}
-                alt="blockchain-expo"
-                fill
-                sizes="(max-width: 768px) 100vw, 768px"
-                priority
-                className="rounded-xl object-cover min-w-full lg:min-w-40"
-              />
-              <Link
-                href={`/events/${event.id}`}
-                className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5"
+          {events?.map((event) => {
+            const eventLength = Number(event?.events?.length)
+            return (
+              <CarouselItem
+                className="h-96 basis-full md:basis-80 lg:basis-[419px] rounded-xl relative ml-4"
+                key={event.id}
               >
-                <div className="text-alpha-900">
-                  {event.location && (
-                    <span className="flex items-center gap-1">
-                      <RiMapPinRangeLine />
-                      <h5 className="text-sm">{event.location}</h5>
-                    </span>
-                  )}
-                  <h5 className="text-xl font-semibold">{event.title}</h5>
-                  <h5 className="">
-                    {event?.events?.[0].date
-                      ? parseDateRange(event?.events?.[0].date)
-                      : event?.events?.[0].multiDateStart &&
-                          event?.events?.[0].multiDateEnd
-                        ? parseDateRange(
-                            `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
-                          )
-                        : ''}
-                  </h5>
-                </div>
-                <button
-                  type="button"
-                  className="px-2 py-[10px] mt-5 text-alpha-900 rounded-[6px] text-xs font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
+                <Image
+                  src={getWikiImageUrl(event.images)}
+                  alt="blockchain-expo"
+                  fill
+                  sizes="(max-width: 768px) 100vw, 768px"
+                  priority
+                  className="rounded-xl object-cover min-w-full lg:min-w-40"
+                />
+                <Link
+                  href={`/events/${event.id}`}
+                  className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5"
                 >
-                  View event details
-                </button>
-              </Link>
-            </CarouselItem>
-          ))}
+                  <div className="text-alpha-900">
+                    {event.location && (
+                      <span className="flex items-center gap-1">
+                        <RiMapPinRangeLine />
+                        <h5 className="text-sm">{event.location}</h5>
+                      </span>
+                    )}
+                    <h5 className="text-xl font-semibold">{event.title}</h5>
+                    <h5 className="">
+                      {event?.events?.[eventLength - 1].date
+                        ? parseDateRange(
+                            String(event?.events?.[eventLength - 1].date),
+                          )
+                        : event?.events?.[eventLength - 1].multiDateStart &&
+                            event?.events?.[eventLength - 1].multiDateEnd
+                          ? parseDateRange(
+                              `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
+                            )
+                          : ''}
+                    </h5>
+                  </div>
+                  <button
+                    type="button"
+                    className="px-2 py-[10px] mt-5 text-alpha-900 rounded-[6px] text-xs font-semibold backdrop-blur-[30px] bg-alpha-300 w-fit"
+                  >
+                    View event details
+                  </button>
+                </Link>
+              </CarouselItem>
+            )
+          })}
         </CarouselContent>
         <CarouselPrevious className="backdrop-blur-[30px] bg-alpha-300" />
         <CarouselNext className="backdrop-blur-[30px] bg-alpha-300" />
