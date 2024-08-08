@@ -1,8 +1,8 @@
 import { parseDateRange } from '@/lib/utils'
-import { TReferenceObject } from '@/utils/CreateWikiUtils/isValidWiki'
+import type { TReferenceObject } from '@/utils/CreateWikiUtils/isValidWiki'
 import { getCountry, isEventLocation } from '@/utils/event.utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
-import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
+import { CommonMetaIds, type Wiki } from '@everipedia/iq-utils'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
 import Link from 'next/link'
@@ -40,7 +40,7 @@ const EventSummary = ({ event }: { event: Wiki }) => {
 
   const references: TReferenceObject[] = JSON.parse(data)
 
-  let url
+  let url: string | undefined
   if (
     references.find((item) => item.description.toLowerCase() === 'event link')
   )
@@ -83,13 +83,13 @@ const EventSummary = ({ event }: { event: Wiki }) => {
           {event?.events?.[dateLength - 1].date
             ? parseDateRange(event.events[dateLength - 1].date)
             : event?.events?.[dateLength - 1].multiDateStart &&
-              event.events?.[dateLength - 1]?.multiDateEnd
-            ? parseDateRange(
-                `${event.events[dateLength - 1].multiDateStart}/${
-                  event.events[dateLength - 1].multiDateEnd
-                }`,
-              )
-            : ''}
+                event.events?.[dateLength - 1]?.multiDateEnd
+              ? parseDateRange(
+                  `${event.events[dateLength - 1].multiDateStart}/${
+                    event.events[dateLength - 1].multiDateEnd
+                  }`,
+                )
+              : ''}
         </span>
       </span>
       {social_profiles.length > 0 && (

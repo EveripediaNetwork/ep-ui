@@ -6,9 +6,9 @@ import {
   PopoverContent,
 } from '@/components/ui/popover'
 import { Calendar } from '@/components/ui/calendar'
-import { DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { cn } from '@lib/utils'
-import { Filters } from './index.type'
+import type { Filters } from './index.type'
 import { useTranslation } from 'next-i18next'
 
 interface FilterOptionProps {

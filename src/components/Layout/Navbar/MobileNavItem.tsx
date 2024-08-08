@@ -1,7 +1,7 @@
 import React from 'react'
 import { Icon, useDisclosure, Text, LinkBox } from '@chakra-ui/react'
 import { RiArrowRightSLine } from 'react-icons/ri'
-import { NavItem } from '@/types/NavItemType'
+import type { NavItem } from '@/types/NavItemType'
 import { StaticContent } from '@/components/StaticElement'
 import LinkOverlay from '@/components/Elements/LinkElements/LinkOverlay'
 import { useTranslation } from 'next-i18next'

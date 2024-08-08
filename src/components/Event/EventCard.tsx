@@ -9,7 +9,11 @@ import {
 import { parseDateRange } from '@/lib/utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { LoadingEventState } from './LoadingState'
-import { CommonMetaIds, Image as ImageType, MData } from '@everipedia/iq-utils'
+import {
+  CommonMetaIds,
+  type Image as ImageType,
+  type MData,
+} from '@everipedia/iq-utils'
 import { useRouter } from 'next/router'
 import { getCountry, isEventLocation } from '@/utils/event.utils'
 
@@ -101,10 +105,10 @@ const EventCard = ({
                     {date.date
                       ? parseDateRange(date.date)
                       : date.multiDateStart && date.multiDateEnd
-                      ? parseDateRange(
-                          `${date.multiDateStart}/${date.multiDateEnd}`,
-                        )
-                      : ''}
+                        ? parseDateRange(
+                            `${date.multiDateStart}/${date.multiDateEnd}`,
+                          )
+                        : ''}
                   </span>
                 </span>
                 {isEventLocation(eventLocation) && (

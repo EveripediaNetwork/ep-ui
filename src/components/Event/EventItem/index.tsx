@@ -1,5 +1,5 @@
 import { parseDateRange } from '@/lib/utils'
-import { TEvents } from '@/services/event'
+import type { TEvents } from '@/services/event'
 import { getCountry, isEventLocation } from '@/utils/event.utils'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import Image from 'next/image'
@@ -45,13 +45,13 @@ const EventItem = (props: TEventItemProps) => {
               {event.events?.[dateLength - 1].date
                 ? parseDateRange(String(event.events?.[dateLength - 1].date))
                 : event.events?.[dateLength - 1].multiDateStart &&
-                  event.events?.[dateLength - 1].multiDateEnd
-                ? parseDateRange(
-                    `${event.events?.[dateLength - 1].multiDateStart}/${
-                      event.events?.[dateLength - 1].multiDateEnd
-                    }`,
-                  )
-                : ''}
+                    event.events?.[dateLength - 1].multiDateEnd
+                  ? parseDateRange(
+                      `${event.events?.[dateLength - 1].multiDateStart}/${
+                        event.events?.[dateLength - 1].multiDateEnd
+                      }`,
+                    )
+                  : ''}
             </span>
           </span>
           {isEventLocation(eventLocation) && (

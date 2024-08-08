@@ -1,4 +1,4 @@
-import { TEvents } from '@/services/event'
+import type { TEvents } from '@/services/event'
 import { CommonMetaIds } from '@everipedia/iq-utils'
 import React from 'react'
 import { RiEmotionSadLine } from 'react-icons/ri'

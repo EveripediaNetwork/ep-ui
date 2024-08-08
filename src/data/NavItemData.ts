@@ -25,7 +25,7 @@ import {
   RiCodeBoxFill,
   RiCalendarEventFill,
 } from 'react-icons/ri'
-import { NavItem } from '@/types/NavItemType'
+import type { NavItem } from '@/types/NavItemType'
 
 export const NAV_ITEMS: NavItem[] = [
   {

@@ -11,7 +11,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { DateRange, SelectRangeEventHandler } from 'react-day-picker'
+import type { DateRange, SelectRangeEventHandler } from 'react-day-picker'
 import { useTranslation } from 'next-i18next'
 
 export function DatePickerDemo({

@@ -53,7 +53,7 @@ export const useCreateWikiState = (router: NextRouter) => {
   const [txHash, setTxHash] = useState<string>()
   const [submittingWiki, setSubmittingWiki] = useState(false)
   const [wikiHash, setWikiHash] = useState<string>()
-  const [isNewCreateWiki, setIsNewCreateWiki] = useState<boolean>(false)
+  const [isNewWiki, setIsNewWiki] = useState<boolean>(false)
   const [openOverrideExistingWikiDialog, setOpenOverrideExistingWikiDialog] =
     useState<boolean>(false)
   const [existingWikiData, setExistingWikiData] = useState<Wiki>()
@@ -86,8 +86,8 @@ export const useCreateWikiState = (router: NextRouter) => {
     setSubmittingWiki,
     wikiHash,
     setWikiHash,
-    isNewCreateWiki,
-    setIsNewCreateWiki,
+    isNewWiki,
+    setIsNewWiki,
     openOverrideExistingWikiDialog,
     setOpenOverrideExistingWikiDialog,
     existingWikiData,

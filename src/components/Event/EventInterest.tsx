@@ -1,6 +1,7 @@
 import { EventInterestData } from '@/components/Event/event.data'
-import { TEvents, getEventsByTags } from '@/services/event'
+import { type TEvents, getEventsByTags } from '@/services/event'
 import { store } from '@/store/store'
+import type { SetState } from '@/types/Utils'
 import { useTranslation } from 'next-i18next'
 import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
@@ -11,8 +12,8 @@ const EventInterest = ({
   setIsLoading,
 }: {
   eventData: TEvents[]
-  setEventData: Function
-  setIsLoading: Function
+  setEventData: SetState<TEvents[]>
+  setIsLoading: SetState<boolean>
 }) => {
   const router = useRouter()
   const { t } = useTranslation('event')
@@ -33,7 +34,7 @@ const EventInterest = ({
         currentQueryParams.tags = updatedTags
         setIsLoading(true)
         filterEventsByTags(updatedTags)
-          .then((res) => setEventData(res))
+          .then((res) => setEventData(res as TEvents[]))
           .catch((err) => console.log(err))
           .finally(() => setIsLoading(false))
       } else {

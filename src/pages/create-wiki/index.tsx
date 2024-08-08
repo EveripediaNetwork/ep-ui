@@ -1,45 +1,24 @@
-import React, { useEffect, useMemo } from 'react'
+import React, { useMemo } from 'react'
 import dynamic from 'next/dynamic'
-import {
-  Flex,
-  Button,
-  Center,
-  Skeleton,
-  Box,
-  HStack,
-  Text,
-  useToast,
-} from '@chakra-ui/react'
+import { Flex, Center, Skeleton, Box } from '@chakra-ui/react'
 import { getWiki, wikiApi } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
-import { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
-import {
-  Wiki,
-  CommonMetaIds,
-  EditSpecificMetaIds,
-  EditorContentOverride,
-  CreateNewWikiSlug,
-} from '@everipedia/iq-utils'
-import {
-  getDraftFromLocalStorage,
-  removeDraftFromLocalStorage,
-} from '@/store/slices/wiki.slice'
 import CreateWikiPageHeader from '@/components/SEO/CreateWikiPage'
-import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import {
   CreateWikiProvider,
   useCreateWikiContext,
   useCreateWikiState,
 } from '@/hooks/useCreateWikiState'
-import { useCreateWikiEffects } from '@/hooks/useCreateWikiEffects'
 import TxErrorAlert from '@/components/CreateWiki/TxError'
 import { CreateWikiTopBar } from '../../components/CreateWiki/CreateWikiTopBar/index'
 import { authenticatedRoute } from '@/components/WrapperRoutes/AuthenticatedRoute'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import isDeepEqual from '@everipedia/iq-utils/build/main/lib/isDeepEqual'
+import useCreateWikiSetup from '@/hooks/createWiki/useCreateWikiSetup'
+import useDraftNotifications from '@/hooks/createWiki/useDraftNotification'
 
 type PageWithoutFooter = NextPage & {
   noFooter?: boolean
@@ -51,132 +30,13 @@ const Editor = dynamic(() => import('@/components/CreateWiki/Editor'), {
 
 const CreateWikiContent = () => {
   const wiki = useAppSelector((state) => state.wiki)
-  const toast = useToast()
 
-  const {
-    isLoadingWiki,
-    wikiData,
-    setCommitMessage,
-    dispatch,
-    revision,
-    isNewCreateWiki,
-    txError,
-    setTxError,
-  } = useCreateWikiContext()
+  const { isLoadingWiki, isNewWiki, txError, setTxError } =
+    useCreateWikiContext()
 
-  const handleOnEditorChanges = (
-    val: string | undefined,
-    isInitSet?: boolean,
-  ) => {
-    if (isInitSet)
-      dispatch({
-        type: 'wiki/setInitialWikiState',
-        payload: {
-          content: val ?? ' ',
-        },
-      })
-    else
-      dispatch({
-        type: 'wiki/setContent',
-        payload: val ?? ' ',
-      })
-  }
+  const { handleOnEditorChanges } = useCreateWikiSetup()
 
-  useCreateWikiEffects()
-
-  useEffect(() => {
-    let draft: Wiki | undefined
-
-    // Load the draft from local storage if creating a new wiki or if wiki data exists
-    if (isNewCreateWiki || wikiData) {
-      draft = getDraftFromLocalStorage()
-    }
-
-    // Use the isDeepEqual function to compare the loaded draft and current wiki data
-    const isDraftDifferent = draft && !isDeepEqual(draft, wikiData)
-
-    if (!toast.isActive('draft-loaded') && draft && isDraftDifferent) {
-      toast({
-        id: 'draft-loaded',
-        title: (
-          <HStack w="full" justify="space-between" align="center">
-            <Text>Loaded from saved draft</Text>
-            <Button
-              size="xs"
-              variant="outline"
-              onClick={() => {
-                removeDraftFromLocalStorage()
-                window.location.reload()
-              }}
-              sx={{
-                '&:hover, &:focus, &:active': {
-                  bgColor: '#0000002a',
-                },
-              }}
-            >
-              {draft?.id === CreateNewWikiSlug
-                ? 'Reset State'
-                : 'Reset to current wiki content'}
-            </Button>
-          </HStack>
-        ),
-        status: 'info',
-        duration: 5000,
-      })
-    }
-  }, [isNewCreateWiki, toast, wikiData])
-
-  useEffect(() => {
-    let initWikiData: Wiki | undefined
-    if (wikiData) initWikiData = getDraftFromLocalStorage()
-
-    // combine draft wiki data with existing wikidata images
-    // if the draft doesn't modify the images
-    if (initWikiData && wikiData && !initWikiData.images)
-      if (wikiData.images && wikiData.images.length > 0)
-        initWikiData.images = wikiData.images
-
-    // if there is no draft stored, use fetched wiki data
-    if (!initWikiData) initWikiData = wikiData
-
-    if (
-      initWikiData &&
-      initWikiData?.content?.length > 0 &&
-      initWikiData?.images &&
-      initWikiData?.images?.length > 0
-    ) {
-      let { metadata } = initWikiData
-
-      // fetch the currently stored meta data of page that are not edit specific
-      // (commonMetaIds) and append edit specific meta data (editMetaIds) with empty values
-      const wikiDt = initWikiData
-      metadata = [
-        ...Object.values(CommonMetaIds).map((mId) => {
-          const meta = getWikiMetadataById(wikiDt, mId)
-          return { id: mId, value: meta?.value ?? '' }
-        }),
-        ...Object.values(EditSpecificMetaIds).map((mId) => ({
-          id: mId,
-          value: '',
-        })),
-      ]
-
-      if (revision) {
-        setCommitMessage(`Reverted to revision ${revision} ⏪`)
-      }
-
-      dispatch({
-        type: 'wiki/setInitialWikiState',
-        payload: {
-          ...initWikiData,
-          content:
-            EditorContentOverride +
-            initWikiData.content.replace(/ {2}\n/gm, '\n'),
-          metadata,
-        },
-      })
-    }
-  }, [dispatch, revision, setCommitMessage, toast, wikiData])
+  useDraftNotifications()
 
   return (
     <>
@@ -203,7 +63,7 @@ const CreateWikiContent = () => {
               <Center>
                 <WikiDetailsSidebar
                   initialImage={wiki?.images?.length ? wiki.images[0].id : ''}
-                  isToResetImage={isNewCreateWiki}
+                  isToResetImage={isNewWiki}
                 />
               </Center>
             </Skeleton>

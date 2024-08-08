@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
+import { useNetwork, useSwitchNetwork } from 'wagmi'
 import {
   Box,
   AlertDialog,
@@ -10,75 +11,48 @@ import {
   Button,
   useToast,
 } from '@chakra-ui/react'
-import { FocusableElement } from '@chakra-ui/utils'
 import { RiCloseLine, RiErrorWarningFill } from 'react-icons/ri'
-import { ProviderDataType } from '@/types/ProviderDataType'
-import { useAccount, useSwitchNetwork } from 'wagmi'
-import { useDispatch } from 'react-redux'
-import detectEthereumProvider from '@metamask/detect-provider'
-import { wagmiClient } from '@/config/wagmi'
 
-const NetworkErrorNotification = ({
-  modalState,
-  setModalState,
-  setNetworkSwitchAttempted,
-}: {
+interface NetworkErrorNotificationProps {
   modalState: boolean
   setModalState: (state: boolean) => void
   setNetworkSwitchAttempted: (state: boolean) => void
+  targetChainId: `0x${string}`
+}
+
+const NetworkErrorNotification: React.FC<NetworkErrorNotificationProps> = ({
+  modalState,
+  setModalState,
+  setNetworkSwitchAttempted,
+  targetChainId,
 }) => {
-  const cancelRef = React.useRef<FocusableElement>(null)
-  const { chains, switchNetwork } = useSwitchNetwork({
+  const cancelRef = React.useRef(null)
+  const { chain } = useNetwork()
+  const toast = useToast()
+  const { switchNetwork, chains } = useSwitchNetwork({
     onSuccess: () => {
       toast({
         title: 'Chain successfully switched 🎊',
         status: 'success',
       })
+      setModalState(false)
+      setNetworkSwitchAttempted(true)
     },
-  })
-  const toast = useToast()
-  const chainame = wagmiClient.chains?.[0]?.name || ''
-
-  const [detectedProvider, setDetectedProvider] =
-    useState<ProviderDataType | null>(null)
-  const { isConnected: isUserConnected } = useAccount()
-  const dispatch = useDispatch()
-
-  useEffect(() => {
-    const getDetectedProvider = async () => {
-      const provider = (await detectEthereumProvider({
-        silent: true,
-      })) as ProviderDataType
-      setDetectedProvider(provider)
-    }
-
-    if (!detectedProvider) {
-      getDetectedProvider()
-    }
-  }, [detectedProvider, dispatch, isUserConnected])
-
-  const handleSwitchNetwork = async () => {
-    setNetworkSwitchAttempted(true)
-
-    try {
-      switchNetwork?.(chains[0]?.id)
+    onError: (error) => {
       setModalState(false)
-      return true
-    } catch (error: any) {
-      setModalState(false)
-      let errorMessage = '🚫 An error occurred while switching chain.'
-      if (error.message) {
-        errorMessage = error.message
-      } else if (error.response?.data?.message) {
-        errorMessage = error.response.data.message
-      }
-
+      setNetworkSwitchAttempted(true)
       toast({
-        title: errorMessage,
+        title: `Error switching chain: ${error.message}`,
         status: 'error',
       })
-      return false
-    }
+    },
+  })
+
+  const targetChain = chains.find((c) => BigInt(c.id) === BigInt(targetChainId))
+  const targetChainName = targetChain?.name || 'the correct network'
+
+  const handleSwitchNetwork = () => {
+    switchNetwork?.(Number.parseInt(targetChainId, 16))
   }
 
   return (
@@ -119,12 +93,9 @@ const NetworkErrorNotification = ({
             />
           </Flex>
           <Text mt="6" w="90%" lineHeight="2">
-            Your wallet is currently connected to an unsupported network. To
-            continue with {chainame} network, Switch the network in your wallet
-            to {chainame}.
-          </Text>
-          <Text mt="6" w="90%" lineHeight="2">
-            Switch wallet if unable to change wallet network.
+            Your wallet is currently connected to{' '}
+            {chain?.name || 'an unsupported network'}. To continue, please
+            switch the network in your wallet to {targetChainName}.
           </Text>
           <Flex mt="6">
             <Text

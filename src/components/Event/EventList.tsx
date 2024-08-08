@@ -3,13 +3,14 @@ import EventCard from './EventCard'
 import { groupEventsByMonth } from '@/lib/utils'
 import EventEmptyState from './EventEmptyState'
 import SuggestEventModal from './SuggestEventModal'
-import { TEvents, getEvents } from '@/services/event'
+import { type TEvents, getEvents } from '@/services/event'
 import { RiArrowLeftLine } from 'react-icons/ri'
 import { LoadingState } from './LoadingState'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import type { SetState } from '@/types/Utils'
 
 const EventList = ({
   fetchedData,
@@ -23,8 +24,8 @@ const EventList = ({
   searchActive: boolean
   fetchedData: TEvents[]
   eventData: TEvents[]
-  setEventData: Function
-  clearState: Function
+  setEventData: SetState<TEvents[]>
+  clearState: () => void
 }) => {
   const router = useRouter()
   const { t } = useTranslation('event')

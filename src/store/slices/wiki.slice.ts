@@ -1,13 +1,13 @@
 import { createSlice } from '@reduxjs/toolkit'
 import {
   LanguagesISOEnum,
-  Wiki,
-  MData,
+  type Wiki,
+  type MData,
   CommonMetaIds,
   EditSpecificMetaIds,
   CreateNewWikiSlug,
-  LinkedWikiKey,
-  BaseEvents,
+  type LinkedWikiKey,
+  type BaseEvents,
   EventType,
 } from '@everipedia/iq-utils'
 
@@ -37,7 +37,7 @@ export const getDraftFromLocalStorage = () => {
   const wikiData = draftData.slice(0, separatorIndex)
   const timestamp = draftData.slice(separatorIndex + 1, draftData.length)
   const wiki = JSON.parse(wikiData)
-  const draftTimestamp = parseInt(timestamp, 10)
+  const draftTimestamp = Number.parseInt(timestamp, 10)
   const currentTimestamp = new Date().getTime()
   // check if draft is older than 75 hour
   const cacheLimit = 75 * 60 * 60 * 1000

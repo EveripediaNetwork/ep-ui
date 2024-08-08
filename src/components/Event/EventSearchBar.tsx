@@ -1,16 +1,21 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { DatePickerDemo } from '../ui/DatePicker'
 import { RiSearchLine } from 'react-icons/ri'
-import { getEventByLocation, getEventByTitle } from '@/services/event'
+import {
+  getEventByLocation,
+  getEventByTitle,
+  type TEvents,
+} from '@/services/event'
 import { store } from '@/store/store'
 import { dateFormater } from '@/lib/utils'
-import {
+import type {
   ActiveModifiers,
   DateRange,
   SelectRangeEventHandler,
 } from 'react-day-picker'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import type { SetState } from '@/types/Utils'
 
 type TQuerySearch = {
   arg: { title: string; startDate?: string; endDate?: string }
@@ -25,13 +30,13 @@ const EventSearchBar = ({
   searchQuery,
   setSearchQuery,
 }: {
-  setEventData: Function
-  setSearchActive: Function
-  setIsLoading: Function
+  setEventData: SetState<TEvents[]>
+  setSearchActive: SetState<boolean>
+  setIsLoading: SetState<boolean>
   searchDate: DateRange | undefined
   setSearchDate: SelectRangeEventHandler
   searchQuery: string
-  setSearchQuery: Function
+  setSearchQuery: SetState<string>
 }) => {
   const router = useRouter()
   const { t } = useTranslation('event')
@@ -57,6 +62,7 @@ const EventSearchBar = ({
     return uniqueResults
   }
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     const query = router.query
     if (query.title || query.startDate || query.endDate) {
@@ -69,7 +75,7 @@ const EventSearchBar = ({
 
       const activeModifiers: ActiveModifiers = {} // assuming this is the correct type
       const mouseEvent = {} as React.MouseEvent<Element, MouseEvent> //
-      if (query.title) setSearchQuery(query.title)
+      if (query.title) setSearchQuery(query.title as string)
       if (query.startDate) {
         const startDate = new Date(query.startDate as string)
         setSearchDate(
