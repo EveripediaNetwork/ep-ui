@@ -63,7 +63,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="shadow-sm fixed top-0 left-0 right-0 z-[9999] md:z-50 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200 lg:py-2"
+      className="shadow-sm fixed top-0 left-0 right-0 z-50 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200 lg:py-2"
       style={{
         height: drawerOperations.isOpen ? '100%' : 'unset',
       }}
@@ -157,7 +157,7 @@ const Navbar = () => {
       >
         <MobileNav
           setHamburger={setIsHamburgerOpen}
-          drawerOperations={drawerOperations}
+          setIsDrawerOpen={setIsDrawerOpen}
         />
       </Collapse>
     </div>

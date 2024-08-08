@@ -6,7 +6,7 @@ import {
 import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import FounderRankingItem from '../Rank/FounderRankCardItem'
 import {
   FoundersRankTable,
@@ -58,24 +58,32 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
   const { t } = useTranslation(['rank', 'common'])
 
-  if (
-    TokensListing &&
-    aiTokensListing &&
-    NFTsListing &&
-    stableCoinsListing &&
-    foundersListing &&
-    (!tokenItems?.length ||
-      !nftItems?.length ||
-      !aiTokenItems?.length ||
-      !stableCoinItems?.length ||
-      !founderItems?.length)
-  ) {
-    setTokenItems(sortByMarketCap('descending', TokensListing))
-    setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
-    setNftItems(sortByMarketCap('descending', NFTsListing))
-    setStableCoinItems(sortByMarketCap('descending', stableCoinsListing))
-    setFounderItems(sortByMarketCap('descending', foundersListing))
-  }
+  useEffect(() => {
+    if (
+      TokensListing &&
+      aiTokensListing &&
+      NFTsListing &&
+      stableCoinsListing &&
+      foundersListing &&
+      (!tokenItems?.length ||
+        !nftItems?.length ||
+        !aiTokenItems?.length ||
+        !stableCoinItems?.length ||
+        !founderItems?.length)
+    ) {
+      setTokenItems(sortByMarketCap('descending', TokensListing))
+      setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
+      setNftItems(sortByMarketCap('descending', NFTsListing))
+      setStableCoinItems(sortByMarketCap('descending', stableCoinsListing))
+      setFounderItems(sortByMarketCap('descending', foundersListing))
+    }
+  }, [
+    TokensListing,
+    aiTokensListing,
+    NFTsListing,
+    stableCoinsListing,
+    foundersListing,
+  ])
 
   const onClickMap: OnClickMap = {
     'Market Cap': () => {
