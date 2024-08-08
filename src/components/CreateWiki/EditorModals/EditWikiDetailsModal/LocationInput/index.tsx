@@ -1,36 +1,74 @@
 import { useAppDispatch } from '@/store/hook'
 import { Box, Button, Flex, Input, Select, Stack, Text } from '@chakra-ui/react'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Location from './Location'
 import { store } from '@/store/store'
 import { CommonMetaIds } from '@everipedia/iq-utils'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
+import { v4 as uuidv4 } from 'uuid'
 
 const LocationInput = () => {
   const dispatch = useAppDispatch()
   const [selectRegion, setSelectedRegion] = useState('')
   const [selectMonth, setSelectMonth] = useState('')
   const [value, setValue] = useState('')
+  const [locationId, setLocationId] = useState('')
+  const [isEditing, setIsEditing] = useState(false)
+  const [location, setLocation] = useState<Location[]>([])
 
-  const metadataValue =
-    getWikiMetadataById(store.getState().wiki, CommonMetaIds.LOCATION)?.value ||
-    '[]'
-  const parsedMetadata = JSON.parse(metadataValue)
+  useEffect(() => {
+    const metadataValue =
+      getWikiMetadataById(store.getState().wiki, CommonMetaIds.LOCATION)
+        ?.value || '[]'
+    const parsedMetadata = JSON.parse(metadataValue)
+    const fetchedLocation = Array.isArray(parsedMetadata)
+      ? parsedMetadata
+      : [parsedMetadata]
 
-  const fetchedLocation = Array.isArray(parsedMetadata)
-    ? parsedMetadata
-    : [parsedMetadata]
+    const updatedLocations = fetchedLocation.map((location: Location) => ({
+      ...location,
+      id: location.id || uuidv4(),
+    }))
+    setLocation(updatedLocations)
+  }, [])
 
   const handleAddLocation = () => {
     if (selectRegion === '' && value === '' && selectMonth === '') return
+
+    if (locationId !== '' || isEditing) {
+      const newLocations = location.map((loc: Location) =>
+        loc.id === locationId
+          ? {
+              ...loc,
+              year: selectMonth,
+              continent: selectRegion,
+              country: value,
+            }
+          : loc,
+      )
+      dispatch({
+        type: 'wiki/updateMetadata',
+        payload: {
+          id: 'location',
+          value: JSON.stringify(newLocations),
+        },
+      })
+      setValue('')
+      setSelectedRegion('')
+      setSelectMonth('')
+      setLocationId('')
+      setIsEditing(false)
+      return
+    }
 
     dispatch({
       type: 'wiki/updateMetadata',
       payload: {
         id: 'location',
         value: JSON.stringify([
-          ...fetchedLocation,
+          ...location,
           {
+            id: uuidv4(),
             year: selectMonth,
             continent: selectRegion,
             country: value,
@@ -39,8 +77,17 @@ const LocationInput = () => {
       },
     })
     setValue('')
+    setIsEditing(false)
     setSelectedRegion('')
     setSelectMonth('')
+  }
+
+  const handleLocationChange = (location: Location) => {
+    setLocationId(location.id || '')
+    setIsEditing(true)
+    setValue(location.country)
+    setSelectedRegion(String(location.continent))
+    setSelectMonth(location.year || '')
   }
 
   return (
@@ -88,10 +135,10 @@ const LocationInput = () => {
           rounded="md"
           onClick={handleAddLocation}
         >
-          Add
+          {locationId !== '' || isEditing ? 'Update' : 'Add'}
         </Button>
       </Flex>
-      <Location />
+      <Location handleLocationChange={handleLocationChange} />
     </Stack>
   )
 }

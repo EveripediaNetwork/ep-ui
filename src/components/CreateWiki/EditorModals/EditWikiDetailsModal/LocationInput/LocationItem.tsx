@@ -2,10 +2,10 @@ import { Flex, Icon, Center, Text, Button } from '@chakra-ui/react'
 import React from 'react'
 import { RiCloseLine } from 'react-icons/ri'
 import { VscLocation } from 'react-icons/vsc'
-import { TLocationType } from './location.type'
+import type { TLocationType } from './location.type'
 
 const LocationItem = (props: TLocationType) => {
-  const { year, country, removeLocation } = props
+  const { year, country, removeLocation, handleLocationChange } = props
   return (
     <Flex
       gap="2"
@@ -17,6 +17,7 @@ const LocationItem = (props: TLocationType) => {
         bg: 'whiteAlpha.200',
       }}
       w="max-content"
+      onClick={handleLocationChange}
     >
       <Flex alignItems="center" gap="1" flexShrink={0}>
         <Icon as={VscLocation} w="16px" h="16px" />

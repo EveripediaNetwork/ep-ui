@@ -1,39 +1,49 @@
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { Flex } from '@chakra-ui/react'
-import { MData } from '@everipedia/iq-utils'
+import type { MData } from '@everipedia/iq-utils'
 import React from 'react'
 import LocationItem from './LocationItem'
 
 interface Location {
+  id?: string
   year?: string
   country: any
+  continent?: string
 }
 
 const renderLocations = (
   locations: Location | Location[],
-  removeLocation: (year: string) => void,
+  removeLocation: (year?: string) => void,
+  handleLocationChange: (location: Location) => void,
 ) => {
   if (Array.isArray(locations)) {
-    return locations.map((item, index) => (
+    return locations.map((item) => (
       <LocationItem
-        key={item.year || index}
+        key={item.id || item.year}
         year={item.year}
         country={item.country}
         removeLocation={removeLocation}
+        handleLocationChange={() => handleLocationChange(item)}
       />
     ))
-  } else if (locations.year || locations.country) {
+  }
+  if (locations.year || locations.country) {
     return (
       <LocationItem
         year={locations.year}
         country={locations.country}
         removeLocation={removeLocation}
+        handleLocationChange={() => handleLocationChange(locations)}
       />
     )
   }
 }
 
-const Location = () => {
+const Location = ({
+  handleLocationChange,
+}: {
+  handleLocationChange: (location: Location) => void
+}) => {
   const dispatch = useAppDispatch()
   const metadata = useAppSelector((state) => state.wiki.metadata)
   const locationString = metadata.find((m: MData) => m.id === 'location')?.value
@@ -60,7 +70,7 @@ const Location = () => {
 
   return (
     <Flex gap={2} flexWrap={'wrap'}>
-      {renderLocations(location, removeLocation)}
+      {renderLocations(location, removeLocation, handleLocationChange)}
     </Flex>
   )
 }
