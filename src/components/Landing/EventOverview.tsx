@@ -12,11 +12,10 @@ const EventOverview = () => {
   const { t } = useTranslation('event')
 
   return (
-    <>
+    <div className="container mx-auto pb-10 pt-5 md:py-20 xl:py-24 px-4 lg:px-8 2xl:px-0 relative">
+      <div className="absolute -z-10 -top-16 lg:-top-[400px] -left-10 w-[400px] lg:w-[600px] h-[650px] lg:h-[1000px] rotate-6 lg:-rotate-45 rounded-[100%] bg-gradient-to-b from-pink-500/10 to-sky-500/10 blur-3xl" />
       {data && data.length > 2 && (
-        <div className="container mx-auto pb-10 pt-5 md:py-20 xl:py-24 px-4 lg:px-8 xl:px-0 relative flex flex-col gap-10">
-          <div className="absolute -z-10 -top-16 lg:-top-[400px] -left-10 w-[400px] lg:w-[600px] h-[650px] lg:h-[1000px] rotate-6 lg:-rotate-45 rounded-[100%] bg-gradient-to-b from-pink-500/10 to-sky-500/10 blur-3xl" />
-
+        <div className="flex flex-col gap-10">
           <div className="flex flex-col md:flex-row gap-10 lg:gap-24 mt-10">
             <div className="flex items-center flex-1 max-w-lg">
               <div className="flex flex-col gap-6">
@@ -46,7 +45,7 @@ const EventOverview = () => {
           </Link>
         </div>
       )}
-    </>
+    </div>
   )
 }
 

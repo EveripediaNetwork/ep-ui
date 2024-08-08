@@ -345,7 +345,7 @@ const NavSearch = (props: NavSearchProps) => {
             <Search2Icon color="gray.300" />
           </InputLeftElement>
           <AutoCompleteInput
-            width={{ base: '360px', md: '720px', lg: '450px', '2xl': '100%' }}
+            width={{ base: '360px', md: '720px', lg: '100%', '2xl': '100%' }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('SearchWikiPlaceholder')}
@@ -362,7 +362,13 @@ const NavSearch = (props: NavSearchProps) => {
           p="0"
           maxH="auto"
           shadow="lg"
-          width={{ base: '360px', md: '720px', lg: '450px', '2xl': '920px' }}
+          width={{
+            base: '360px',
+            md: '720px',
+            lg: '350px',
+            xl: '420px',
+            '2xl': '850px',
+          }}
           {...listProps}
         >
           {isLoading ? loadingView : searchList}

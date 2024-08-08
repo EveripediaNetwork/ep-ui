@@ -35,7 +35,7 @@ const WalletNavMenu = () => {
       ) : (
         <Link
           href="/login"
-          className="hidden md:block bg-brand-500 dark:bg-brand-800 text-white hover:bg-brand-600 dark:hover:bg-brand-700 font-semibold text-sm px-6 py-2 rounded-md"
+          className="hidden md:flex bg-brand-500 dark:bg-brand-800 text-white hover:bg-brand-600 dark:hover:bg-brand-700 font-semibold text-sm px-6 py-2 w-28 items-center justify-center rounded-md"
         >
           {t('signIn')}
         </Link>

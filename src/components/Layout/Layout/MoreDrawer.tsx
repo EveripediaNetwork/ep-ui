@@ -77,8 +77,8 @@ export function MoreDrawer() {
           variant="outline"
           className="bg-white dark:bg-gray800 border-none w-0 hover:bg-white hover:dark:bg-gray800"
         >
-          <div className="flex flex-col gap-2 items-center text-xs text-gray-500 dark:text-alpha-600">
-            <RiMoreFill className="w-6 h-6" />
+          <div className="flex flex-col gap-2 items-center text-[10px] text-gray-500 dark:text-alpha-600">
+            <RiMoreFill className="w-5 h-5" />
             More
           </div>
         </Button>
