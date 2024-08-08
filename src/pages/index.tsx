@@ -77,7 +77,6 @@ export const Index = ({
   trending,
   categories,
 }: HomePageProps) => {
-  console.log(leaderboards)
   return (
     <section>
       <Hero />
