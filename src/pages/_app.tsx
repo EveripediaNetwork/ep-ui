@@ -1,4 +1,5 @@
-import React, { StrictMode } from 'react'
+import type React from 'react'
+import { StrictMode } from 'react'
 import '../styles/global.css'
 import '../styles/editor-dark.css'
 import '@/editor-plugins/pluginStyles.css'

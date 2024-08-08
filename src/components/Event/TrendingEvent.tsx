@@ -11,7 +11,7 @@ import Image from 'next/image'
 import { RiMapPinRangeLine } from 'react-icons/ri'
 import Link from 'next/link'
 import Autoplay from 'embla-carousel-autoplay'
-import { TEvents } from '@/services/event'
+import type { TEvents } from '@/services/event'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import { parseDateRange } from '@/lib/utils'
 import { useTranslation } from 'next-i18next'
@@ -29,20 +29,20 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
         <CarouselContent className="">
           {events?.map((event) => (
             <CarouselItem
-              className=" max-[375px]:h-[300px] h-[350px] xl:h-[300px] overflow-hidden basis-[80%] md:basis-[40%] xl:basis-[309px] rounded-xl relative ml-4"
+              className="h-96 basis-full md:basis-80 lg:basis-[419px] rounded-xl relative ml-4"
               key={event.id}
             >
               <Image
                 src={getWikiImageUrl(event.images)}
                 alt="blockchain-expo"
                 fill
+                sizes="(max-width: 768px) 100vw, 768px"
                 priority
-                sizes="80%, (min-width: 768px) 50%, 309px"
-                className=" object-cover"
+                className="rounded-xl object-cover min-w-full lg:min-w-40"
               />
               <Link
                 href={`/events/${event.title.toLowerCase().replace(/ /g, '-')}`}
-                className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5"
+                className="absolute left-0 h-full bg-black/30 w-full flex flex-col justify-end px-2 py-5 rounded-xl"
               >
                 <div className="text-alpha-900">
                   {event.location && (
@@ -56,11 +56,11 @@ export const TrendingEventsCard = ({ events }: { events: TEvents[] }) => {
                     {event?.events?.[0].date
                       ? parseDateRange(event?.events?.[0].date)
                       : event?.events?.[0].multiDateStart &&
-                        event?.events?.[0].multiDateEnd
-                      ? parseDateRange(
-                          `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
-                        )
-                      : ''}
+                          event?.events?.[0].multiDateEnd
+                        ? parseDateRange(
+                            `${event?.events?.[0].multiDateStart}/${event?.events?.[0].multiDateEnd}`,
+                          )
+                        : ''}
                   </h5>
                 </div>
                 <button

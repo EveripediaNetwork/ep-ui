@@ -1,61 +1,44 @@
-import { Box, Flex, Icon, Text, chakra } from '@chakra-ui/react'
-import React from 'react'
+import { Icon } from '@chakra-ui/react'
+import type { Wiki } from '@everipedia/iq-utils'
+import type { EmblaOptionsType } from 'embla-carousel'
+import Autoplay from 'embla-carousel-autoplay'
+import { useTranslation } from 'next-i18next'
 import { RiStarFill } from 'react-icons/ri'
-import { Wiki } from '@everipedia/iq-utils'
+import { WikiCarousel } from '../Elements/Carousel/Carousel'
 import { FeaturedWikiCard } from './FeaturedWikiCard'
 import { LoadingFeaturedWikiCard } from './LoadingFeaturedWikiCard'
-import Autoplay from 'embla-carousel-autoplay'
-import { WikiCarousel } from '../Elements/Carousel/Carousel'
-import { EmblaOptionsType } from 'embla-carousel'
-import { useTranslation } from 'next-i18next'
 
 export const FeaturedWikis = ({ featuredWikis }: { featuredWikis: Wiki[] }) => {
   const OPTIONS: EmblaOptionsType = { loop: true }
   const { t } = useTranslation('home')
+
   return (
-    <Flex pt="1" minH="500px">
-      <Box
-        maxW={{ base: 'min(90vw, 400px)', md: '96', lg: '392' }}
-        border="1px solid"
-        borderColor={'gray.100'}
-        rounded="lg"
-        py={3}
-        bgColor="bodyBg"
-        _dark={{ border: 'none' }}
-        textAlign="center"
-        justifyContent="center"
-      >
-        <chakra.div w="full" alignItems="center" display="flex" px="4" pb={3}>
-          <Icon
-            cursor="pointer"
-            color="brandLinkColor"
-            fontSize="2xl"
-            fontWeight={600}
-            as={RiStarFill}
-          />
-          <Text
-            color={'wikiFlagTextColor'}
-            fontSize={{ base: 'md', lg: '18px' }}
-            pl={2}
-            fontWeight="600"
-          >
-            {t('featuredWikisTitle')}
-          </Text>
-        </chakra.div>
+    <section className="w-full lg:h-full dark:text-white text-center justify-center bg-transparent backdrop-filter backdrop-blur-sm border dark:border-gray-700 border-gray-200 rounded-xl pb-4 xl:pb-0">
+      <div className="w-full flex items-center gap-2 p-4">
+        <Icon
+          cursor="pointer"
+          color="brandLinkColor"
+          fontSize="2xl"
+          fontWeight={600}
+          as={RiStarFill}
+        />
+        <h1 className="text-base font-semibold text-center text-gray-900 dark:text-white font-montserrat">
+          {t('featuredWikisTitle')}
+        </h1>
+      </div>
+      <div className="px-4">
         {featuredWikis ? (
-          <chakra.div px={5}>
-            <WikiCarousel plugins={[Autoplay()]} options={OPTIONS}>
-              {featuredWikis.map((wiki) => (
-                <Box flex="0 0 100%" key={`wiki-${wiki.id}`}>
-                  <FeaturedWikiCard wiki={wiki} />
-                </Box>
-              ))}
-            </WikiCarousel>
-          </chakra.div>
+          <WikiCarousel plugins={[Autoplay()]} options={OPTIONS}>
+            {featuredWikis.map((wiki) => (
+              <div className="flex-[1_0_100%]" key={`wiki-${wiki.id}`}>
+                <FeaturedWikiCard wiki={wiki} />
+              </div>
+            ))}
+          </WikiCarousel>
         ) : (
           <LoadingFeaturedWikiCard />
         )}
-      </Box>
-    </Flex>
+      </div>
+    </section>
   )
 }

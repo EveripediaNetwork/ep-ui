@@ -1,64 +1,34 @@
-import { Box, Flex } from '@chakra-ui/react'
 import React from 'react'
-import { Wiki } from '@everipedia/iq-utils'
-import { RiBarChartFill, RiTimeFill } from 'react-icons/ri'
-import { TrendingData } from '@/types/Home'
+import type { Wiki } from '@everipedia/iq-utils'
+import { RiBarChartFill } from 'react-icons/ri'
+import type { TrendingData } from '@/types/Home'
 import TrendingCard from './TrendingCard'
 import { FeaturedWikis } from './FeaturedWikis'
 import { useTranslation } from 'next-i18next'
+import WikiCategories from './WikiCategories'
 
 const TrendingWikis = ({
   trending,
-  recent = [],
   featuredWikis = [],
 }: {
   trending?: TrendingData
-  recent?: Wiki[]
   featuredWikis?: Wiki[]
 }) => {
   const { t } = useTranslation('home')
 
   return (
-    <Box
-      px={{ base: 3, md: 8 }}
-      pb={{ base: 16, md: 20, lg: 24 }}
-      pt={0}
-      textAlign="center"
-    >
-      <Flex
-        // alignItems={{ base: 'flex-start', md: 'center' }}
-        // justifyContent={{ base: 'flex-start', md: 'center' }}
-        alignItems="center"
-        justifyContent="center"
-        maxW={{ base: '403px', md: '672px', xl: 'fit-content' }}
-        mx="auto"
-        flexWrap="wrap"
-        gap={4}
-        minH="500px"
-        direction={{ base: 'column', md: 'row' }}
-      >
-        <Flex
-          gap={4}
-          alignItems="center"
-          justifyContent="center"
-          w={{ base: '100%', md: 'auto' }}
-          direction={{ base: 'column', md: 'row' }}
-        >
-          <TrendingCard
-            title={t('trendingWikisTitle')}
-            icon={RiBarChartFill}
-            wikis={trending}
-            isTrending
-          />
-          <TrendingCard
-            title={t('recentEditsTitle')}
-            icon={RiTimeFill}
-            wikis={recent}
-          />
-        </Flex>
+    <section className="px-4 lg:px-8 2xl:px-0 container mx-auto pb-16 md:pb-20 lg:pb-24 -mt-36 md:-mt-0">
+      <div className="md:grid flex flex-row flex-wrap md:items-center md:grid-cols-2 xl:grid-cols-3 w-full gap-4 lg:gap-8">
+        <TrendingCard
+          title={t('trendingWikisTitle')}
+          icon={RiBarChartFill}
+          wikis={trending}
+          isTrending
+        />
+        <WikiCategories />
         <FeaturedWikis featuredWikis={featuredWikis} />
-      </Flex>
-    </Box>
+      </div>
+    </section>
   )
 }
 
