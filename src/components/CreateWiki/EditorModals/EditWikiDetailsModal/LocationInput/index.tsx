@@ -1,11 +1,12 @@
 import { useAppDispatch } from '@/store/hook'
 import { Box, Button, Flex, Input, Select, Stack, Text } from '@chakra-ui/react'
 import React, { useEffect, useState } from 'react'
-import Location from './Location'
 import { store } from '@/store/store'
 import { CommonMetaIds } from '@everipedia/iq-utils'
 import { getWikiMetadataById } from '@/utils/WikiUtils/getWikiFields'
 import { v4 as uuidv4 } from 'uuid'
+import type { Location } from './location.type'
+import LocationList from './Location'
 
 const LocationInput = () => {
   const dispatch = useAppDispatch()
@@ -138,7 +139,7 @@ const LocationInput = () => {
           {locationId !== '' || isEditing ? 'Update' : 'Add'}
         </Button>
       </Flex>
-      <Location handleLocationChange={handleLocationChange} />
+      <LocationList handleLocationChange={handleLocationChange} />
     </Stack>
   )
 }

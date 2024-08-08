@@ -5,7 +5,7 @@ import { VscLocation } from 'react-icons/vsc'
 import type { TLocationType } from './location.type'
 
 const LocationItem = (props: TLocationType) => {
-  const { year, country, removeLocation, handleLocationChange } = props
+  const { location, removeLocation, handleLocationChange } = props
   return (
     <Flex
       gap="2"
@@ -51,7 +51,7 @@ const LocationItem = (props: TLocationType) => {
           whiteSpace="nowrap"
           maxWidth="150px"
         >
-          {`${country} - ${year}`}
+          {`${location.country} - ${location.year}`}
         </Text>
       </Button>
       <Center
@@ -68,7 +68,7 @@ const LocationItem = (props: TLocationType) => {
         rounded="full"
         onClick={(e) => {
           e.stopPropagation()
-          removeLocation(year)
+          removeLocation(location)
         }}
       >
         <Icon as={RiCloseLine} w="16px" h="16px" />

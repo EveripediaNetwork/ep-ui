@@ -3,43 +3,34 @@ import { Flex } from '@chakra-ui/react'
 import type { MData } from '@everipedia/iq-utils'
 import React from 'react'
 import LocationItem from './LocationItem'
-
-interface Location {
-  id?: string
-  year?: string
-  country: any
-  continent?: string
-}
+import { v4 as uuidv4 } from 'uuid'
+import type { Location } from './location.type'
 
 const renderLocations = (
   locations: Location | Location[],
-  removeLocation: (year?: string) => void,
+  removeLocation: (location: Location) => void,
   handleLocationChange: (location: Location) => void,
 ) => {
   if (Array.isArray(locations)) {
     return locations.map((item) => (
       <LocationItem
         key={item.id || item.year}
-        year={item.year}
-        country={item.country}
+        location={item}
         removeLocation={removeLocation}
         handleLocationChange={() => handleLocationChange(item)}
       />
     ))
   }
-  if (locations.year || locations.country) {
-    return (
-      <LocationItem
-        year={locations.year}
-        country={locations.country}
-        removeLocation={removeLocation}
-        handleLocationChange={() => handleLocationChange(locations)}
-      />
-    )
-  }
+  return (
+    <LocationItem
+      location={locations}
+      removeLocation={removeLocation}
+      handleLocationChange={() => handleLocationChange(locations)}
+    />
+  )
 }
 
-const Location = ({
+const LocationList = ({
   handleLocationChange,
 }: {
   handleLocationChange: (location: Location) => void
@@ -48,13 +39,16 @@ const Location = ({
   const metadata = useAppSelector((state) => state.wiki.metadata)
   const locationString = metadata.find((m: MData) => m.id === 'location')?.value
   const parsedLocation = locationString ? JSON.parse(locationString) : ''
-  const location = parsedLocation
+  const location = parsedLocation.map((location: Location) => ({
+    ...location,
+    id: location.id || uuidv4(),
+  }))
 
-  const removeLocation = (year?: string) => {
+  const removeLocation = (selectedLocation: Location) => {
     let newLocation = []
     if (Array.isArray(parsedLocation)) {
       newLocation = location.filter(
-        (item: { year: string | undefined }) => item?.year !== year,
+        (item: Location) => item?.id !== selectedLocation.id,
       )
     } else {
       newLocation = []
@@ -75,4 +69,4 @@ const Location = ({
   )
 }
 
-export default Location
+export default LocationList

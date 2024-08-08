@@ -1,8 +1,14 @@
 import type { MouseEventHandler } from 'react'
 
-export type TLocationType = {
+export interface Location {
+  id?: string
   year?: string
-  country: string
-  removeLocation: (item?: string) => void
+  country: any
+  continent?: string
+}
+
+export type TLocationType = {
+  location: Location
+  removeLocation: (item: Location) => void
   handleLocationChange: MouseEventHandler<HTMLDivElement>
 }

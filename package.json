@@ -124,7 +124,6 @@
     "tailwindcss-animate": "^1.0.7",
     "unified": "^10.1.2",
     "uuid": "^8.3.2",
-    "uuidv4": "^6.2.13",
     "viem": "^1.16.6",
     "wagmi": "^1.4.4",
     "yarn": "^1.22.18",
