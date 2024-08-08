@@ -18,7 +18,7 @@ import {
   RiCoinFill,
   RiUserFill,
 } from 'react-icons/ri'
-import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import {
@@ -61,7 +61,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
-  const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
+  const [selectedRanking, setSelectedRanking] = useState<string | undefined>(
     'cryptocurrencies',
   )
   const { t } = useTranslation(['rank', 'common'])
@@ -86,7 +86,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const onClickMap: OnClickMap = {
-    'Market Cap': function () {
+    'Market Cap': () => {
       if (
         tokenItems &&
         nftItems &&
@@ -104,7 +104,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setFounderItems(sortByMarketCap(newSortOrder, foundersListing))
       }
     },
-    '24h Change': function () {
+    '24h Change': () => {
       if (
         tokenItems &&
         nftItems &&

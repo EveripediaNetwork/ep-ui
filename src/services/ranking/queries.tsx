@@ -91,7 +91,13 @@ export const GET_AI_TOKEN_RANKINGS = gql`
     $offset: Int
     $category: TokenCategory
   ) {
-    rankList(kind: $kind, limit: $limit, offset: $offset, category: $category) {
+    rankList(
+      kind: $kind
+      limit: $limit
+      offset: $offset
+      category: $category
+      founders: true
+    ) {
       ... on TokenRankListData {
         id
         title
@@ -183,13 +189,8 @@ export const GET_STABLECOIN_RANKINGS = gql`
   }
 `
 export const GET_FOUNDERS_RANKINGS = gql`
-  query getTokenRanking(
-    $kind: RankType
-    $limit: Int
-    $offset: Int
-    $founders: Boolean
-  ) {
-    rankList(kind: $kind, limit: $limit, offset: $offset, founders: $founders) {
+  query getTokenRanking($kind: RankType, $limit: Int, $offset: Int) {
+    rankList(kind: $kind, limit: $limit, offset: $offset) {
       ... on TokenRankListData {
         id
         title

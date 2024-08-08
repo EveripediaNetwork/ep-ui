@@ -125,22 +125,19 @@ export const rankingAPI = createApi({
         kind: string
         limit: number
         offset: number
-        founders: boolean
       }
     >({
       query: ({
         kind,
         limit,
         offset,
-        founders,
       }: {
         kind: string
         limit?: number
         offset?: number
-        founders: boolean
       }) => ({
         document: GET_FOUNDERS_RANKINGS,
-        variables: { kind, limit, offset, founders },
+        variables: { kind, limit, offset },
       }),
       transformResponse: (response: RankListResponse) => response.rankList,
     }),
