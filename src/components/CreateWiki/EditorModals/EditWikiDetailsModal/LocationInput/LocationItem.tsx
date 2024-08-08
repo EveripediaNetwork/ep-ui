@@ -65,6 +65,7 @@ const LocationItem = (props: TLocationType) => {
         _hover={{
           bg: 'red.500',
         }}
+        cursor={'pointer'}
         rounded="full"
         onClick={(e) => {
           e.stopPropagation()
