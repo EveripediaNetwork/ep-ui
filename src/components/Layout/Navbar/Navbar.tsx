@@ -1,40 +1,26 @@
-import React, { Suspense, useEffect, useRef, useState } from 'react'
-import {
-  Box,
-  Collapse,
-  Flex,
-  IconButton,
-  useDisclosure,
-  HStack,
-  Text,
-  Menu,
-  MenuButton,
-  MenuItemOption,
-  MenuList,
-  MenuOptionGroup,
-  Button,
-  chakra,
-} from '@chakra-ui/react'
-import { CloseIcon, HamburgerIcon, ChevronDownIcon } from '@chakra-ui/icons'
-import { languageData } from '@/data/LanguageData'
-import dynamic from 'next/dynamic'
-import { setDrawerOpen } from '@/store/slices/app-slice'
-import Link from 'next/link'
-import DesktopNav from './DesktopNav'
-const WalletNavMenu = dynamic(() => import('./WalletNavMenu'))
 import Logo from '@/components/Elements/Logo/Logo'
-import { useSelector, useDispatch } from 'react-redux'
-import { RootState, store } from '@/store/store'
-import useLanguageChange from '@/hooks/useLanguageChange'
 import NavSearch from '@/components/Layout/Navbar/NavSearch'
-import MobileNav from './MobileNav'
-const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
-import SuggestWikiModal from './SuggestWiki'
-import Image from 'next/image'
+import { Button } from '@/components/ui/button'
+import { languageData } from '@/data/LanguageData'
 import { useAddress } from '@/hooks/useAddress'
+import useLanguageChange from '@/hooks/useLanguageChange'
 import useWhiteListValidator from '@/hooks/useWhiteListValidator'
+import { setDrawerOpen } from '@/store/slices/app-slice'
+import { type RootState, store } from '@/store/store'
+import { Collapse, IconButton, useDisclosure } from '@chakra-ui/react'
+import { AlignJustify, X } from 'lucide-react'
 import { useTranslation } from 'next-i18next'
+import dynamic from 'next/dynamic'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
+import React, { Suspense, useEffect, useState } from 'react'
+import { RiSearchLine } from 'react-icons/ri'
+import { useDispatch, useSelector } from 'react-redux'
+import DesktopNav from './DesktopNav'
+import { LocaleSelect } from './LocaleSelect'
+import MobileNav from './MobileNav'
+import SuggestWikiModal from './SuggestWiki'
+const WalletDrawer = dynamic(() => import('../WalletDrawer/WalletDrawer'))
 
 const Navbar = () => {
   const dispatch = useDispatch()
@@ -48,10 +34,10 @@ const Navbar = () => {
       dispatch(setDrawerOpen(false))
     },
   })
-  const loginButtonRef = useRef<HTMLButtonElement>(null)
   const [isHamburgerOpen, setIsHamburgerOpen] = useState<boolean>(false)
+  const [isDrawerOpen, setIsDrawerOpen] = useState<boolean>(false)
+  const [isSearchOpen, setIsSearchOpen] = useState<boolean>(false)
   const router = useRouter()
-  const { isOpen, onToggle } = drawerOperations
   const lang = useSelector((state: RootState) => state.app.language)
   const { handleLangChange } = useLanguageChange()
   const locale = router.locale
@@ -67,142 +53,46 @@ const Navbar = () => {
     if (locale && lang !== locale) handleLangChange(locale)
   }, [router.locale])
 
-  useEffect(() => {
-    const handleRouteChange = () => isOpen && onToggle()
-    router.events.on('routeChangeComplete', handleRouteChange)
-    return () => {
-      router.events.off('routeChangeComplete', handleRouteChange)
-    }
-  }, [router.events, isOpen, onToggle])
+  const handleDrawerOpen = () => {
+    setIsDrawerOpen(!isDrawerOpen)
+  }
+
+  const handleSearchOpen = () => {
+    setIsSearchOpen(!isSearchOpen)
+  }
 
   return (
-    <Box
-      boxShadow="sm"
-      position="fixed"
-      zIndex="banner"
-      w="full"
-      h={{ base: drawerOperations.isOpen ? '100%' : 'unset', md: 'unset' }}
-      bg="subMenuBg"
-      borderBottomWidth={1}
-      borderBottomColor="rankingListBorder"
+    <div
+      className="shadow-sm fixed top-0 left-0 right-0 z-[9999] md:z-50 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200 lg:py-2"
+      style={{
+        height: drawerOperations.isOpen ? '100%' : 'unset',
+      }}
     >
-      <Flex
-        gap={{ base: 8, lg: 40, xl: 8 }}
-        h="70px"
-        alignItems="center"
-        justifyContent="space-between"
-        px={{ base: 4, md: 8 }}
-      >
-        <Box
-          cursor="pointer"
-          mr={{ base: 0, xl: '0.1vw' }}
-          _hover={{ textDecoration: 'none' }}
-        >
-          <chakra.button
-            onClick={() => router.push('/')}
-            display={'flex'}
-            alignItems={'center'}
-            gap={2}
-          >
+      <div className="flex gap-8 lg:gap-40 xl:gap-8 h-16 items-center justify-between px-4 lg:px-8 border-b lg:border-b-0 dark:border-alpha-200 border-gray-200">
+        <Link prefetch={false} href="/">
+          <div className="flex flex-row gap-2 items-center">
             <Logo />
-            <Text
-              fontWeight="bold"
-              fontSize="xl"
-              color="gray.900"
-              _dark={{ color: 'white' }}
-            >
+            <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
               IQ.wiki
-            </Text>
-          </chakra.button>
-        </Box>
-        <HStack
-          spacing={4}
-          display={{
-            base: 'none',
-            xl: 'flex',
-          }}
-        >
-          <DesktopNav />
-        </HStack>
-        <Suspense>
-          <NavSearch setHamburger={setIsHamburgerOpen} />
-        </Suspense>
-        <HStack
-          ml={2}
-          spacing={3}
-          display={{
-            base: 'none',
-            xl: 'flex',
-          }}
-        >
-          <Menu placement={'bottom-end'}>
-            <MenuButton
-              as={Button}
-              fontSize="sm"
-              paddingX={0}
-              bg="transparent"
-              sx={{
-                marginRight: 0,
-                fontWeight: 600,
-                fontSize: 'sm',
-                color: 'linkColor',
-                _active: {
-                  bg: 'transparent',
-                },
-                _hover: {
-                  bg: 'transparent',
-                },
-              }}
-              rightIcon={<ChevronDownIcon color="linkColor" />}
-              iconSpacing={1}
-              defaultValue={locale}
-            >
-              <chakra.span textTransform={'uppercase'}>{locale}</chakra.span>
-            </MenuButton>
-            <MenuList color="linkColor">
-              <MenuOptionGroup type="radio" onChange={handleLangChange}>
-                {languageData.map((langObj) => (
-                  <MenuItemOption
-                    key={langObj.locale}
-                    fontSize="md"
-                    value={langObj.locale}
-                    isChecked={langObj.locale === lang}
-                  >
-                    <HStack>
-                      <Image
-                        src={langObj.icon}
-                        alt={langObj.name}
-                        width={24}
-                        height={24}
-                      />
-                      <Text>{langObj.name}</Text>
-                    </HStack>
-                  </MenuItemOption>
-                ))}
-              </MenuOptionGroup>
-            </MenuList>
-          </Menu>
+            </h1>
+          </div>
+        </Link>
+        <DesktopNav />
+        <div className="hidden lg:block w-full">
+          <Suspense>
+            <NavSearch setHamburger={setIsHamburgerOpen} />
+          </Suspense>
+        </div>
+        <div className="hidden xl:flex flex-row gap-4 items-center">
+          <LocaleSelect
+            languageData={languageData}
+            locale={locale}
+            handleLangChange={handleLangChange}
+          />
           <Button
             variant="outline"
-            paddingInline={4}
-            size={'sm'}
-            borderRadius={'6px'}
-            fontSize="14px"
-            fontWeight={600}
-            color="linkColor"
+            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800 border-gray-200 dark:border-alpha-400 px-5 py-1 text-sm"
             onClick={userCanEdit && address ? () => {} : onSuggestWikiOpen}
-            _hover={{
-              textDecoration: 'none',
-              bgColor: 'gray.200',
-            }}
-            whiteSpace="nowrap"
-            borderColor={'gray.200'}
-            _dark={{
-              borderColor: 'whiteAlpha.300',
-              _hover: {
-                bgColor: 'whiteAlpha.300',
-              },
-            }}
           >
             {userCanEdit && address ? (
               <Link href="/create-wiki">{t('Create Wiki')}</Link>
@@ -214,42 +104,52 @@ const Navbar = () => {
             isOpen={isSuggestWikiOpen}
             onClose={onSuggestWikiClose}
           />
-          <WalletNavMenu
-            drawerOperations={drawerOperations}
-            setHamburger={setIsHamburgerOpen}
+          {address ? (
+            <WalletDrawer
+              isOpen={isDrawerOpen}
+              handleDrawerOpen={handleDrawerOpen}
+            />
+          ) : (
+            <Button
+              size="sm"
+              className="hidden lg:block bg-brand-500 dark:bg-brand-800 text-white hover:bg-brand-600 dark:hover:bg-brand-700 font-semibold text-sm px-6"
+              onClick={() => router.push('/login')}
+            >
+              {t('signIn')}
+            </Button>
+          )}
+        </div>
+        <div className="xl:hidden flex flex-row items-center gap-2 justify-center">
+          <RiSearchLine
+            onClick={handleSearchOpen}
+            className="w-6 h-6 md:w-7 md:h-7 text-gray-500 dark:text-alpha-800 mr-0 md:mr-1 lg:hidden"
           />
-        </HStack>
-        <HStack
-          display={{
-            base: 'flex',
-            xl: 'none',
-          }}
-        >
-          <WalletNavMenu
-            drawerOperations={drawerOperations}
-            setHamburger={setIsHamburgerOpen}
+          <WalletDrawer
+            isOpen={isDrawerOpen}
+            handleDrawerOpen={handleDrawerOpen}
           />
           <IconButton
             onClick={() => setIsHamburgerOpen(!isHamburgerOpen)}
             icon={
               isHamburgerOpen ? (
-                <CloseIcon w={4} h={4} />
+                <X className="w-6 lg:w-7 h-6 lg:h-7" />
               ) : (
-                <HamburgerIcon boxSize={{ base: 6, lg: 7 }} />
+                <AlignJustify className="w-6 lg:w-7 h-6 lg:h-7" />
               )
             }
             variant="ghost"
             aria-label="Toggle Navigation"
           />
-        </HStack>
-      </Flex>
-      {drawerOperations.isOpen && (
-        <WalletDrawer
-          finalFocusRef={loginButtonRef}
-          setHamburger={setIsHamburgerOpen}
-          toggleOperations={drawerOperations}
-        />
+        </div>
+      </div>
+      {isSearchOpen && (
+        <div className="block lg:hidden w-full py-3 mx-4">
+          <Suspense>
+            <NavSearch setHamburger={setIsHamburgerOpen} />
+          </Suspense>
+        </div>
       )}
+
       <Collapse
         in={isHamburgerOpen}
         animateOpacity
@@ -260,7 +160,7 @@ const Navbar = () => {
           drawerOperations={drawerOperations}
         />
       </Collapse>
-    </Box>
+    </div>
   )
 }
 

@@ -1,11 +1,11 @@
-import { Dict } from '@chakra-ui/utils'
+import type { Dict } from '@chakra-ui/utils'
 import React from 'react'
 import { Tooltip, ResponsiveContainer, AreaChart, Area } from 'recharts'
 import CustomTooltip from './CustomTooltip'
 
 const IQGraph = ({
   areaGraphData,
-  height = 70,
+  height = 55,
 }: { areaGraphData?: Dict<number>[] | undefined; height?: number }) => {
   return (
     <ResponsiveContainer width="100%" height={height}>

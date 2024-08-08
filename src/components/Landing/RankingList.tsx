@@ -1,41 +1,24 @@
-import React, { useState } from 'react'
 import {
-  Box,
-  Flex,
-  Heading,
-  TabList,
-  TabPanel,
-  TabPanels,
-  Tabs,
-  Tbody,
-  Text,
-} from '@chakra-ui/react'
+  LISTING_LIMIT,
+  sortBy24hChange,
+  sortByMarketCap,
+} from '@/pages/rank/[[...category]]'
+import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-import { BiImage } from 'react-icons/bi'
-import {
-  RiCoinsFill,
-  RiRobotFill,
-  RiCoinFill,
-  RiUserFill,
-} from 'react-icons/ri'
-import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
-import RankingListButton from '../Rank/RankButton'
-import { RankTable, RankTableHead } from '../Rank/RankTable'
+import { useState } from 'react'
+import FounderRankingItem from '../Rank/FounderRankCardItem'
 import {
   FoundersRankTable,
   FoundersRankTableHead,
 } from '../Rank/FoundersRankTable'
 import { InvalidRankCardItem } from '../Rank/InvalidRankCardItem'
 import RankingItem from '../Rank/RankCardItem'
-import FounderRankingItem from '../Rank/FounderRankCardItem'
-import { LinkButton } from '../Elements'
-import {
-  LISTING_LIMIT,
-  sortBy24hChange,
-  sortByMarketCap,
-} from '@/pages/rank/[[...category]]'
-import { CATEGORIES_WITH_INDEX } from '@/data/RankingListData'
-import { getKeyByValue } from '@/utils/DataTransform/getKeyByValue'
+import { RankTable, RankTableHead } from '../Rank/RankTable'
+
+import { tabsData } from '@/data/RanksTabsData'
+import Link from 'next/link'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 
 type RankingListProps = {
   rankings: {
@@ -48,7 +31,19 @@ type RankingListProps = {
   listingLimit: number
 }
 
+enum RankingListTabs {
+  Cryptocurrencies = 'cryptocurrencies',
+  Stablecoins = 'stableCoins',
+  AITokens = 'aitokens',
+  Founders = 'founders',
+  NFTs = 'nfts',
+}
+
 const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
+  const [selectedTab, setSelectedTab] = useState<RankingListTabs>(
+    RankingListTabs.Cryptocurrencies,
+  )
+
   const TokensListing = rankings?.TokensListing
   const aiTokensListing = rankings?.aiTokensListing
   const NFTsListing = rankings?.NFTsListing
@@ -61,9 +56,6 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [founderItems, setFounderItems] = useState<RankCardType[]>([])
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
-  const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
-    'cryptocurrencies',
-  )
   const { t } = useTranslation(['rank', 'common'])
 
   if (
@@ -86,7 +78,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   }
 
   const onClickMap: OnClickMap = {
-    'Market Cap': function () {
+    'Market Cap': () => {
       if (
         tokenItems &&
         nftItems &&
@@ -104,7 +96,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setFounderItems(sortByMarketCap(newSortOrder, foundersListing))
       }
     },
-    '24h Change': function () {
+    '24h Change': () => {
       if (
         tokenItems &&
         nftItems &&
@@ -123,78 +115,41 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       }
     },
   }
+
+  const handleSelectedTab = (tab: string) => {
+    setSelectedTab(tab as RankingListTabs)
+  }
+
   return (
-    <Box
-      px={{ base: 3, md: 8 }}
-      pb={{ base: 16, md: 20, lg: 24 }}
-      pt={{ lg: 4 }}
-      textAlign="center"
-    >
-      <Heading
-        textAlign="center"
-        mb={4}
-        fontWeight="600"
-        fontSize={{ base: '3xl', lg: 46 }}
-      >
-        {`${t('rankingListHeading')}`}
-      </Heading>
-      <Text
-        color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: '20px' }}
-        mx="auto"
-        mb={9}
-        px={4}
-        maxW="768"
-      >{`${t('rankingListDescription')}`}</Text>
-      <Box maxW="1208px" mx="auto">
-        <Tabs
-          mt={10}
-          pl={0}
-          overflowX={'auto'}
-          onChange={(index) => {
-            setSelectedRanking(getKeyByValue(CATEGORIES_WITH_INDEX, index))
-          }}
-        >
-          <Flex justifyContent="center">
-            <TabList
-              border="none"
-              display="flex"
-              gap={{ base: '0', md: '4' }}
-              overflowX={'auto'}
-              overflowY={'hidden'}
-            >
-              <RankingListButton
-                label={t('rankingListButtonCryptocurrencies')}
-                icon={RiCoinsFill}
-                fontSize={{ lg: 'md' }}
-              />
-              <RankingListButton
-                label={t('rankingListButtonStablecoins')}
-                icon={RiCoinFill}
-                fontSize={{ lg: 'md' }}
-              />
-              <RankingListButton
-                label={t('rankingListButtonAITokens')}
-                icon={RiRobotFill}
-                fontSize={{ lg: 'md' }}
-              />
-              <RankingListButton
-                label={t('rankingListButtonFounders')}
-                icon={RiUserFill}
-                fontSize={{ lg: 'md' }}
-              />
-              <RankingListButton
-                label={t('rankingListButtonNfts')}
-                icon={BiImage}
-                fontSize={{ lg: 'md' }}
-              />
-            </TabList>
-          </Flex>
-          <TabPanels mt={{ base: 8, md: '10' }}>
-            <TabPanel
-              px={{ base: 0, md: 'initial' }}
-              py={{ base: 0, md: 'initial' }}
-            >
+    <div className="flex flex-col container mx-auto mb-20 relative px-4 lg:px-8 2xl:px-0">
+      <div className="absolute -z-10 -top-20 lg:-top-60 right-0 lg:right-40 w-[400px] lg:w-[720px] h-[0px] lg:h-[1400px] rotate-6 lg:rotate-45 rounded-[100%] bg-gradient-to-b from-pink-500/10 to-indigo-500/10 blur-3xl" />
+      <div className="w-full flex flex-col gap-8">
+        <div className="flex flex-col gap-2">
+          <h1 className="text-sm lg:text-2xl font-bold">
+            {t('rankingListHeading')}
+          </h1>
+          <p className="dark:text-alpha-800 text-gray-600 max-w-4xl font-medium text-xs lg:text-base">
+            {t('rankingListDescription')}
+          </p>
+        </div>
+        <div>
+          <Tabs defaultValue="cryptocurrencies" className="overflow-hidden">
+            <div className="overflow-x-auto scrollbar-hide">
+              <TabsList className="mb-4 space-x-6">
+                {tabsData.map((tab) => (
+                  <TabsTrigger
+                    key={tab.value}
+                    value={t(tab.id)}
+                    onClick={() => handleSelectedTab(t(tab.id))}
+                    className="flex flex-row items-center gap-2"
+                  >
+                    <tab.icon className="text-brand-500 dark:text-brand-800 w-6 h-6" />
+                    <span>{t(tab.label)}</span>
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+            <TabsContent value="cryptocurrencies">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -214,11 +169,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                   )}
                 </Tbody>
               </RankTable>
-            </TabPanel>
-            <TabPanel
-              px={{ base: 2, md: 'initial' }}
-              py={{ base: 0, md: 'initial' }}
-            >
+            </TabsContent>
+            <TabsContent value="stableCoins">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -238,11 +190,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                   )}
                 </Tbody>
               </RankTable>
-            </TabPanel>
-            <TabPanel
-              px={{ base: 2, md: 'initial' }}
-              py={{ base: 0, md: 'initial' }}
-            >
+            </TabsContent>
+            <TabsContent value="aitokens">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -262,11 +211,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                   )}
                 </Tbody>
               </RankTable>
-            </TabPanel>
-            <TabPanel
-              px={{ base: 2, md: 'initial' }}
-              py={{ base: 0, md: 'initial' }}
-            >
+            </TabsContent>
+            <TabsContent value="founders">
               <FoundersRankTable hasPagination={false}>
                 <FoundersRankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -286,11 +232,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                   )}
                 </Tbody>
               </FoundersRankTable>
-            </TabPanel>
-            <TabPanel
-              px={{ base: 2, md: 'initial' }}
-              py={{ base: 0, md: 'initial' }}
-            >
+            </TabsContent>
+            <TabsContent value="nfts">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -310,23 +253,20 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                   )}
                 </Tbody>
               </RankTable>
-            </TabPanel>
-          </TabPanels>
-        </Tabs>
-        <Flex justifyContent="center" mt="10">
-          <LinkButton
-            href={`/rank/${selectedRanking}`}
-            h="50px"
-            w={{ base: 32, lg: 40 }}
-            variant="outline"
-            bgColor="btnBgColor"
-            prefetch={false}
-          >
-            {t('rankingListViewMore')}
-          </LinkButton>
-        </Flex>
-      </Box>
-    </Box>
+            </TabsContent>
+          </Tabs>
+          <div className="flex items-center justify-center mt-10">
+            <Link
+              className="w-32 lg:w-40 border dark:border-gray-700 border-gray-300 h-[50px] rounded-md flex items-center justify-center text-xs hover:bg-gray-200 dark:hover:bg-alpha-50 transition-colors duration-300 delay-150 ease-in-out"
+              href={`/rank/${selectedTab}`}
+              prefetch={false}
+            >
+              {t('rankingListViewMore')}
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
   )
 }
 

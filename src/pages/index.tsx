@@ -1,10 +1,10 @@
 import React from 'react'
-import { Box, Flex } from '@chakra-ui/react'
 import dynamic from 'next/dynamic'
 import {
   getPromotedWikis,
   getTrendingWikis,
   getWikis,
+  getWikisAndCategories,
   wikiApi,
   type PromotedWikisBuilder,
   type RecentWikisBuilder,
@@ -47,6 +47,7 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import EventOverview from '@/components/Landing/EventOverview'
 import { IQBar } from '@/components/Landing/IQBar'
 import type { TGraphQLError } from '@/components/CreateWiki/CreateWikiTopBar/WikiPublish/WikiPublishButton'
+import type { CategoryAndWikiDataProps } from '@/types/CategoryDataTypes'
 
 const RANKING_LIST_LIMIT = 10
 const TRENDING_WIKIS_AMOUNT = 5
@@ -56,6 +57,7 @@ interface HomePageProps {
   recentWikis: Wiki[]
   popularTags: { id: string }[]
   leaderboards: LeaderBoardType[]
+  categories: CategoryAndWikiDataProps[]
   rankings: {
     NFTsListing: RankCardType[]
     aiTokensListing: RankCardType[]
@@ -64,45 +66,31 @@ interface HomePageProps {
     foundersListing: RankCardType[]
   }
   trending: TrendingData
+  isLoading: boolean
 }
 
 export const Index = ({
   promotedWikis,
-  recentWikis,
   popularTags,
   leaderboards,
   rankings,
   trending,
+  categories,
 }: HomePageProps) => {
   return (
-    <Flex
-      _dark={{
-        bgColor: '#1A202C',
-      }}
-      direction="column"
-      mx="auto"
-      w="full"
-    >
+    <section>
       <Hero />
       <IQBar />
-      <Box
-        mt={{ base: '-20', md: '-15', xl: '-10' }}
-        px={0}
-        className="container"
-      >
-        <TrendingWikis
-          trending={trending}
-          recent={recentWikis?.slice(0, 5)}
-          featuredWikis={promotedWikis}
-        />
+      <div className="relative">
+        <TrendingWikis trending={trending} featuredWikis={promotedWikis} />
         <RankingList listingLimit={RANKING_LIST_LIMIT} rankings={rankings} />
         <AboutIqgpt />
-        <CategoriesList />
+        <CategoriesList categories={categories} />
         <EventOverview />
-      </Box>
-      {leaderboards?.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+      </div>
+      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
-    </Flex>
+    </section>
   )
 }
 
@@ -199,6 +187,12 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     }),
   )
 
+  const { data: categories } = await store.dispatch(
+    getWikisAndCategories.initiate({
+      limit: 8,
+    }),
+  )
+
   await Promise.all([
     store.dispatch(wikiApi.util.getRunningQueriesThunk()),
     store.dispatch(tagsApi.util.getRunningQueriesThunk()),
@@ -250,6 +244,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       leaderboards: sortedleaderboards ?? [],
       rankings: rankings,
       trending: { todayTrending, weekTrending, monthTrending },
+      categories: categories,
     },
   }
 }

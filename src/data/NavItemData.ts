@@ -13,19 +13,18 @@ import {
   RiNewspaperFill,
   RiBook2Fill,
   RiTeamFill,
-  RiUserSearchFill,
+  RiInformationFill,
   RiNumbersFill,
   RiGroup2Fill,
   RiCopperDiamondLine,
   RiOrganizationChart,
-  RiHashtag,
   RiSearchEyeFill,
   RiStarSFill,
   RiLightbulbFlashFill,
   RiCodeBoxFill,
   RiCalendarEventFill,
 } from 'react-icons/ri'
-import { NavItem } from '@/types/NavItemType'
+import type { NavItem } from '@/types/NavItemType'
 
 export const NAV_ITEMS: NavItem[] = [
   {
@@ -96,7 +95,7 @@ export const NAV_ITEMS: NavItem[] = [
     id: 2,
     label: 'Rank',
     href: '/rank',
-    icon: RiHashtag,
+    icon: RiCalendarEventFill,
   },
   {
     id: 3,
@@ -108,7 +107,7 @@ export const NAV_ITEMS: NavItem[] = [
     id: 4,
     label: 'About',
     href: '/about',
-    icon: RiUserSearchFill,
+    icon: RiInformationFill,
   },
   {
     id: 5,
@@ -179,10 +178,24 @@ export const NAV_ITEMS: NavItem[] = [
     ],
   },
 ]
+export const MOBILE_ITEMS: NavItem[] = [
+  {
+    id: 1,
+    label: 'Activity',
+    href: '/activity',
+    icon: RiBarChartFill,
+  },
+  {
+    id: 2,
+    label: 'About',
+    href: '/about',
+    icon: RiInformationFill,
+  },
+]
 
 export const NAV_ICON = {
   label: 'Accounts',
-  id: 5,
+  id: 3,
   href: '#',
   subItem: [
     {
@@ -198,7 +211,7 @@ export const NAV_ICON = {
 export const mobileWalletDetails: NavItem = {
   label: 'Wallet',
   href: '#',
-  id: 6,
+  id: 4,
   icon: RiWalletFill,
 }
 
@@ -207,20 +220,20 @@ export const MOBILE_NAV_ITEMS = ({
 }: {
   address: string | undefined
 }): NavItem[] => {
-  const filteredNavItems = NAV_ITEMS.filter(
+  const filteredNavItems = MOBILE_ITEMS.filter(
     (item) => item.label !== 'Create Wiki' && item.label !== 'Suggest Wiki',
   )
 
   if (address) {
     filteredNavItems.push({
-      id: 6,
+      id: 5,
       label: 'Create Wiki',
       href: '/create-wiki',
       icon: RiAddBoxFill,
     })
   } else {
     filteredNavItems.push({
-      id: 7,
+      id: 6,
       label: 'Suggest Wiki',
       href: '#',
       icon: RiLightbulbFlashFill,

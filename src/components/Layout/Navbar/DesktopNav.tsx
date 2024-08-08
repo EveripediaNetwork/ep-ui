@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from 'react'
-import { HStack } from '@chakra-ui/react'
 import { NAV_ITEMS } from '@/data/NavItemData'
 import { NavMenu } from '@/components/Layout/Navbar'
 import { useRouter } from 'next/router'
-import { NavItem } from '@/types/NavItemType'
+import type { NavItem } from '@/types/NavItemType'
 import { useTranslation } from 'next-i18next'
 
 const DesktopNav = () => {
@@ -22,7 +21,10 @@ const DesktopNav = () => {
   const { t } = useTranslation()
 
   return (
-    <HStack onMouseLeave={() => setVisibleMenu(null)}>
+    <div
+      className="hidden xl:flex flex-row gap-2"
+      onMouseLeave={() => setVisibleMenu(null)}
+    >
       {NAV_ITEMS.map((navItem: NavItem) => {
         return (
           <NavMenu
@@ -34,7 +36,7 @@ const DesktopNav = () => {
           />
         )
       })}
-    </HStack>
+    </div>
   )
 }
 

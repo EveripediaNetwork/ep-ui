@@ -1,54 +1,36 @@
-import React, { memo, RefObject, useState } from 'react'
-import {
-  Box,
-  Divider,
-  Drawer,
-  DrawerBody,
-  DrawerCloseButton,
-  DrawerContent,
-  DrawerHeader,
-  DrawerOverlay,
-  Flex,
-  Text,
-  MenuButton,
-  Menu,
-  HStack,
-  MenuList,
-  MenuItem,
-  Spinner,
-  useToast,
-  Icon,
-} from '@chakra-ui/react'
-import { FocusableElement } from '@chakra-ui/utils'
-import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
-import { ChevronDownIcon } from '@chakra-ui/icons'
-import { shortenAccount } from '@/utils/textUtils'
 import DisplayAvatar from '@/components/Elements/Avatar/DisplayAvatar'
-import NetworkMenu from '@/components/Layout/Network/NetworkMenu'
-import { useENSData } from '@/hooks/useENSData'
-import { useHiIQBalance } from '@/hooks/useHiIQBalance'
-import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
-import CopyIcon from '@/components/Icons/CopyIcon'
-import { Link } from '@/components/Elements'
-import { useTranslation } from 'next-i18next'
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTrigger,
+} from '@/components/ui/sheet'
 import { useAddress } from '@/hooks/useAddress'
-import { WalletDrawerBody } from './WalletDrawerBody'
-
-type WalletDrawerType = {
-  toggleOperations: {
-    isOpen: boolean
-    onClose: () => void
-    onOpen: () => void
-  }
-  finalFocusRef: RefObject<FocusableElement>
-  setHamburger: React.Dispatch<React.SetStateAction<boolean>>
-}
+import { useENSData } from '@/hooks/useENSData'
+import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
+import { useHiIQBalance } from '@/hooks/useHiIQBalance'
+import { Spinner, useToast } from '@chakra-ui/react'
+import { useTranslation } from 'next-i18next'
+import dynamic from 'next/dynamic'
+import { memo, useState } from 'react'
+import { RiArrowLeftSLine, RiRefreshLine } from 'react-icons/ri'
+import NetworkMenu from '../Network/NetworkMenu'
+import { WalletDrawerBody } from '../WalletDrawer/WalletDrawerBody'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover'
+import { ChevronDownIcon } from 'lucide-react'
+import Link from 'next/link'
+import { shortenAccount } from '@/utils/textUtils'
+import CopyIcon from '@/components/Icons/CopyIcon'
+const WalletNavMenu = dynamic(() => import('../Navbar/WalletNavMenu'))
 
 const WalletDrawer = ({
-  toggleOperations,
-  finalFocusRef,
-  setHamburger,
-}: WalletDrawerType) => {
+  isOpen,
+  handleDrawerOpen,
+}: { isOpen: boolean; handleDrawerOpen: () => void }) => {
   const { address: userAddress, isConnected: isUserConnected } = useAddress()
   const [, username] = useENSData(userAddress)
   useHiIQBalance(userAddress)
@@ -56,11 +38,6 @@ const WalletDrawer = ({
   const toast = useToast()
   const { refreshBalance } = useFetchWalletBalance()
   const { t } = useTranslation('common')
-
-  const handleNavigation = () => {
-    toggleOperations.onClose()
-    setHamburger(true)
-  }
 
   const handleAccountRefresh = async () => {
     if (typeof userAddress !== 'undefined') {
@@ -88,89 +65,82 @@ const WalletDrawer = ({
     })
   }
 
-  return toggleOperations.isOpen ? (
-    <Drawer
-      isOpen={toggleOperations.isOpen}
-      onClose={toggleOperations.onClose}
-      placement="right"
-      finalFocusRef={finalFocusRef}
-      trapFocus={false}
-      size="sm"
-    >
-      <DrawerOverlay />
-      <DrawerContent>
-        <DrawerCloseButton />
-        <DrawerHeader mt={7}>
-          <Flex
-            w="full"
-            cursor="pointer"
-            direction="row"
-            justifyContent="flex-start"
-            alignItems="center"
-          >
-            <HStack flex="1">
-              <Box
-                onClick={handleNavigation}
-                display={{ sm: 'block', md: 'none' }}
-              >
+  return (
+    <Sheet open={isOpen} onOpenChange={handleDrawerOpen}>
+      <SheetTrigger asChild>
+        <div
+          onKeyUp={(event: React.KeyboardEvent<HTMLDivElement>) => {
+            if (event.key === 'Enter' || event.key === ' ') {
+              handleDrawerOpen()
+            }
+          }}
+          onClick={handleDrawerOpen}
+        >
+          <WalletNavMenu />
+        </div>
+      </SheetTrigger>
+      <SheetContent
+        aria-describedby={undefined}
+        className="bg-white dark:bg-gray-800 p-0 z-[9999]"
+      >
+        <SheetHeader className="border-b border-gray-200 dark:border-gray-700">
+          <div className="flex flex-row items-center justify-between mt-6 p-6">
+            <div className="flex flex-row items-center gap-3">
+              <div className="block md:hidden">
                 <RiArrowLeftSLine size="30" />
-              </Box>
+              </div>
               <DisplayAvatar
                 address={userAddress}
                 alt={userAddress ?? 'avatar'}
               />
-              <Box>
-                <Menu>
-                  <MenuButton pl={1} fontSize="md" fontWeight={600}>
-                    {t('myWallet')} {isUserConnected && <ChevronDownIcon />}
-                  </MenuButton>
-                  {isUserConnected && (
-                    <MenuList py={0}>
-                      <MenuItem
+              <div className="flex flex-col">
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <div className="text-base font-semibold text-gray-600 dark:text-alpha-500 flex flex-row items-center gap-2 cursor-pointer">
+                      {t('myWallet')}{' '}
+                      {isUserConnected && (
+                        <ChevronDownIcon className="w-4 h-4" />
+                      )}
+                    </div>
+                  </PopoverTrigger>
+                  <PopoverContent className="w-48 ml-20 p-2.5 rounded-lg">
+                    {isUserConnected && (
+                      <div
+                        onKeyDown={() => {}}
                         onClick={handleAccountRefresh}
-                        closeOnSelect={false}
-                        py={3}
-                        icon={<RiRefreshLine size={25} />}
+                        className="flex flex-row items-center gap-2 cursor-pointer"
                       >
-                        <Flex>
-                          <Text flex="1" fontSize="small" fontWeight="bold">
-                            Refresh
-                          </Text>
+                        <RiRefreshLine size={25} />
+                        <div>
+                          <h1 className="text-sm font-bold">Refresh</h1>
                           {accountRefreshLoading && <Spinner size="sm" />}
-                        </Flex>
-                      </MenuItem>
-                    </MenuList>
-                  )}
-                </Menu>
+                        </div>
+                      </div>
+                    )}
+                  </PopoverContent>
+                </Popover>
                 {isUserConnected && (
-                  <HStack>
+                  <div className="flex flex-row gap-1 items-center">
                     <Link
-                      fontSize="sm"
-                      color="fadedText2"
                       href={`/account/${userAddress}`}
-                      pl={1}
+                      className="text-sm opacity-70"
                     >
                       {username || (userAddress && shortenAccount(userAddress))}
                     </Link>
-                    <Icon
-                      cursor="pointer"
-                      as={CopyIcon}
-                      onClick={copyToClipboard}
-                    />
-                  </HStack>
+                    <CopyIcon onClick={copyToClipboard} className="w-4 h-4" />
+                  </div>
                 )}
-              </Box>
-            </HStack>
+              </div>
+            </div>
             <NetworkMenu />
-          </Flex>
-        </DrawerHeader>
-        <Divider />
-        <DrawerBody shadow="sm">
+          </div>
+        </SheetHeader>
+        <div className="px-6 py-4">
           <WalletDrawerBody />
-        </DrawerBody>
-      </DrawerContent>
-    </Drawer>
-  ) : null
+        </div>
+      </SheetContent>
+    </Sheet>
+  )
 }
 
 export default memo(WalletDrawer)

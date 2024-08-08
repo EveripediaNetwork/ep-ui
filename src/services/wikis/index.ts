@@ -20,6 +20,7 @@ import {
   GET_TRENDING_WIKIS,
   GET_TRENDING_CATEGORY_WIKIS,
   GET_WIKI_ACTIVITY_BY_CATEGORIES,
+  GET_WIKIS_AND_CATEGORIES,
   GET_WIKI_TITLE_BY_ID,
 } from '@/services/wikis/queries'
 import type { User, Wiki, WikiPreview, WikiBuilder } from '@everipedia/iq-utils'
@@ -171,6 +172,37 @@ type ActivitiesByCategoryArgs = {
 type ActivitiesByCategoryData = {
   activitiesByCategory: {
     content: Wiki[]
+  }[]
+}
+
+type WikisAndCategoriesArg = {
+  limit?: number
+  offset?: number
+}
+
+type GetWikisAndCategoriesData = {
+  categories: Category[]
+}
+
+type Category = {
+  title: string
+  id: string
+  wikis: {
+    id: string
+    title: string
+    summary: string
+    user: {
+      id: string
+      profile: {
+        avatar: string
+        username: string
+        id: string
+      }
+    }
+    images: {
+      id: string
+      type: string
+    }[]
   }[]
 }
 
@@ -334,6 +366,14 @@ export const wikiApi = createApi({
       transformResponse: (response: ActivitiesByCategoryData) =>
         response.activitiesByCategory.map((activity) => activity.content[0]),
     }),
+    getWikisAndCategories: builder.query<Category[], WikisAndCategoriesArg>({
+      query: ({ limit, offset }: WikisAndCategoriesArg) => ({
+        document: GET_WIKIS_AND_CATEGORIES,
+        variables: { limit, offset },
+      }),
+      transformResponse: (response: GetWikisAndCategoriesData) =>
+        response.categories,
+    }),
     postWiki: builder.mutation<string, { data: Partial<Wiki> }>({
       query: ({ data }) => {
         return {
@@ -397,6 +437,7 @@ export const {
   usePostWikiMutation,
   usePostImageMutation,
   usePostWikiViewCountMutation,
+  useGetWikisAndCategoriesQuery,
 } = wikiApi
 
 export const {
@@ -419,4 +460,5 @@ export const {
   getTrendingWikis,
   getTrendingCategoryWikis,
   getWikiActivityByCategory,
+  getWikisAndCategories,
 } = wikiApi.endpoints
