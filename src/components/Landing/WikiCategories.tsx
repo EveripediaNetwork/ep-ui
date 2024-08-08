@@ -28,7 +28,6 @@ export default function WikiCategories() {
     return shuffledArray
   }
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (AllCategoriesData && AllCategoriesData.length > 0) {
       const shuffledCategories = shuffleArray(AllCategoriesData)
