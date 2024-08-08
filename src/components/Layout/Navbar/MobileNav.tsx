@@ -12,7 +12,6 @@ import {
   LinkBox,
   Menu,
   Text,
-  type UseDisclosureReturn,
   VStack,
   useDisclosure,
 } from '@chakra-ui/react'
@@ -35,11 +34,11 @@ import SettingsLink from './SettingsLink'
 import SuggestWikiModal from './SuggestWiki'
 
 type MobileNavType = {
-  drawerOperations: UseDisclosureReturn
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
+  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
+const MobileNav = ({ setHamburger, setIsDrawerOpen }: MobileNavType) => {
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const { isConnected, address: userAddress } = useAddress()
@@ -64,7 +63,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   }
   const handleWalletButtonClick = () => {
     setHamburger(false)
-    drawerOperations.onToggle()
+    setIsDrawerOpen(true)
   }
 
   const langItem = {
@@ -140,6 +139,16 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                   />
                 ))}
 
+              {userAddress && (
+                <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
+                  <MobileNavItem
+                    handleClick={handleWalletButtonClick}
+                    key={mobileWalletDetails.label}
+                    navItem={mobileWalletDetails}
+                  />
+                </Box>
+              )}
+
               <LinkBox
                 onClick={() => {
                   handleClick(langItem)
@@ -170,15 +179,6 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 </Text>
               </LinkBox>
 
-              {userAddress && (
-                <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
-                  <MobileNavItem
-                    handleClick={handleWalletButtonClick}
-                    key={mobileWalletDetails.label}
-                    navItem={mobileWalletDetails}
-                  />
-                </Box>
-              )}
               <Menu>
                 <Flex gap={{ base: '4' }} direction="column">
                   <ColorModeToggle isInMobileMenu />
@@ -192,7 +192,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
             </Box>
           </Box>
         ) : (
-          <Box h="calc(100vh - 220px)">
+          <Box>
             <MobileSubNav
               setHamburger={setHamburger}
               setShowSubNav={setShowSubNav}

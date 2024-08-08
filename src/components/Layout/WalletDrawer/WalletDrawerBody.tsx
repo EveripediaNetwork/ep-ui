@@ -14,7 +14,7 @@ import React, { useEffect, useState } from 'react'
 import WalletDetails from './WalletDetails'
 import { useFetchWalletBalance } from '@/hooks/UseFetchWallet'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState, store } from '@/store/store'
+import { type RootState, store } from '@/store/store'
 import { useTranslation } from 'next-i18next'
 import {
   fetchRateAndCalculateTotalBalance,
@@ -34,7 +34,9 @@ import SettingsLink from '../Navbar/SettingsLink'
 import AdminLink from '../Navbar/AdminLink'
 import { adminApiClient, checkIsAdmin } from '@/services/admin'
 
-export const WalletDrawerBody = () => {
+export const WalletDrawerBody = ({
+  handleDrawerOpen,
+}: { handleDrawerOpen: () => void }) => {
   const { t } = useTranslation('common')
   const { address } = useAddress()
   const [isAdmin, setIsAdmin] = React.useState(false)
@@ -230,6 +232,7 @@ export const WalletDrawerBody = () => {
               href={`/login?from=${
                 router.asPath === '/login' ? '/' : router.asPath
               }`}
+              onClick={handleDrawerOpen}
               variant="unstyled"
               display="block"
             >
