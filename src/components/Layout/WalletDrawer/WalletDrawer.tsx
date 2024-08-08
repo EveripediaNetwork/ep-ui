@@ -81,12 +81,21 @@ const WalletDrawer = ({
       </SheetTrigger>
       <SheetContent
         aria-describedby={undefined}
-        className="bg-white dark:bg-gray-800 p-0 z-[9999]"
+        className="bg-white dark:bg-gray-800 p-0 z-[9999] w-[100%] lg:w-3/4"
+        side="right"
       >
         <SheetHeader className="border-b border-gray-200 dark:border-gray-700">
           <div className="flex flex-row items-center justify-between mt-6 p-6">
             <div className="flex flex-row items-center gap-3">
-              <div className="block md:hidden">
+              <div
+                className="block md:hidden"
+                onKeyUp={(event: React.KeyboardEvent<HTMLDivElement>) => {
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    handleDrawerOpen()
+                  }
+                }}
+                onClick={handleDrawerOpen}
+              >
                 <RiArrowLeftSLine size="30" />
               </div>
               <DisplayAvatar
@@ -136,7 +145,7 @@ const WalletDrawer = ({
           </div>
         </SheetHeader>
         <div className="px-6 py-4">
-          <WalletDrawerBody />
+          <WalletDrawerBody handleDrawerOpen={handleDrawerOpen} />
         </div>
       </SheetContent>
     </Sheet>
