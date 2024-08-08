@@ -18,7 +18,7 @@
   "wikiInCategory": "Wikis in this category",
   "careerHeading": "Careers",
   "noOpeningsHeading": "There are currently no open positions at this time",
-  "categoryViewMore": "View More",
+  "categoryViewMore": "See more wikis",
   "recentActivity": "Recent Activity",
   "recentActivityDescription": "Explore recently edited wikis and get updated on the latest information on IQ.wiki across all categories.",
   "checkOutRecentActivity": "Check out recent wiki activities",
@@ -127,5 +127,14 @@
   "signToken": "Sign Token",
   "title": "Install IQ.wiki",
   "description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar and select \"Add to Home Screen\" or \"Install App.\"",
-  "safari_description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar, click on the share icon then select \"Add to Home Screen\" or \"Install App.\" option."
+  "safari_description": "Add IQ.wiki to your home screen for easy access. Navigate to your toolbar, click on the share icon then select \"Add to Home Screen\" or \"Install App.\" option.",
+  "categorynftsTitle": "NFTs",
+  "categorydefiTitle": "Decentralized Finance",
+  "categoryexchangesTitle": "Exchanges",
+  "categorycryptocurrenciesTitle": "Cryptocurrencies",
+  "categorydaosTitle": "DAOs",
+  "categorypeopleTitle": "People in Crypto",
+  "categorydappsTitle": "Decentralized Applications",
+  "categoryorganizationsTitle": "Organizations",
+  "categoryViewAll": "View all"
 }

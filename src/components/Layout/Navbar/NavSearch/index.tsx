@@ -1,4 +1,5 @@
-import React, { useRef } from 'react'
+import type React from 'react'
+import { useRef } from 'react'
 import {
   Button,
   Center,
@@ -7,7 +8,7 @@ import {
   InputLeftElement,
   Spinner,
   chakra,
-  HTMLChakraProps,
+  type HTMLChakraProps,
   Text,
   useEventListener,
   Wrap,
@@ -22,11 +23,11 @@ import {
   AutoCompleteInput,
   AutoCompleteItem,
   AutoCompleteList,
-  AutoCompleteListProps,
+  type AutoCompleteListProps,
 } from '@choc-ui/chakra-autocomplete'
 import {
   fillType,
-  SearchItem,
+  type SearchItem,
   SEARCH_TYPES,
   useNavSearch,
 } from '@/services/search/utils'
@@ -335,22 +336,16 @@ const NavSearch = (props: NavSearchProps) => {
           })
         }}
       >
-        <InputGroup
-          size="lg"
-          maxW="600px"
-          display={{ base: 'none', md: 'block' }}
-          {...inputGroupProps}
-        >
+        <InputGroup size="lg" {...inputGroupProps}>
           <InputLeftElement
-            ml={{ base: '15px', xl: 'unset' }}
+            ml={{ base: '8px', xl: 'unset' }}
             pointerEvents="none"
             h="full"
           >
             <Search2Icon color="gray.300" />
           </InputLeftElement>
           <AutoCompleteInput
-            maxW={{ base: 'unset', md: '600px' }}
-            ml={{ base: '15px', xl: 'unset' }}
+            width={{ base: '360px', md: '720px', lg: '100%', '2xl': '100%' }}
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder={t('SearchWikiPlaceholder')}
@@ -364,10 +359,16 @@ const NavSearch = (props: NavSearchProps) => {
           />
         </InputGroup>
         <AutoCompleteList
-          mx={{ base: '15px', xl: 'unset' }}
           p="0"
           maxH="auto"
           shadow="lg"
+          width={{
+            base: '360px',
+            md: '720px',
+            lg: '350px',
+            xl: '420px',
+            '2xl': '850px',
+          }}
           {...listProps}
         >
           {isLoading ? loadingView : searchList}

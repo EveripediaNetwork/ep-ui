@@ -6,12 +6,12 @@ import {
   Thead,
   Tr,
   Flex,
-  TableContainerProps,
+  type TableContainerProps,
 } from '@chakra-ui/react'
 import { RankingListHead } from '@/data/RankingListData'
 import RankPagination from './RankPagination'
-import { RankTableProps } from '@/types/RankDataTypes'
-import { OnClickMap } from '@/types/RankDataTypes'
+import type { RankTableProps } from '@/types/RankDataTypes'
+import type { OnClickMap } from '@/types/RankDataTypes'
 import { useTranslation } from 'next-i18next'
 
 export const RankTable = ({
@@ -28,9 +28,6 @@ export const RankTable = ({
     <TableContainer
       w="full"
       boxShadow="3xl"
-      borderRadius="8px"
-      bg="rankingListTableBg"
-      border="1px solid"
       borderColor="rankingListBorder"
       _dark={{ boxShadow: '0px 25px 50px -12px rgba(16, 16, 17, 0.25)' }}
       borderBottom="none"
@@ -58,7 +55,7 @@ export const RankTableHead = ({ onClickMap }: RankTableHeadProps) => {
   const { t } = useTranslation(['rank', 'common'])
 
   return (
-    <Thead h="45px" bg="rankingListTableHead">
+    <Thead h="45px">
       <Tr>
         {RankingListHead.map((item, i) => {
           const onClick = onClickMap?.[item.id]

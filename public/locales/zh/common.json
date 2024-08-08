@@ -133,5 +133,14 @@
   "signToken": "签名令牌",
   "title": "安裝 IQ.wiki",
   "description": "將 IQ.wiki 新增到您的主畫面以便於存取。導航至工具列並選擇“新增至主畫面”或“安裝應用程式。”",
-  "safari_description": "將 IQ.wiki 新增到您的主畫面以便於存取。導航到工具欄，點擊共享圖標，然後選擇“添加到主螢幕”或“安裝應用程式。”選項。”"
+  "safari_description": "將 IQ.wiki 新增到您的主畫面以便於存取。導航到工具欄，點擊共享圖標，然後選擇“添加到主螢幕”或“安裝應用程式。”選項。”",
+  "categorynftsTitle": "NFTs",
+  "categorydefiTitle": "去中心化金融",
+  "categoryexchangesTitle": "交易所",
+  "categorycryptocurrenciesTitle": "加密货币",
+  "categorydaosTitle": "DAOs",
+  "categorypeopleTitle": "加密领域的人",
+  "categorydappsTitle": "去中心化应用",
+  "categoryorganizationsTitle": "组织",
+  "categoryViewAll": "查看全部"
 }
