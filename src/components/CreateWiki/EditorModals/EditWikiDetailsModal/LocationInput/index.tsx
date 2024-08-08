@@ -15,23 +15,19 @@ const LocationInput = () => {
   const [value, setValue] = useState('')
   const [locationId, setLocationId] = useState('')
   const [isEditing, setIsEditing] = useState(false)
-  const [location, setLocation] = useState<Location[]>([])
 
-  useEffect(() => {
-    const metadataValue =
-      getWikiMetadataById(store.getState().wiki, CommonMetaIds.LOCATION)
-        ?.value || '[]'
-    const parsedMetadata = JSON.parse(metadataValue)
-    const fetchedLocation = Array.isArray(parsedMetadata)
-      ? parsedMetadata
-      : [parsedMetadata]
+  const metadataValue =
+    getWikiMetadataById(store.getState().wiki, CommonMetaIds.LOCATION)?.value ||
+    '[]'
+  const parsedMetadata = JSON.parse(metadataValue)
+  const fetchedLocation = Array.isArray(parsedMetadata)
+    ? parsedMetadata
+    : [parsedMetadata]
 
-    const updatedLocations = fetchedLocation.map((location: Location) => ({
-      ...location,
-      id: location.id || uuidv4(),
-    }))
-    setLocation(updatedLocations)
-  }, [])
+  const location = fetchedLocation.map((location: Location) => ({
+    ...location,
+    id: location.id || uuidv4(),
+  }))
 
   const handleAddLocation = () => {
     if (selectRegion === '' && value === '' && selectMonth === '') return
