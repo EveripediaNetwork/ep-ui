@@ -1,11 +1,11 @@
-import { ArrowRightIcon } from 'lucide-react'
-import { RiDatabaseFill } from 'react-icons/ri'
-import React, { useCallback, useEffect, useState } from 'react'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
-import Link from 'next/link'
-import Image from 'next/image'
-import { useTranslation } from 'next-i18next'
 import type { CategoryDataType } from '@/types/CategoryDataTypes'
+import { ArrowRightIcon } from 'lucide-react'
+import { useTranslation } from 'next-i18next'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
+import { RiDatabaseFill } from 'react-icons/ri'
 
 const NUMBER_OF_ITEMS_TO_SHOW = 5
 

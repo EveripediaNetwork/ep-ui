@@ -30,7 +30,7 @@ export function LocaleSelect({
       <PopoverTrigger asChild>
         <Button
           variant="outline"
-          className="uppercase px-2 h-8 dark:bg-gray800 bg-white border-none flex flex-row items-center gap-2 font-semibold"
+          className="uppercase px-0 h-8 dark:bg-gray800 bg-white border-none flex flex-row items-center gap-2 font-semibold hover:dark:bg-gray800 hover:bg-white"
         >
           {locale}
           <ChevronDownIcon className="w-5 h-5 opacity-80" />

@@ -64,7 +64,7 @@ const Navbar = () => {
 
   return (
     <div
-      className="shadow-sm fixed top-0 left-0 right-0 z-[9999] md:z-50 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200"
+      className="shadow-sm fixed top-0 left-0 right-0 z-[9999] md:z-50 w-full bg-white dark:bg-gray800 border-b dark:border-alpha-100 border-gray-200 lg:py-2"
       style={{
         height: drawerOperations.isOpen ? '100%' : 'unset',
       }}
@@ -92,7 +92,7 @@ const Navbar = () => {
           />
           <Button
             variant="outline"
-            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800 border-gray-200 dark:border-alpha-400 px-6 py-2 text-xs"
+            className="hover:no-underline hover:bg-gray-200 bg-white dark:bg-gray800 border-gray-200 dark:border-alpha-400 px-5 py-1 text-sm"
             onClick={userCanEdit && address ? () => {} : onSuggestWikiOpen}
           >
             {userCanEdit && address ? (
@@ -123,7 +123,7 @@ const Navbar = () => {
         <div className="xl:hidden flex flex-row items-center gap-2 justify-center">
           <RiSearchLine
             onClick={handleSearchOpen}
-            className="w-6 h-6 md:w-7 md:h-7 text-gray-500 dark:text-alpha-800 mr-1"
+            className="w-6 h-6 md:w-7 md:h-7 text-gray-500 dark:text-alpha-800 mr-0 md:mr-1 lg:hidden"
           />
           <WalletDrawer
             isOpen={isDrawerOpen}

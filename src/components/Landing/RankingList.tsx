@@ -17,8 +17,8 @@ import RankingItem from '../Rank/RankCardItem'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 
 import { tabsData } from '@/data/RanksTabsData'
-import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 import Link from 'next/link'
+import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
 
 type RankingListProps = {
   rankings: {
@@ -33,7 +33,7 @@ type RankingListProps = {
 
 enum RankingListTabs {
   Cryptocurrencies = 'cryptocurrencies',
-  Stablecoins = 'stableCCoins',
+  Stablecoins = 'stableCoins',
   AITokens = 'aitokens',
   Founders = 'founders',
   NFTs = 'nfts',
@@ -43,6 +43,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [selectedTab, setSelectedTab] = useState<RankingListTabs>(
     RankingListTabs.Cryptocurrencies,
   )
+
   const TokensListing = rankings?.TokensListing
   const aiTokensListing = rankings?.aiTokensListing
   const NFTsListing = rankings?.NFTsListing
@@ -132,21 +133,14 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
           </p>
         </div>
         <div>
-          <Tabs
-            defaultValue={t('rankingListButtonCryptocurrencies')}
-            className="overflow-hidden"
-          >
+          <Tabs defaultValue="cryptocurrencies" className="overflow-hidden">
             <div className="overflow-x-auto scrollbar-hide">
               <TabsList className="mb-4 space-x-6">
                 {tabsData.map((tab) => (
                   <TabsTrigger
                     key={tab.value}
-                    value={t(tab.value)}
-                    onClick={() =>
-                      handleSelectedTab(
-                        t(tab.value).replaceAll(' ', '').toLowerCase(),
-                      )
-                    }
+                    value={t(tab.id)}
+                    onClick={() => handleSelectedTab(t(tab.id))}
                     className="flex flex-row items-center gap-2"
                   >
                     <tab.icon className="text-brand-500 dark:text-brand-800 w-6 h-6" />
@@ -155,7 +149,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 ))}
               </TabsList>
             </div>
-            <TabsContent value={t('rankingListButtonCryptocurrencies')}>
+            <TabsContent value="cryptocurrencies">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -176,7 +170,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 </Tbody>
               </RankTable>
             </TabsContent>
-            <TabsContent value={t('rankingListButtonStablecoins')}>
+            <TabsContent value="stableCoins">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -197,7 +191,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 </Tbody>
               </RankTable>
             </TabsContent>
-            <TabsContent value={t('rankingListButtonAITokens')}>
+            <TabsContent value="aitokens">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -218,7 +212,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 </Tbody>
               </RankTable>
             </TabsContent>
-            <TabsContent value={t('rankingListButtonFounders')}>
+            <TabsContent value="founders">
               <FoundersRankTable hasPagination={false}>
                 <FoundersRankTableHead onClickMap={onClickMap} />
                 <Tbody>
@@ -239,7 +233,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
                 </Tbody>
               </FoundersRankTable>
             </TabsContent>
-            <TabsContent value={t('rankingListButtonNfts')}>
+            <TabsContent value="nfts">
               <RankTable hasPagination={false}>
                 <RankTableHead onClickMap={onClickMap} />
                 <Tbody>
