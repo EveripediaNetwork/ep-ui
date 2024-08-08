@@ -77,6 +77,7 @@ export const Index = ({
   trending,
   categories,
 }: HomePageProps) => {
+  console.log(leaderboards)
   return (
     <section>
       <Hero />
@@ -88,7 +89,7 @@ export const Index = ({
         <CategoriesList categories={categories} />
         <EventOverview />
       </div>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+      {leaderboards?.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
     </section>
   )
@@ -214,7 +215,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     )
   }
   let sortedPromotedWikis: PromotedWikisBuilder[] = []
-  if (promotedWikis?.length) {
+  if (promotedWikis) {
     sortedPromotedWikis = [...promotedWikis]
     sortedPromotedWikis?.sort((a, b) => a.promoted - b.promoted)
   }
