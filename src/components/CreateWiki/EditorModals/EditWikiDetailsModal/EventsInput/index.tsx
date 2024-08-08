@@ -137,8 +137,6 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         'type',
       ) as HTMLSelectElement
 
-      console.log(data.type)
-
       if (data.type) {
         setEventType(data.type)
       }

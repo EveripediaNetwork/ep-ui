@@ -314,9 +314,6 @@ importers:
       unified:
         specifier: ^10.1.2
         version: 10.1.2
-      use-google-maps-script:
-        specifier: ^0.1.2
-        version: 0.1.2(react@18.3.1)
       uuid:
         specifier: ^8.3.2
         version: 8.3.2
@@ -7301,11 +7298,6 @@ packages:
     peerDependenciesMeta:
       '@types/react':
         optional: true
-
-  use-google-maps-script@0.1.2:
-    resolution: {integrity: sha512-7GQGb8nFrZ3QixGHI34kyTV1NLy5mifUvDl7wnqw3GXGK+KPucD5jtDgpgi/CAqTXwzymw2QIZrQYXmMJOcxCw==}
-    peerDependencies:
-      react: '>=16'
 
   use-isomorphic-layout-effect@1.1.2:
     resolution: {integrity: sha512-49L8yCO3iGT/ZF9QttjwLF/ZD9Iwto5LnH5LmEdk/6cFmXddqi2ulF0edxTwjj+7mqvpVVGQWvbXZdn32wRSHA==}
@@ -16167,11 +16159,6 @@ snapshots:
       tslib: 2.6.3
     optionalDependencies:
       '@types/react': 18.3.3
-
-  use-google-maps-script@0.1.2(react@18.3.1):
-    dependencies:
-      invariant: 2.2.4
-      react: 18.3.1
 
   use-isomorphic-layout-effect@1.1.2(@types/react@18.3.3)(react@18.3.1):
     dependencies:
