@@ -214,7 +214,7 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
     )
   }
   let sortedPromotedWikis: PromotedWikisBuilder[] = []
-  if (promotedWikis) {
+  if (promotedWikis?.length) {
     sortedPromotedWikis = [...promotedWikis]
     sortedPromotedWikis?.sort((a, b) => a.promoted - b.promoted)
   }
