@@ -3,19 +3,19 @@ import TrendingEvent from '@/components/Event/TrendingEvent'
 import EventBanner from '@/components/Event/EventBanner'
 import EventInterest from '@/components/Event/EventInterest'
 import EventSearchBar from '@/components/Event/EventSearchBar'
-import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
+// import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
-import { GetStaticProps } from 'next'
+import type { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useState } from 'react'
 import EventList from '@/components/Event/EventList'
-import { TEvents, getEvents, getPopularEvents } from '@/services/event'
+import { type TEvents, getEvents, getPopularEvents } from '@/services/event'
 import { store } from '@/store/store'
 import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
-import { DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { useRouter } from 'next/router'
-import { useGetIpDetailsQuery } from '@/services/location'
+// import { useGetIpDetailsQuery } from '@/services/location'
 
 const EventPage = ({
   events,
@@ -30,7 +30,7 @@ const EventPage = ({
   const [searchDate, setSearchDate] = useState<DateRange>()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const router = useRouter()
-  const { data: countryName } = useGetIpDetailsQuery()
+  // const { data: countryName } = useGetIpDetailsQuery()
 
   const clearSearchState = () => {
     setEventData(events)
@@ -91,7 +91,7 @@ const EventPage = ({
               />
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter countryName={countryName ?? ''} />
+              {/* <NearbyEventFilter countryName={countryName ?? ''} /> */}
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
