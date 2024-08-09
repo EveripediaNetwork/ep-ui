@@ -10,7 +10,7 @@ import {
   GET_EVENT_BY_TITLE,
   GET_POPULAR_EVENTS,
 } from './queries'
-import { Image, MData } from '@everipedia/iq-utils'
+import type { Image, MData } from '@everipedia/iq-utils'
 
 export type TEventsDate = {
   type: string
@@ -111,11 +111,11 @@ export const eventApi = createApi({
     }),
     getPopularEvents: builder.query<
       TEvents[],
-      { limit?: number; offset?: number }
+      { limit?: number; offset?: number; startDate?: string }
     >({
-      query: ({ limit, offset }) => ({
+      query: ({ limit, offset, startDate }) => ({
         document: GET_POPULAR_EVENTS,
-        variables: { limit, offset },
+        variables: { limit, offset, startDate },
       }),
       transformResponse: (response: TGetPopularEventResponse) =>
         response.popularEvents,

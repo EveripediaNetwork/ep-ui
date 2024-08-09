@@ -13,6 +13,7 @@ import { dateFormater } from '@/lib/utils'
 import FilterOptions from './FilterOptions'
 import type { Filters } from './index.type'
 import { useTranslation } from 'next-i18next'
+import type { SetState } from '@/utils/event.utils'
 
 const defaultFilters: Filters = {
   date: '',
@@ -23,7 +24,7 @@ const defaultFilters: Filters = {
 
 const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   const today = new Date()
-  let startDate: string | undefined
+  let startDate = dateFormater(today)
   let endDate: string | undefined
 
   switch (filter.date) {
@@ -87,8 +88,8 @@ const EventFilter = ({
   setIsLoading,
 }: {
   fetchedData: TEvents[]
-  setEventData: (data: TEvents[]) => void
-  setIsLoading: (isLoading: boolean) => void
+  setEventData: SetState<TEvents[]>
+  setIsLoading: SetState<boolean>
 }) => {
   const [selectedFilter, setSelectedFilter] = useState('Date')
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
@@ -189,7 +190,6 @@ const EventFilter = ({
   useEffect(() => {
     const updatedFilters: Filters = { ...defaultFilters }
 
-    // Iterate over each filter key and update the state if a corresponding query parameter exists
     for (const key of Object.keys(defaultFilters)) {
       const queryParam = router.query[key]
       if (queryParam) {
@@ -212,9 +212,10 @@ const EventFilter = ({
     setDateRange(undefined)
     setEventData(fetchedData)
     const newQuery = { ...router.query }
-    for (const key of Object.keys(defaultFilters)) {
+    for (const key in defaultFilters) {
       delete newQuery[key]
     }
+
     router.push({ pathname: router.pathname, query: newQuery }, undefined, {
       shallow: true,
     })
@@ -285,7 +286,7 @@ const EventFilter = ({
               <FilterOptions
                 eventFilter={eventFilter}
                 category={
-                  eventFilter.title === 'Event Type'
+                  eventFilter.title === 'eventType'
                     ? 'eventType'
                     : (eventFilter.title.toLowerCase() as keyof Filters)
                 }

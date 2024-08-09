@@ -4,6 +4,8 @@ interface Location {
   country?: string
 }
 
+export type SetState<T> = React.Dispatch<React.SetStateAction<T>>
+
 // Helper function to determine if eventLocation is non-empty
 export const isEventLocation = (location: Location | Location[]) => {
   if (!location) return false

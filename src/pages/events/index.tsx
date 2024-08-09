@@ -3,7 +3,7 @@ import TrendingEvent from '@/components/Event/TrendingEvent'
 import EventBanner from '@/components/Event/EventBanner'
 import EventInterest from '@/components/Event/EventInterest'
 import EventSearchBar from '@/components/Event/EventSearchBar'
-import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
+// import NearbyEventFilter from '@/components/Event/NearbyEventFilter'
 import PopularEventFilter from '@/components/Event/PopularEventFilter'
 import type { GetStaticProps } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
@@ -15,7 +15,8 @@ import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
 import type { DateRange } from 'react-day-picker'
 import { useRouter } from 'next/router'
-import { useGetIpDetailsQuery } from '@/services/location'
+import { dateFormater } from '@/lib/utils'
+// import { useGetIpDetailsQuery } from '@/services/location'
 
 const EventPage = ({
   events,
@@ -30,7 +31,12 @@ const EventPage = ({
   const [searchDate, setSearchDate] = useState<DateRange>()
   const [searchQuery, setSearchQuery] = useState<string>('')
   const router = useRouter()
-  const { data: countryName } = useGetIpDetailsQuery()
+  // const { data: countryName } = useGetIpDetailsQuery()
+  // const { data } = useGetEventsQuery({
+  //   offset: 0,
+  //   limit: EVENT_TEST_ITEM_PER_PAGE,
+  //   startDate: dateFormater(new Date()),
+  // })
 
   const clearSearchState = () => {
     setEventData(events)
@@ -91,7 +97,7 @@ const EventPage = ({
               />
             </div>
             <div className="grid md:grid-cols-2 xl:grid-cols-1 gap-10 md:gap-4 lg:gap-10">
-              <NearbyEventFilter countryName={countryName ?? ''} />
+              {/* <NearbyEventFilter countryName={countryName ?? ''} /> */}
               <PopularEventFilter popularEvents={popularEvents} />
             </div>
           </div>
@@ -108,11 +114,16 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     getEvents.initiate({
       offset: 0,
       limit: EVENT_TEST_ITEM_PER_PAGE,
+      startDate: dateFormater(new Date()),
     }),
   )
 
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate({ offset: 0, limit: 4 }),
+    getPopularEvents.initiate({
+      offset: 0,
+      limit: 4,
+      startDate: dateFormater(new Date()),
+    }),
   )
   return {
     props: {

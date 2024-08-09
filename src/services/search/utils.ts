@@ -5,8 +5,8 @@ import {
 } from '@/services/search'
 import { getTagWikis } from '@/services/wikis'
 import { store } from '@/store/store'
-import { CategoryDataType } from '@/types/CategoryDataTypes'
-import { WikiPreview } from '@everipedia/iq-utils'
+import type { CategoryDataType } from '@/types/CategoryDataTypes'
+import type { WikiPreview } from '@everipedia/iq-utils'
 import { debounce } from 'debounce'
 import { useEffect, useState } from 'react'
 import {
