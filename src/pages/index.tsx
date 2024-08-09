@@ -88,7 +88,7 @@ export const Index = ({
         <CategoriesList categories={categories} />
         <EventOverview />
       </div>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+      {leaderboards?.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
     </section>
   )
