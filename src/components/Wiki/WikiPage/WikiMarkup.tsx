@@ -2,9 +2,9 @@ import dynamic from 'next/dynamic'
 import {
   CommonMetaIds,
   EditSpecificMetaIds,
-  Media,
-  User,
-  Wiki,
+  type Media,
+  type User,
+  type Wiki,
 } from '@everipedia/iq-utils'
 import { Box, Flex, HStack, VStack, chakra, Text } from '@chakra-ui/react'
 import React from 'react'
@@ -70,7 +70,7 @@ const MobileMeta = (wiki: {
 export const WikiMarkup = ({ wiki, ipfs }: WikiLayoutProps) => {
   const referencesRaw =
     getWikiMetadataById(wiki, CommonMetaIds.REFERENCES)?.value ?? '[]'
-  let references
+  let references: any[]
 
   try {
     references = JSON.parse(referencesRaw)

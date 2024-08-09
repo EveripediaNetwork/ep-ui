@@ -1,13 +1,12 @@
+import React, { useEffect, useState } from 'react'
 import {
   LISTING_LIMIT,
   sortBy24hChange,
   sortByMarketCap,
 } from '@/pages/rank/[[...category]]'
-import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
-import { useEffect, useState } from 'react'
-import FounderRankingItem from '../Rank/FounderRankCardItem'
+import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import {
   FoundersRankTable,
   FoundersRankTableHead,
@@ -19,6 +18,7 @@ import { RankTable, RankTableHead } from '../Rank/RankTable'
 import { tabsData } from '@/data/RanksTabsData'
 import Link from 'next/link'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../ui/tabs'
+import FounderRankingItem from '../Rank/FounderRankCardItem'
 
 type RankingListProps = {
   rankings: {
@@ -55,7 +55,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
   const [nftItems, setNftItems] = useState<RankCardType[]>([])
   const [founderItems, setFounderItems] = useState<RankCardType[]>([])
-  const [sortOrder, setOrder] = useState<SortOrder>('descending')
+  const [sortOrder, setSortOrder] = useState<SortOrder>('descending')
   const { t } = useTranslation(['rank', 'common'])
 
   useEffect(() => {
@@ -64,12 +64,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       aiTokensListing &&
       NFTsListing &&
       stableCoinsListing &&
-      foundersListing &&
-      (!tokenItems?.length ||
-        !nftItems?.length ||
-        !aiTokenItems?.length ||
-        !stableCoinItems?.length ||
-        !founderItems?.length)
+      foundersListing
     ) {
       setTokenItems(sortByMarketCap('descending', TokensListing))
       setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
@@ -86,7 +81,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   ])
 
   const onClickMap: OnClickMap = {
-    'Market Cap': () => {
+    // biome-ignore lint/complexity/useArrowFunction: <explanation>
+    'Market Cap': function () {
       if (
         tokenItems &&
         nftItems &&
@@ -96,7 +92,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       ) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
-        setOrder(newSortOrder)
+        setSortOrder(newSortOrder)
         setTokenItems(sortByMarketCap(newSortOrder, TokensListing))
         setAiTokenItems(sortByMarketCap(newSortOrder, aiTokensListing))
         setStableCoinItems(sortByMarketCap(newSortOrder, stableCoinsListing))
@@ -104,7 +100,8 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setFounderItems(sortByMarketCap(newSortOrder, foundersListing))
       }
     },
-    '24h Change': () => {
+    // biome-ignore lint/complexity/useArrowFunction: <explanation>
+    '24h Change': function () {
       if (
         tokenItems &&
         nftItems &&
@@ -114,7 +111,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
       ) {
         const newSortOrder =
           sortOrder === 'ascending' ? 'descending' : 'ascending'
-        setOrder(newSortOrder)
+        setSortOrder(newSortOrder)
         setTokenItems(sortBy24hChange(newSortOrder, TokensListing))
         setAiTokenItems(sortBy24hChange(newSortOrder, aiTokensListing))
         setStableCoinItems(sortBy24hChange(newSortOrder, stableCoinsListing))
