@@ -1,4 +1,4 @@
-import React from 'react'
+import type React from 'react'
 import WikiAccordion from '@/components/Wiki/WikiAccordion'
 import {
   Box,
@@ -7,19 +7,17 @@ import {
   Icon,
   IconButton,
   Link,
-  Skeleton,
   Tag,
   Text,
   VStack,
   Wrap,
 } from '@chakra-ui/react'
-import { CommonMetaIds, Wiki } from '@everipedia/iq-utils'
+import { CommonMetaIds, type Wiki } from '@everipedia/iq-utils'
 import { FiExternalLink } from 'react-icons/fi'
 import { shortenText } from '@/utils/textUtils'
 import { LinkType, LINK_OPTIONS } from '@/data/WikiLinks'
 import { RiExternalLinkLine } from 'react-icons/ri'
 import { useTranslation } from 'next-i18next'
-import { useGetWikiTitleByIdQuery } from '@/services/wikis'
 
 const MAX_FOUNDERS_LIST = 3
 
@@ -33,7 +31,7 @@ const parseLink = (link: string) =>
 interface ProfileListItemProps {
   title: string
   children: React.ReactNode
-  lengthyArr?: string[]
+  lengthyArr?: { id: string; title: string }[]
 }
 const ProfileListItem = ({
   title,
@@ -194,48 +192,50 @@ const ProfileSummary = ({ wiki }: ProfileSummaryProps) => {
             ))}
           </ProfileListItem>
         )}
-
-        {wiki.linkedWikis?.founders &&
-          wiki.linkedWikis?.founders?.length > 0 && (
-            <ProfileListItem
-              title={t('Founders')}
-              lengthyArr={wiki.linkedWikis?.founders}
-            >
-              <Flex alignItems="start" flexWrap="wrap" gap="1">
-                {wiki.linkedWikis?.founders.map((founder, i) => (
-                  <LinkedWikiTag key={i} wikiId={founder} />
-                ))}
-              </Flex>
-            </ProfileListItem>
-          )}
-        {wiki.linkedWikis?.blockchains &&
-          wiki.linkedWikis?.blockchains?.length > 0 && (
-            <ProfileListItem
-              title={t('Blockchains')}
-              lengthyArr={wiki.linkedWikis?.blockchains}
-            >
-              <Flex alignItems="start" flexWrap="wrap" gap="1">
-                {wiki.linkedWikis?.blockchains.map((item, i) => (
-                  <LinkedWikiTag key={i} wikiId={item} />
-                ))}
-              </Flex>
-            </ProfileListItem>
-          )}
+        {wiki.founderWikis && wiki.founderWikis.length > 0 && (
+          <ProfileListItem title={t('Founders')} lengthyArr={wiki.founderWikis}>
+            <Flex alignItems="start" flexWrap="wrap" gap="1">
+              {wiki.founderWikis.map((founder) => (
+                <LinkedWikiTag
+                  key={founder.id}
+                  wikiId={founder.id}
+                  wikiTitle={founder.title}
+                />
+              ))}
+            </Flex>
+          </ProfileListItem>
+        )}
+        {wiki.blockchainWikis && wiki.blockchainWikis?.length > 0 && (
+          <ProfileListItem
+            title={t('Blockchains')}
+            lengthyArr={wiki.blockchainWikis}
+          >
+            <Flex alignItems="start" flexWrap="wrap" gap="1">
+              {wiki.blockchainWikis.map((blockchain) => (
+                <LinkedWikiTag
+                  key={blockchain.id}
+                  wikiId={blockchain.id}
+                  wikiTitle={blockchain.title}
+                />
+              ))}
+            </Flex>
+          </ProfileListItem>
+        )}
       </WikiAccordion>
     </VStack>
   )
 }
 
-const LinkedWikiTag = ({ wikiId }: { wikiId: string }) => {
-  const { data, isLoading } = useGetWikiTitleByIdQuery(wikiId)
-
-  if (isLoading) return <Skeleton w="100px" h="20px" />
-
-  if (!data) return null
-
+const LinkedWikiTag = ({
+  wikiId,
+  wikiTitle,
+}: {
+  wikiId: string
+  wikiTitle: string
+}) => {
   return (
     <Link w="max-content" href={`/wiki/${wikiId}`}>
-      <Tag py="1">{data}</Tag>
+      <Tag py="1">{wikiTitle}</Tag>
     </Link>
   )
 }

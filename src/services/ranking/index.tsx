@@ -9,7 +9,7 @@ import {
   GET_FOUNDERS_RANKINGS,
 } from '@/services/ranking/queries'
 import config from '@/config'
-import { RankCardType } from '@/types/RankDataTypes'
+import type { RankCardType } from '@/types/RankDataTypes'
 
 type RankListResponse = {
   rankList: RankCardType[]
@@ -125,22 +125,19 @@ export const rankingAPI = createApi({
         kind: string
         limit: number
         offset: number
-        founders: boolean
       }
     >({
       query: ({
         kind,
         limit,
         offset,
-        founders,
       }: {
         kind: string
         limit?: number
         offset?: number
-        founders: boolean
       }) => ({
         document: GET_FOUNDERS_RANKINGS,
-        variables: { kind, limit, offset, founders },
+        variables: { kind, limit, offset },
       }),
       transformResponse: (response: RankListResponse) => response.rankList,
     }),

@@ -143,7 +143,6 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       kind: 'TOKEN',
       limit: RANKING_LIST_LIMIT,
       offset: 1,
-      founders: true,
     }),
   )
   const { data: aiTokensList } = await store.dispatch(

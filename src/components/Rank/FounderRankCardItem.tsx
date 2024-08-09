@@ -1,12 +1,10 @@
 import React from 'react'
 import { Box, Flex, Text, Td, Tr, Stat, StatArrow } from '@chakra-ui/react'
-import { formatFoundersArray } from '@/utils/DataTransform/formatFoundersArray'
 import { EventType } from '@everipedia/iq-utils'
 import { Link } from '../Elements'
 import type { SortOrder, RankCardType } from '@/types/RankDataTypes'
 import { getWikiImageUrl } from '@/utils/WikiUtils/getWikiImageUrl'
 import Image from 'next/image'
-import { WikiLinkTag } from './RankCardItem'
 
 const MAX_LINKED_WIKIS = 3
 
@@ -77,58 +75,52 @@ const FounderRankingItem = ({
         maxW={'350px'}
         minW={'300px'}
       >
-        {item?.founderWikis ? (
+        {item?.founderWikis && item.founderWikis.length > 0 ? (
           <Flex alignItems={'center'}>
             <Flex mr={3}>
               {item.founderWikis
                 .slice(0, MAX_LINKED_WIKIS)
-                .map((founder, i) => {
-                  return (
-                    <React.Fragment key={`founder${i}`}>
-                      <Flex
-                        display={'inline-block'}
-                        minW={'40px'}
-                        marginLeft={i > 0 ? '-15px' : '0px'}
-                      >
-                        <Image
-                          src={getWikiImageUrl(founder?.images)}
-                          alt={founder?.title}
-                          width={36}
-                          height={36}
-                          style={{
-                            borderRadius: '50%',
-                            objectFit: 'cover',
-                            height: '36px',
-                            width: '36px',
-                            border: '2px solid',
-                            borderColor: 'white',
-                          }}
-                        />
-                      </Flex>
-                    </React.Fragment>
-                  )
-                })}
+                .map((founder, i) => (
+                  <Flex
+                    key={`founderImage-${founder.id}`}
+                    display={'inline-block'}
+                    minW={'40px'}
+                    marginLeft={i > 0 ? '-15px' : '0px'}
+                  >
+                    <Image
+                      src={getWikiImageUrl(founder?.images)}
+                      alt={founder?.title}
+                      width={36}
+                      height={36}
+                      style={{
+                        borderRadius: '50%',
+                        objectFit: 'cover',
+                        height: '36px',
+                        width: '36px',
+                        border: '2px solid',
+                        borderColor: 'white',
+                      }}
+                    />
+                  </Flex>
+                ))}
             </Flex>
             <Flex display={'inline-block'} flexWrap="wrap">
-              {formatFoundersArray(
-                item.founderWikis.map((founder) => founder?.title),
-              )
-                ?.slice(0, MAX_LINKED_WIKIS)
-                ?.map((founderName, i, arr) => {
-                  const founder = item.linkedWikis?.founders[i]
-                  return (
-                    <Link
-                      href={`/wiki/${founder}`}
-                      key={`founder${i}`}
-                      color="brandLinkColor"
-                    >
-                      {founderName}
-                      {i !== arr?.length - 1 && arr?.length > 1 && ', '}
-                      {i === 1 && <br />}
+              {item.founderWikis
+                .slice(0, MAX_LINKED_WIKIS)
+                .map((founder, i, arr) => (
+                  <React.Fragment key={`founder-${founder.id}${i}`}>
+                    <Link href={`/wiki/${founder.id}`} color="brandLinkColor">
+                      {founder.title}
                     </Link>
-                  )
-                })}
-              {item.linkedWikis?.founders?.length > 3 && (
+                    {i !== arr.length - 1 && (
+                      <Text as="span" color="brandLinkColor">
+                        {i === arr.length - 2 ? ' and ' : ', '}
+                      </Text>
+                    )}
+                    {i === 1 && <br />}
+                  </React.Fragment>
+                ))}
+              {item.founderWikis.length > MAX_LINKED_WIKIS && (
                 <Text as={'span'} color="brandLinkColor">
                   ...
                 </Text>
@@ -136,9 +128,10 @@ const FounderRankingItem = ({
             </Flex>
           </Flex>
         ) : (
-          <Text>NA</Text>
+          <Text>N/A</Text>
         )}
       </Td>
+
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}
@@ -222,22 +215,23 @@ const FounderRankingItem = ({
         fontSize="14px"
         minW="150px"
       >
-        {item.linkedWikis?.blockchains &&
-        item.linkedWikis.blockchains.length > 0 ? (
+        {item.blockchainWikis && item.blockchainWikis.length > 0 ? (
           <Flex flexWrap="wrap">
-            {item.linkedWikis.blockchains
+            {item.blockchainWikis
               .slice(0, MAX_LINKED_WIKIS)
               .map((blockchain, i) => (
-                <React.Fragment key={`blockchain${i}`}>
+                <React.Fragment key={`blockchain-${blockchain.id}-${i}`}>
                   {i > 0 && (
                     <Box as="span" color="brandLinkColor">
-                      , &nbsp;
+                      ,
                     </Box>
                   )}
-                  <WikiLinkTag wikiId={blockchain} />
+                  <Link href={`/wiki/${blockchain.id}`} color="brandLinkColor">
+                    {blockchain.title}
+                  </Link>
                 </React.Fragment>
               ))}
-            {item.linkedWikis.blockchains.length > MAX_LINKED_WIKIS && (
+            {item.blockchainWikis.length > MAX_LINKED_WIKIS && (
               <Text as="span" color="brandLinkColor">
                 &nbsp;...
               </Text>

@@ -197,7 +197,6 @@ const Rank = ({
       kind: 'TOKEN',
       offset: foundersOffset,
       limit: LISTING_LIMIT,
-      founders: true,
     })
   /* Sets items before render finishes to prevent flash of empty items and reduce Cumulative Layout Shift */
   if (

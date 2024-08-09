@@ -84,6 +84,8 @@ const initialState: Wiki = {
   views: 0,
   events: [],
   linkedWikis: { founders: [], blockchains: [], speakers: [] },
+  founderWikis: [],
+  blockchainWikis: [],
 }
 
 const wikiSlice = createSlice({

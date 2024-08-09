@@ -54,9 +54,17 @@ export const GET_WIKI_BY_ID = gql`
         type
         source
       }
-      linkedWikis {
+      linkedWikis{
         founders
         blockchains
+      }
+      founderWikis {
+        id
+        title
+      }
+      blockchainWikis {
+        id
+        title
       }
       metadata {
         id
