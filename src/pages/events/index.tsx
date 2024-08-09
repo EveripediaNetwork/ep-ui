@@ -15,6 +15,7 @@ import { EVENT_TEST_ITEM_PER_PAGE } from '@/data/Constants'
 import EventFilter from '@/components/Event/EventFilter'
 import type { DateRange } from 'react-day-picker'
 import { useRouter } from 'next/router'
+import { dateFormater } from '@/lib/utils'
 // import { useGetIpDetailsQuery } from '@/services/location'
 
 const EventPage = ({
@@ -31,6 +32,11 @@ const EventPage = ({
   const [searchQuery, setSearchQuery] = useState<string>('')
   const router = useRouter()
   // const { data: countryName } = useGetIpDetailsQuery()
+  // const { data } = useGetEventsQuery({
+  //   offset: 0,
+  //   limit: EVENT_TEST_ITEM_PER_PAGE,
+  //   startDate: dateFormater(new Date()),
+  // })
 
   const clearSearchState = () => {
     setEventData(events)
@@ -108,11 +114,16 @@ export const getStaticProps: GetStaticProps = async ({ locale }) => {
     getEvents.initiate({
       offset: 0,
       limit: EVENT_TEST_ITEM_PER_PAGE,
+      startDate: dateFormater(new Date()),
     }),
   )
 
   const { data: popularEvents } = await store.dispatch(
-    getPopularEvents.initiate({ offset: 0, limit: 4 }),
+    getPopularEvents.initiate({
+      offset: 0,
+      limit: 4,
+      startDate: dateFormater(new Date()),
+    }),
   )
   return {
     props: {

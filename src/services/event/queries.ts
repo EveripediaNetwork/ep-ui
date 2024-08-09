@@ -2,13 +2,7 @@ import { gql } from 'graphql-request'
 
 export const GET_EVENTS = gql`
   query GetEvents($offset: Int, $limit: Int, $startDate: String) {
-    events(
-      offset: $offset
-      limit: $limit
-      startDate: $startDate
-      order: DATE
-      direction: DESC
-    ) {
+    events(offset: $offset, limit: $limit, startDate: $startDate, order: DATE) {
       id
       title
       summary
