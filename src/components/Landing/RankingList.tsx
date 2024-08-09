@@ -7,6 +7,7 @@ import {
 import { Tbody } from '@chakra-ui/react'
 import { useTranslation } from 'next-i18next'
 import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import RankingListButton from '../Rank/RankButton'
 import {
   FoundersRankTable,
   FoundersRankTableHead,
