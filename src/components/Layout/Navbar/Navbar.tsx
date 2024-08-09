@@ -69,14 +69,14 @@ const Navbar = () => {
       }}
     >
       <div className="flex gap-8 lg:gap-40 xl:gap-8 h-16 items-center justify-between px-4 lg:px-8 border-b lg:border-b-0 dark:border-alpha-200 border-gray-200">
-        <Link prefetch={false} href="/">
+        <button onClick={() => router.push('/')} type="button">
           <div className="flex flex-row gap-2 items-center">
             <Logo />
             <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
               IQ.wiki
             </h1>
           </div>
-        </Link>
+        </button>
         <DesktopNav />
         <div className="hidden lg:block w-full">
           <Suspense>
