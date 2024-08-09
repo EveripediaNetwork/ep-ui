@@ -18,7 +18,7 @@ import {
   RiCoinFill,
   RiUserFill,
 } from 'react-icons/ri'
-import { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
+import type { OnClickMap, RankCardType, SortOrder } from '@/types/RankDataTypes'
 import RankingListButton from '../Rank/RankButton'
 import { RankTable, RankTableHead } from '../Rank/RankTable'
 import {
@@ -55,38 +55,29 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
   const stableCoinsListing = rankings?.stableCoinsListing
   const foundersListing = rankings?.foundersListing
 
-  const [tokenItems, setTokenItems] = useState<RankCardType[]>([])
-  const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>([])
-  const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>([])
-  const [nftItems, setNftItems] = useState<RankCardType[]>([])
-  const [founderItems, setFounderItems] = useState<RankCardType[]>([])
+  const [tokenItems, setTokenItems] = useState<RankCardType[]>(
+    sortByMarketCap('descending', TokensListing),
+  )
+  const [aiTokenItems, setAiTokenItems] = useState<RankCardType[]>(
+    sortByMarketCap('descending', aiTokensListing),
+  )
+  const [stableCoinItems, setStableCoinItems] = useState<RankCardType[]>(
+    sortByMarketCap('descending', stableCoinsListing),
+  )
+  const [nftItems, setNftItems] = useState<RankCardType[]>(
+    sortByMarketCap('descending', NFTsListing),
+  )
+  const [founderItems, setFounderItems] = useState<RankCardType[]>(
+    sortByMarketCap('descending', foundersListing),
+  )
   const [sortOrder, setOrder] = useState<SortOrder>('descending')
-  const [selectedRanking, setSelectedRanking] = useState<String | undefined>(
+  const [selectedRanking, setSelectedRanking] = useState<string | undefined>(
     'cryptocurrencies',
   )
   const { t } = useTranslation(['rank', 'common'])
 
-  if (
-    TokensListing &&
-    aiTokensListing &&
-    NFTsListing &&
-    stableCoinsListing &&
-    foundersListing &&
-    (!tokenItems?.length ||
-      !nftItems?.length ||
-      !aiTokenItems?.length ||
-      !stableCoinItems?.length ||
-      !founderItems?.length)
-  ) {
-    setTokenItems(sortByMarketCap('descending', TokensListing))
-    setAiTokenItems(sortByMarketCap('descending', aiTokensListing))
-    setNftItems(sortByMarketCap('descending', NFTsListing))
-    setStableCoinItems(sortByMarketCap('descending', stableCoinsListing))
-    setFounderItems(sortByMarketCap('descending', foundersListing))
-  }
-
   const onClickMap: OnClickMap = {
-    'Market Cap': function () {
+    'Market Cap': () => {
       if (
         tokenItems &&
         nftItems &&
@@ -104,7 +95,7 @@ const RankingList = ({ rankings, listingLimit }: RankingListProps) => {
         setFounderItems(sortByMarketCap(newSortOrder, foundersListing))
       }
     },
-    '24h Change': function () {
+    '24h Change': () => {
       if (
         tokenItems &&
         nftItems &&
