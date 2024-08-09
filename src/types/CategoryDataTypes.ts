@@ -1,5 +1,5 @@
-import { IconType } from 'react-icons'
-import { Image as ImageType, User } from '@everipedia/iq-utils'
+import type { IconType } from 'react-icons'
+import type { Image as ImageType, User } from '@everipedia/iq-utils'
 
 export type CategoryDataType = {
   id: string
@@ -30,4 +30,26 @@ export type TrendingCategoryItemProps = {
   lastModTimeStamp?: string
   wikiId?: string
   WikiImgObj?: ImageType[]
+}
+
+export type CategoryAndWikiDataProps = {
+  title: string
+  id: string
+  wikis: {
+    id: string
+    title: string
+    summary: string
+    user: {
+      id: string
+      profile: {
+        avatar: string
+        username: string
+        id: string
+      }
+    }
+    images: {
+      id: string
+      type: string
+    }[]
+  }[]
 }

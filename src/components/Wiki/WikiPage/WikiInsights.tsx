@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from 'react'
 import { Box, Flex, VStack } from '@chakra-ui/react'
-import { CommonMetaIds, EditSpecificMetaIds, Wiki } from '@everipedia/iq-utils'
-import { TokenStats } from '@/services/token-stats'
-import { NFTStats } from '@/services/nft-stats'
+import {
+  CommonMetaIds,
+  EditSpecificMetaIds,
+  type Wiki,
+} from '@everipedia/iq-utils'
+import type { TokenStats } from '@/services/token-stats'
+import type { NFTStats } from '@/services/nft-stats'
 import { fetchTokenStats, getTokenFromURI } from '@/services/token-stats/utils'
 import { fetchNFTStats } from '@/services/nft-stats/utils'
 import { useStickyBox } from 'react-sticky-box'
@@ -20,6 +24,7 @@ import NFTStatistics from './InsightComponents/NFTStatistics'
 import BrainBot from './InsightComponents/BrainBot/BrainBot'
 import BrainBotMobile from './InsightComponents/BrainBot/BrainBotMobile'
 import WikiRating from './InsightComponents/WikiRating'
+import { usePostHog } from 'posthog-js/react'
 
 export interface WikiInsightsProps {
   wiki: Wiki
@@ -28,6 +33,7 @@ export interface WikiInsightsProps {
 }
 
 const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
+  const posthog = usePostHog()
   const stickyRef = useStickyBox({ offsetTop: 50, offsetBottom: 20 })
   const coingeckoLink = wiki.metadata.find(
     (meta) => meta.id === CommonMetaIds.COINGECKO_PROFILE,
@@ -52,6 +58,17 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
   const [tokenStats, setTokenStats] = useState<TokenStats>()
   const [nftStats, setNftStats] = useState<NFTStats>()
 
+  const trackBrainBotInteraction = (
+    action: string,
+    properties: Record<string, any> = {},
+  ) => {
+    posthog?.capture(`brainbot_${action}`, {
+      wiki_id: wiki.id,
+      ...properties,
+    })
+  }
+
+  // biome-ignore lint/correctness/useExhaustiveDependencies: <explanation>
   useEffect(() => {
     if (!wikiIsNFT) {
       const fetchTokenData = async () => {
@@ -106,7 +123,7 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               }}
               minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
             >
-              <BrainBot wiki={wiki} />
+              <BrainBot wiki={wiki} onInteraction={trackBrainBotInteraction} />
             </Box>
             <Box
               display={{
@@ -115,7 +132,12 @@ const WikiInsights = ({ wiki, ipfs, dateTime }: WikiInsightsProps) => {
               }}
               minW={{ base: '100%', xl: 'clamp(300px, 25vw, 430px)' }}
             >
-              {<BrainBotMobile wiki={wiki} />}
+              {
+                <BrainBotMobile
+                  wiki={wiki}
+                  onInteraction={trackBrainBotInteraction}
+                />
+              }
             </Box>
             <Box w="full" display={{ base: 'none', xl: 'block' }}>
               <WikiRating contentId={wiki.id} />

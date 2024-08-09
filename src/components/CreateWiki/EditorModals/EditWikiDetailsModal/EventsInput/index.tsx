@@ -9,11 +9,11 @@ import {
 } from '@chakra-ui/react'
 import { useAppDispatch } from '@/store/hook'
 import { isValidUrl } from '@/utils/textUtils'
-import { BaseEvents, EventType, Wiki } from '@everipedia/iq-utils'
+import { type BaseEvents, EventType, type Wiki } from '@everipedia/iq-utils'
 import { EventsList } from './EventsList'
 import { useTranslation } from 'next-i18next'
 import { DatePickerDemo } from '@/components/ui/DatePicker'
-import { DateRange } from 'react-day-picker'
+import type { DateRange } from 'react-day-picker'
 import { dateFormater } from '@/lib/utils'
 import ComboBoxPopup from '../ComboBoxPopup'
 
@@ -52,7 +52,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
   const [errMsg, setErrMsg] = React.useState<string | null>(null)
   const [isUpdate, setIsUpdate] = React.useState<boolean>(false)
   const [inputTitle, setInputTitle] = useState<string | undefined>(undefined)
-  const [isMultiDate, setIsMultiDate] = useState<string>('')
+  const [eventType, setEventType] = useState<string>('')
   const [dateRange, setDateRange] = useState<DateRange>()
   const formRef = React.useRef<HTMLFormElement>(null)
   const { t } = useTranslation('wiki')
@@ -101,7 +101,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
     formRef.current?.reset()
     setResetDropdown(true)
     setDateRange(undefined)
-    setIsMultiDate('')
+    setEventType('')
     setIsUpdate(false)
     if (wiki.events && wiki.events?.length >= 1) {
       setInputTitle(undefined)
@@ -137,10 +137,8 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
         'type',
       ) as HTMLSelectElement
 
-      if (data.type === EventType.MULTIDATE) {
-        setIsMultiDate('MULTIDATE')
-      } else {
-        setIsMultiDate('')
+      if (data.type) {
+        setEventType(data.type)
       }
 
       if (dateInput) {
@@ -217,7 +215,7 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               gridTemplateColumns={{ base: '1fr', md: '0.8fr 1fr 1fr' }}
               gap="3"
             >
-              {isMultiDate === 'MULTIDATE' ? (
+              {eventType === 'MULTIDATE' ? (
                 <DatePickerDemo
                   date={dateRange}
                   onDateSelect={setDateRange}
@@ -248,9 +246,9 @@ const EventsInput = ({ wiki }: { wiki: Wiki }) => {
               />
               <ComboBoxPopup
                 options={eventOptions}
-                defaultSelect={isMultiDate}
+                defaultSelect={eventType}
                 onSelect={(value) => {
-                  setIsMultiDate(value)
+                  setEventType(value)
                   setResetDropdown(false)
                 }}
                 placeholder={t('selectCategory')}

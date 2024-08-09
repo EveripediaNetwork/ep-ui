@@ -1,7 +1,7 @@
-import React, { Suspense } from 'react'
-import { Box, Stack } from '@chakra-ui/react'
+import { Suspense } from 'react'
 import dynamic from 'next/dynamic'
 import Navbar from '../Navbar/Navbar'
+import NavigationTabs from './NavigationTabs'
 
 const Footer = dynamic(() => import('@/components/Layout/Footer/Footer'), {
   suspense: true,
@@ -15,13 +15,12 @@ const Layout = ({
   noFooter?: boolean
 }) => {
   return (
-    <Stack justify="space-between" minH="100vh" spacing={0}>
+    <div className="flex flex-col min-h-screen">
       <Navbar />
-      <Box as="main" pt={'70px'}>
-        {children}
-      </Box>
+      <div className="mt-16 flex-1 overflow-hidden">{children}</div>
+      <NavigationTabs />
       <Suspense>{!noFooter && <Footer />}</Suspense>
-    </Stack>
+    </div>
   )
 }
 

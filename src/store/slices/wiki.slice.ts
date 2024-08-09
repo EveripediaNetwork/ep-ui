@@ -10,6 +10,7 @@ import {
   type BaseEvents,
   EventType,
 } from '@everipedia/iq-utils'
+import { sortEvents } from '@/utils/event.utils'
 
 const getCurrentSlug = () => {
   let slug = window.location.search.split('=')[1]
@@ -271,9 +272,19 @@ const wikiSlice = createSlice({
         multiDateEnd,
       } = action.payload as BaseEvents
 
-      const index = state.events
-        ? state.events?.findIndex((e) => e.date === date)
-        : -1
+      let index = -1
+
+      if (action.payload.type === EventType.MULTIDATE) {
+        index = Number(
+          state.events?.findIndex(
+            (e) =>
+              e.multiDateStart === multiDateStart &&
+              e.multiDateEnd === multiDateEnd,
+          ),
+        )
+      } else {
+        index = Number(state.events?.findIndex((e) => e.date === date))
+      }
 
       if (index !== -1) {
         const updatedEvent = {
@@ -287,12 +298,8 @@ const wikiSlice = createSlice({
         }
         const events = state.events ? [...state.events] : []
         events[index] = updatedEvent
-        events.sort((a, b) => {
-          const dateA = a.date ? new Date(a.date) : null
-          const dateB = b.date ? new Date(b.date) : null
-          return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0)
-        })
-        const newState = { ...state, events }
+        const sortedEvents = sortEvents(events)
+        const newState = { ...state, events: sortedEvents }
         saveDraftInLocalStorage(newState)
         return newState
       }
@@ -307,21 +314,26 @@ const wikiSlice = createSlice({
         multiDateEnd,
       }
       const events = state.events ? [...state.events, newEvent] : [newEvent]
-      events.sort((a, b) => {
-        const dateA = a.date ? new Date(a.date) : null
-        const dateB = b.date ? new Date(b.date) : null
-        return (dateA?.getTime() ?? 0) - (dateB?.getTime() ?? 0)
-      })
-      const newState = { ...state, events }
+      const sortedEvents = sortEvents(events)
+      const newState = { ...state, events: sortedEvents }
       saveDraftInLocalStorage(newState)
       return newState
     },
     removeEvent(state, action) {
       if (state.events) {
         if (state.events.length === 1) {
-          const updatedEvents = state.events.filter(
-            (event) => event.date !== action.payload.date,
-          )
+          let updatedEvents = []
+          if (action.payload.type === EventType.MULTIDATE) {
+            updatedEvents = state.events.filter(
+              (event) =>
+                event.multiDateStart !== action.payload.multiDateStart ||
+                event.multiDateEnd !== action.payload.multiDateEnd,
+            )
+          } else {
+            updatedEvents = state.events.filter(
+              (event) => event.date !== action.payload.date,
+            )
+          }
 
           const newState = {
             ...state,
@@ -342,9 +354,20 @@ const wikiSlice = createSlice({
           return state
         }
 
-        const updatedEvents = state.events.filter(
-          (event) => event.date !== action.payload.date,
-        )
+        let updatedEvents = []
+
+        if (action.payload.type === EventType.MULTIDATE) {
+          updatedEvents = state.events.filter((event) => {
+            return (
+              event.multiDateStart !== action.payload.multiDateStart ||
+              event.multiDateEnd !== action.payload.multiDateEnd
+            )
+          })
+        } else {
+          updatedEvents = state.events.filter(
+            (event) => event.date !== action.payload.date,
+          )
+        }
 
         const newState = {
           ...state,

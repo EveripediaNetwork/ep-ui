@@ -17,5 +17,7 @@
   "categoryorganizationsDescription": "기관 카테고리에는 블록체인 기술을 개발, 구현 또는 활용하는 회사 및 기타 조직을 포함합니다.",
   "categoryPopular": "인기 있는",
   "categoryNew": "새로운",
-  "categoryWikis": "위키"
+  "categoryWikis": "위키",
+  "categoryWikisTitle": "위키 카테고리",
+  "categoryWikisButton": "모두 보기"
 }

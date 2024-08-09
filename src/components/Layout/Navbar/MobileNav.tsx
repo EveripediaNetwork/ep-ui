@@ -1,46 +1,44 @@
-import React, { useState } from 'react'
+import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
+import { MOBILE_NAV_ITEMS, mobileWalletDetails } from '@/data/NavItemData'
+import { useAddress } from '@/hooks/useAddress'
+import type { RootState } from '@/store/store'
+import type { NavItem } from '@/types/NavItemType'
 import {
   Box,
-  Flex,
   Button,
   Center,
-  VStack,
   Divider,
+  Flex,
+  LinkBox,
   Menu,
   Text,
-  UseDisclosureReturn,
+  VStack,
   useDisclosure,
-  LinkBox,
 } from '@chakra-ui/react'
-import {
-  RiInstagramFill,
-  RiLinkedinFill,
-  RiFacebookFill,
-  RiTelegramFill,
-  RiTwitterFill,
-  RiArrowRightSLine,
-} from 'react-icons/ri'
-import { NavItem } from '@/types/NavItemType'
-import { mobileWalletDetails, MOBILE_NAV_ITEMS } from '@/data/NavItemData'
-import { MobileNavItem, MobileSubNav } from '@/components/Layout/Navbar'
-import NavSearch from '@/components/Layout/Navbar/NavSearch'
-import { ColorModeToggle } from './ColorModeToggle'
-import { LogOutBtn } from './Logout'
-import SuggestWikiModal from './SuggestWiki'
-import { useSelector } from 'react-redux'
-import { RootState } from '@/store/store'
 import { useTranslation } from 'next-i18next'
 import Image from 'next/image'
+import { useState } from 'react'
+import {
+  RiArrowRightSLine,
+  RiFacebookFill,
+  RiInstagramFill,
+  RiLinkedinFill,
+  RiTelegramFill,
+  RiTwitterFill,
+} from 'react-icons/ri'
+import { useSelector } from 'react-redux'
+import { ColorModeToggle } from './ColorModeToggle'
+import { LogOutBtn } from './Logout'
 import { ProfileLink } from './ProfileLink'
 import SettingsLink from './SettingsLink'
-import { useAddress } from '@/hooks/useAddress'
+import SuggestWikiModal from './SuggestWiki'
 
 type MobileNavType = {
-  drawerOperations: UseDisclosureReturn
   setHamburger: React.Dispatch<React.SetStateAction<boolean>>
+  setIsDrawerOpen: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
+const MobileNav = ({ setHamburger, setIsDrawerOpen }: MobileNavType) => {
   const [showSubNav, setShowSubNav] = useState<boolean>(false)
   const [currentMenu, setCurrentMenu] = useState<NavItem | null>(null)
   const { isConnected, address: userAddress } = useAddress()
@@ -65,7 +63,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
   }
   const handleWalletButtonClick = () => {
     setHamburger(false)
-    drawerOperations.onToggle()
+    setIsDrawerOpen(true)
   }
 
   const langItem = {
@@ -106,19 +104,6 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
       h="95vh"
     >
       <Box borderTopWidth={1}>
-        <NavSearch
-          inputGroupProps={{
-            display: { base: 'inherit', md: 'none' },
-          }}
-          inputProps={{
-            my: 2,
-            width: '90%',
-            mx: '5%',
-          }}
-          listProps={{ w: 'full', rounded: 'none', mt: 0 }}
-          setHamburger={setHamburger}
-        />
-
         <Divider />
         {!showSubNav ? (
           <Box
@@ -154,6 +139,16 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                   />
                 ))}
 
+              {userAddress && (
+                <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
+                  <MobileNavItem
+                    handleClick={handleWalletButtonClick}
+                    key={mobileWalletDetails.label}
+                    navItem={mobileWalletDetails}
+                  />
+                </Box>
+              )}
+
               <LinkBox
                 onClick={() => {
                   handleClick(langItem)
@@ -184,15 +179,6 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
                 </Text>
               </LinkBox>
 
-              {userAddress && (
-                <Box display={{ sm: 'block', md: 'none', lg: 'none' }}>
-                  <MobileNavItem
-                    handleClick={handleWalletButtonClick}
-                    key={mobileWalletDetails.label}
-                    navItem={mobileWalletDetails}
-                  />
-                </Box>
-              )}
               <Menu>
                 <Flex gap={{ base: '4' }} direction="column">
                   <ColorModeToggle isInMobileMenu />
@@ -206,7 +192,7 @@ const MobileNav = ({ drawerOperations, setHamburger }: MobileNavType) => {
             </Box>
           </Box>
         ) : (
-          <Box h="calc(100vh - 220px)">
+          <Box>
             <MobileSubNav
               setHamburger={setHamburger}
               setShowSubNav={setShowSubNav}

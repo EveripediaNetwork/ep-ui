@@ -3,7 +3,7 @@ import { Button, Center, Flex, Icon, Text } from '@chakra-ui/react'
 import { useAppDispatch, useAppSelector } from '@/store/hook'
 import { FiCalendar } from 'react-icons/fi'
 import { RiCloseLine } from 'react-icons/ri'
-import { BaseEvents, EventType } from '@everipedia/iq-utils'
+import { type BaseEvents, EventType } from '@everipedia/iq-utils'
 
 export const EventsList = ({
   handleFormChange,
@@ -36,6 +36,23 @@ export const EventsList = ({
     })
   }
 
+  const removeMultiDateEventHandler = (
+    multiDateStart: string,
+    multiDateEnd: string,
+  ) => {
+    setFeedbackMessage('')
+
+    dispatch({
+      type: 'wiki/removeEvent',
+      payload: {
+        type: EventType.MULTIDATE,
+        date: null,
+        multiDateStart,
+        multiDateEnd,
+      },
+    })
+  }
+
   useEffect(() => {
     if (feedbackMessage) {
       textFeedbackRef.current?.scrollIntoView({
@@ -62,7 +79,11 @@ export const EventsList = ({
       >
         {wiki.events?.map((wikiEvent) => (
           <Flex
-            key={wikiEvent.date}
+            key={
+              wikiEvent.date
+                ? wikiEvent.date
+                : `${wikiEvent.multiDateStart}-${wikiEvent.multiDateEnd}`
+            }
             gap="2"
             alignItems="center"
             borderRadius="md"
@@ -134,7 +155,12 @@ export const EventsList = ({
                 rounded="full"
                 onClick={(e) => {
                   e.stopPropagation()
-                  removeEventHandler(wikiEvent.date)
+                  if (wikiEvent.type === EventType.MULTIDATE) {
+                    removeMultiDateEventHandler(
+                      String(wikiEvent.multiDateStart),
+                      String(wikiEvent.multiDateEnd),
+                    )
+                  } else removeEventHandler(wikiEvent.date)
                 }}
               >
                 <Icon as={RiCloseLine} />

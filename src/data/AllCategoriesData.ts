@@ -1,4 +1,4 @@
-import { CategoryDataType } from '@/types/CategoryDataTypes'
+import type { CategoryDataType } from '@/types/CategoryDataTypes'
 import {
   RiBitCoinFill,
   RiCoinsFill,
