@@ -2,8 +2,8 @@ import { useRouter } from 'next/router'
 import React, { useEffect, useState } from 'react'
 import { RiArrowLeftSLine, RiFilter3Line } from 'react-icons/ri'
 import { eventFilterData } from '../event.data'
-import { DateRange } from 'react-day-picker'
-import { TEvents } from '@/services/event'
+import type { DateRange } from 'react-day-picker'
+import type { TEvents } from '@/services/event'
 import {
   fetchEventByBlockchain,
   fetchEventByLocation,
@@ -11,8 +11,9 @@ import {
 } from '@/services/search/utils'
 import { dateFormater } from '@/lib/utils'
 import FilterOptions from './FilterOptions'
-import { Filters } from './index.type'
+import type { Filters } from './index.type'
 import { useTranslation } from 'next-i18next'
+import type { SetState } from '@/utils/event.utils'
 
 const defaultFilters: Filters = {
   date: '',
@@ -23,8 +24,8 @@ const defaultFilters: Filters = {
 
 const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
   const today = new Date()
-  let startDate
-  let endDate
+  let startDate = dateFormater(today)
+  let endDate: string | undefined
 
   switch (filter.date) {
     case 'Next Week':
@@ -71,13 +72,14 @@ const handleFilter = (filter: Filters, dateRange?: DateRange | undefined) => {
 
   if (filter.eventType.length > 0) {
     return fetchFilteredEventList(filter.eventType, startDate, endDate)
-  } else if (filter.blockchain) {
-    return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
-  } else if (filter.location) {
-    return fetchEventByLocation(filter.location, startDate, endDate)
-  } else {
-    return fetchFilteredEventList([], startDate, endDate)
   }
+  if (filter.blockchain) {
+    return fetchEventByBlockchain(filter.blockchain, startDate, endDate)
+  }
+  if (filter.location) {
+    return fetchEventByLocation(filter.location, startDate, endDate)
+  }
+  return fetchFilteredEventList([], startDate, endDate)
 }
 
 const EventFilter = ({
@@ -86,8 +88,8 @@ const EventFilter = ({
   setIsLoading,
 }: {
   fetchedData: TEvents[]
-  setEventData: Function
-  setIsLoading: Function
+  setEventData: SetState<TEvents[]>
+  setIsLoading: SetState<boolean>
 }) => {
   const [selectedFilter, setSelectedFilter] = useState('Date')
   const [dateRange, setDateRange] = React.useState<DateRange | undefined>()
@@ -188,8 +190,7 @@ const EventFilter = ({
   useEffect(() => {
     const updatedFilters: Filters = { ...defaultFilters }
 
-    // Iterate over each filter key and update the state if a corresponding query parameter exists
-    Object.keys(defaultFilters).forEach((key) => {
+    for (const key of Object.keys(defaultFilters)) {
       const queryParam = router.query[key]
       if (queryParam) {
         if (key === 'eventType') {
@@ -201,7 +202,7 @@ const EventFilter = ({
           }
         }
       }
-    })
+    }
 
     setFilters(updatedFilters)
   }, [router.query])
@@ -211,9 +212,9 @@ const EventFilter = ({
     setDateRange(undefined)
     setEventData(fetchedData)
     const newQuery = { ...router.query }
-    Object.keys(defaultFilters).forEach((key) => {
+    for (const key in defaultFilters) {
       delete newQuery[key]
-    })
+    }
     router.push({ pathname: router.pathname, query: newQuery }, undefined, {
       shallow: true,
     })
@@ -223,11 +224,11 @@ const EventFilter = ({
     const value = filters[key as keyof Filters]
     if (typeof value === 'string') {
       return value.trim() !== ''
-    } else if (Array.isArray(value)) {
-      return value.length > 0
-    } else {
-      return false
     }
+    if (Array.isArray(value)) {
+      return value.length > 0
+    }
+    return false
   })
 
   return (
