@@ -91,13 +91,7 @@ export const GET_AI_TOKEN_RANKINGS = gql`
     $offset: Int
     $category: TokenCategory
   ) {
-    rankList(
-      kind: $kind
-      limit: $limit
-      offset: $offset
-      category: $category
-      founders: true
-    ) {
+    rankList(kind: $kind, limit: $limit, offset: $offset, category: $category) {
       ... on TokenRankListData {
         id
         title
@@ -204,10 +198,6 @@ export const GET_FOUNDERS_RANKINGS = gql`
         }
         images {
           id
-        }
-        founderWikis {
-          id
-          title
         }
         blockchainWikis {
           id
