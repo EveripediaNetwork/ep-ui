@@ -13,11 +13,11 @@ import {
 import { getWiki, wikiApi } from '@/services/wikis'
 import { useRouter } from 'next/router'
 import { store } from '@/store/store'
-import { GetServerSideProps, NextPage } from 'next'
+import type { GetServerSideProps, NextPage } from 'next'
 import WikiDetailsSidebar from '@/components/CreateWiki/WikiDetailsSidebar'
 import { useAppSelector } from '@/store/hook'
 import {
-  Wiki,
+  type Wiki,
   CommonMetaIds,
   EditSpecificMetaIds,
   EditorContentOverride,

@@ -306,7 +306,6 @@ const RankingItem = ({
           <Text>N/A</Text>
         )}
       </Td>
-
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}

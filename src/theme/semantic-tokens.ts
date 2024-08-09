@@ -1,4 +1,4 @@
-import { Pseudos, SemanticValue } from '@chakra-ui/react'
+import type { Pseudos, SemanticValue } from '@chakra-ui/react'
 
 export type SemanticTokens = Partial<
   Record<string, Record<string, SemanticValue<keyof Pseudos>>>
@@ -191,7 +191,7 @@ export const semanticTokens: SemanticTokens = {
     },
     fadedText2: {
       default: 'gray.600',
-      _dark: 'gray.500',
+      _dark: 'whiteAlpha.800',
     },
     divider: {
       default: 'gray.200',

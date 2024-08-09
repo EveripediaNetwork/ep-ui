@@ -1,7 +1,7 @@
 import { Box, Text } from '@chakra-ui/react'
 import React, { useState } from 'react'
 import { RiArrowDownSLine } from 'react-icons/ri'
-import { WikiInsightsProps } from '../../WikiInsights'
+import type { Wiki } from '@everipedia/iq-utils'
 import ChatBot from './ChatBot'
 import { BrainBotSuggestion } from './BotSuggestions'
 import QuestionMarkIcon from '@/components/Icons/questionMarkIcon'
@@ -10,13 +10,25 @@ import IQGPTIcon from '@/components/Elements/icons/IQGPTIcon'
 import { useTranslation } from 'next-i18next'
 import { QueryType } from '@/hooks/useStream/useQueryTranslation'
 
-const BrainBot = ({ wiki }: WikiInsightsProps) => {
+interface BrainBotProps {
+  wiki: Wiki
+  onInteraction: (action: string, properties?: Record<string, any>) => void
+}
+
+const BrainBot = ({ wiki, onInteraction }: BrainBotProps) => {
   const { t } = useTranslation('wiki')
   const [open, setOpen] = useState(true)
+
+  const toggleOpen = () => {
+    const state = !open
+    setOpen(state)
+    onInteraction(state ? 'opened' : 'closed')
+  }
+
   return (
     <>
       {open ? (
-        <ChatBot wiki={wiki} />
+        <ChatBot wiki={wiki} onInteraction={onInteraction} />
       ) : (
         <Box
           display={'flex'}
@@ -72,6 +84,9 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
               icon={<QuestionMarkIcon style={{ marginInlineStart: '0px' }} />}
               wiki={wiki}
               setOpen={setOpen}
+              onInteraction={(question) =>
+                onInteraction('suggestion_clicked', { question })
+              }
             />
             <BrainBotSuggestion
               question={t(QueryType.ContentPageSummary)}
@@ -84,6 +99,9 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
                   style={{ marginInlineStart: '0px' }}
                 />
               }
+              onInteraction={(question) =>
+                onInteraction('suggestion_clicked', { question })
+              }
               wiki={wiki}
               setOpen={setOpen}
             />
@@ -93,7 +111,7 @@ const BrainBot = ({ wiki }: WikiInsightsProps) => {
             <Box color={'brandLinkColor'}>
               <RiArrowDownSLine
                 size={'28px'}
-                onClick={() => setOpen(true)}
+                onClick={toggleOpen}
                 style={{ flexShrink: 0, cursor: 'pointer' }}
               />
             </Box>

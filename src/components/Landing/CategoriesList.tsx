@@ -1,92 +1,108 @@
-import React from 'react'
-import { Text, SimpleGrid, Heading, VStack, Flex, Box } from '@chakra-ui/react'
-import { useTranslation } from 'next-i18next'
-import { CategoryDataType } from '@/types/CategoryDataTypes'
-import { LinkButton } from '../Elements'
 import { AllCategoriesData } from '@/data/AllCategoriesData'
-import CategoryCard from '../Categories/CategoryCard'
+import { useTranslation } from 'next-i18next'
+import { Tabs, TabsList, TabsTrigger } from '../ui/tabs'
+import { TabsContent } from '@radix-ui/react-tabs'
+import CategoriesCard from '../Categories/CategoriesCard'
+import Link from 'next/link'
+import { ArrowRightIcon } from 'lucide-react'
+import type { CategoryAndWikiDataProps } from '@/types/CategoryDataTypes'
+import { CategorySkeletonCard } from './CategorySkeleton'
+import { useState } from 'react'
 
-const NUM_OF_CATEGORIES = 6
+interface CategoriesListProps {
+  categories: CategoryAndWikiDataProps[]
+}
 
-const CategoriesList = () => {
+enum CategoriesTabs {
+  Cryptocurrencies = 'cryptocurrencies',
+  Exchanges = 'exchanges',
+  People = 'people',
+  NFTs = 'nfts',
+  DAOs = 'daos',
+  DAPPs = 'dapps',
+  Organizations = 'organizations',
+  DeFi = 'defi',
+}
+
+const CategoriesList = ({ categories }: CategoriesListProps) => {
   const { t } = useTranslation('common')
-  const newCategoryList: CategoryDataType[] = []
+  const [selectedTab, setSelectedTab] = useState<CategoriesTabs>(
+    CategoriesTabs.NFTs,
+  )
 
-  while (newCategoryList.length < NUM_OF_CATEGORIES) {
-    const randIndex = Math.floor(Math.random() * AllCategoriesData.length)
-    const randCategory = AllCategoriesData[randIndex]
-
-    if (!newCategoryList.includes(randCategory)) {
-      newCategoryList.push(randCategory)
-    }
-
-    if (
-      randIndex === AllCategoriesData.length - 1 &&
-      !newCategoryList.includes(AllCategoriesData[randIndex])
-    ) {
-      newCategoryList.push(AllCategoriesData[randIndex])
-    }
+  const handleSelectedTab = (tab: string) => {
+    setSelectedTab(tab as CategoriesTabs)
   }
 
   return (
-    <VStack py={{ base: 16, md: 20, lg: 24 }} spacing={2}>
-      <Heading
-        textAlign="center"
-        fontWeight="600"
-        fontSize={{ base: '3xl', lg: 46 }}
-      >
-        {`${t('browseCategory')}`}
-      </Heading>
-      <Text
-        color="homeDescriptionColor"
-        fontSize={{ base: 'lg', lg: '20px' }}
-        pb={9}
-        px={4}
-        textAlign="center"
-        maxW="800"
-      >{`${t('browseCategoryDescription')}`}</Text>
-      <SimpleGrid
-        maxW="1290px"
-        w="100%"
-        mx="auto"
-        gridTemplateColumns={{
-          base: 'repeat(1, 1fr)',
-          md: 'repeat(2, 1fr)',
-          lg: 'repeat(3, 1fr)',
-        }}
-        spacingX={6}
-        spacingY={12}
-        px={6}
-      >
-        {newCategoryList?.map(
-          (category) =>
-            category.cardImage && (
-              <CategoryCard
+    <div className="flex flex-col gap-10 container mx-auto py-0 lg:py-20 relative px-4 lg:px-8 2xl:px-0">
+      <div className="absolute -top-1/2 right-20 rotate-6 w-[700px] h-[1150px] lg:rotate-45 rounded-[100%] bg-gradient-to-b from-pink-500/10 to-indigo-400/10 blur-3xl -z-20" />
+      <div className="flex flex-col gap-3">
+        <h1 className="text-base lg:text-2xl font-semibold">
+          {t('browseCategory')}
+        </h1>
+        <h2 className="dark:text-alpha-800 text-gray-600 font-medium max-w-3xl text-sm lg:text-base">
+          {t('browseCategoryDescription')}
+        </h2>
+      </div>
+      <Tabs defaultValue={AllCategoriesData[0].id}>
+        <div className="overflow-x-auto scrollbar-hide">
+          <TabsList className="space-x-2 mb-8 xl:mb-12">
+            {AllCategoriesData.map((category) => (
+              <TabsTrigger
                 key={category.id}
-                imageCard={category.cardImage}
-                title={category.title}
-                brief={t(category.description)}
-                categoryId={category.id}
-                coverIcon={category.icon}
-              />
-            ),
-        )}
-      </SimpleGrid>
-      <Box mt="10 !important">
-        <Flex justifyContent="center">
-          <LinkButton
-            href="/categories"
-            h="50px"
-            w={{ base: 32, lg: 40 }}
-            variant="outline"
-            bgColor="btnBgColor"
-            prefetch={false}
-          >
-            {t('categoryViewMore')}
-          </LinkButton>
-        </Flex>
-      </Box>
-    </VStack>
+                value={category.id}
+                onClick={() => handleSelectedTab(category.id)}
+                className="rounded-full border-b-0 py-2.5 data-[state=active]:bg-brand-50 text-sm font-medium data-[state=active]:dark:bg-brand-200 bg-gray-100 dark:bg-alpha-50 dark:border-gray-700 border-gray-200/20"
+              >
+                {t(category.title)}
+              </TabsTrigger>
+            ))}
+            <Link
+              href="/categories"
+              className="flex items-center gap-2 rounded-full w-[110px] xl:w-full px-4 py-2.5 text-sm font-medium text-gray600 dark:text-gray-300 group h-9 border dark:border-gray-700 border-gray-200/20 bg-gray-100 dark:bg-alpha-50"
+            >
+              {t('categoryViewAll')}
+              <ArrowRightIcon className="w-3 h-3 transition-transform group-hover:translate-x-1 duration-300 ease-in-out delay-150" />
+            </Link>
+          </TabsList>
+        </div>
+        {AllCategoriesData.map((allCategory) => (
+          <TabsContent key={allCategory.id} value={allCategory?.id}>
+            <div>
+              {!categories ? (
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                  {Array.from({ length: 6 }).map((_, index) => (
+                    <CategorySkeletonCard key={index} />
+                  ))}
+                </div>
+              ) : (
+                categories?.map(
+                  (category) =>
+                    category?.id === allCategory.id && (
+                      <div
+                        key={category.id}
+                        className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6"
+                      >
+                        {category.wikis.slice(0, 6).map((wiki) => (
+                          <CategoriesCard key={wiki.id} wiki={wiki} />
+                        ))}
+                      </div>
+                    ),
+                )
+              )}
+            </div>
+          </TabsContent>
+        ))}
+      </Tabs>
+      <Link
+        href={`/categories/${selectedTab}`}
+        prefetch={false}
+        className="px-5 py-3 rounded-lg border dark:border-gray-700 border-gray-300 self-center dark:text-alpha-800 text-gray-600 text-xs lg:text-sm hover:bg-gray-200 dark:hover:bg-alpha-50 transition-colors duration-300 delay-150 ease-in-out"
+      >
+        {t('categoryViewMore')}
+      </Link>
+    </div>
   )
 }
 
