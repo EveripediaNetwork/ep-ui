@@ -60,29 +60,6 @@ function cryptoFormatter(num: number): CryptoFormatResult {
   return priceFormatter(num)
 }
 
-export const WikiLinkTag = ({ wikiId }: { wikiId: string }) => {
-  const { data, isLoading } = useGetWikiTitleByIdQuery(wikiId)
-
-  if (isLoading) {
-    return <Skeleton w="100px" h="20px" />
-  }
-
-  if (!data) {
-    return <Text as="span">N/A</Text>
-  }
-
-  return (
-    <Link
-      href={`/wiki/${wikiId}`}
-      color="brandLinkColor"
-      fontWeight={500}
-      fontSize="14px"
-    >
-      {data}
-    </Link>
-  )
-}
-
 const RankingItem = ({
   index,
   item,
@@ -269,17 +246,25 @@ const RankingItem = ({
         maxW="350px"
         minW="250px"
       >
-        {item.linkedWikis?.founders && item.linkedWikis.founders.length > 0 ? (
+        {item.founderWikis && item.founderWikis.length > 0 ? (
           <Flex flexWrap="wrap" gap="1">
-            {item.linkedWikis.founders
-              .slice(0, MAX_LINKED_WIKIS)
-              .map((founder, i) => (
-                <React.Fragment key={`founder${i}`}>
-                  {i > 0 && <Box as="span">,&nbsp;</Box>}
-                  <WikiLinkTag wikiId={founder} />
-                </React.Fragment>
-              ))}
-            {item.linkedWikis.founders.length > MAX_LINKED_WIKIS && (
+            {item.founderWikis.slice(0, MAX_LINKED_WIKIS).map((founder, i) => (
+              <React.Fragment key={`founder-${founder.id}-${i}`}>
+                <Link
+                  href={`/wiki/${founder.id}`}
+                  color="brandLinkColor"
+                  fontWeight={500}
+                  fontSize="14px"
+                >
+                  {founder.title}
+                </Link>
+                {i <
+                  Math.min(item.founderWikis.length, MAX_LINKED_WIKIS) - 1 && (
+                  <Box as="span">,</Box>
+                )}
+              </React.Fragment>
+            ))}
+            {item.founderWikis.length > MAX_LINKED_WIKIS && (
               <Text color="brandLinkColor">...</Text>
             )}
           </Flex>
@@ -287,7 +272,6 @@ const RankingItem = ({
           <Text>N/A</Text>
         )}
       </Td>
-
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}
@@ -295,18 +279,26 @@ const RankingItem = ({
         px={{ base: 2, md: 6 }}
         minW="150px"
       >
-        {item.linkedWikis?.blockchains &&
-        item.linkedWikis.blockchains.length > 0 ? (
+        {item.blockchainWikis && item.blockchainWikis.length > 0 ? (
           <Flex flexWrap="wrap" gap="1">
-            {item.linkedWikis.blockchains
+            {item.blockchainWikis
               .slice(0, MAX_LINKED_WIKIS)
               .map((blockchain, i) => (
-                <React.Fragment key={`blockchain${i}`}>
-                  {i > 0 && <Box as="span">,&nbsp;</Box>}
-                  <WikiLinkTag wikiId={blockchain} />
+                <React.Fragment key={`blockchain-${blockchain.id}-${i}`}>
+                  <Link
+                    href={`/wiki/${blockchain.id}`}
+                    color="brandLinkColor"
+                    fontWeight={500}
+                    fontSize="14px"
+                  >
+                    {blockchain.title}
+                  </Link>
+                  {i <
+                    Math.min(item.blockchainWikis.length, MAX_LINKED_WIKIS) -
+                      1 && <Box as="span">,</Box>}
                 </React.Fragment>
               ))}
-            {item.linkedWikis.blockchains.length > MAX_LINKED_WIKIS && (
+            {item.blockchainWikis.length > MAX_LINKED_WIKIS && (
               <Text color="brandLinkColor">...</Text>
             )}
           </Flex>
@@ -314,7 +306,6 @@ const RankingItem = ({
           <Text>N/A</Text>
         )}
       </Td>
-
       <Td
         borderColor="rankingListBorder"
         fontWeight={500}

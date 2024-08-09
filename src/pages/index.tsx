@@ -88,7 +88,7 @@ export const Index = ({
         <CategoriesList categories={categories} />
         <EventOverview />
       </div>
-      {leaderboards.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
+      {leaderboards?.length > 0 && <LeaderBoard leaderboards={leaderboards} />}
       <DiscoverMore tagsData={popularTags} />
     </section>
   )
@@ -143,7 +143,6 @@ export const getServerSideProps: GetServerSideProps = async ({ locale }) => {
       kind: 'TOKEN',
       limit: RANKING_LIST_LIMIT,
       offset: 1,
-      founders: true,
     }),
   )
   const { data: aiTokensList } = await store.dispatch(

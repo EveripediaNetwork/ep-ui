@@ -55,24 +55,26 @@ export default function WikiCategories() {
         {randomCategories.map((category) => {
           return (
             <Link
-              href={`/categories/${category.id}`}
-              key={category.id}
+              href={`/categories/${category?.id}`}
+              key={category?.id}
               className="border-b border-gray-200 dark:border-gray-700 hover:bg-gray100 dark:hover:bg-alpha-100 cursor-pointer px-4 py-3.5 transition-all duration-300 ease-in-out delay-200 last:border-b-0 last:rounded-b-xl flex flex-row gap-3 items-center"
             >
               <div className="w-[68px] h-[46px] aspect-square rounded-md">
                 <Image
                   className="w-full h-full object-cover rounded-md"
-                  src={category.cardImage}
-                  alt={category.title}
+                  src={category?.cardImage}
+                  alt={category?.title}
                   width={450}
                   height={450}
                 />
               </div>
 
               <div className="flex-1 flex flex-col gap-1.5">
-                <div className="text-sm font-semibold">{t(category.title)}</div>
+                <div className="text-sm font-semibold">
+                  {t(category?.title)}
+                </div>
                 <h3 className="text-xs font-medium line-clamp-2">
-                  {t(category.description)}
+                  {t(category?.description)}
                 </h3>
               </div>
             </Link>
