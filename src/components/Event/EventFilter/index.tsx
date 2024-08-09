@@ -215,6 +215,7 @@ const EventFilter = ({
     for (const key in defaultFilters) {
       delete newQuery[key]
     }
+
     router.push({ pathname: router.pathname, query: newQuery }, undefined, {
       shallow: true,
     })
@@ -285,7 +286,7 @@ const EventFilter = ({
               <FilterOptions
                 eventFilter={eventFilter}
                 category={
-                  eventFilter.title === 'Event Type'
+                  eventFilter.title === 'eventType'
                     ? 'eventType'
                     : (eventFilter.title.toLowerCase() as keyof Filters)
                 }
