@@ -87,11 +87,6 @@ const RankingItem = ({
     (event) => event.type === EventType.CREATED,
   )?.date
 
-  console.log('founderWikis', {
-    founderWikis: item.founderWikis,
-    title: item.title,
-  })
-
   return (
     <Tr
       _hover={{
